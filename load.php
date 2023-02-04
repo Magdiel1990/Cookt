@@ -3,10 +3,10 @@
     require_once ("config/db_Connection.php");
     
     //Array of the columns to be querried from the database.
-    $columns = ["recipeid", "recipename", "categoryid"];
+    $columns = ["recipeid","recipename", "category"];
     
     //Table to be querried from the database.
-    $table = "recipe";
+    $table = "recipeinfoview";
 
     //If the variable search is set it's received, else it's null.
     $field = isset($_POST["search"]) ? $conn -> real_escape_string($_POST["search"]) : null;
@@ -43,8 +43,8 @@
     if($num_rows > 0) {
         while($row = $result->fetch_assoc()){
             $output['data'] .= "<tr>";
-            $output['data'] .= "<td >" .$row['recipename']. "</td>";
-            $output['data'] .= "<td>" .$row['recipeid']. "</td>";
+            $output['data'] .= "<td ><a href='./actions/recipe_viewer.php?recipe=" . $row['recipename'] . "'>" . $row['recipename'] . "</a></td>";
+            $output['data'] .= "<td>" .$row['category']. "</td>";
             $output['data'] .= "<td>";
             $output['data'] .= "<a href='./actions/update.php?id=" .$row['recipeid']. "' " ."class='btn btn-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
             $output['data'] .= "<a href='./actions/delete.php?id=" .$row['recipeid']. "' " ."class='btn btn-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
