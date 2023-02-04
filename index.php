@@ -1,20 +1,61 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <title>Cookt</title>
-    <link rel="stylesheet" href="styles/styles.css">
-    <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    
+<?php
+//Head of the page.
+require_once ("modules/head.php");
 
+//Navigation panel of the page
+require_once ("modules/nav.php");
+?>
+<main>
+    <div>
+        <h3>Get Recipe</h3>
+<!--Form for filtering the database info-->
+        <div>
+            <div>
+                <label for="search">Buscar: </label>
+                <input type="text" id="search" name="search">
+            </div>
+        </div>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>Receta</td>
+                    <td>Categoría</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody id="content">
+            </tbody>
+        </table>
+    </div>
+</main>
+<script>
+getData();
 
+//Adding event to the searching input.
+document.getElementById("search").addEventListener("keyup", function() {
+        getData()
+}, false)
 
+function getData(){
+    let content = document.getElementById("content")
+    let input = document.getElementById("search").value
 
-
-</body>
-</html>
+    let url = "load.php";
+    let formaData = new FormData()
+    formaData.append("search", input)
+    fetch(url, {
+        method: "POST",
+        body: formaData            
+    }).then(response => response.json())
+    .then(data => {
+        content.innerHTML = data.data
+//If there's an error.  
+    }).catch(err => console.log(err))
+}
+</script>
+<?php
+//Footer of the page.
+require_once ("modules/footer.php");
+?>
