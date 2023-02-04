@@ -46,15 +46,15 @@
             $output['data'] .= "<td ><a href='./actions/recipe_viewer.php?recipe=" . $row['recipename'] . "'>" . $row['recipename'] . "</a></td>";
             $output['data'] .= "<td>" .$row['category']. "</td>";
             $output['data'] .= "<td>";
-            $output['data'] .= "<a href='./actions/update.php?id=" .$row['recipeid']. "' " ."class='btn btn-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
-            $output['data'] .= "<a href='./actions/delete.php?id=" .$row['recipeid']. "' " ."class='btn btn-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+            $output['data'] .= "<a href='actions/edit.php?name=" . $row['recipename'] . "' " . "class='btn btn-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
+            $output['data'] .= "<a href='actions/delete.php?name=" . $row['recipename'] . "' " . "class='btn btn-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
             $output['data'] .= "</td>";
             $output['data'] .= "</tr>";
         }
     } else {
     //Else this message is shown.
         $output['data'] .= "<tr>";
-        $output['data'] .= "<td colspan = '3'>No results</td>";
+        $output['data'] .= "<td colspan = '3'>No hay resultados</td>";
         $output['data'] .= "</tr>";
     }
     //Json file is encoded and echoed excluding especial characters.

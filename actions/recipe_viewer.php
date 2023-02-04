@@ -5,9 +5,6 @@ require_once ("../config/db_Connection.php");
 //Head of the page.
 require_once ("../modules/head.php");
 
-//Navigation panel of the page
-require_once ("../modules/nav.php");
-
 $recipe = isset($_GET["recipe"]) ? $conn -> real_escape_string($_GET["recipe"]) : null;
 
 $sql = "SELECT * FROM recipeview WHERE recipename = '$recipe'";
@@ -32,6 +29,7 @@ $row = $result->fetch_assoc();
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Preparación
                 </a>
+                <a href="../index.php">Regresar</a>
             </div>
             <?php
             $sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipe'";

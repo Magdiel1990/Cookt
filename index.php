@@ -4,10 +4,22 @@ require_once ("modules/head.php");
 
 //Navigation panel of the page
 require_once ("modules/nav.php");
+
+require_once ("models/models.php");
 ?>
 <main>
+    <?php
+//Messages that are shown in the index page
+        if(isset($_SESSION['message'])){
+        buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
+
+//Unsetting the messages variables so the message fades after refreshing the page.
+        unset($_SESSION['message_alert'], $_SESSION['message']);
+        }
+    ?>
+
     <div>
-        <h3>Get Recipe</h3>
+        <h3>Recetas</h3>
 <!--Form for filtering the database info-->
         <div>
             <div>
