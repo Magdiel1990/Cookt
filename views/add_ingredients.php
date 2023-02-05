@@ -21,7 +21,7 @@ require_once ("../models/models.php");
     ?>
     <h3>Agregar Unidades</h3>
 <!--Form for filtering the database info-->
-        <form method="POST" action="../actions/unit_add.php" autocomplete="off">
+        <form method="POST" action="../actions/save.php" autocomplete="off">
             <div>
                 <label for="add_ingredient">Ingrediente: </label>
                 <input type="text" id="add_ingredient" name="add_ingredient">
@@ -39,16 +39,16 @@ require_once ("../models/models.php");
             </thead>
             <tbody>                
                 <?php
-                    $sql = "SELECT unit FROM units";
+                    $sql = "SELECT ingredient FROM ingredients";
 
                     $result = $conn -> query($sql);
 
                     while($row = $result -> fetch_assoc()){
                         $html = "<tr>";
-                        $html .= "<td>" . $row['unit'] . "</td>";
+                        $html .= "<td>" . $row['ingredient'] . "</td>";
                         $html .= "<td>";
-                        $html .= "<a href='../actions/edit.php?unitname=" . $row['unit'] . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
-                        $html .= "<a href='../actions/delete.php?unitname=" . $row['unit'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                        $html .= "<a href='../actions/edit.php?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
+                        $html .= "<a href='../actions/delete.php?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                         $html .= "</td>";
                         $html .= "</tr>";
                         echo $html;

@@ -9,10 +9,10 @@
                 <a class="nav-link" href="index.php">Recetas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Elegir por ingredients</a>
+                <a class="nav-link" href="./views/random_recipe.php">Elegir por ingredients</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Sugerencias</a>
+                <a class="nav-link" href="./views/custom_recipe.php">Sugerencias</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -20,8 +20,8 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="./views/add_units.php">Unidades</a>
-                <a class="dropdown-item" href="#">Ingredientes</a>
-                <a class="dropdown-item" href="#">Recetas</a>
+                <a class="dropdown-item" href="./views/add_ingredients.php">Ingredientes</a>
+                <a class="dropdown-item" href="./views/add_recipe.php">Recetas</a>
                 </div>
             </li>
             </ul>

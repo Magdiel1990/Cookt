@@ -5,6 +5,7 @@ require_once ("modules/head.php");
 //Navigation panel of the page
 require_once ("modules/nav.php");
 
+//Models
 require_once ("models/models.php");
 ?>
 <main>
