@@ -21,10 +21,10 @@ require_once ("../models/models.php");
     ?>
     <h3>Agregar Unidades</h3>
 <!--Form for filtering the database info-->
-        <form method="POST" action="../actions/create.php" autocomplete="off">
+        <form method="POST" action="../actions/unit_add.php" autocomplete="off">
             <div>
-                <label for="add">Unidad: </label>
-                <input type="text" id="add" name="add">
+                <label for="add_ingredient">Ingrediente: </label>
+                <input type="text" id="add_ingredient" name="add_ingredient">
                 <input type="submit" value="Agregar">
             </div>
         </form>
@@ -33,7 +33,7 @@ require_once ("../models/models.php");
         <table class="table">
             <thead>
                 <tr>
-                    <th>Unidades</th>
+                    <th>Ingredientes</th>
                     <th>Acciones</th>
                 </tr>
             </thead>

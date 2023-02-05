@@ -1,6 +1,6 @@
 <?php
-//Head of the page.
-require_once ("../modules/head.php");
+//Iniciating session. 
+session_start();
 
 //Including the database connection.
 require_once ("../config/db_Connection.php");
@@ -43,7 +43,4 @@ if ($unit == ""){
 <?php
 //Exiting the connection to the database.
 $conn -> close(); 
-
-//We include the footer (jquery, bootstrap and popper scripts).
-include("../modules/footer.php");
 ?>
