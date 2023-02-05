@@ -41,7 +41,6 @@ $row = $result->fetch_assoc();
                 <div class="card card-body"> <?php echo $row["preparation"]; ?> </div>
             </div>        
         </div>
-        <!--<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>-->
     </div>
 </main>
 <?php

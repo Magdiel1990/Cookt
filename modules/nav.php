@@ -9,19 +9,19 @@
                 <a class="nav-link" href="index.php">Recetas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Choose by ingredients</a>
+                <a class="nav-link" href="#">Elegir por ingredients</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Random recipes</a>
+                <a class="nav-link" href="#">Sugerencias</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Data management
+                Administración
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Add units</a>
-                <a class="dropdown-item" href="#">Add ingredients</a>
-                <a class="dropdown-item" href="#">Add recipe</a>
+                <a class="dropdown-item" href="./views/add_units.php">Unidades</a>
+                <a class="dropdown-item" href="#">Ingredientes</a>
+                <a class="dropdown-item" href="#">Recetas</a>
                 </div>
             </li>
             </ul>
