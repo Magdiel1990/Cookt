@@ -23,8 +23,8 @@ require_once ("../models/models.php");
 <!--Form for filtering the database info-->
         <form method="POST" action="../actions/create.php" autocomplete="off">
             <div>
-                <label for="add">Unidad: </label>
-                <input type="text" id="add" name="add">
+                <label for="add_units">Unidad: </label>
+                <input type="text" id="add_units" name="add_units">
                 <input type="submit" value="Agregar">
             </div>
         </form>

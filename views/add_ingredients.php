@@ -19,9 +19,9 @@ require_once ("../models/models.php");
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>
-    <h3>Agregar Unidades</h3>
+    <h3>Agregar Ingredientes</h3>
 <!--Form for filtering the database info-->
-        <form method="POST" action="../actions/save.php" autocomplete="off">
+        <form method="POST" action="../actions/create.php" autocomplete="off">
             <div>
                 <label for="add_ingredient">Ingrediente: </label>
                 <input type="text" id="add_ingredient" name="add_ingredient">
