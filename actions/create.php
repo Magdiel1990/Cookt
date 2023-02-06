@@ -121,6 +121,50 @@ if(isset($_POST['add_ingredient'])){
 }
 
 
+/************************************************************************************************/
+/**********************************FULL INGREDIENT DESCRIPTION CODE******************************/
+/************************************************************************************************/
+
+
+//receive the data
+if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredient'])){
+
+  $ingredient = $_POST['ingredient'];
+  $quantity = $_POST['quantity'];
+  $unit = $_POST['unit'];
+
+
+  if ($quantity == "" || $quantity <= 0) {
+  //Message if the variable is null.
+      $_SESSION['message'] = 'Elija la cantidad por favor!';
+      $_SESSION['message_alert'] = "danger";
+          
+  //The page is redirected to the add_recipe.php
+      header('Location: ../views/add_recipe.php');
+  } else {
+
+    $sql = "INSERT INTO reholder (ingredient, quantity, unit) VALUES ('$ingredient', '$quantity', '$unit');";
+
+      if ($conn->query($sql) === TRUE) {
+    //Success message.
+          $_SESSION['message'] = 'Ingrediente agregado con éxito!';
+          $_SESSION['message_alert'] = "success";
+              
+    //The page is redirected to the ingredients.php.
+          header('Location: ../views/add_recipe.php');
+
+        } else {
+    //Failure message.
+          $_SESSION['message'] = 'Error al agregar ingrediente!';
+          $_SESSION['message_alert'] = "danger";
+              
+    //The page is redirected to the ingredients.php.
+          header('Location: ../views/add_recipe.php');
+        }
+  }
+}
+
+
 
 
 

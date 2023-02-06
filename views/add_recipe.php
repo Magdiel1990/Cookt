@@ -39,7 +39,7 @@ require_once ("../models/models.php");
                     ?>
                 </select>
 
-                <label for="ingredient">Unidad: </label>                
+                <label for="ingredient">Ingrediente: </label>                
                 <select name="ingredient" id="ingredient">
                     <?php
                     $sql = "SELECT ingredient FROM ingredients";
@@ -51,15 +51,46 @@ require_once ("../models/models.php");
                     }
                     ?>
                 </select>
-                <input type="submit" value="Agregar">
+                <input type="submit" value="Agregar ingrediente">
             </div>
         </form>
+        <!-- Table with ingredients that will conform the recipe-->
         <div>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th>Ingredients</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+                $sql = "SELECT re_id, ingredient, quantity, unit, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder";
 
-        <!-- Lista de ingredientes  -->
+                $result = $conn -> query($sql);
 
+                $row = $result -> fetch_assoc();
 
+                $num_rows = $result -> num_rows;
 
+                if ($num_rows == 0) {
+                    $html = "";
+                    $html .= "<tr>";
+                    $html .= "<td>Agrega los ingredientes...</td>";
+                    $html .= "</tr>";
+                    echo $html;
+                }
+                else {
+
+                    while($row = $result -> fetch_assoc()){
+                        echo "<tr>";
+                        echo "<td><a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"] . "</a></td>";
+                        echo "</tr>";
+                    }
+                    
+                }
+            ?>
+            </tbody>
+            </table>
         </div>
         <form method="POST" action="">
             <div>
@@ -75,7 +106,7 @@ require_once ("../models/models.php");
                 <textarea name="observation" id="observation" cols="30" rows="10"></textarea>
             </div>
             <div>
-                <input type="submit" value="Agregar">
+                <input type="submit" value="Agregar receta">
             </div>
         </form>
     </div>
