@@ -188,42 +188,56 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
       header('Location: ../views/add_recipe.php');
   } else {
 
-    $sql = "SELECT categoryid FROM categories WHERE category = '$category'";
-    $result = $conn -> query($sql);
-    $row = $result -> fetch_assoc();
-    $categoryid = $row["categoryid"];
+      $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename';";
+      $result = $conn -> query($sql);
+      $num_rows = $result -> num_rows;
+      
+      if($num_rows == 0){
 
-    $sql = "INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime)
-    VALUES ('$recipename', $categoryid, '$preparation', '$observation', $cookingtime);";
-    $conn -> query($sql);
-    $sql = "SELECT * FROM reholder;";    
-    $result = $conn -> query($sql);
-    $row = $result -> fetch_assoc();    
+      $sql = "SELECT categoryid FROM categories WHERE category = '$category';";
+      $result = $conn -> query($sql);
+      $row = $result -> fetch_assoc();
+      $categoryid = $row["categoryid"];
 
-    while($row = $result -> fetch_assoc()){
-    $sql = "INSERT INTO recipeinfo (recipename, quantity, unit, ingredient)
-    VALUES ('$recipename', " . $row["quantity"] . ", '" . $row["unit"] . "', '" . $row["ingredient"] . "');";
+      $sql = "INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime)
+      VALUES ('$recipename', $categoryid, '$preparation', '$observation', $cookingtime);";
+      $conn -> query($sql);
+      $sql = "SELECT * FROM reholder;";    
+      $result = $conn -> query($sql);
+      $row = $result -> fetch_assoc();    
 
-    $conn -> query($sql);
-    }
+      while($row = $result -> fetch_assoc()){
+        $sql = "INSERT INTO recipeinfo (recipename, quantity, unit, ingredient)
+        VALUES ('$recipename', " . $row["quantity"] . ", '" . $row["unit"] . "', '" . $row["ingredient"] . "');";
 
-    $sql = "DELETE FROM reholder;";
-    $conn -> query($sql);   
+        $conn -> query($sql);
+      }
 
-    if ($conn -> query($sql) === TRUE) {
-    //Success message.
-      $_SESSION['message'] = 'Receta agregada exitosamente!';
-      $_SESSION['message_alert'] = "success";
+      $sql = "DELETE FROM reholder;";
+      $conn -> query($sql);   
 
-    //The page is redirected to the ingredients.php.
-      header('Location: ../views/add_recipe.php');
+      if ($conn -> query($sql) === TRUE) {
+      //Success message.
+        $_SESSION['message'] = 'Receta agregada exitosamente!';
+        $_SESSION['message_alert'] = "success";
+
+      //The page is redirected to the ingredients.php.
+        header('Location: ../views/add_recipe.php');
+      } else {
+        //Failure message.
+        $_SESSION['message'] = 'Error al agregar receta!';
+        $_SESSION['message_alert'] = "danger";
+                
+      //The page is redirected to the ingredients.php.
+        header('Location: ../views/add_recipe.php');
+      }
     } else {
       //Failure message.
-      $_SESSION['message'] = 'Error al agregar receta!';
-      $_SESSION['message_alert'] = "danger";
-              
-    //The page is redirected to the ingredients.php.
-      header('Location: ../views/add_recipe.php');
+        $_SESSION['message'] = 'Esta receta ya fue agregada!';
+        $_SESSION['message_alert'] = "success";
+                
+      //The page is redirected to the ingredients.php.
+        header('Location: ../views/add_recipe.php');
     }
   }
 }

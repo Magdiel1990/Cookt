@@ -64,34 +64,37 @@ require_once ("../models/models.php");
                 </thead>
                 <tbody>
                 <?php
-                    $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder";
+                $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder;";
 
-                    $result = $conn -> query($sql);
+                $result = $conn -> query($sql);
 
-                    $row = $result -> fetch_assoc();
+                $row = $result -> fetch_assoc();
 
-                    $num_rows = $result -> num_rows;
+                $num_rows = $result -> num_rows;
 
-                    if ($num_rows == 0) {
-                        $html = "";
+                if ($num_rows != 0) {
+                    $html = "";
+                    while($row = $result -> fetch_assoc()){
                         $html .= "<tr>";
-                        $html .= "<td>Agrega los ingredientes...</td>";
-                        $html .= "</tr>";
-                        echo $html;
+                        $html .= "<td>";
+                        $html .= "<a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
+                        $html .= "</a>";
+                        $html .= "<a class='btn btn-danger' href='../actions/delete.php?id=" . $row["re_id"] . "'>";
+                        $html .= "Eliminar"; 
+                        $html .=  "</a>";
+                        $html .= "</td>";                   
+                        $html .= "</tr>";                        
                     }
-                    else {
-                        $html = "";
-
-                        while($row = $result -> fetch_assoc()){
-                            $html .= "<tr>";
-                            $html .= "<td>";
-                            $html .= "<a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
-                            $html .= "</a>";
-                            $html .= "</td>";
-                            $html .= "</tr>";
-                            echo $html;
-                        }                    
-                    }
+                    echo $html;
+                }  else {                          
+                    $html = "";
+                    $html .= "<tr>";
+                    $html .= "<td>";
+                    $html .= "Agrega los ingredientes...";
+                    $html .= "</td>";
+                    $html .= "</tr>";
+                    echo $html;                                   
+                }
                 ?>
                 </tbody>
             </table>
