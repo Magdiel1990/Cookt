@@ -53,7 +53,7 @@ $unit = $row["unit"];
     unset($_SESSION['message_alert'], $_SESSION['message']);
 }
 ?>
-    <h4>Editar ingrediente</h4>     
+    <h3>Editar ingrediente</h3>     
     <div>
         <div class="card card-body">
             <form action="update.php?editid=<?php echo $id ?>" method="POST">

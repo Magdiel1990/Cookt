@@ -64,7 +64,7 @@ require_once ("../models/models.php");
             </thead>
             <tbody>
             <?php
-                $sql = "SELECT re_id, ingredient, quantity, unit, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder";
+                $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder";
 
                 $result = $conn -> query($sql);
 
@@ -72,7 +72,7 @@ require_once ("../models/models.php");
 
                 $num_rows = $result -> num_rows;
 
-                if ($num_rows == 0) {
+                if ($num_rows < 1) {
                     $html = "";
                     $html .= "<tr>";
                     $html .= "<td>Agrega los ingredientes...</td>";
@@ -80,33 +80,55 @@ require_once ("../models/models.php");
                     echo $html;
                 }
                 else {
+                    $html = "";
 
                     while($row = $result -> fetch_assoc()){
-                        echo "<tr>";
-                        echo "<td><a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"] . "</a></td>";
-                        echo "</tr>";
-                    }
-                    
+                        $html = "<tr>";
+                        $html .= "<td>";
+                        $html .= "<a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
+                        $html .= "</a>";
+                        $html .= "</td>";
+                        $html .= "</tr>";
+                        echo $html;
+                    }                    
                 }
             ?>
             </tbody>
             </table>
         </div>
-        <form method="POST" action="">
+        <form method="POST" action="../actions/create.php">
             <div>
                 <label for="recipename">Nombre: </label>
                 <input type="text" id="recipename" name="recipename">             
             </div>
             <div>
+                <label for="category">Categoría: </label>                
+                <select name="category" id="category">
+                    <?php
+                    $sql = "SELECT category FROM categories";
+
+                    $result = $conn -> query($sql);
+
+                    while($row = $result -> fetch_assoc()) {
+                        echo '<option value="' . $row["category"] . '">' . $row["category"] . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+             <div>
+                <label for="cookingtime">Tiempo de cocción: </label>
+                <input type="number" id="cookingtime" name="cookingtime">             
+            </div>
+            <div>
                 <p>Preparación: </p>
                 <textarea name="preparation" id="preparation" cols="30" rows="10"></textarea>
-            </div>
+            </div>           
             <div>
                 <p>Observaciones: </p>
                 <textarea name="observation" id="observation" cols="30" rows="10"></textarea>
             </div>
             <div>
-                <input type="submit" value="Agregar receta">
+                <input type="submit" value="Agregar receta" name="addrecipe">
             </div>
         </form>
     </div>

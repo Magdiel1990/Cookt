@@ -165,6 +165,81 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
 }
 
 
+/************************************************************************************************/
+/***************************************RECIPE ADDITION CODE*************************************/
+/************************************************************************************************/
+
+
+//receive the data
+if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['observation']) || isset($_POST['category']) || isset($_POST['cookingtime'])){
+
+  $recipename = $_POST['recipename'];
+  $preparation = $_POST['preparation'];
+  $observation = $_POST['observation'];
+  $category = $_POST['category'];
+  $cookingtime = $_POST['cookingtime'];
+
+  if ($recipename == "" || $preparation == "") {
+  //Message if the variable is null.
+      $_SESSION['message'] = 'Falta nombre de la receta o la preparación!';
+      $_SESSION['message_alert'] = "danger";
+          
+  //The page is redirected to the add_recipe.php
+      header('Location: ../views/add_recipe.php');
+  } else {
+
+    $sql = "SELECT categoryid FROM categories WHERE category = '$category'";
+
+    $result = $conn -> query($sql);
+
+    $row = $result -> fetch_assoc();
+
+    $categoryid = $row["categoryid"];
+
+    $sql = "INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime)
+    VALUES ('$recipename', $categoryid, '$preparation', '$observation', $cookingtime);";
+
+    $result = $conn -> query($sql);
+
+    $sql = "SELECT * FROM reholder;";
+    
+    $result = $conn -> query($sql);
+
+    $quantity =  $row["quantity"];
+    $unit = $row["unit"];
+    $ingredient = $row["ingredient"];
+
+
+    while($row = $result -> fetch_assoc()) {
+      $sql = "INSERT INTO recipeinfo (recipename, quantity, unit, ingredient) VALUES ('$recipename', $quantity, '$unit', '$ingredient';";
+
+      $result = $conn -> query($sql);
+    }
+
+    $sql = "DELETE FROM reholder;";
+
+    $result = $conn -> query($sql);   
+
+    /*  if ($conn->query($sql) === TRUE) {
+    //Success message.
+          $_SESSION['message'] = 'Ingrediente agregado con éxito!';
+          $_SESSION['message_alert'] = "success";
+              
+    //The page is redirected to the ingredients.php.
+          header('Location: ../views/add_recipe.php');
+
+        } else {
+    //Failure message.
+          $_SESSION['message'] = 'Error al agregar ingrediente!';
+          $_SESSION['message_alert'] = "danger";
+              
+    //The page is redirected to the ingredients.php.
+          header('Location: ../views/add_recipe.php');
+        }*/
+  }
+}
+
+
 
 
 
