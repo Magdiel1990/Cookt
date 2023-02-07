@@ -189,60 +189,44 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
   } else {
 
     $sql = "SELECT categoryid FROM categories WHERE category = '$category'";
-
     $result = $conn -> query($sql);
-
     $row = $result -> fetch_assoc();
-
     $categoryid = $row["categoryid"];
 
     $sql = "INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime)
     VALUES ('$recipename', $categoryid, '$preparation', '$observation', $cookingtime);";
-
+    $conn -> query($sql);
+    $sql = "SELECT * FROM reholder;";    
     $result = $conn -> query($sql);
+    $row = $result -> fetch_assoc();    
 
-    $sql = "SELECT * FROM reholder;";
-    
-    $result = $conn -> query($sql);
+    while($row = $result -> fetch_assoc()){
+    $sql = "INSERT INTO recipeinfo (recipename, quantity, unit, ingredient)
+    VALUES ('$recipename', " . $row["quantity"] . ", '" . $row["unit"] . "', '" . $row["ingredient"] . "');";
 
-    $quantity =  $row["quantity"];
-    $unit = $row["unit"];
-    $ingredient = $row["ingredient"];
-
-
-    while($row = $result -> fetch_assoc()) {
-      $sql = "INSERT INTO recipeinfo (recipename, quantity, unit, ingredient) VALUES ('$recipename', $quantity, '$unit', '$ingredient';";
-
-      $result = $conn -> query($sql);
+    $conn -> query($sql);
     }
 
     $sql = "DELETE FROM reholder;";
+    $conn -> query($sql);   
 
-    $result = $conn -> query($sql);   
-
-    /*  if ($conn->query($sql) === TRUE) {
+    if ($conn -> query($sql) === TRUE) {
     //Success message.
-          $_SESSION['message'] = 'Ingrediente agregado con éxito!';
-          $_SESSION['message_alert'] = "success";
-              
-    //The page is redirected to the ingredients.php.
-          header('Location: ../views/add_recipe.php');
+      $_SESSION['message'] = 'Receta agregada exitosamente!';
+      $_SESSION['message_alert'] = "success";
 
-        } else {
-    //Failure message.
-          $_SESSION['message'] = 'Error al agregar ingrediente!';
-          $_SESSION['message_alert'] = "danger";
+    //The page is redirected to the ingredients.php.
+      header('Location: ../views/add_recipe.php');
+    } else {
+      //Failure message.
+      $_SESSION['message'] = 'Error al agregar receta!';
+      $_SESSION['message_alert'] = "danger";
               
     //The page is redirected to the ingredients.php.
-          header('Location: ../views/add_recipe.php');
-        }*/
+      header('Location: ../views/add_recipe.php');
+    }
   }
 }
-
-
-
-
-
 
 
 ?>

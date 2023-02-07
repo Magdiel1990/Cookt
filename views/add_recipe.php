@@ -57,43 +57,43 @@ require_once ("../models/models.php");
         <!-- Table with ingredients that will conform the recipe-->
         <div>
             <table class="table">
-            <thead>
-                <tr>
-                    <th>Ingredients</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php
-                $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder";
+                <thead>
+                    <tr>
+                        <th>Ingredientes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                    $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder";
 
-                $result = $conn -> query($sql);
+                    $result = $conn -> query($sql);
 
-                $row = $result -> fetch_assoc();
+                    $row = $result -> fetch_assoc();
 
-                $num_rows = $result -> num_rows;
+                    $num_rows = $result -> num_rows;
 
-                if ($num_rows < 1) {
-                    $html = "";
-                    $html .= "<tr>";
-                    $html .= "<td>Agrega los ingredientes...</td>";
-                    $html .= "</tr>";
-                    echo $html;
-                }
-                else {
-                    $html = "";
-
-                    while($row = $result -> fetch_assoc()){
-                        $html = "<tr>";
-                        $html .= "<td>";
-                        $html .= "<a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
-                        $html .= "</a>";
-                        $html .= "</td>";
+                    if ($num_rows == 0) {
+                        $html = "";
+                        $html .= "<tr>";
+                        $html .= "<td>Agrega los ingredientes...</td>";
                         $html .= "</tr>";
                         echo $html;
-                    }                    
-                }
-            ?>
-            </tbody>
+                    }
+                    else {
+                        $html = "";
+
+                        while($row = $result -> fetch_assoc()){
+                            $html .= "<tr>";
+                            $html .= "<td>";
+                            $html .= "<a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
+                            $html .= "</a>";
+                            $html .= "</td>";
+                            $html .= "</tr>";
+                            echo $html;
+                        }                    
+                    }
+                ?>
+                </tbody>
             </table>
         </div>
         <form method="POST" action="../actions/create.php">
