@@ -8,34 +8,34 @@ require_once ("modules/nav.php");
 //Models
 require_once ("models/models.php");
 ?>
-<main>
-    <?php
+
+<main class="container py-4">
+<?php
 //Messages that are shown in the index page
-        if(isset($_SESSION['message'])){
-        buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
+    if(isset($_SESSION['message'])){
+    buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
 
 //Unsetting the messages variables so the message fades after refreshing the page.
-        unset($_SESSION['message_alert'], $_SESSION['message']);
-        }
-    ?>
-
-    <div>
-        <h3>Recetas</h3>
+    unset($_SESSION['message_alert'], $_SESSION['message']);
+    }
+?>
+    <div class="row mt-2 text-center justify-content-center">
+        <h3>RECETAS</h3>
 <!--Form for filtering the database info-->
-        <div>
-            <div>
-                <label for="search">Buscar: </label>
-                <input type="text" id="search" name="search">
+        <div class="col-auto">
+            <div class="input-group mb-3">
+                <label for="search" class="input-group-text">Buscar: </label>
+                <input class="form-control" type="text" id="search" name="search">
             </div>
         </div>
     </div>
-    <div>
+    <div class="mt-2">
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <td>Receta</td>
-                    <td>Categoría</td>
-                    <td>Acciones</td>
+                <tr class="bg-secondary">
+                    <th>Receta</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody id="content">

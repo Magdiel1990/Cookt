@@ -7,6 +7,9 @@ require_once ("../config/db_Connection.php");
 
 //Models.
 require_once ("../models/models.php");
+
+//Navigation panel of the page
+require_once ("../modules/nav.php");
 ?>
 <main>
     <div>

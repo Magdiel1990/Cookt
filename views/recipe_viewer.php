@@ -1,9 +1,12 @@
 <?php
+//Head of the page.
+require_once ("../modules/head.php");
+
 //Including the database connection.
 require_once ("../config/db_Connection.php");
 
-//Head of the page.
-require_once ("../modules/head.php");
+//Navigation panel of the page
+require_once ("../modules/nav.php");
 
 $recipe = isset($_GET["recipe"]) ? $conn -> real_escape_string($_GET["recipe"]) : null;
 
