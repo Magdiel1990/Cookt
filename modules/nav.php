@@ -9,10 +9,10 @@
                 <a class="nav-link" href="index.php">Recetas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./views/random_recipe.php">Elegir por ingredients</a>
+                <a class="nav-link" href="./views/random_recipe.php">Sugerencias</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./views/custom_recipe.php">Sugerencias</a>
+                <a class="nav-link" href="./views/custom_recipe.php">Elegir por ingredientes</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

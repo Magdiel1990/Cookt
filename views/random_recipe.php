@@ -40,31 +40,21 @@ require_once ("../modules/nav.php");
     if(isset($_POST["category"])) {
     $category = $_POST["category"];
 
-    $sql = "SELECT max(recipeid) as 'maxid', min(recipeid) as 'minid' FROM recipe;";
-    $result = $conn -> query($sql);
-    $row = $result -> fetch_assoc();
-
-    $maxid = $row["maxid"];
-    $minid = $row["minid"];
-
-    $id = rand($minid,$maxid);
-
-    $sql = "SELECT recipename FROM recipe WHERE recipeid = $id;";
+    $sql = "SELECT * FROM recipeinfoview WHERE category='$category' ORDER BY RAND() LIMIT 1;"; 
     $result = $conn -> query($sql);
     $row = $result -> fetch_assoc();
 
     $recipename = $row["recipename"];
 
-    $sql = "SELECT * FROM recipeview WHERE recipename = '$recipename';";
-
-    $result = $conn -> query($sql);
-    $row = $result -> fetch_assoc();
-    ?>
+?>
     <div class="jumbotron">
         <h1 class="display-4"> <?php echo $row["recipename"]; ?> </h1>
         <h7> <?php echo "(" . $row["cookingtime"] . " minutos)"; ?> </h7>
         <ul class="lead"> 
-        <?php 
+    <?php 
+        $sql = "SELECT * FROM recipeview WHERE recipename ='$recipename';"; 
+        $result = $conn -> query($sql);
+
         while($row = $result->fetch_assoc()){
             echo "<li>" . $row["indications"]. "</li>";
         }        
