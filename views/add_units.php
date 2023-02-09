@@ -11,8 +11,10 @@ require_once ("../models/models.php");
 //Navigation panel of the page
 require_once ("../modules/nav.php");
 ?>
-<main>
-    <div>
+<link rel="stylesheet" href="../styles/styles.css">
+
+<main class="container p-4">
+    <div class="row mt-2 text-center justify-content-center">
     <?php
 //Messages that are shown in the add_units page
         if(isset($_SESSION['message'])){
@@ -22,18 +24,18 @@ require_once ("../modules/nav.php");
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>
-    <h3>Agregar Unidades</h3>
+    <h3>AGREGAR UNIDADES</h3>
 <!--Form for filtering the database info-->
-        <form method="POST" action="../actions/create.php" autocomplete="off">
-            <div>
-                <label for="add_units">Unidad: </label>
-                <input type="text" id="add_units" name="add_units">
-                <input type="submit" value="Agregar">
+        <form class="mt-3 col-auto" id="randomform" method="POST" action="../actions/create.php" autocomplete="off">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="add_units">Unidad: </label>
+                <input class="form-control" type="text" id="add_units" name="add_units">
+                <input  class="btn btn-primary" type="submit" value="Agregar">
             </div>
         </form>
     </div>
     <div>
-        <table class="table">
+        <table class="table table-sm">
             <thead>
                 <tr>
                     <th>Unidades</th>

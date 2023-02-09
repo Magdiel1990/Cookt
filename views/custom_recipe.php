@@ -11,14 +11,16 @@ require_once ("../models/models.php");
 //Navigation panel of the page
 require_once ("../modules/nav.php");
 ?>
-<main>
-    <div>
-        <h3>Elegir por ingredientes</h3>
+<link rel="stylesheet" href="../styles/styles.css">
+
+<main class="container p-4">
+    <div  class="row mt-2 text-center justify-content-center">
+        <h3>ELEGIR POR INGREDIENTE</h3>
 <!--Form for filtering the database info-->
-        <form method="POST" action="../actions/create.php">
-            <div>
-                <label for="customingredient">Unidad: </label>                
-                <select name="customingredient" id="customingredient">
+        <form class="mt-3 col-auto" id="randomform" method="POST" action="../actions/create.php">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="customingredient">Unidad: </label>                
+                <select class="form-select" name="customingredient" id="customingredient">
                     <?php
                     $sql = "SELECT ingredient FROM ingredients";
 
@@ -29,7 +31,7 @@ require_once ("../modules/nav.php");
                     }
                     ?>
                 </select>
-                <input type="submit" value="Agregar">
+                <input class="btn btn-primary" type="submit" value="Agregar">
             </div>
         </form>
         <div>

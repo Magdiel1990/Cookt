@@ -46,7 +46,7 @@ require_once ("../modules/nav.php");
 
     $recipename = $row["recipename"];
 
-?>
+    ?>
     <div class="jumbotron">
         <h1 class="display-4"> <?php echo $row["recipename"]; ?> </h1>
         <h7> <?php echo "(" . $row["cookingtime"] . " minutos)"; ?> </h7>
@@ -81,8 +81,8 @@ require_once ("../modules/nav.php");
     </div>
 </main>
 <?php
-}
-$conn -> close();   
+$conn -> close();
+}  
 //Footer of the page.
 require_once ("../modules/footer.php");
 ?>

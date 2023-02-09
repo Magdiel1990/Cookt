@@ -11,8 +11,11 @@ require_once ("../models/models.php");
 //Navigation panel of the page
 require_once ("../modules/nav.php");
 ?>
-<main>
-    <div>
+
+<link rel="stylesheet" href="../styles/styles.css">
+
+<main class="container p-4">
+    <div class="row mt-2 text-center justify-content-center">
     <?php
 //Messages that are shown in the add_units page
         if(isset($_SESSION['message'])){
@@ -22,15 +25,16 @@ require_once ("../modules/nav.php");
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>
-        <h3>Agregar Receta</h3>
+        <h3>AGREGAR RECETA</h3>
 <!--Form for filtering the database info-->
-        <form method="POST" action="../actions/create.php">
-            <div>
-                <label for="quantity">Cantidad: </label>                    
-                <input type="number" name="quantity" id="quantity">
-
-                <label for="unit">Unidad: </label>                
-                <select name="unit" id="unit">
+        <form class="mt-3 col-auto" id="randomform" method="POST" action="../actions/create.php">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="quantity">Cantidad: </label>                    
+                <input class="form-control" type="number" name="quantity" id="quantity">
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="unit">Unidad: </label>                
+                <select class="form-select" name="unit" id="unit">
                     <?php
                     $sql = "SELECT unit FROM units";
 
@@ -41,9 +45,10 @@ require_once ("../modules/nav.php");
                     }
                     ?>
                 </select>
-
-                <label for="ingredient">Ingrediente: </label>                
-                <select name="ingredient" id="ingredient">
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="ingredient">Ingrediente: </label>                
+                <select class="form-select" name="ingredient" id="ingredient">
                     <?php
                     $sql = "SELECT ingredient FROM ingredients";
 
@@ -54,12 +59,13 @@ require_once ("../modules/nav.php");
                     }
                     ?>
                 </select>
-                <input type="submit" value="Agregar ingrediente">
             </div>
+                <input class="btn btn-primary" type="submit" value="Agregar ingrediente">
+            
         </form>
         <!-- Table with ingredients that will conform the recipe-->
-        <div>
-            <table class="table">
+        <div class="table table-sm mt-5 col-auto">
+            <table class="table table-sm">
                 <thead>
                     <tr>
                         <th>Ingredientes</th>
@@ -102,14 +108,16 @@ require_once ("../modules/nav.php");
                 </tbody>
             </table>
         </div>
-        <form method="POST" action="../actions/create.php">
-            <div>
-                <label for="recipename">Nombre: </label>
-                <input type="text" id="recipename" name="recipename">             
+        <form class="mt-3 col-auto" id="randomform" method="POST" action="../actions/create.php">
+            
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="recipename">Nombre: </label>
+                <input  class="form-control" type="text" id="recipename" name="recipename">             
             </div>
-            <div>
-                <label for="category">Categoría: </label>                
-                <select name="category" id="category">
+            
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="category">Categoría: </label>                
+                <select class="form-select" name="category" id="category">
                     <?php
                     $sql = "SELECT category FROM categories";
 
@@ -121,20 +129,22 @@ require_once ("../modules/nav.php");
                     ?>
                 </select>
             </div>
-             <div>
-                <label for="cookingtime">Tiempo de cocción: </label>
-                <input type="number" id="cookingtime" name="cookingtime">             
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="cookingtime">Tiempo de cocción: </label>
+                <input class="form-control" type="number" id="cookingtime" name="cookingtime">             
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
+                    <label for="preparation" class="form-label">Preparación: </label>
+                    <textarea class="form-control" name="preparation" id="preparation" cols="30" rows="10"></textarea>
+                </div>           
+                <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
+                    <label for="observation" class="form-label">Observaciones: </label>
+                    <textarea class="form-control" name="observation" id="observation" cols="30" rows="10"></textarea>
+                </div>
             </div>
             <div>
-                <p>Preparación: </p>
-                <textarea name="preparation" id="preparation" cols="30" rows="10"></textarea>
-            </div>           
-            <div>
-                <p>Observaciones: </p>
-                <textarea name="observation" id="observation" cols="30" rows="10"></textarea>
-            </div>
-            <div>
-                <input type="submit" value="Agregar receta" name="addrecipe">
+                <input class="btn btn-primary" type="submit" value="Agregar receta" name="addrecipe">
             </div>
         </form>
     </div>

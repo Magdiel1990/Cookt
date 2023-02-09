@@ -5,6 +5,7 @@
     padding: 0;
 }
 h3 {
+    font-size: 1.5rem;
     color: #444;
     font-weight: bold;
 }
@@ -14,10 +15,15 @@ h3 {
 .btn-outline-danger {
     margin-left: 0.2rem;
 }
+table {
+    background-color:rgb(255, 246, 234);
+    box-shadow: 1px 1px 8px 1px #888;
+
+}
 table th {
     font-weight: bold;
     font-size: 1.4rem;
-    color: rgb(255, 255, 255);
+    color:#444;
 }
 table td a {
     text-decoration:none;
@@ -28,7 +34,12 @@ table td {
     color: rgb(22, 182, 4);
     
 }
-
+select:hover {
+    box-shadow: 1px 1px 5px rgb(240, 144, 41);
+}
+option {
+    color: rgb(240, 144, 41);
+}
 #randomform label, #randomform select, #randomform input {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
