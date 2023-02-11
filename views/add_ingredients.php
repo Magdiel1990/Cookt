@@ -27,8 +27,8 @@ require_once ("../modules/nav.php");
     ?>
     <h3>AGREGAR INGREDIENTES</h3>
 <!--Form for filtering the database info-->
-        <form method="POST" action="../actions/create.php" autocomplete="off" class="mt-3 col-auto" id="randomform">
-            <div class="input-group mb-3">
+        <form method="POST" action="../actions/create.php" autocomplete="off" id="upperinput" class="mt-3 col-auto">
+            <div class="input-group mb-4">
                 <label  class="input-group-text" for="add_ingredient">Ingrediente: </label>
                 <input  class="form-control" type="text" id="add_ingredient" name="add_ingredient">
                 <input class="btn btn-primary" type="submit" value="Agregar">

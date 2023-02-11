@@ -17,7 +17,7 @@ require_once ("../modules/nav.php");
     <div  class="row mt-2 text-center justify-content-center">
         <h3>ELEGIR POR INGREDIENTE</h3>
 <!--Form for filtering the database info-->
-        <form class="mt-3 col-auto" id="randomform" method="POST" action="../actions/create.php">
+        <form class="mt-3 col-auto" id="upperinput" method="POST" action="../actions/create.php">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="customingredient">Unidad: </label>                
                 <select class="form-select" name="customingredient" id="customingredient">
