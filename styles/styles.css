@@ -52,3 +52,11 @@ option {
 #upperinput label, #upperinput label select, #upperinput label input  {
     font-size: 1.2rem;
 }
+.banner {
+    background-color: rgb(216, 237, 255);
+    height: 8vh;
+    color: rgb(255, 64, 64);
+    font-size: 1.8rem;
+    font-weight: bold;
+    font-style: italic;
+}
