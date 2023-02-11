@@ -242,6 +242,48 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
   }
 }
 
+/************************************************************************************************/
+/***************************************INGREDIENTS REPOSITORY CODE******************************/
+/************************************************************************************************/
+
+
+//receive the data
+if(isset($_POST['customingredient'])){
+  $ingredient = $_POST['customingredient'];
+
+  $sql = "SELECT ingredient FROM ingholder WHERE ingredient = '$ingredient';";
+
+  $num_rows = $conn -> query($sql) -> num_rows;
+
+  if($num_rows != 0){
+  //It already exists.
+      $_SESSION['message'] = 'Ya ha sido agregado!';
+      $_SESSION['message_alert'] = "success";
+
+  //The page is redirected to the add_units.php.
+      header('Location: ../views/custom_recipe.php');
+  } else {
+
+    $sql = "INSERT INTO ingholder (ingredient) VALUES ('$ingredient');";
+
+    if ($conn->query($sql) === TRUE) {
+  //Success message.
+        $_SESSION['message'] = 'Ingrediente agregado con éxito!';
+        $_SESSION['message_alert'] = "success";
+            
+  //The page is redirected to the add_units.php.
+        header('Location: ../views/custom_recipe.php');
+
+    } else {
+//Failure message.
+      $_SESSION['message'] = 'Error al agregar ingrediente!';
+      $_SESSION['message_alert'] = "danger";
+          
+//The page is redirected to the add_units.php.
+      header('Location: ../views/custom_recipe.php');
+    }
+  }
+}
 
 ?>
 <?php
