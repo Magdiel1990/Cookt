@@ -13,7 +13,7 @@ require_once ("../config/db_Connection.php");
 
 
 /************************************************************************************************/
-/***************************************INGREDIENTS EDITION CODE********************************/
+/***************************************INGREDIENTS (AGREGAR RECETA) ADDITION CODE********************************/
 /************************************************************************************************/
 
 
@@ -54,66 +54,56 @@ $unit = $row["unit"];
 }
 ?>
     <h3>Editar ingrediente</h3>     
-    <div>
-        <div class="card card-body">
-            <form action="update.php?editid=<?php echo $id ?>" method="POST">
+    <div class="card card-body">
+        <form action="update.php?editid=<?php echo $id ?>" method="POST">
 
-                <div>
-                    <label for="quantity">Cantidad: </label>
-                    <input type="number" name="quantity" value="<?php echo $quantity?>" class="form-control" id="quantity">
-                </div>
+            <div>
+                <label for="quantity">Cantidad: </label>
+                <input type="number" name="quantity" value="<?php echo $quantity?>" class="form-control" id="quantity">
+            </div>
 
-                <div>
-                    <label for="unit">Unidad: </label>
-                    <select class="form-control" name="unit" id="unit">
-                    <?php
-                    $sql = "SELECT unit FROM units";
+            <div>
+                <label for="unit">Unidad: </label>
+                <select class="form-control" name="unit" id="unit">
+                <?php
+                $sql = "SELECT unit FROM units";
 
-                    $result = $conn -> query($sql);
+                $result = $conn -> query($sql);
 
-                    while($row = $result -> fetch_assoc()) {
-                        echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
-                    }
-                    ?>
-                    
-                    </select>
-                </div>
+                while($row = $result -> fetch_assoc()) {
+                    echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
+                }
+                ?>
                 
-                <div>
-                    <label for="ingredient">Ingrediente: </label>
-                    <select class="form-control" name="ingredient" id="ingredient">
-                    <?php
-                    $sql = "SELECT ingredient FROM ingredients";
+                </select>
+            </div>
+            
+            <div>
+                <label for="ingredient">Ingrediente: </label>
+                <select class="form-control" name="ingredient" id="ingredient">
+                <?php
+                $sql = "SELECT ingredient FROM ingredients";
 
-                    $result = $conn -> query($sql);
+                $result = $conn -> query($sql);
 
-                    while($row = $result -> fetch_assoc()) {
-                        echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
-                    }
-                    ?>
-                    </select>
-                </div>                 
-                
-                <div>
-                    <input type="submit" name="edit" value="Actualizar"> 
-                    <a href='../views/add_recipe.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
-                </div>
-            </form>
-        </div>
-    </div>   
+                while($row = $result -> fetch_assoc()) {
+                    echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
+                }
+                ?>
+                </select>
+            </div>                 
+            
+            <div>
+                <input type="submit" name="edit" value="Actualizar"> 
+                <a href='../views/add_recipe.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
+            </div>
+        </form>
+    </div>      
 </main>
 <?php
     }
 }
-?>
 
-
-
-
-
-
-
-<?php
 //Footer of the page.
 require_once ("../modules/footer.php");
 ?>

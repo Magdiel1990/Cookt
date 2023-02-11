@@ -53,9 +53,9 @@ option {
     font-size: 1.2rem;
 }
 .banner {
-    background-color: rgb(216, 237, 255);
+    background-color: rgb(240, 247, 253);
     height: 8vh;
-    color: rgb(255, 64, 64);
+    color: rgb(253, 38, 38);
     font-size: 1.8rem;
     font-weight: bold;
     font-style: italic;

@@ -53,7 +53,6 @@ require_once ("../modules/nav.php");
                         $html = "<tr>";
                         $html .= "<td>" . $row['ingredient'] . "</td>";
                         $html .= "<td>";
-                        $html .= "<a href='../actions/edit.php?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
                         $html .= "<a href='../actions/delete.php?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                         $html .= "</td>";
                         $html .= "</tr>";
