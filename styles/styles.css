@@ -49,7 +49,7 @@ option {
 #form label, #form select, #form input {
     font-size: 1.2rem;
 }
-#upperinput label, #upperinput label select, #upperinput label input  {
+#upperinput label, #upperinput label select, #upperinput label input, #upperinput select option  {
     font-size: 1.2rem;
 }
 .banner {
@@ -59,4 +59,10 @@ option {
     font-size: 1.8rem;
     font-weight: bold;
     font-style: italic;
+}
+.suggestionpannel {
+    background-color: rgb(255, 247, 220);
+    box-shadow: 1px 1px 2px #888;
+    width: 11.5rem;
+    padding: 1rem;
 }

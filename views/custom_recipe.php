@@ -71,11 +71,20 @@ require_once ("../modules/nav.php");
         ?>
         </div>
         <div>
-            <form action="" method="POST">
-
-                <div class="form-check form-switch m-2">
-                    <input class="form-check-input" type="checkbox" id="match" name="match" value="yes" checked>
-                    <label class="form-check-label" for="match">Correspondencia total</label>
+            <form action="recipe_suggestions.php" method="POST">
+                <div class="suggestionpannel">
+                    <b>Correspondencia total</b>
+                    <div class="form-check m-2 form-check-inline">
+                        <input class="form-check-input" type="radio" id="yes" name="match" value="Sí">
+                        <label class="form-check-label" for="yes">Sí</label><br>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="no" name="match" value="No" checked>
+                        <label class="form-check-label" for="no">No</label><br>
+                    </div>
+                </div>
+                <div class="m-2">
+                    <input class="btn btn-secondary" type="submit" value="Buscar">
                 </div>
             </form>
         </div>        
