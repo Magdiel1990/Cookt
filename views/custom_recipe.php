@@ -57,7 +57,7 @@ require_once ("../modules/nav.php");
         $result = $conn -> query($sql);
         
         if($result -> num_rows == 0){
-            echo "<h3>Agregue los ingredientes para conseguir recetas...</h3>";
+            die ("<h3>Agregue los ingredientes para conseguir recetas...</h3>");
 
         } else {
             $html = "<ol>";

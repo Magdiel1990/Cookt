@@ -47,16 +47,24 @@ require_once ("../modules/nav.php");
                     $sql = "SELECT unit FROM units";
 
                     $result = $conn -> query($sql);
-
-                    while($row = $result -> fetch_assoc()){
+                    if($result -> num_rows > 0){
+                        while($row = $result -> fetch_assoc()){
+                            $html = "<tr>";
+                            $html .= "<td>" . $row['unit'] . "</td>";
+                            $html .= "<td>";
+                            $html .= "<a href='../actions/delete.php?unitname=" . $row['unit'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                            $html .= "</td>";
+                            $html .= "</tr>";
+                            echo $html;
+                        }
+                    } else {
                         $html = "<tr>";
-                        $html .= "<td>" . $row['unit'] . "</td>";
-                        $html .= "<td>";
-                        $html .= "<a href='../actions/delete.php?unitname=" . $row['unit'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                        $html .= "<td colspan='2'>";
+                        $html .= "Agrega las unidades...";
                         $html .= "</td>";
                         $html .= "</tr>";
-                        echo $html;
-                    }                   
+                        echo $html;      
+                    }                  
                 ?>                
             </tbody>
         </table>

@@ -189,6 +189,40 @@ $total = $total + $row['total'];
     }
 }
 
+/************************************************************************************************/
+/***************************************ELEGIR POR INGREDIENTE***********************************/
+/************************************************************************************************/
+
+if(isset($_GET['custom'])){
+    
+//Getting the name.
+$customName = $_GET['custom'];
+
+$sql = "DELETE FROM ingholder WHERE ingredient = '$customName';";
+
+$result = $conn -> query($sql);
+
+//If there's no record with that name, a message is sent.
+
+    if($result !== true){
+//Creation of the message of error deleting the receta.
+        $_SESSION['message'] = 'Error al eliminar el ingrediente!';
+        $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the add_units.php
+        header('Location: ../views/custom_recipe.php');
+    } else {
+//Creation of the message of success deleting the receta.
+        $_SESSION['message'] = 'Ingrediente eliminado!';
+        $_SESSION['message_alert'] = "success";
+
+//After the receta has been deleted, the page is redirected to the add_units.php.
+        header('Location: ../views/custom_recipe.php');
+    }
+} 
+
+
+
 //Exiting the connection to the database.
 $conn -> close(); 
 

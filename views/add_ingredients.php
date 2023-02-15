@@ -36,6 +36,13 @@ require_once ("../modules/nav.php");
         </form>
     </div>
     <div>
+         <?php
+            $sql = "SELECT ingredient FROM ingredients";
+
+            $result = $conn -> query($sql);
+
+            if($result -> num_rows > 0){
+        ?>
         <table class="table table-sm">
             <thead>
                 <tr>
@@ -43,24 +50,26 @@ require_once ("../modules/nav.php");
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>                
-                <?php
-                    $sql = "SELECT ingredient FROM ingredients";
-
-                    $result = $conn -> query($sql);
-
-                    while($row = $result -> fetch_assoc()){
-                        $html = "<tr>";
-                        $html .= "<td>" . $row['ingredient'] . "</td>";
-                        $html .= "<td>";
-                        $html .= "<a href='../actions/delete.php?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
-                        $html .= "</td>";
-                        $html .= "</tr>";
-                        echo $html;
-                    }                   
-                ?>                
-            </tbody>
-        </table>
+            <tbody>  
+            <?php              
+                while($row = $result -> fetch_assoc()){
+                    $html = "<tr>";
+                    $html .= "<td>" . $row['ingredient'] . "</td>";
+                    $html .= "<td>";
+                    $html .= "<a href='../actions/delete.php?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                    $html .= "</td>";
+                    $html .= "</tr>";
+                }
+                $html .= "</tbody>";
+                $html .= "</table>";
+                echo $html;
+            } else {
+                $html = "<h3>";
+                $html .= "Agregue los ingredientes...";
+                $html .= "</h3>";
+                echo $html;
+            }    
+            ?>
     </div>
 </main>
 <?php

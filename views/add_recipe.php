@@ -64,53 +64,45 @@ require_once ("../modules/nav.php");
             </div>            
             <input class="btn btn-primary" type="submit" value="Agregar ingrediente">
         </form>
-        <!-- Table with ingredients that will conform the recipe-->
-        <div class="table table-sm mt-5 col-auto">
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th>Ingredientes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-                $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder;";
+        <!-- List with ingredients that will conform the recipe-->
+        <div class="mt-5">
+            <h3>Ingredientes</h3>
+            <?php
+            $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder;";
 
-                $result = $conn -> query($sql);
+            $result = $conn -> query($sql);
 
-                $row = $result -> fetch_assoc();
+            $row = $result -> fetch_assoc();
 
-                $num_rows = $result -> num_rows;
+            $num_rows = $result -> num_rows;
 
-                if ($num_rows != 0) {
-                    $html = "";
-                    while($row = $result -> fetch_assoc()){
-                        $html .= "<tr>";
-                        $html .= "<td>";
-                        $html .= "<a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
-                        $html .= "</a>";
-                        $html .= "<a class='btn btn-danger' href='../actions/delete.php?id=" . $row["re_id"] . "'>";
-                        $html .= "Eliminar"; 
-                        $html .=  "</a>";
-                        $html .= "</td>";                   
-                        $html .= "</tr>";                        
-                    }
-                    echo $html;
-                }  else {                          
-                    $html = "";
-                    $html .= "<tr>";
-                    $html .= "<td>";
-                    $html .= "Agrega los ingredientes...";
-                    $html .= "</td>";
-                    $html .= "</tr>";
-                    echo $html;                                   
+            $html = "";
+
+            if ($num_rows != 0) {                
+                while($row = $result -> fetch_assoc()){
+                    $html .= "<ol>";
+                    $html .= "<li>";
+                    $html .= "<a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
+                    $html .= "Editar"; 
+                    $html .= "</a>";
+                    $html .= "<a class='btn btn-danger' href='../actions/delete.php?id=" . $row["re_id"] . "'>";
+                    $html .= "Eliminar"; 
+                    $html .=  "</a>";
+                    $html .= "</li>";
+                    $html .= "</ol>";              
                 }
-                ?>
-                </tbody>
-            </table>
+                echo $html;
+            }  else {                          
+                $html .= "<p>";
+                $html .= "Agrega los ingredientes...";
+                $html .= "</p>";
+                echo $html;                                   
+            }
+            ?>
+          
         </div>
         <form class="mt-3 col-auto" id="form" method="POST" action="../actions/create.php">
-            <div class="d-sm-flex">
+            <div>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="recipename">Nombre: </label>
                     <input  class="form-control" type="text" id="recipename" name="recipename">             
