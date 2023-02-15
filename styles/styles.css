@@ -75,5 +75,8 @@ li a {
 .bg-form {
     background-color:rgb(255, 249, 241);
     box-shadow: 1px 1px 8px 1px #888;
+}
 
+.jumbotron li{
+    font-size: 1.6rem;
 }

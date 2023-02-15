@@ -47,35 +47,41 @@ require_once ("../modules/nav.php");
     $recipename = $row["recipename"];
 
     ?>
-    <div class="jumbotron">
-        <h1 class="display-4"> <?php echo $row["recipename"]; ?> </h1>
-        <h7> <?php echo "(" . $row["cookingtime"] . " minutos)"; ?> </h7>
-        <ul class="lead"> 
-    <?php 
-        $sql = "SELECT * FROM recipeview WHERE recipename ='$recipename';"; 
-        $result = $conn -> query($sql);
+    <div class="jumbotron row justify-content-center">
+        <div class="bg-form p-3 mt-3 col-sm-8 col-md-8">
+            <div class="text-center">
+                <h1 class="display-4 text-info"> <?php echo $row["recipename"]; ?> </h1>
+                <h5 class="text-warning"> <?php echo "(" . $row["cookingtime"] . " minutos)"; ?> </h5>
+            </div>
+            <ul class="lead"> 
+            <?php 
+            $sql = "SELECT * FROM recipeview WHERE recipename ='$recipename';"; 
+            $result = $conn -> query($sql);
 
-        while($row = $result->fetch_assoc()){
-            echo "<li>" . $row["indications"]. "</li>";
-        }        
-        ?>   
-        </ul>
-        <hr class="my-4">
-        <div class="lead">
-            <div>
+            while($row = $result->fetch_assoc()){
+                echo "<li class='text-success'>" . $row["indications"]. "</li>";
+            }        
+            ?>   
+            </ul>
+            <hr class="my-4">
+        </div>
+        <div class="lead text-center">
+            <div class="mt-3">
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Preparación
                 </a>
-                <a href="../index.php">Regresar</a>
+                <a class="btn btn-secondary" href="../index.php">Regresar</a>
             </div>
+        </div>
+        <div class="col-sm-8 col-md-8">
             <?php
             $sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipename';";
 
             $result = $conn -> query($sql);
             $row = $result->fetch_assoc();
             ?>
-            <div class="collapse" id="collapseExample">
-                <div class="card card-body"> <?php echo $row["preparation"]; ?> </div>
+            <div class="collapse mt-3 bg-form" id="collapseExample">
+                <h5 class="card card-body text-danger"> <?php echo $row["preparation"]; ?> </h5>
             </div>     
         </div>
     </div>
