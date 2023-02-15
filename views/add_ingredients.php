@@ -59,14 +59,16 @@ require_once ("../modules/nav.php");
                     $html .= "<a href='../actions/delete.php?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                     $html .= "</td>";
                     $html .= "</tr>";
+                    echo $html;
                 }
-                $html .= "</tbody>";
-                $html .= "</table>";
-                echo $html;
+            ?>
+            </tbody>
+        </table>
+            <?php
             } else {
-                $html = "<h3>";
+                $html = "<p>";
                 $html .= "Agregue los ingredientes...";
-                $html .= "</h3>";
+                $html .= "</p>";
                 echo $html;
             }    
             ?>

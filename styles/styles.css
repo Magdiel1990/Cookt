@@ -66,4 +66,14 @@ option {
     width: 11.5rem;
     padding: 1rem;
 }
+li a {
+    text-decoration: none;
+    font-size: 1.3rem;
+    color: rgb(96, 96, 231);
+    margin: 0.5rem;
+}
+.bg-form {
+    background-color:rgb(255, 249, 241);
+    box-shadow: 1px 1px 8px 1px #888;
 
+}

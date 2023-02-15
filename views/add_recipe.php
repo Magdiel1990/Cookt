@@ -15,82 +15,83 @@ require_once ("../modules/nav.php");
 <link rel="stylesheet" href="../styles/styles.css">
 
 <main class="container p-4">
-    <div class="row mt-2 text-center justify-content-center">
-    <?php
-//Messages that are shown in the add_units page
-        if(isset($_SESSION['message'])){
-        buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
+    <div class="row mt-2 justify-content-center">
+        <div class="bg-form p-3 mb-4">
+        <?php
+        //Messages that are shown in the add_units page
+            if(isset($_SESSION['message'])){
+            buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
 
-//Unsetting the messages variables so the message fades after refreshing the page.
-        unset($_SESSION['message_alert'], $_SESSION['message']);
-        }
-    ?>
-        <h3>AGREGAR RECETA</h3>
-<!--Form for filtering the database info-->
-        <form class="mt-3 col-auto" id="upperinput" method="POST" action="../actions/create.php">
-            <div class="d-sm-flex justify-content-around">
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="quantity">Cantidad: </label>                    
-                    <input class="form-control" type="number" name="quantity" id="quantity">
-                </div>
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="unit">Unidad: </label>                
-                    <select class="form-select" name="unit" id="unit">
-                        <?php
-                        $sql = "SELECT unit FROM units";
+        //Unsetting the messages variables so the message fades after refreshing the page.
+            unset($_SESSION['message_alert'], $_SESSION['message']);
+            }
+        ?>
+            <h3 class="text-center">AGREGAR RECETA</h3>
+        <!--Form for filtering the database info-->
+            <form class="mt-4 mb-4 col-auto text-center" id="upperinput" method="POST" action="../actions/create.php">
+                <div class="d-sm-flex justify-content-around">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="quantity">Cantidad: </label>                    
+                        <input class="form-control" type="number" name="quantity" id="quantity">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="unit">Unidad: </label>                
+                        <select class="form-select" name="unit" id="unit">
+                            <?php
+                            $sql = "SELECT unit FROM units";
 
-                        $result = $conn -> query($sql);
+                            $result = $conn -> query($sql);
 
-                        while($row = $result -> fetch_assoc()) {
-                            echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="ingredient">Ingrediente: </label>                
-                    <select class="form-select" name="ingredient" id="ingredient">
-                        <?php
-                        $sql = "SELECT ingredient FROM ingredients";
+                            while($row = $result -> fetch_assoc()) {
+                                echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="ingredient">Ingrediente: </label>                
+                        <select class="form-select" name="ingredient" id="ingredient">
+                            <?php
+                            $sql = "SELECT ingredient FROM ingredients";
 
-                        $result = $conn -> query($sql);
+                            $result = $conn -> query($sql);
 
-                        while($row = $result -> fetch_assoc()) {
-                            echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>            
-            <input class="btn btn-primary" type="submit" value="Agregar ingrediente">
-        </form>
+                            while($row = $result -> fetch_assoc()) {
+                                echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>            
+                <input class="btn btn-primary" type="submit" value="Agregar ingrediente">
+            </form>
+        </div>
         <!-- List with ingredients that will conform the recipe-->
-        <div class="mt-5">
-            <h3>Ingredientes</h3>
+        <div class="mt-4 col-sm-8 col-md-8 col-lg-5">
+            <h3 class="text-center">Ingredientes</h3>
             <?php
             $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder;";
 
             $result = $conn -> query($sql);
 
-            $row = $result -> fetch_assoc();
-
             $num_rows = $result -> num_rows;
 
             $html = "";
 
-            if ($num_rows != 0) {                
-                while($row = $result -> fetch_assoc()){
-                    $html .= "<ol>";
+            if ($num_rows != 0) {
+                $html .= "<ol>";            
+                while($row = $result -> fetch_assoc()){                    
                     $html .= "<li>";
                     $html .= "<a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
-                    $html .= "Editar"; 
                     $html .= "</a>";
                     $html .= "<a class='btn btn-danger' href='../actions/delete.php?id=" . $row["re_id"] . "'>";
                     $html .= "Eliminar"; 
                     $html .=  "</a>";
                     $html .= "</li>";
-                    $html .= "</ol>";              
+                                 
                 }
+                $html .= "</ol>"; 
+
                 echo $html;
             }  else {                          
                 $html .= "<p>";
@@ -101,7 +102,7 @@ require_once ("../modules/nav.php");
             ?>
           
         </div>
-        <form class="mt-3 col-auto" id="form" method="POST" action="../actions/create.php">
+        <form class="mt-4 col-auto text-center" id="form" method="POST" action="../actions/create.php">
             <div>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="recipename">Nombre: </label>
