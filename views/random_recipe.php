@@ -15,7 +15,7 @@ require_once ("../modules/nav.php");
 <main class="container p-4">
     <div class="row mt-2 text-center justify-content-center">
         <h3>SUGERENCIAS</h3>
-        <form action="" method="POST" class="mt-3 col-auto" id="upperinput">
+        <form action="" method="POST" class="mt-3 col-auto">
             <div class="input-group mb-3">
                 <label for="category" class="input-group-text">Categoría: </label>
                 

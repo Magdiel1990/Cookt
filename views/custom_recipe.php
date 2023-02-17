@@ -28,7 +28,7 @@ require_once ("../modules/nav.php");
     <div  class="row mt-2 text-center justify-content-center">
         <h3>ELEGIR POR INGREDIENTE</h3>
 <!--Form for filtering the database info-->
-        <form class="m-3 col-auto" id="upperinput" method="POST" action="../actions/create.php">
+        <form class="m-3 col-auto" method="POST" action="../actions/create.php">
 
            <div class="input-group">
                 <label class="input-group-text" for="customingredient">Ingredientes: </label>                

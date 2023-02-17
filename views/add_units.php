@@ -26,7 +26,7 @@ require_once ("../modules/nav.php");
     ?>
     <h3>AGREGAR UNIDADES</h3>
 <!--Form for filtering the database info-->
-        <form class="mt-3 col-auto" id="upperinput" method="POST" action="../actions/create.php" autocomplete="off">
+        <form class="mt-3 col-auto" method="POST" action="../actions/create.php" autocomplete="off">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="add_units">Unidad: </label>
                 <input class="form-control" type="text" id="add_units" name="add_units">

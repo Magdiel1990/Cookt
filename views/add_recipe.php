@@ -28,7 +28,7 @@ require_once ("../modules/nav.php");
         ?>
             <h3 class="text-center">AGREGAR RECETA</h3>
         <!--Form for filtering the database info-->
-            <form class="mt-4 mb-4 col-auto text-center" id="upperinput" method="POST" action="../actions/create.php">
+            <form class="mt-4 mb-4 col-auto text-center" method="POST" action="../actions/create.php">
                 <div class="d-sm-flex justify-content-around">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="quantity">Cantidad: </label>                    

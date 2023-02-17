@@ -126,10 +126,6 @@ $preparation= $row["preparation"];
 $observation = $row["observation"];
 $category = $row["category"];
 
-$sql = "SELECT indications FROM recipeview WHERE recipename = '$recipeName';";
-
-$result = $conn -> query($sql);
-$row = $result -> fetch_assoc();
 ?>
 <main class="container p-4">
 <?php
@@ -190,7 +186,66 @@ $row = $result -> fetch_assoc();
                     <a href='../index.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
                 </div>
             </form>
-        </div> 
+        </div>
+         
+        <div class="mt-3 bg-form card card-body col-auto ">
+            <h3 class="text-center">Editar Ingredientes</h3>
+            <div class="mt-2">
+            <?php
+            $sql = "SELECT indications FROM recipeview WHERE recipename = '$recipeName';";
+
+            $result = $conn -> query($sql);
+            
+            $html = "<ul>";
+            while($row = $result -> fetch_assoc()){
+                $html .= "<li>". $row['indications'];
+                $html .= "<a class='btn btn-danger' href='delete.php?indication=" . $row['indications'] . "'>Eliminar</a>";
+                $html .= "</li>";
+            }
+            $html .= "</ul>";
+            echo $html;
+            ?>
+            </div>
+            <div class="mb-4 mt-2 text-center m-auto">
+                <form method="POST" action="update.php">
+                    <div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="quantity">Cantidad: </label>                    
+                            <input class="form-control" type="number" name="quantity" id="quantity">
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="unit">Unidad: </label>                
+                            <select class="form-select" name="unit" id="unit">
+                                <?php
+                                $sql = "SELECT unit FROM units";
+
+                                $result = $conn -> query($sql);
+
+                                while($row = $result -> fetch_assoc()) {
+                                    echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="ingredient">Ingrediente: </label>                
+                            <select class="form-select" name="ingredient" id="ingredient">
+                                <?php
+                                $sql = "SELECT ingredient FROM ingredients";
+
+                                $result = $conn -> query($sql);
+
+                                while($row = $result -> fetch_assoc()) {
+                                    echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>            
+                    <input class="btn btn-primary" type="submit" value="Agregar ingrediente">
+                </form>
+            </div>
+       </div>                  
     </div>     
 </main>
 
