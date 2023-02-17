@@ -25,7 +25,7 @@ table th {
     font-size: 1.4rem;
     color:#444;
 }
-table td a {
+table td a, p {
     text-decoration:none;
     color: rgb(22, 182, 4);
 }
@@ -46,12 +46,10 @@ option {
     box-shadow: 1px 1px 8px 1px #888;
     padding: 1.5rem;
 }
-#form label, #form select, #form input {
+label, select, input, option {
     font-size: 1.2rem;
 }
-#upperinput label, #upperinput label select, #upperinput label input, #upperinput select option  {
-    font-size: 1.2rem;
-}
+
 .banner {
     background-color: rgb(240, 247, 253);
     height: 8vh;
@@ -60,11 +58,10 @@ option {
     font-weight: bold;
     font-style: italic;
 }
-.suggestionpannel {
+.suggestionpannel,.bg-form  {
     background-color: rgb(255, 250, 234);
     box-shadow: 1px 1px 2px #888;
-    width: 11.5rem;
-    padding: 1rem;
+   
 }
 li a {
     text-decoration: none;
@@ -72,9 +69,9 @@ li a {
     color: rgb(96, 96, 231);
     margin: 0.5rem;
 }
-.bg-form {
-    background-color:rgb(255, 249, 241);
-    box-shadow: 1px 1px 8px 1px #888;
+.suggestionpannel {
+    width: 11.5rem;
+    padding: 1rem;
 }
 
 .jumbotron li{
