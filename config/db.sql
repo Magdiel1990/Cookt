@@ -53,9 +53,11 @@ CREATE TABLE `ingholder` (
   `username` varchar(30) DEFAULT NULL,
   `ingredient` varchar(50) NOT NULL,
   PRIMARY KEY (`ingid`),
+  KEY `fk_ingredient_ingholder` (`ingredient`),
   KEY `fk_user_ingholder` (`username`),
-  CONSTRAINT `fk_user_ingholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_ingredient_ingholder` FOREIGN KEY (`ingredient`) REFERENCES `ingredients` (`ingredient`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_user_ingholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,6 +66,7 @@ CREATE TABLE `ingholder` (
 
 LOCK TABLES `ingholder` WRITE;
 /*!40000 ALTER TABLE `ingholder` DISABLE KEYS */;
+INSERT INTO `ingholder` VALUES (9,NULL,'harina');
 /*!40000 ALTER TABLE `ingholder` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +91,7 @@ CREATE TABLE `ingredients` (
 
 LOCK TABLES `ingredients` WRITE;
 /*!40000 ALTER TABLE `ingredients` DISABLE KEYS */;
-INSERT INTO `ingredients` VALUES (26,'azúcar'),(25,'harina'),(27,'huevos'),(28,'mantequilla'),(30,'sal'),(29,'vainilla');
+INSERT INTO `ingredients` VALUES (26,'azúcar'),(25,'harina'),(27,'huevos'),(28,'mantequilla'),(30,'sal');
 /*!40000 ALTER TABLE `ingredients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +123,7 @@ CREATE TABLE `recipe` (
 
 LOCK TABLES `recipe` WRITE;
 /*!40000 ALTER TABLE `recipe` DISABLE KEYS */;
-INSERT INTO `recipe` VALUES (19,'Bizcocho de avena',1,'ffsffsfgsgfsgf','','2023-02-15 01:27:13',50),(20,'Flan de fresa',2,'hthrthr\r\nhjghjgh','','2023-02-15 21:17:17',20),(21,'Sopa de pollo',3,'jhhjhgjghjghjgjgh','','2023-02-15 21:18:39',20),(22,'Bizcocho de chocolate',1,'fgsgdfgdfgdfgdfgdfgfdgfdg\r\nghghgfhgfh','','2023-02-15 21:20:21',50);
+INSERT INTO `recipe` VALUES (21,'Sopa de pato',2,'                            Esta receta es buena                                                                                         ','Es buena                                                                                   \r\n                         \r\n                         \r\n                         \r\n                        ','2023-02-15 21:18:39',30),(22,'Bizcocho de chocolate',1,'fgsgdfgdfgdfgdfgdfgfdgfdg\r\nghghgfhgfh','','2023-02-15 21:20:21',50);
 /*!40000 ALTER TABLE `recipe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,10 +142,12 @@ CREATE TABLE `recipeinfo` (
   `ingredient` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_recipeinfo_recipe` (`recipename`),
+  KEY `fk_ingredients_recipeinfo` (`ingredient`),
   KEY `fk_recipeinfo_units` (`unit`),
-  CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipename`) REFERENCES `recipe` (`recipename`),
-  CONSTRAINT `fk_recipeinfo_units` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_ingredients_recipeinfo` FOREIGN KEY (`ingredient`) REFERENCES `ingredients` (`ingredient`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipename`) REFERENCES `recipe` (`recipename`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_recipeinfo_units` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,7 +156,7 @@ CREATE TABLE `recipeinfo` (
 
 LOCK TABLES `recipeinfo` WRITE;
 /*!40000 ALTER TABLE `recipeinfo` DISABLE KEYS */;
-INSERT INTO `recipeinfo` VALUES (13,'Bizcocho de avena',6.00,'gramos','azúcar'),(14,'Bizcocho de avena',4.00,'unidades','huevos'),(15,'Bizcocho de avena',7.00,'gramos','harina'),(16,'Bizcocho de avena',7.00,'gramos','mantequilla'),(17,'Flan de fresa',6.00,'gramos','mantequilla'),(18,'Flan de fresa',10.00,'cucharaditas','sal'),(19,'Flan de fresa',5.00,'unidades','huevos'),(20,'Sopa de pollo',6.00,'unidades','huevos'),(21,'Sopa de pollo',4.00,'gramos','mantequilla'),(22,'Sopa de pollo',7.00,'gramos','harina'),(23,'Bizcocho de chocolate',7.00,'gramos','mantequilla'),(24,'Bizcocho de chocolate',4.00,'unidades','huevos'),(25,'Bizcocho de chocolate',7.00,'cucharaditas','vainilla'),(26,'Bizcocho de chocolate',6.00,'gramos','sal');
+INSERT INTO `recipeinfo` VALUES (20,'Sopa de pato',6.00,'unidades','huevos'),(21,'Sopa de pato',4.00,'gramos','mantequilla'),(22,'Sopa de pato',7.00,'gramos','harina'),(23,'Bizcocho de chocolate',7.00,'gramos','mantequilla'),(24,'Bizcocho de chocolate',4.00,'unidades','huevos'),(26,'Bizcocho de chocolate',6.00,'gramos','sal');
 /*!40000 ALTER TABLE `recipeinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,10 +213,10 @@ CREATE TABLE `reholder` (
   KEY `fk_units_reholder` (`unit`),
   KEY `fk_ingredients_reholder` (`ingredient`),
   KEY `fk_user_reholder` (`username`),
-  CONSTRAINT `fk_ingredients_reholder` FOREIGN KEY (`ingredient`) REFERENCES `ingredients` (`ingredient`),
-  CONSTRAINT `fk_units_reholder` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`),
-  CONSTRAINT `fk_user_reholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_ingredients_reholder` FOREIGN KEY (`ingredient`) REFERENCES `ingredients` (`ingredient`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_units_reholder` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_user_reholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,6 +225,7 @@ CREATE TABLE `reholder` (
 
 LOCK TABLES `reholder` WRITE;
 /*!40000 ALTER TABLE `reholder` DISABLE KEYS */;
+INSERT INTO `reholder` VALUES (56,'azúcar',6.00,'cucharaditas',NULL);
 /*!40000 ALTER TABLE `reholder` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,4 +326,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-15 19:18:42
+-- Dump completed on 2023-02-18 23:55:33
