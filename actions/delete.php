@@ -15,9 +15,9 @@ require_once ("../config/db_Connection.php");
 if(isset($_GET['recipename'])){
     
 //Getting the name.
-$name = $_GET['recipename'];
+$recipeName = $_GET['recipename'];
 
-$sql = "DELETE FROM recipe WHERE recipename = '$name';";
+$sql = "DELETE FROM recipe WHERE recipename = '$recipeName';";
 $result = $conn -> query($sql);
 
 //If there's no record with that name, a message is sent.

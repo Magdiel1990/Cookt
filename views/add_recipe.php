@@ -16,7 +16,7 @@ require_once ("../modules/nav.php");
 
 <main class="container p-4">
     <div class="row mt-2 justify-content-center">
-        <div class="bg-form p-3 mb-4">
+        <div class="bg-form p-3 mb-4 col-auto">
         <?php
         //Messages that are shown in the add_units page
             if(isset($_SESSION['message'])){
@@ -28,7 +28,7 @@ require_once ("../modules/nav.php");
         ?>
             <h3 class="text-center">AGREGAR RECETA</h3>
         <!--Form for filtering the database info-->
-            <form class="mt-4 mb-4 col-auto text-center" method="POST" action="../actions/create.php">
+            <form class="mt-4 mb-4 text-center" method="POST" action="../actions/create.php">
                 <div class="d-sm-flex justify-content-around">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="quantity">Cantidad: </label>                    
@@ -67,7 +67,7 @@ require_once ("../modules/nav.php");
             </form>
         </div>
         <!-- List with ingredients that will conform the recipe-->
-        <div class="mt-4 col-sm-8 col-md-8 col-lg-5">
+        <div class="m-2 p-2 col-sm-auto col-md-auto col-lg-6">
             <h3 class="text-center">Ingredientes</h3>
             <?php
             $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder;";
@@ -82,7 +82,7 @@ require_once ("../modules/nav.php");
                 $html .= "<ol>";            
                 while($row = $result -> fetch_assoc()){                    
                     $html .= "<li>";
-                    $html .= "<a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
+                    $html .= "<a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"] . ".";
                     $html .= "</a>";
                     $html .= "<a class='btn btn-danger' href='../actions/delete.php?id=" . $row["re_id"] . "'>";
                     $html .= "Eliminar"; 

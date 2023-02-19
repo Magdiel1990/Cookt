@@ -15,7 +15,7 @@ require_once ("../modules/nav.php");
 <link rel="stylesheet" href="../styles/styles.css">
 
 <main class="container p-4">
-    <div class="row mt-2 text-center justify-content-center">
+    <div class="row text-center justify-content-center">
     <?php
 //Messages that are shown in the add_units page
         if(isset($_SESSION['message'])){
@@ -35,7 +35,7 @@ require_once ("../modules/nav.php");
             </div>
         </form>
     </div>
-    <div>
+    <div class="row">
          <?php
             $sql = "SELECT ingredient FROM ingredients";
 
@@ -43,7 +43,7 @@ require_once ("../modules/nav.php");
 
             if($result -> num_rows > 0){
         ?>
-        <table class="table table-sm">
+        <table class="table table-sm p-4 col-auto">
             <thead>
                 <tr>
                     <th>Ingredientes</th>
@@ -54,7 +54,7 @@ require_once ("../modules/nav.php");
             <?php              
                 while($row = $result -> fetch_assoc()){
                     $html = "<tr>";
-                    $html .= "<td>" . $row['ingredient'] . "</td>";
+                    $html .= "<td>" . ucfirst($row['ingredient']) . "</td>";
                     $html .= "<td>";
                     $html .= "<a href='../actions/delete.php?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                     $html .= "</td>";

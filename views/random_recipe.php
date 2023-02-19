@@ -40,6 +40,13 @@ require_once ("../modules/nav.php");
     if(isset($_POST["category"])) {
     $category = $_POST["category"];
 
+    $sql = "SELECT category FROM recipeinfoview WHERE category='$category';"; 
+    $num_rows = $conn -> query($sql) -> num_rows;
+    
+    if($num_rows == 0){
+        die("<p class='text-center'>No hay recetas disponibles para esta categoría!</p>");
+    }
+    else {
     $sql = "SELECT * FROM recipeinfoview WHERE category='$category' ORDER BY RAND() LIMIT 1;"; 
     $result = $conn -> query($sql);
     $row = $result -> fetch_assoc();
@@ -87,8 +94,10 @@ require_once ("../modules/nav.php");
     </div>
 </main>
 <?php
+    }  
+}
+
 $conn -> close();
-}  
 //Footer of the page.
 require_once ("../modules/footer.php");
 ?>

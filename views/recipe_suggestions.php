@@ -11,6 +11,11 @@ require_once ("../models/models.php");
 //Navigation panel of the page
 require_once ("../modules/nav.php");
 ?>
+<script>
+    if (window.history.replaceState) { // verificamos disponibilidad
+    window.history.replaceState(null, null, window.location.href);
+}
+</script>
 
 <link rel="stylesheet" href="../styles/styles.css">
 
@@ -20,80 +25,35 @@ require_once ("../modules/nav.php");
     </div>
     <table>
 <?php
-if(isset($_POST['match'])){
-    $match = $_POST['match'];
+if(isset($_GET['ingredients'])){
 
-    $sql = "SELECT ingredient FROM ingholder;";
+    $ingArray = (unserialize(base64_decode($_GET['ingredients'])));
 
-    $result = $conn -> query($sql);    
+    $ingredients = implode(", ", $ingArray);  
 
-    $ingArray = [];
+    $sql = "SELECT DISTINCT recipename FROM recipeinfo WHERE ingredient IN (". $ingredients .") ORDER BY RAND();";
+    $result = $conn -> query($sql);
 
-    while($row = $result -> fetch_assoc()){
-        $ingArray [] = $row['ingredient']; 
-    }
+    $html = "";
 
-    $exclusiveIngredients = implode(" AND ", $ingArray);
-    $inclusiveIngredients = implode(" OR ", $ingArray);
-
-    if($match == "yes") {
-        $sql = "SELECT DISTINCT * FROM recipeinfo WHERE ingredient IN (". $exclusiveIngredients .");";
-        $result = $conn -> query($sql);
-
-        $html = "";
-
-        if($result -> num_rows > 0){
-            
-            while($row = $result -> fetch_assoc()) {
-                $html .= "<tr>";
-                $html .= "<td ><a href='./views/recipe_viewer.php?recipe=" . $row['recipename'] . "'>" . $row['recipename'] . "</a></td>";
-                $html .= "<td>" .$row['category']. "</td>";
-                $html .= "<td>";
-                $html .= "<a href='actions/edit.php?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
-                $html .= "<a href='actions/delete.php?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
-                $html .= "</td>";
-                $html .= "</tr>";
-            } 
-            echo $html;
-        } else {
-             $html .= "<tr>";
-             $html .= "<td colspan='3'>";
-             $html .= "<p>Ninguna receta disponible!</p>";
-             $html .= "<a href='custom_recipe.php'>Regresar</a>";
-             $html .= "</td>";
-             $html .= "</tr>";
-        }
+    if($result -> num_rows > 0){
+        $html .= "<ol>";
+        while($row = $result -> fetch_assoc()) {            
+            $html .= "<li><a href='../views/recipe_viewer.php?recipe=" . $row['recipename'] . "'>" . $row['recipename'] . "</a></li>";
+        } 
+         $html .= "</ol>";
+         $html .= "<a class='btn btn-secondary' href='custom_recipe.php'>Regresar</a>";
+        echo $html;
     } else {
-        $sql = "SELECT DISTINCT * FROM recipeinfo WHERE ingredient IN (". $inclusiveIngredients .");";
-        $result = $conn -> query($sql);
+            $html .= "<p class='text-center'>Ninguna receta disponible!";
+            $html .= "<a class='btn btn-secondary' href='custom_recipe.php'>Regresar</a>";
+            $html .= "</p>";
 
-        $html = "";
-
-        if($result -> num_rows > 0){
-            
-            while($row = $result -> fetch_assoc()) {
-                $html .= "<tr>";
-                $html .= "<td ><a href='./views/recipe_viewer.php?recipe=" . $row['recipename'] . "'>" . $row['recipename'] . "</a></td>";
-                $html .= "<td>" .$row['category']. "</td>";
-                $html .= "<td>";
-                $html .= "<a href='actions/edit.php?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
-                $html .= "<a href='actions/delete.php?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
-                $html .= "</td>";
-                $html .= "</tr>";
-            } 
             echo $html;
-        } else {
-             $html .= "<tr>";
-             $html .= "<td colspan='3'>";
-             $html .= "<p>Ninguna receta disponible!</p>";
-             $html .= "<a href='custom_recipe.php'>Regresar</a>";
-             $html .= "</td>";
-             $html .= "</tr>";
-        }
-    }    
-}
-?>
+    }
+}      
 
+?>
 </table>    
 </main>
 <?php

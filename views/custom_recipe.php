@@ -39,7 +39,7 @@ require_once ("../modules/nav.php");
                     $result = $conn -> query($sql);
 
                     while($row = $result -> fetch_assoc()) {
-                        echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
+                        echo '<option value="' . $row["ingredient"] . '">' . ucfirst($row["ingredient"]) . '</option>';
            
                     }
                     
@@ -49,21 +49,23 @@ require_once ("../modules/nav.php");
             </div>
         </form>
     </div>
-    <div>
-        <div class="mt-5">
+    <div class="row mt-5">
+        <div class="col-auto">
         <?php
         $sql = "SELECT ingredient FROM ingholder;";
 
         $result = $conn -> query($sql);
         
         if($result -> num_rows == 0){
-            die ("<p>Agregue los ingredientes para conseguir recetas...</p>");
+            die ("<p class='text-center'>Agregue los ingredientes para conseguir recetas...</p>");
 
         } else {
             $html = "<ol>";
             while($row = $result -> fetch_assoc()) {
-                $html .= '<li>' . $row["ingredient"] . '</li>';
-                $html .= "<a href='../actions/delete.php?custom=" . $row['ingredient'] . "' " . "title='Eliminar'>Eliminar</a>";
+                $html .= "<li>" . ucfirst($row["ingredient"]);
+                $html .= "<a class='btn btn-danger' href='../actions/delete.php?custom=" . $row['ingredient'] . "' " . "title='Eliminar'>Eliminar</a>";
+                $html .= "</li>";
+                $ingArray[] = "'".$row["ingredient"]."'";
             }
             $html .= "</ol>";
             echo $html;
@@ -71,19 +73,8 @@ require_once ("../modules/nav.php");
         ?>
         </div>
         <div>
-            <form action="recipe_suggestions.php" method="POST">
-                <div class="suggestionpannel">
-                    <b>Correspondencia total</b>
-                    <div class="form-check m-2 form-check-inline">
-                        <input class="form-check-input" type="radio" id="yes" name="match" value="Sí">
-                        <label class="form-check-label" for="yes">Sí</label><br>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="no" name="match" value="No" checked>
-                        <label class="form-check-label" for="no">No</label><br>
-                    </div>
-                </div>
-                <div class="m-2">
+            <form action="recipe_suggestions.php?ingredients=<?php echo base64_encode(serialize($ingArray));?>" method="POST">       
+                <div class="m-2">                    
                     <input class="btn btn-secondary" type="submit" value="Buscar">
                 </div>
             </form>

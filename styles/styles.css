@@ -16,23 +16,39 @@ h3 {
     margin-left: 0.2rem;
 }
 table {
-    background-color:rgb(255, 246, 234);
     box-shadow: 1px 1px 8px 1px #888;
-
 }
-table th {
+thead {
+    background-color:#444444;
+}
+thead tr {
+    font-weight: bold;
+    font-size: 1.4rem;
+    color:#ffffff;
+}
+tbody {
+    background-color:rgb(255, 246, 234);
+}
+tbody th {
     font-weight: bold;
     font-size: 1.4rem;
     color:#444;
 }
-table td a, p {
+table td a {
     text-decoration:none;
     color: rgb(22, 182, 4);
 }
-table td {
-    font-size: 1.2rem;
-    color: rgb(22, 182, 4);
-    
+table td, p, ul li, ol li, li a {
+    font-size: 1.5rem;
+    color: rgb(22, 182, 4);  
+    text-decoration: none;
+}
+ol li a, b {
+    margin: 0.3rem;
+}
+b {
+    font-size: 1.1rem;
+    color: #555555;
 }
 select:hover {
     box-shadow: 1px 1px 5px rgb(240, 144, 41);
@@ -58,20 +74,10 @@ label, select, input, option {
     font-weight: bold;
     font-style: italic;
 }
-.suggestionpannel,.bg-form  {
+.bg-form  {
     background-color: rgb(255, 250, 234);
     box-shadow: 1px 1px 2px #888;
    
-}
-li a {
-    text-decoration: none;
-    font-size: 1.3rem;
-    color: rgb(96, 96, 231);
-    margin: 0.5rem;
-}
-.suggestionpannel {
-    width: 11.5rem;
-    padding: 1rem;
 }
 
 .jumbotron li{

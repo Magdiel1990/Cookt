@@ -7,7 +7,7 @@ require_once ("../config/db_Connection.php");
 
 
 /************************************************************************************************/
-/***************************************UNITS ADDITION CODE**************************************/
+/***************************************UNITS ADITION CODE**************************************/
 /************************************************************************************************/
 
 
@@ -64,7 +64,7 @@ if(isset($_POST['add_units'])){
 
 
 /************************************************************************************************/
-/***************************************INGREDIENT ADDITION CODE*********************************/
+/***************************************INGREDIENT ADITION CODE*********************************/
 /************************************************************************************************/
 
 
@@ -142,6 +142,11 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
   //The page is redirected to the add_recipe.php
       header('Location: ../views/add_recipe.php');
   } else {
+    $sql = "SELECT re_id FROM reholder WHERE ingredient = '$ingredient' AND quantity = '$quantity' AND unit = '$unit';";
+
+    $num_rows = $conn -> query($sql) -> num_rows;
+
+    if($num_rows == 0) {
 
     $sql = "INSERT INTO reholder (ingredient, quantity, unit) VALUES ('$ingredient', '$quantity', '$unit');";
 
@@ -160,7 +165,15 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
               
     //The page is redirected to the ingredients.php.
           header('Location: ../views/add_recipe.php');
-        }
+      }
+    } else {
+      //Success message.
+          $_SESSION['message'] = 'Ingrediente ya fue agregado!';
+          $_SESSION['message_alert'] = "success";
+              
+      //The page is redirected to the ingredients.php.
+          header('Location: ../views/add_recipe.php');
+    }
   }
 }
 
@@ -210,7 +223,7 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
 
 
 /************************************************************************************************/
-/***************************************RECIPE ADDITION CODE*************************************/
+/***************************************RECIPE ADITION CODE*************************************/
 /************************************************************************************************/
 
 

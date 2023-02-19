@@ -50,7 +50,7 @@ require_once ("../modules/nav.php");
                     if($result -> num_rows > 0){
                         while($row = $result -> fetch_assoc()){
                             $html = "<tr>";
-                            $html .= "<td>" . $row['unit'] . "</td>";
+                            $html .= "<td>" . ucfirst($row['unit']) . "</td>";
                             $html .= "<td>";
                             $html .= "<a href='../actions/delete.php?unitname=" . $row['unit'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                             $html .= "</td>";
