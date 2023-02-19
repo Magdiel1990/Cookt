@@ -17,14 +17,10 @@ if(isset($_GET['recipename'])){
 //Getting the name.
 $name = $_GET['recipename'];
 
-//Deleting the register with the name received.
-$sql = "DELETE FROM recipeinfo WHERE recipename = '$name';";
-$sql .= "DELETE FROM recipe WHERE recipename = '$name';";
-
-$result = $conn -> multi_query($sql);
+$sql = "DELETE FROM recipe WHERE recipename = '$name';";
+$result = $conn -> query($sql);
 
 //If there's no record with that name, a message is sent.
-
     if(!$result){
 //Creation of the message of error deleting the receta.
         $_SESSION['message'] = 'Error al eliminar la receta!';
@@ -54,51 +50,33 @@ if(isset($_GET['unitname'])){
 //Getting the name.
 $unitname = $_GET['unitname'];
 
-$sql = "SELECT count(*) as total FROM recipeinfo WHERE unit = '$unitname';";
-$row = $conn -> query($sql) -> fetch_assoc();
-$total = $row['total']; 
+//Deleting the register with the name received.
+$sql = "DELETE FROM units WHERE unit = '$unitname';";
 
-$sql = "SELECT count(*) as total FROM reholder WHERE unit = '$unitname';";
-$row = $conn -> query($sql) -> fetch_assoc();
-$total = $total + $row['total']; 
+$result = $conn -> query($sql);
 
-    if($total == 0) {
+//If there's no record with that name, a message is sent.
 
-    //Deleting the register with the name received.
-    $sql = "DELETE FROM units WHERE unit = '$unitname';";
+    if($result !== true){
+//Creation of the message of error deleting the receta.
+        $_SESSION['message'] = 'Error al eliminar la unidad!';
+        $_SESSION['message_alert'] = "danger";
 
-    $result = $conn -> query($sql);
-
-    //If there's no record with that name, a message is sent.
-
-        if($result !== true){
-    //Creation of the message of error deleting the receta.
-            $_SESSION['message'] = 'Error al eliminar la unidad!';
-            $_SESSION['message_alert'] = "danger";
-
-    //The page is redirected to the add_units.php
-            header('Location: ../views/add_units.php');
-        } else {
-    //Creation of the message of success deleting the receta.
-            $_SESSION['message'] = 'Unidad eliminada!';
-            $_SESSION['message_alert'] = "success";
-
-    //After the receta has been deleted, the page is redirected to the add_units.php.
-            header('Location: ../views/add_units.php');
-        }
+//The page is redirected to the add_units.php
+        header('Location: ../views/add_units.php');
     } else {
-        //Creation of the message of error deleting the receta.
-            $_SESSION['message'] = 'Esta unidad está siendo usada!';
-            $_SESSION['message_alert'] = "danger";
+//Creation of the message of success deleting the receta.
+        $_SESSION['message'] = 'Unidad eliminada!';
+        $_SESSION['message_alert'] = "success";
 
-    //The page is redirected to the add_units.php
-            header('Location: ../views/add_units.php');
+//After the receta has been deleted, the page is redirected to the add_units.php.
+        header('Location: ../views/add_units.php');
     }
-}
+} 
 
 
 /************************************************************************************************/
-/***************************************RECIPE DELETION CODE*************************************/
+/*****************************INGREDIENT DELETION FROM REHOLDER CODE*****************************/
 /************************************************************************************************/
 
 //Verifying that the id value comes with data.
@@ -143,54 +121,30 @@ if(isset($_GET['ingredientname'])){
 //Getting the name.
 $ingredientName = $_GET['ingredientname'];
 
-$sql = "SELECT count(*) as total FROM recipeinfo WHERE ingredient = '$ingredientName';";
-$row = $conn -> query($sql) -> fetch_assoc();
-$total = $row['total']; 
+$sql = "DELETE FROM ingredients WHERE ingredient = '$ingredientName';";
+$result = $conn -> query($sql);
 
-$sql = "SELECT count(*) as total FROM reholder WHERE ingredient = '$ingredientName';";
-$row = $conn -> query($sql) -> fetch_assoc();
-$total = $total + $row['total']; 
+//If there's no record with that name, a message is sent.
 
-$sql = "SELECT count(*) as total FROM ingholder WHERE ingredient = '$ingredientName';";
-$row = $conn -> query($sql) -> fetch_assoc();
-$total = $total + $row['total']; 
-
-    if($total == 0) {
-
-    $sql = "DELETE FROM ingredients WHERE ingredient = '$ingredientName';";
-
-    $result = $conn -> query($sql);
-
-    //If there's no record with that name, a message is sent.
-
-        if(!$result){
-        //Creation of the message of error deleting the receta.
-            $_SESSION['message'] = 'Error al eliminar ingrediente!';
-            $_SESSION['message_alert'] = "danger";
-
-        //The page is redirected to the add_units.php
-            header('Location: ../views/add_ingredients.php');
-        } else {
-        //Creation of the message of success deleting the receta.
-            $_SESSION['message'] = 'Ingrediente eliminado!';
-            $_SESSION['message_alert'] = "success";
-
-        //After the receta has been deleted, the page is redirected to the add_units.php.
-            header('Location: ../views/add_ingredients.php');
-        }
-    } else {
+    if(!$result){
     //Creation of the message of error deleting the receta.
-        $_SESSION['message'] = 'Este ingrediente está en uso!';
+        $_SESSION['message'] = 'Error al eliminar ingrediente!';
         $_SESSION['message_alert'] = "danger";
 
     //The page is redirected to the add_units.php
         header('Location: ../views/add_ingredients.php');
+    } else {
+    //Creation of the message of success deleting the receta.
+        $_SESSION['message'] = 'Ingrediente eliminado!';
+        $_SESSION['message_alert'] = "success";
 
+    //After the receta has been deleted, the page is redirected to the add_units.php.
+        header('Location: ../views/add_ingredients.php');
     }
-}
+} 
 
 /************************************************************************************************/
-/***************************************ELEGIR POR INGREDIENTE***********************************/
+/***************************************CHOOSE BY INGREDIENT***********************************/
 /************************************************************************************************/
 
 if(isset($_GET['custom'])){
@@ -222,6 +176,45 @@ $result = $conn -> query($sql);
 } 
 
 
+/************************************************************************************************/
+/*****************************INGREDIENT DELETION FROM RECIPE CODE*****************************/
+/************************************************************************************************/
+
+
+//Verifying that the id value comes with data.
+if(isset($_GET['indication']) && isset($_GET['rpename'])){
+    
+//Getting the name.
+$ingredientFullName = $_GET['indication'];
+$recipeName = $_GET['rpename'];
+$ingredientFullNameArray = explode(" ",$ingredientFullName);
+$quantity = $ingredientFullNameArray[0];
+$unit = $ingredientFullNameArray[1];
+$ingredient = $ingredientFullNameArray[3];
+
+//Deleting the register with the name received.
+$sql = "DELETE FROM recipeinfo WHERE recipename = '$recipeName' AND unit = '$unit' AND quantity = '$quantity' AND ingredient = '$ingredient';";
+
+$result = $conn -> query($sql);
+
+//If there's no record with that name, a message is sent.
+
+    if(!$result){
+//Creation of the message of error deleting the receta.
+        $_SESSION['message'] = 'Error al eliminar ingrediente!';
+        $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the add_units.php
+        header("Location: edit.php?recipename=". $recipeName);
+    } else {
+//Creation of the message of success deleting the receta.
+        $_SESSION['message'] = 'Ingrediente eliminado!';
+        $_SESSION['message_alert'] = "success";
+
+//After the receta has been deleted, the page is redirected to the add_units.php.
+        header("Location: edit.php?recipename=". $recipeName);
+    }
+}
 
 //Exiting the connection to the database.
 $conn -> close(); 

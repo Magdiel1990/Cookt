@@ -13,10 +13,30 @@ $recipe = isset($_GET["recipe"]) ? $conn -> real_escape_string($_GET["recipe"]) 
 $sql = "SELECT * FROM recipeview WHERE recipename = '$recipe'";
 
 $result = $conn -> query($sql);
+$num_rows = $result -> num_rows;
 $row = $result->fetch_assoc();
+
 ?>
 <link rel="stylesheet" href="../styles/styles.css">
 <main class="container p-4">
+    <?php
+    if($num_rows == 0) {
+    ?>
+    <div class="text-center">
+        <p>Esta receta no tiene ingredientes 
+            <a class="m-2" href="../actions/edit.php?recipename=<?php echo $recipe ?>">
+                <i class="fa-solid fa-plus">                    
+                </i>
+            </a>
+            <a href="../index.php">
+                <i class="fa-regular fa-backward-fast">                    
+                </i>
+            </a>
+        </p>        
+    </div>
+    <?php
+    } else {   
+    ?>
     <div class="jumbotron row justify-content-center">
         <div class="bg-form p-3 mt-3 col-sm-8 col-md-8">
             <div class="text-center">
@@ -24,7 +44,9 @@ $row = $result->fetch_assoc();
                 <h5 class="text-warning"> (<?php echo $row["cookingtime"]; ?> minutos)</h5>
             </div>
             <ul class="lead"> 
-            <?php 
+            <?php            
+            $result = $conn -> query($sql);
+            
             while($row = $result->fetch_assoc()){
                 echo "<li class='text-success'>" . $row["indications"]. "</li>";
             }        
@@ -52,6 +74,9 @@ $row = $result->fetch_assoc();
             </div>        
         </div>        
     </div>
+    <?php
+    }
+    ?>
 </main>
 <?php
 //Footer of the page.

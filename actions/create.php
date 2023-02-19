@@ -164,6 +164,50 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
   }
 }
 
+/************************************************************************************************/
+/**************************ADD INGREDIENT (TO AN EXISTING RECIPE) CODE***************************/
+/************************************************************************************************/
+
+
+//receive the data
+if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || isset($_GET['rname'])){
+
+  $ingredient = $_POST['ing'];
+  $quantity = $_POST['qty'];
+  $unit = $_POST['units'];
+  $recipeName = $_GET['rname'];
+
+
+  if ($quantity == "" || $quantity <= 0) {
+  //Message if the variable is null.
+      $_SESSION['message'] = 'Elija la cantidad por favor!';
+      $_SESSION['message_alert'] = "danger";
+          
+  //The page is redirected to the add_recipe.php
+      header('Location: edit.php?recipename='. $recipeName);
+  } else {
+
+    $sql = "INSERT INTO recipeinfo (recipename, ingredient, quantity, unit) VALUES ('$recipeName', '$ingredient', '$quantity', '$unit');";
+
+      if ($conn->query($sql) === TRUE) {
+    //Success message.
+          $_SESSION['message'] = 'Ingrediente agregado con éxito!';
+          $_SESSION['message_alert'] = "success";
+              
+    //The page is redirected to the ingredients.php.
+          header('Location: edit.php?recipename='. $recipeName);
+
+        } else {
+    //Failure message.
+          $_SESSION['message'] = 'Error al agregar ingrediente!';
+          $_SESSION['message_alert'] = "danger";
+              
+    //The page is redirected to the ingredients.php.
+          header('Location: edit.php?recipename='. $recipeName);
+        }
+  }
+}
+
 
 /************************************************************************************************/
 /***************************************RECIPE ADDITION CODE*************************************/

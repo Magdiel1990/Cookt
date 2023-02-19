@@ -143,8 +143,8 @@ $category = $row["category"];
             <form class="bg-form card card-body" action="update.php?editname=<?php echo $recipeName ?>" method="POST">
 
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="recipeName">Nombre: </label>
-                    <input type="text" name="recipeName" value="<?php echo $recipeName?>" class="form-control" id="recipeName">
+                    <label class="input-group-text" for="newRecipeName">Nombre: </label>
+                    <input type="text" name="newRecipeName" value="<?php echo $recipeName?>" class="form-control" id="newRecipeName">
                 </div>
 
                 <div class="input-group mb-3 w-50">
@@ -188,7 +188,7 @@ $category = $row["category"];
             </form>
         </div>
          
-        <div class="mt-3 bg-form card card-body col-auto ">
+        <div class="mt-3 bg-form card card-body col-auto">
             <h3 class="text-center">Editar Ingredientes</h3>
             <div class="mt-2">
             <?php
@@ -199,7 +199,7 @@ $category = $row["category"];
             $html = "<ul>";
             while($row = $result -> fetch_assoc()){
                 $html .= "<li>". $row['indications'];
-                $html .= "<a class='btn btn-danger' href='delete.php?indication=" . $row['indications'] . "'>Eliminar</a>";
+                $html .= "<a class='btn btn-danger' href='delete.php?indication=" . $row['indications'] . "&rpename=" . $recipeName . "'>Eliminar</a>";
                 $html .= "</li>";
             }
             $html .= "</ul>";
@@ -207,15 +207,15 @@ $category = $row["category"];
             ?>
             </div>
             <div class="mb-4 mt-2 text-center m-auto">
-                <form method="POST" action="update.php">
+                <form method="POST" action="create.php?rname=<?php echo $recipeName ?>">
                     <div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="quantity">Cantidad: </label>                    
-                            <input class="form-control" type="number" name="quantity" id="quantity">
+                            <input class="form-control" type="number" name="qty" id="quantity">
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="unit">Unidad: </label>                
-                            <select class="form-select" name="unit" id="unit">
+                            <select class="form-select" name="units" id="unit">
                                 <?php
                                 $sql = "SELECT unit FROM units";
 
@@ -229,7 +229,7 @@ $category = $row["category"];
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="ingredient">Ingrediente: </label>                
-                            <select class="form-select" name="ingredient" id="ingredient">
+                            <select class="form-select" name="ing" id="ingredient">
                                 <?php
                                 $sql = "SELECT ingredient FROM ingredients";
 
@@ -250,7 +250,7 @@ $category = $row["category"];
 </main>
 
 <?php
-
+$conn -> close();
     
 }
 //Footer of the page.
