@@ -11,11 +11,6 @@ require_once ("../models/models.php");
 //Navigation panel of the page
 require_once ("../modules/nav.php");
 ?>
-<script>
-    if (window.history.replaceState) { // verificamos disponibilidad
-    window.history.replaceState(null, null, window.location.href);
-}
-</script>
 
 <link rel="stylesheet" href="../styles/styles.css">
 
@@ -29,9 +24,19 @@ if(isset($_GET['ingredients'])){
 
     $ingArray = (unserialize(base64_decode($_GET['ingredients'])));
 
-    $ingredients = implode(", ", $ingArray);  
+    $where = "WHERE (";
 
-    $sql = "SELECT DISTINCT recipename FROM recipeinfo WHERE ingredient IN (". $ingredients .") ORDER BY RAND();";
+    $count = count($ingArray);
+    for($i=0; $i<$count; $i++){
+        $where .= "ingredient = '". $ingArray[$i] . "' AND ";
+    }
+
+    //The final where delection.
+    $where = substr_replace($where, "", -5);
+    $where .= ")";
+
+    $sql = "SELECT DISTINCT recipename FROM recipeinfo " . $where  . " ORDER BY RAND();";
+    echo $sql;
     $result = $conn -> query($sql);
 
     $html = "";

@@ -65,7 +65,7 @@ require_once ("../modules/nav.php");
                 $html .= "<li>" . ucfirst($row["ingredient"]);
                 $html .= "<a class='btn btn-danger' href='../actions/delete.php?custom=" . $row['ingredient'] . "' " . "title='Eliminar'>Eliminar</a>";
                 $html .= "</li>";
-                $ingArray[] = "'".$row["ingredient"]."'";
+                $ingArray[] = $row["ingredient"];
             }
             $html .= "</ol>";
             echo $html;
