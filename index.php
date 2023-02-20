@@ -1,12 +1,12 @@
 <?php
 //Head of the page.
-require_once ("modules/head.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/modules/head.php");
+
+//Models.
+require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/models/models.php");
 
 //Navigation panel of the page
-require_once ("modules/nav.php");
-
-//Models
-require_once ("models/models.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/modules/nav.php");
 ?>
 
 <main class="container py-4">

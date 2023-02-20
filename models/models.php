@@ -15,3 +15,4 @@ function buttonMessage($message, $message_alert) {
         echo $html;             
     }
 }
+?>

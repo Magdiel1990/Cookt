@@ -1,12 +1,12 @@
 <?php
 //Head of the page.
-require_once ("../modules/head.php");
-
-//Models
-require_once ("../models/models.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/modules/head.php");
 
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/config/db_Connection.php");
+
+//Models.
+require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/models/models.php");
 
 
 /************************************************************************************************/

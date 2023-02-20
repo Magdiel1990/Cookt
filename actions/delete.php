@@ -1,9 +1,9 @@
 <?php
 //Head of the page.
-require_once ("../modules/head.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/modules/head.php");
 
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/config/db_Connection.php");
 
 
 /************************************************************************************************/

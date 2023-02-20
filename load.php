@@ -1,6 +1,6 @@
 <?php
     //Including the database connection.
-    require_once ("config/db_Connection.php");
+    require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/config/db_Connection.php");
     
     //Array of the columns to be querried from the database.
     $columns = ["recipeid","recipename", "category"];
