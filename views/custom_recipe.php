@@ -1,15 +1,15 @@
 <?php
 //Head of the page.
-require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/modules/head.php");
+require_once ("../modules/head.php");
 
 //Including the database connection.
-require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/config/db_Connection.php");
+require_once ("../config/db_Connection.php");
 
 //Models.
-require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/models/models.php");
+require_once ("../models/models.php");
 
 //Navigation panel of the page
-require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/modules/nav.php");
+require_once ("../modules/nav.php");
 ?>
 <link rel="stylesheet" href="../styles/styles.css">
 

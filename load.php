@@ -1,6 +1,6 @@
 <?php
     //Including the database connection.
-    require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/config/db_Connection.php");
+    require_once ("config/db_Connection.php");
     
     //Array of the columns to be querried from the database.
     $columns = ["recipeid","recipename", "category"];
@@ -43,8 +43,8 @@
     if($num_rows > 0) {
         while($row = $result->fetch_assoc()){
             $output['data'] .= "<tr>";
-            $output['data'] .= "<td ><a href='./views/recipe_viewer.php?recipe=" . ucfirst($row['recipename']) . "'>" . $row['recipename'] . "</a></td>";
-            $output['data'] .= "<td>" .ucfirst($row['category']). "</td>";
+            $output['data'] .= "<td ><a href='./views/recipe_viewer.php?recipe=" . $row['recipename'] . "'>" . $row['recipename'] . "</a></td>";
+            $output['data'] .= "<td>" .$row['category']. "</td>";
             $output['data'] .= "<td>";
             $output['data'] .= "<a href='actions/edit.php?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
             $output['data'] .= "<a href='actions/delete.php?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";

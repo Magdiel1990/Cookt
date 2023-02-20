@@ -1,12 +1,12 @@
 <?php
 //Head of the page.
-require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/modules/head.php");
+require_once ("../modules/head.php");
 
 //Including the database connection.
-require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/config/db_Connection.php");
+require_once ("../config/db_Connection.php");
 
 //Navigation panel of the page
-require_once ($_SERVER["DOCUMENT_ROOT"]."/cookt/modules/nav.php");
+require_once ("../modules/nav.php");
 
 $recipe = isset($_GET["recipe"]) ? $conn -> real_escape_string($_GET["recipe"]) : null;
 
