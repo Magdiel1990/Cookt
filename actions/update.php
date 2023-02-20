@@ -34,7 +34,7 @@ $ingredient = $_POST["ingredient"];
                 
         if ($conn->query($sql) === TRUE) {
          //Message if the variable is null.
-        $_SESSION['message'] = 'Ingrediente completo editado!';
+        $_SESSION['message'] = 'El ingrediente ha sido editado!';
         $_SESSION['message_alert'] = "success";
             
         //The page is redirected to the add_recipe.php

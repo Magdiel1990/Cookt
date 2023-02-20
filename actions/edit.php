@@ -46,7 +46,7 @@ $unit = $row["unit"];
 
     } else {
 ?>        
-<main>
+<main class="container p-4">
 <?php
 //Messages that are shown in the index page
     if(isset($_SESSION['message'])){
@@ -56,51 +56,53 @@ $unit = $row["unit"];
     unset($_SESSION['message_alert'], $_SESSION['message']);
 }
 ?>
-    <h3>Editar ingrediente</h3>     
-    <div class="card card-body">
-        <form action="update.php?editid=<?php echo $id ?>" method="POST">
+    <div class="row mt-2 text-center justify-content-center">
+        <h3>EDITAR INGREDIENTE</h3>     
+        <div class="mt-3 col-auto">
+            <form class="bg-form card card-body" action="update.php?editid=<?php echo $id ?>" method="POST">
 
-            <div>
-                <label for="quantity">Cantidad: </label>
-                <input type="number" name="quantity" value="<?php echo $quantity?>" class="form-control" id="quantity">
-            </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="quantity">Cantidad: </label>
+                    <input type="number" name="quantity" value="<?php echo $quantity?>" class="form-control" id="quantity">
+                </div>
 
-            <div>
-                <label for="unit">Unidad: </label>
-                <select class="form-control" name="unit" id="unit">
-                <?php
-                $sql = "SELECT unit FROM units";
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="unit">Unidad: </label>
+                    <select class="form-select" name="unit" id="unit">
+                    <?php
+                    $sql = "SELECT unit FROM units";
 
-                $result = $conn -> query($sql);
+                    $result = $conn -> query($sql);
 
-                while($row = $result -> fetch_assoc()) {
-                    echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
-                }
-                ?>
+                    while($row = $result -> fetch_assoc()) {
+                        echo '<option value="' . $row["unit"] . '">' . ucfirst($row["unit"]) . '</option>';
+                    }
+                    ?>
+                    
+                    </select>
+                </div>
                 
-                </select>
-            </div>
-            
-            <div>
-                <label for="ingredient">Ingrediente: </label>
-                <select class="form-control" name="ingredient" id="ingredient">
-                <?php
-                $sql = "SELECT ingredient FROM ingredients";
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="ingredient">Ingrediente: </label>
+                    <select class="form-select" name="ingredient" id="ingredient">
+                    <?php
+                    $sql = "SELECT ingredient FROM ingredients";
 
-                $result = $conn -> query($sql);
+                    $result = $conn -> query($sql);
 
-                while($row = $result -> fetch_assoc()) {
-                    echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
-                }
-                ?>
-                </select>
-            </div>                 
-            
-            <div>
-                <input type="submit" name="edit" value="Actualizar"> 
-                <a href='../views/add_recipe.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
-            </div>
-        </form>
+                    while($row = $result -> fetch_assoc()) {
+                        echo '<option value="' . $row["ingredient"] . '">' . ucfirst($row["ingredient"]) . '</option>';
+                    }
+                    ?>
+                    </select>
+                </div>                 
+                
+                <div class="mb-3">
+                    <input class='btn btn-primary' type="submit" name="edit" value="Actualizar"> 
+                    <a href='../views/add_recipe.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
+                </div>
+            </form>
+        </div>
     </div>      
 </main>
 <?php
@@ -154,9 +156,9 @@ $category = $row["category"];
                         $sql = "SELECT category FROM categories WHERE NOT category='" . $category . "';";
 
                         $result = $conn -> query($sql);
-                        echo '<option value="' . $category . '">' . $category . '</option>';
+                        echo '<option value="' . $category . '">' .  ucfirst($category) . '</option>';
                         while($row = $result -> fetch_assoc()) {
-                            echo '<option value="' . $row["category"]  . '">' . $row["category"] . '</option>';
+                            echo '<option value="' . $row["category"]  . '">' . ucfirst($row["category"]) . '</option>';
                         }
                         ?>
                     </select>
@@ -170,13 +172,13 @@ $category = $row["category"];
                     <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
                         <label  class="form-label" for="preparation">Preparación: </label>
                         <textarea name="preparation"  cols="30" rows="10" class="form-control" id="preparation">
-                            <?php echo $preparation?>
+                            <?php echo $preparation;?>
                         </textarea>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
                         <label  class="form-label" for="observation">Observación: </label>
                         <textarea name="observation"  cols="30" rows="10" class="form-control" id="observation">
-                            <?php echo $observation?> 
+                            <?php echo $observation;?> 
                         </textarea>
                     </div>                 
                 </div>
@@ -198,8 +200,8 @@ $category = $row["category"];
             
             $html = "<ul>";
             while($row = $result -> fetch_assoc()){
-                $html .= "<li>". $row['indications'];
-                $html .= "<a class='btn btn-danger' href='delete.php?indication=" . $row['indications'] . "&rpename=" . $recipeName . "'>Eliminar</a>";
+                $html .= "<li class='my-2'><i>". $row['indications'] ."</i>";
+                $html .= "<a class='btn btn-danger mx-2' href='delete.php?indication=" . $row['indications'] . "&rpename=" . $recipeName . "'>Eliminar</a>";
                 $html .= "</li>";
             }
             $html .= "</ul>";

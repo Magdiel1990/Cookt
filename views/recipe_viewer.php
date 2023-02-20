@@ -48,7 +48,7 @@ $row = $result->fetch_assoc();
             $result = $conn -> query($sql);
             
             while($row = $result->fetch_assoc()){
-                echo "<li class='text-success'>" . $row["indications"]. "</li>";
+                echo "<li class='text-success'>" . $row["indications"]. ".</li>";
             }        
             ?>   
             </ul>
@@ -70,7 +70,7 @@ $row = $result->fetch_assoc();
             $row = $result->fetch_assoc();
             ?>
             <div class="collapse mt-3 bg-form" id="collapseExample">
-                <div class="card card-body text-danger"> <?php echo $row["preparation"]; ?> </div>
+                <div class="card card-body text-danger"> <?php echo ucfirst($row["preparation"]); ?> </div>
             </div>        
         </div>        
     </div>

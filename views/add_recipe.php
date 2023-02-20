@@ -118,7 +118,7 @@ require_once ("../modules/nav.php");
                         $result = $conn -> query($sql);
 
                         while($row = $result -> fetch_assoc()) {
-                            echo '<option value="' . $row["category"] . '">' . $row["category"] . '</option>';
+                            echo '<option value="' . $row["category"] . '">' . ucfirst($row["category"]) . '</option>';
                         }
                         ?>
                     </select>
