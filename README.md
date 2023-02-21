@@ -7,3 +7,4 @@ sanitizar e impedir inyeccion
 llevar todo a pdo
 comentar
 averiguar sobre dir relativas
+Validar con js y html todas las entradas.
