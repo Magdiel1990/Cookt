@@ -25,7 +25,7 @@ require_once ("models/models.php");
         <div class="col-auto">
             <div class="input-group mb-3">
                 <label for="search" class="input-group-text">Buscar: </label>
-                <input class="form-control" type="text" id="search" name="search">
+                <input class="form-control" type="text" id="search" name="search" maxlength="50">
             </div>
         </div>
     </div>

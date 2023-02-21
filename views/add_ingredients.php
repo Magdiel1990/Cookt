@@ -30,8 +30,8 @@ require_once ("../modules/nav.php");
         <form method="POST" action="../actions/create.php" autocomplete="off" class="mt-3 col-auto">
             <div class="input-group mb-4">
                 <label  class="input-group-text" for="add_ingredient">Ingrediente: </label>
-                <input  class="form-control" type="text" id="add_ingredient" name="add_ingredient">
-                <input class="btn btn-primary" type="submit" value="Agregar">
+                <input  class="form-control" type="text" id="add_ingredient" name="add_ingredient" maxlength="50" autofocus>
+                <input class="btn btn-primary" type="submit" value="Agregar" onclick="validation()">
             </div>
         </form>
     </div>
@@ -73,6 +73,16 @@ require_once ("../modules/nav.php");
             }    
             ?>
     </div>
+    <script>
+        function validation(){
+        let ingredient = document.getElementById("add_ingredient").value;
+
+        if(ingredient == "Harina blanca") {
+            alert("Ingrediente no válido!")
+        }
+        }
+
+    </script>
 </main>
 <?php
 //Footer of the page.
