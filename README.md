@@ -11,3 +11,4 @@ Validar con js y html todas las entradas.
 Agregar las categorias
 poner comentado los queries con los username information
 Que se quede en ultimo ingrediente seleccionado, y que los demas se organicen albitrariamente
+Poner asterisco rojo a los campos requeridos

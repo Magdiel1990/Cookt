@@ -15,11 +15,12 @@ require_once ("../models/models.php");
 
 //receive the data
 if(isset($_POST['add_units'])){
-  $unit = mysqli_real_escape_string($conn, $_POST['add_units']);
-  
+  $unit = $_POST['add_units'];
+  $unit = sanitization($unit, FILTER_SANITIZE_STRING, $conn);
+
   $pattern = "/[a-zA-Z\t\h]+|(^$)/"; 
 
-  $unit = sanitization($unit, FILTER_SANITIZE_STRING);
+  
 
   if ($unit == ""){
   //Message if the variable is null.
@@ -28,7 +29,7 @@ if(isset($_POST['add_units'])){
           
   //The page is redirected to the add_units.php
       header('Location: ../views/add_units.php');
-  } elseif(!preg_match($pattern, $unit)){
+  } elseif (!preg_match($pattern, $unit)){
       //Message if the variable is null.
       $_SESSION['message'] = 'Unidad incorrecto!';
       $_SESSION['message_alert'] = "danger";
@@ -82,11 +83,12 @@ if(isset($_POST['add_units'])){
 
 //receive the data
 if(isset($_POST['add_ingredient'])){
-  $ingredient = mysqli_real_escape_string($conn, $_POST['add_ingredient']);
+  $ingredient = $_POST['add_ingredient'];
+
+  $ingredient = sanitization($ingredient, FILTER_SANITIZE_STRING, $conn);
   
   $pattern = "/[a-zA-Z\t\h]+|(^$)/"; 
-
-  $ingredient = sanitization($ingredient, FILTER_SANITIZE_STRING);
+ 
 
   if ($ingredient == ""){
   //Message if the variable is null.
@@ -252,17 +254,17 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
 //receive the data
 if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['observation']) || isset($_POST['category']) || isset($_POST['cookingtime'])){
 
-  $recipename = mysqli_real_escape_string($conn, $_POST['recipename']);
-  $preparation = mysqli_real_escape_string($conn, $_POST['preparation']);
-  $observation = mysqli_real_escape_string($conn, $_POST['observation']);
-  $category = mysqli_real_escape_string($conn, $_POST['category']);
-  $cookingtime = mysqli_real_escape_string($conn, $_POST['cookingtime']);
+  $recipename = $_POST['recipename'];
+  $preparation = $_POST['preparation'];
+  $observation = $_POST['observation'];
+  $category = $_POST['category'];
+  $cookingtime = $_POST['cookingtime'];
 
-  $recipename = sanitization($recipename, FILTER_SANITIZE_STRING);
-  $preparation = sanitization($preparation, FILTER_SANITIZE_STRING);
-  $observation = sanitization($observation, FILTER_SANITIZE_STRING);
-  $category = sanitization($category, FILTER_SANITIZE_STRING);
-  $cookingtime = sanitization($cookingtime, FILTER_SANITIZE_NUMBER_INT);
+  $recipename = sanitization($recipename, FILTER_SANITIZE_STRING, $conn);
+  $preparation = sanitization($preparation, FILTER_SANITIZE_STRING, $conn);
+  $observation = sanitization($observation, FILTER_SANITIZE_STRING, $conn);
+  $category = sanitization($category, FILTER_SANITIZE_STRING, $conn);
+  $cookingtime = sanitization($cookingtime, FILTER_SANITIZE_NUMBER_INT, $conn);
 
   $pattern = "/[a-zA-Z\t\h]+|(^$)/"; 
 

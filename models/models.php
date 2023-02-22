@@ -16,7 +16,8 @@ function buttonMessage($message, $message_alert) {
     }
 }
 
-function sanitization($input, $type) {
+function sanitization($input, $type, $conn) {
+    $input = mysqli_real_escape_string($conn, $input);
     $input = trim($input);
     $input = stripslashes($input);
     $input = htmlspecialchars($input);

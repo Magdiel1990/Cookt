@@ -67,7 +67,7 @@ require_once ("../modules/nav.php");
             </form>
         </div>
         <!-- List with ingredients that will conform the recipe-->
-        <div class="m-2 p-2 col-sm-auto col-md-auto col-lg-7">
+        <div class="m-2 p-2 col-sm-auto col-md-auto col-lg-6 col-xl-6">
             <h3 class="text-center">Ingredientes</h3>
             <?php
             $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder;";
@@ -106,7 +106,7 @@ require_once ("../modules/nav.php");
             <div>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="recipename">Nombre: </label>
-                    <input  class="form-control" type="text" id="recipename" name="recipename" max-length="50" min-length="7">             
+                    <input  class="form-control" type="text" id="recipename" name="recipename" max-length="50" min-length="7" required>             
                 </div>
                 
                 <div class="input-group mb-3 w-50">
@@ -125,14 +125,14 @@ require_once ("../modules/nav.php");
                 </div>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="cookingtime">Tiempo de cocción: </label>
-                    <input class="form-control" type="number" id="cookingtime" name="cookingtime">             
+                    <input class="form-control" type="number" id="cookingtime" name="cookingtime" max="180" min="5"  placeholder="minutos">             
                 </div>
             </div>
         
             <div class="row">
                 <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
                     <label for="preparation" class="form-label">Preparación: </label>
-                    <textarea class="form-control" name="preparation" id="preparation" cols="30" rows="10"></textarea>
+                    <textarea class="form-control" name="preparation" id="preparation" cols="30" rows="10" required></textarea>
                 </div>           
                 <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
                     <label for="observation" class="form-label">Observaciones: </label>
