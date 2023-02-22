@@ -23,3 +23,15 @@ function validation(){
     }
     return true;
 }
+
+
+/*
+function validation(type, regExpText){
+    let input = document.getElementById("'" + type + "'").value;
+    if (!regExpText.test(input)) {
+        alert("¡Texto incorrecto!");
+        return false; 
+    }
+    return true;
+}
+*/
