@@ -8,3 +8,6 @@ llevar todo a pdo
 comentar
 averiguar sobre dir relativas
 Validar con js y html todas las entradas.
+Agregar las categorias
+poner comentado los queries con los username information
+Que se quede en ultimo ingrediente seleccionado, y que los demas se organicen albitrariamente

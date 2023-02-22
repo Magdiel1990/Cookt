@@ -32,7 +32,7 @@ require_once ("../modules/nav.php");
                 <div class="d-sm-flex justify-content-around">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="quantity">Cantidad: </label>                    
-                        <input class="form-control" type="number" name="quantity" id="quantity">
+                        <input class="form-control" type="number" name="quantity" id="quantity" max="1000" min="1" autofocus required>
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="unit">Unidad: </label>                
@@ -67,7 +67,7 @@ require_once ("../modules/nav.php");
             </form>
         </div>
         <!-- List with ingredients that will conform the recipe-->
-        <div class="m-2 p-2 col-sm-auto col-md-auto col-lg-6">
+        <div class="m-2 p-2 col-sm-auto col-md-auto col-lg-7">
             <h3 class="text-center">Ingredientes</h3>
             <?php
             $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder;";
@@ -106,7 +106,7 @@ require_once ("../modules/nav.php");
             <div>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="recipename">Nombre: </label>
-                    <input  class="form-control" type="text" id="recipename" name="recipename">             
+                    <input  class="form-control" type="text" id="recipename" name="recipename" max-length="50" min-length="7">             
                 </div>
                 
                 <div class="input-group mb-3 w-50">

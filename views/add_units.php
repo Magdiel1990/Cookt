@@ -11,6 +11,19 @@ require_once ("../models/models.php");
 //Navigation panel of the page
 require_once ("../modules/nav.php");
 ?>
+
+<script>
+    function validation(){
+        let ingredient = document.getElementById("add_units").value;
+        let regExpText = /[a-zA-Z\t\h]+|(^$)/;  
+        if (!regExpText.test(ingredient)) {
+            alert("¡Texto incorrecto!");
+            return false; 
+        }
+        return true;
+    }
+</script>
+
 <link rel="stylesheet" href="../styles/styles.css">
 
 <main class="container p-4">
@@ -26,10 +39,10 @@ require_once ("../modules/nav.php");
     ?>
     <h3>AGREGAR UNIDADES</h3>
 <!--Form for filtering the database info-->
-        <form class="mt-3 col-auto" method="POST" action="../actions/create.php" autocomplete="off">
+        <form class="mt-3 col-auto" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation()">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="add_units">Unidad: </label>
-                <input class="form-control" type="text" id="add_units" name="add_units">
+                <input class="form-control" type="text" id="add_units" name="add_units" pattern="[a-zA-Z]+" oninvalid="setCustomValidity('Solo letras por favor!')" minlength="2" maxlength="50" autofocus>
                 <input  class="btn btn-primary" type="submit" value="Agregar">
             </div>
         </form>

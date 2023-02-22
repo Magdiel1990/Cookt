@@ -15,4 +15,12 @@ function buttonMessage($message, $message_alert) {
         echo $html;             
     }
 }
+
+function sanitization($input, $type) {
+    $input = trim($input);
+    $input = stripslashes($input);
+    $input = htmlspecialchars($input);
+    $input = filter_var($input, $type);
+    return $input;
+  }
 ?>

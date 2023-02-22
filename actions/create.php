@@ -5,6 +5,8 @@ session_start();
 //Including the database connection.
 require_once ("../config/db_Connection.php");
 
+//Models
+require_once ("../models/models.php");
 
 /************************************************************************************************/
 /***************************************UNITS ADITION CODE**************************************/
@@ -13,8 +15,11 @@ require_once ("../config/db_Connection.php");
 
 //receive the data
 if(isset($_POST['add_units'])){
-  $unit = $_POST['add_units'];
+  $unit = mysqli_real_escape_string($conn, $_POST['add_units']);
+  
+  $pattern = "/[a-zA-Z\t\h]+|(^$)/"; 
 
+  $unit = sanitization($unit, FILTER_SANITIZE_STRING);
 
   if ($unit == ""){
   //Message if the variable is null.
@@ -23,6 +28,13 @@ if(isset($_POST['add_units'])){
           
   //The page is redirected to the add_units.php
       header('Location: ../views/add_units.php');
+  } elseif(!preg_match($pattern, $unit)){
+      //Message if the variable is null.
+      $_SESSION['message'] = 'Unidad incorrecto!';
+      $_SESSION['message_alert'] = "danger";
+          
+  //The page is redirected to the add_units.php
+       header('Location: ../views/add_units.php');
   } else {
 
   //lowercase the variable
@@ -70,12 +82,22 @@ if(isset($_POST['add_units'])){
 
 //receive the data
 if(isset($_POST['add_ingredient'])){
-  $ingredient = $_POST['add_ingredient'];
+  $ingredient = mysqli_real_escape_string($conn, $_POST['add_ingredient']);
+  
+  $pattern = "/[a-zA-Z\t\h]+|(^$)/"; 
 
+  $ingredient = sanitization($ingredient, FILTER_SANITIZE_STRING);
 
-  if ($ingredient== ""){
+  if ($ingredient == ""){
   //Message if the variable is null.
       $_SESSION['message'] = 'Escriba el ingrediente por favor!';
+      $_SESSION['message_alert'] = "danger";
+          
+  //The page is redirected to the add_units.php
+      header('Location: ../views/add_ingredients.php');
+  } elseif(!preg_match($pattern, $ingredient)){
+      //Message if the variable is null.
+      $_SESSION['message'] = 'Ingrediente incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
@@ -230,11 +252,19 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
 //receive the data
 if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['observation']) || isset($_POST['category']) || isset($_POST['cookingtime'])){
 
-  $recipename = $_POST['recipename'];
-  $preparation = $_POST['preparation'];
-  $observation = $_POST['observation'];
-  $category = $_POST['category'];
-  $cookingtime = $_POST['cookingtime'];
+  $recipename = mysqli_real_escape_string($conn, $_POST['recipename']);
+  $preparation = mysqli_real_escape_string($conn, $_POST['preparation']);
+  $observation = mysqli_real_escape_string($conn, $_POST['observation']);
+  $category = mysqli_real_escape_string($conn, $_POST['category']);
+  $cookingtime = mysqli_real_escape_string($conn, $_POST['cookingtime']);
+
+  $recipename = sanitization($recipename, FILTER_SANITIZE_STRING);
+  $preparation = sanitization($preparation, FILTER_SANITIZE_STRING);
+  $observation = sanitization($observation, FILTER_SANITIZE_STRING);
+  $category = sanitization($category, FILTER_SANITIZE_STRING);
+  $cookingtime = sanitization($cookingtime, FILTER_SANITIZE_NUMBER_INT);
+
+  $pattern = "/[a-zA-Z\t\h]+|(^$)/"; 
 
   if ($recipename == "" || $preparation == "") {
   //Message if the variable is null.
@@ -243,6 +273,14 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
           
   //The page is redirected to the add_recipe.php
       header('Location: ../views/add_recipe.php');
+  } elseif (!preg_match($pattern, $recipename)){
+      //Message if the variable is null.
+      $_SESSION['message'] = 'Nombre de receta incorrecto!';
+      $_SESSION['message_alert'] = "danger";
+          
+  //The page is redirected to the add_units.php
+      header('Location: ../views/add_recipe.php');
+
   } else {
 
       $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename';";
@@ -250,14 +288,17 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
       $num_rows = $result -> num_rows;
       
       if($num_rows == 0){
-
+        if($cookingtime == "") { 
+          $cookingtime = 0;
+        }
+        
       $sql = "SELECT categoryid FROM categories WHERE category = '$category';";
       $result = $conn -> query($sql);
       $row = $result -> fetch_assoc();
       $categoryid = $row["categoryid"];
 
       $sql = "INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime)
-      VALUES ('$recipename', $categoryid, '$preparation', '$observation', $cookingtime);";
+      VALUES ('$recipename', '$categoryid', '$preparation', '$observation', '$cookingtime');";
       $conn -> query($sql);
       $sql = "SELECT * FROM reholder;";    
       $result = $conn -> query($sql);
@@ -270,7 +311,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
         $conn -> query($sql);
       }
 
-      $sql = "DELETE FROM reholder;";
+      $sql = "DELETE FROM reholder /*WHERE username = 'Admin'*/;";
       $conn -> query($sql);   
 
       if ($conn -> query($sql) === TRUE) {
