@@ -15,23 +15,21 @@ require_once ("../models/models.php");
 
 //receive the data
 if(isset($_POST['add_units'])){
-  $unit = $_POST['add_units'];
-  $unit = sanitization($unit, FILTER_SANITIZE_STRING, $conn);
+  $unit = sanitization($_POST['add_units'], FILTER_SANITIZE_STRING, $conn);
 
-  $pattern = "/[a-zA-Z\t\h]+|(^$)/"; 
-
+  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
   
 
   if ($unit == ""){
   //Message if the variable is null.
-      $_SESSION['message'] = 'Escriba la unidad por favor!';
+      $_SESSION['message'] = '¡Escriba la unidad por favor!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
       header('Location: ../views/add_units.php');
   } elseif (!preg_match($pattern, $unit)){
       //Message if the variable is null.
-      $_SESSION['message'] = 'Unidad incorrecto!';
+      $_SESSION['message'] = '¡Unidad incorrecta!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
@@ -47,7 +45,7 @@ if(isset($_POST['add_units'])){
 
       if($num_rows != 0){
     //It already exists.
-          $_SESSION['message'] = 'Ya ha sido agregado!';
+          $_SESSION['message'] = '¡Ya ha sido agregado!';
           $_SESSION['message_alert'] = "success";
 
     //The page is redirected to the add_units.php.
@@ -57,7 +55,7 @@ if(isset($_POST['add_units'])){
 
       if ($conn->query($sql) === TRUE) {
     //Success message.
-          $_SESSION['message'] = 'Unidad agregada con éxito!';
+          $_SESSION['message'] = '¡Unidad agregada con éxito!';
           $_SESSION['message_alert'] = "success";
               
     //The page is redirected to the add_units.php.
@@ -65,7 +63,7 @@ if(isset($_POST['add_units'])){
 
         } else {
     //Failure message.
-          $_SESSION['message'] = 'Error al agregar unidad!';
+          $_SESSION['message'] = '¡Error al agregar unidad!';
           $_SESSION['message_alert'] = "danger";
               
     //The page is redirected to the add_units.php.
@@ -83,23 +81,21 @@ if(isset($_POST['add_units'])){
 
 //receive the data
 if(isset($_POST['add_ingredient'])){
-  $ingredient = $_POST['add_ingredient'];
-
-  $ingredient = sanitization($ingredient, FILTER_SANITIZE_STRING, $conn);
+  $ingredient = sanitization($_POST['add_ingredient'], FILTER_SANITIZE_STRING, $conn);
   
-  $pattern = "/[a-zA-Z\t\h]+|(^$)/"; 
+  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
  
 
   if ($ingredient == ""){
   //Message if the variable is null.
-      $_SESSION['message'] = 'Escriba el ingrediente por favor!';
+      $_SESSION['message'] = '¡Escriba el ingrediente por favor!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
       header('Location: ../views/add_ingredients.php');
   } elseif(!preg_match($pattern, $ingredient)){
       //Message if the variable is null.
-      $_SESSION['message'] = 'Ingrediente incorrecto!';
+      $_SESSION['message'] = '¡Ingrediente incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
@@ -115,7 +111,7 @@ if(isset($_POST['add_ingredient'])){
 
       if($num_rows != 0){
       //It already exists.
-          $_SESSION['message'] = 'Ya ha sido agregado!';
+          $_SESSION['message'] = '¡Ya ha sido agregado!';
           $_SESSION['message_alert'] = "success";
 
       //The page is redirected to the add_units.php.
@@ -126,7 +122,7 @@ if(isset($_POST['add_ingredient'])){
 
       if ($conn->query($sql) === TRUE) {
     //Success message.
-          $_SESSION['message'] = 'Ingrediente agregado con éxito!';
+          $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
           $_SESSION['message_alert'] = "success";
               
     //The page is redirected to the add_units.php.
@@ -134,7 +130,7 @@ if(isset($_POST['add_ingredient'])){
 
         } else {
     //Failure message.
-          $_SESSION['message'] = 'Error al agregar ingrediente!';
+          $_SESSION['message'] = '¡Error al agregar ingrediente!';
           $_SESSION['message_alert'] = "danger";
               
     //The page is redirected to the add_units.php.
@@ -160,7 +156,7 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
 
   if ($quantity == "" || $quantity <= 0) {
   //Message if the variable is null.
-      $_SESSION['message'] = 'Elija la cantidad por favor!';
+      $_SESSION['message'] = '¡Elija la cantidad por favor!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_recipe.php
@@ -176,7 +172,7 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
 
       if ($conn->query($sql) === TRUE) {
     //Success message.
-          $_SESSION['message'] = 'Ingrediente agregado con éxito!';
+          $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
           $_SESSION['message_alert'] = "success";
               
     //The page is redirected to the ingredients.php.
@@ -184,7 +180,7 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
 
         } else {
     //Failure message.
-          $_SESSION['message'] = 'Error al agregar ingrediente!';
+          $_SESSION['message'] = '¡Error al agregar ingrediente!';
           $_SESSION['message_alert'] = "danger";
               
     //The page is redirected to the ingredients.php.
@@ -192,7 +188,7 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
       }
     } else {
       //Success message.
-          $_SESSION['message'] = 'Ingrediente ya fue agregado!';
+          $_SESSION['message'] = '¡Ingrediente ya fue agregado!';
           $_SESSION['message_alert'] = "success";
               
       //The page is redirected to the ingredients.php.
@@ -217,7 +213,7 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
 
   if ($quantity == "" || $quantity <= 0) {
   //Message if the variable is null.
-      $_SESSION['message'] = 'Elija la cantidad por favor!';
+      $_SESSION['message'] = '¡Elija la cantidad por favor!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_recipe.php
@@ -228,7 +224,7 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
 
       if ($conn->query($sql) === TRUE) {
     //Success message.
-          $_SESSION['message'] = 'Ingrediente agregado con éxito!';
+          $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
           $_SESSION['message_alert'] = "success";
               
     //The page is redirected to the ingredients.php.
@@ -236,7 +232,7 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
 
         } else {
     //Failure message.
-          $_SESSION['message'] = 'Error al agregar ingrediente!';
+          $_SESSION['message'] = '¡Error al agregar ingrediente!';
           $_SESSION['message_alert'] = "danger";
               
     //The page is redirected to the ingredients.php.
@@ -254,42 +250,46 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
 //receive the data
 if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['observation']) || isset($_POST['category']) || isset($_POST['cookingtime'])){
 
-  $recipename = $_POST['recipename'];
-  $preparation = $_POST['preparation'];
-  $observation = $_POST['observation'];
+  $recipename = sanitization($_POST['recipename'], FILTER_SANITIZE_STRING, $conn);
+  $preparation = sanitization($_POST['preparation'], FILTER_SANITIZE_STRING, $conn);
+  $observation = sanitization($_POST['observation'], FILTER_SANITIZE_STRING, $conn);
   $category = $_POST['category'];
-  $cookingtime = $_POST['cookingtime'];
+  $cookingtime = sanitization($_POST['cookingtime'], FILTER_SANITIZE_NUMBER_INT, $conn);
 
-  $recipename = sanitization($recipename, FILTER_SANITIZE_STRING, $conn);
-  $preparation = sanitization($preparation, FILTER_SANITIZE_STRING, $conn);
-  $observation = sanitization($observation, FILTER_SANITIZE_STRING, $conn);
-  $category = sanitization($category, FILTER_SANITIZE_STRING, $conn);
-  $cookingtime = sanitization($cookingtime, FILTER_SANITIZE_NUMBER_INT, $conn);
-
-  $pattern = "/[a-zA-Z\t\h]+|(^$)/"; 
+  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
 
   if ($recipename == "" || $preparation == "") {
   //Message if the variable is null.
-      $_SESSION['message'] = 'Falta nombre de la receta o la preparación!';
+      $_SESSION['message'] = '¡Falta nombre de la receta o la preparación!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_recipe.php
       header('Location: ../views/add_recipe.php');
   } elseif (!preg_match($pattern, $recipename)){
       //Message if the variable is null.
-      $_SESSION['message'] = 'Nombre de receta incorrecto!';
+      $_SESSION['message'] = '¡Nombre de receta incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
       header('Location: ../views/add_recipe.php');
 
+  } elseif ($cookingtime > 180 || $cookingtime < 5) {
+      //Message if the variable is null.
+      $_SESSION['message'] = '¡Tiempo de cocción debe estar entre 5 - 180 minutos!';
+      $_SESSION['message_alert'] = "danger";
+          
+      //The page is redirected to the add_units.php
+      header('Location: ../views/add_recipe.php');
   } else {
+
+      $_SESSION['category'] = $_POST['category'];
 
       $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename';";
       $result = $conn -> query($sql);
       $num_rows = $result -> num_rows;
       
       if($num_rows == 0){
+        
         if($cookingtime == "") { 
           $cookingtime = 0;
         }
@@ -318,14 +318,14 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
 
       if ($conn -> query($sql) === TRUE) {
       //Success message.
-        $_SESSION['message'] = 'Receta agregada exitosamente!';
+        $_SESSION['message'] = '¡Receta agregada exitosamente!';
         $_SESSION['message_alert'] = "success";
 
       //The page is redirected to the ingredients.php.
         header('Location: ../views/add_recipe.php');
       } else {
         //Failure message.
-        $_SESSION['message'] = 'Error al agregar receta!';
+        $_SESSION['message'] = '¡Error al agregar receta!';
         $_SESSION['message_alert'] = "danger";
                 
       //The page is redirected to the ingredients.php.
@@ -333,7 +333,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
       }
     } else {
       //Failure message.
-        $_SESSION['message'] = 'Esta receta ya fue agregada!';
+        $_SESSION['message'] = '¡Esta receta ya fue agregada!';
         $_SESSION['message_alert'] = "success";
                 
       //The page is redirected to the ingredients.php.
@@ -357,7 +357,7 @@ if(isset($_POST['customingredient'])){
 
   if($num_rows != 0){
   //It already exists.
-      $_SESSION['message'] = 'Ya ha sido agregado!';
+      $_SESSION['message'] = '¡Ya ha sido agregado!';
       $_SESSION['message_alert'] = "success";
 
   //The page is redirected to the add_units.php.
@@ -368,7 +368,7 @@ if(isset($_POST['customingredient'])){
 
     if ($conn->query($sql) === TRUE) {
   //Success message.
-        $_SESSION['message'] = 'Ingrediente agregado con éxito!';
+        $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
         $_SESSION['message_alert'] = "success";
             
   //The page is redirected to the add_units.php.
@@ -376,7 +376,7 @@ if(isset($_POST['customingredient'])){
 
     } else {
 //Failure message.
-      $_SESSION['message'] = 'Error al agregar ingrediente!';
+      $_SESSION['message'] = '¡Error al agregar ingrediente!';
       $_SESSION['message_alert'] = "danger";
           
 //The page is redirected to the add_units.php.

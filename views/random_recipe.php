@@ -10,24 +10,35 @@ require_once ("../models/models.php");
 
 //Navigation panel of the page
 require_once ("../modules/nav.php");
+
+if(isset($_POST["category"])) {
+    $_SESSION['categoryName'] = $_POST["category"];
+}
 ?>
 <link rel="stylesheet" href="../styles/styles.css">
 <main class="container p-4">
     <div class="row mt-2 text-center justify-content-center">
         <h3>SUGERENCIAS</h3>
-        <form action="" method="POST" class="mt-3 col-auto">
+        <form action= "<?php echo $_SERVER ['PHP_SELF'] ?>" method="POST" class="mt-3 col-auto">
             <div class="input-group mb-3">
                 <label for="category" class="input-group-text">Categoría: </label>
                 
                 <select class="form-select" name="category" id="category">
                     <?php
-                    $sql = "SELECT category FROM categories";
+                    if(isset($_SESSION['categoryName'])){
+                        $sql = "SELECT category FROM categories WHERE NOT category='" . $_SESSION['categoryName'] . "';";                    
+                        
+                        echo "<option value='" . $_SESSION['categoryName'] . "'>" . ucfirst($_SESSION['categoryName']) . "</option>";
+                    } else {
+                        $sql = "SELECT category FROM categories;";                                      
+                    }
 
-                    $result = $conn -> query($sql);
+                    $result = $conn -> query($sql); 
 
                     while($row = $result -> fetch_assoc()) {
-                        echo '<option value="' . $row["category"] . '">' . ucfirst($row["category"]) . '</option>';
+                        echo "<option value='" . $row["category"] . "'>" . ucfirst($row["category"]) . "</option>";
                     }
+
                     ?>
                 </select>
 
@@ -44,9 +55,10 @@ require_once ("../modules/nav.php");
     $num_rows = $conn -> query($sql) -> num_rows;
     
     if($num_rows == 0){
-        die("<p class='text-center'>No hay recetas disponibles para esta categoría!</p>");
+        die("<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>");
     }
-    else {
+    else {  
+
     $sql = "SELECT * FROM recipeinfoview WHERE category='$category' ORDER BY RAND() LIMIT 1;"; 
     $result = $conn -> query($sql);
     $row = $result -> fetch_assoc();

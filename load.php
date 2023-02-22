@@ -8,7 +8,7 @@
     //Table to be querried from the database.
     $table = "recipeinfoview";
 
-    //If the variable search is set it's received, else it's null.
+    //If the variable search is set it's received, else it's null.    
     $field = isset($_POST["search"]) ? $conn -> real_escape_string($_POST["search"]) : null;
     
     /*Filter where*/
@@ -30,7 +30,7 @@
 
     $sql = "SELECT SQL_CALC_FOUND_ROWS ". implode(", ", $columns) . " 
     FROM $table 
-    $where";
+    $where ORDER BY recipename;";
 
     //Count of the number of rows of the query
     $result = $conn->query($sql);

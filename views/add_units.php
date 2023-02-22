@@ -27,10 +27,10 @@ require_once ("../modules/nav.php");
     ?>
     <h3>AGREGAR UNIDADES</h3>
 <!--Form for filtering the database info-->
-        <form class="mt-3 col-auto" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation()">
+        <form class="mt-3 col-auto" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation('add_units', /[a-zA-Z\t\h]+|(^$)/)">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="add_units">Unidad: </label>
-                <input class="form-control" type="text" id="add_units" name="add_units" pattern="[a-zA-Z]+" oninvalid="setCustomValidity('Solo letras por favor!')" minlength="2" maxlength="50" autofocus>
+                <input class="form-control" type="text" id="add_units" name="add_units"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" minlength="2" maxlength="50" autofocus>
                 <input  class="btn btn-primary" type="submit" value="Agregar">
             </div>
         </form>
@@ -45,7 +45,7 @@ require_once ("../modules/nav.php");
             </thead>
             <tbody>                
                 <?php
-                    $sql = "SELECT unit FROM units";
+                    $sql = "SELECT unit FROM units ORDER BY unit;";
 
                     $result = $conn -> query($sql);
                     if($result -> num_rows > 0){

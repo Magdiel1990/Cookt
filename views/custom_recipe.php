@@ -34,8 +34,25 @@ require_once ("../modules/nav.php");
                 <label class="input-group-text" for="customingredient">Ingredientes: </label>                
                 <select class="form-select" name="customingredient" id="customingredient">
                     <?php
-                    $sql = "SELECT ingredient FROM ingredients;";
+                    $sql = "SELECT ingredient FROM ingholder/*WHERE username = 'Admin'*/;";
+                    $result = $conn -> query($sql);
+                    $num_rows = $result -> num_rows;
 
+                    if ($num_rows == 0) {
+                        $sql = "SELECT ingredient FROM ingredients /*WHERE username = 'Admin'*/;";
+                    }
+                    else {
+                        $where = "WHERE NOT ingredient IN (";
+
+                        while($row = $result -> fetch_assoc()) {
+                            $where .= "'" . $row["ingredient"] . "', ";
+                        }
+                        
+                        $where = substr_replace($where, "", -2);
+                        $where .= ")";  
+
+                        $sql = "SELECT ingredient FROM ingredients $where/*WHERE username = 'Admin'*/;";
+                    }
                     $result = $conn -> query($sql);
 
                     while($row = $result -> fetch_assoc()) {

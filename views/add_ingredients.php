@@ -11,17 +11,6 @@ require_once ("../models/models.php");
 //Navigation panel of the page
 require_once ("../modules/nav.php");
 ?>
-<script>
-    function validation(){
-        let ingredient = document.getElementById("add_ingredient").value;
-        let regExpText = /[a-zA-Z\t\h]+|(^$)/;  
-        if (!regExpText.test(ingredient)) {
-            alert("¡Texto incorrecto!");
-            return false; 
-        }
-        return true;
-    }
-</script>
 
 <link rel="stylesheet" href="../styles/styles.css">
 
@@ -38,17 +27,17 @@ require_once ("../modules/nav.php");
     ?>
     <h3>AGREGAR INGREDIENTES</h3>
 <!--Form for filtering the database info-->
-        <form method="POST" action="../actions/create.php" autocomplete="on" class="mt-3 col-auto" onsubmit="return validation()">
+        <form method="POST" action="../actions/create.php" autocomplete="on" class="mt-3 col-auto" onsubmit="return validation('add_ingredient', /[a-zA-Z\t\h]+|(^$)/ )">
             <div class="input-group mb-4">
                 <label  class="input-group-text" for="add_ingredient">Ingrediente: </label>
-                <input  class="form-control" type="text" id="add_ingredient" name="add_ingredient" pattern="[a-zA-Z]+" oninvalid="setCustomValidity('Solo letras por favor!')" minlength="2" maxlength="20" autofocus>
+                <input  class="form-control" type="text" id="add_ingredient" name="add_ingredient" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" minlength="2" maxlength="20" autofocus>
                 <input class="btn btn-primary" type="submit" value="Agregar">
             </div>
         </form>
     </div>
     <div class="row">
          <?php
-            $sql = "SELECT ingredient FROM ingredients";
+            $sql = "SELECT ingredient FROM ingredients ORDER BY ingredient;";
 
             $result = $conn -> query($sql);
 
