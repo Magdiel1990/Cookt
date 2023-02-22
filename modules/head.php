@@ -12,10 +12,6 @@ session_start();
     <title>Cookt</title>
     <link rel="stylesheet" href="./styles/styles.css">
     <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
-    <script>
-        if (window.history.replaceState) { // verificamos disponibilidad
-        window.history.replaceState(null, null, window.location.href);
-        }
-    </script>
+    <script src="../js/scripts.js"></script>   
 </head>
 <body>

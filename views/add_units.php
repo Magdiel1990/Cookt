@@ -12,18 +12,6 @@ require_once ("../models/models.php");
 require_once ("../modules/nav.php");
 ?>
 
-<script>
-    function validation(){
-        let ingredient = document.getElementById("add_units").value;
-        let regExpText = /[a-zA-Z\t\h]+|(^$)/;  
-        if (!regExpText.test(ingredient)) {
-            alert("¡Texto incorrecto!");
-            return false; 
-        }
-        return true;
-    }
-</script>
-
 <link rel="stylesheet" href="../styles/styles.css">
 
 <main class="container p-4">
