@@ -23,7 +23,7 @@ $ingredient = $_POST["ingredient"];
 
     if($quantity == "" || $quantity <= 0){
     //Message if the variable is null.
-        $_SESSION['message'] = 'Elija la cantidad por favor!';
+        $_SESSION['message'] = '¡Elija la cantidad por favor!';
         $_SESSION['message_alert'] = "danger";
             
     //The page is redirected to the add_recipe.php
@@ -34,14 +34,14 @@ $ingredient = $_POST["ingredient"];
                 
         if ($conn->query($sql) === TRUE) {
          //Message if the variable is null.
-        $_SESSION['message'] = 'El ingrediente ha sido editado!';
+        $_SESSION['message'] = '¡El ingrediente ha sido editado!';
         $_SESSION['message_alert'] = "success";
             
         //The page is redirected to the add_recipe.php
         header('Location: ../views/add_recipe.php');
         } else {
          //Message if the variable is null.
-        $_SESSION['message'] = 'Error al editar ingrediente!';
+        $_SESSION['message'] = '¡Error al editar ingrediente!';
         $_SESSION['message_alert'] = "danger";
             
         //The page is redirected to the add_recipe.php
@@ -61,11 +61,11 @@ if(isset($_GET["editname"]) || isset($_POST["newRecipeName"]) || isset($_POST["c
 || isset($_POST["cookingTime"]) || isset($_POST["preparation"]) || isset($_POST["observation"])){
 
 $oldName = $_GET["editname"];
-$newRecipeName = $_POST["newRecipeName"];
+$newRecipeName = sanitization($_POST["newRecipeName"], FILTER_SANITIZE_STRING, $conn);
 $category = $_POST["category"];
-$cookingTime = $_POST["cookingTime"];
-$preparation = $_POST["preparation"];
-$observation = $_POST["observation"];
+$cookingTime = sanitization($_POST["cookingTime"], FILTER_SANITIZE_NUMBER_INT, $conn);
+$preparation = sanitization($_POST["preparation"], FILTER_SANITIZE_STRING, $conn);
+$observation = sanitization($_POST["observation"], FILTER_SANITIZE_STRING, $conn);
 
 $sql = "SELECT categoryid FROM categories WHERE category = '$category';";
 $row = $conn -> query($sql) -> fetch_assoc();
@@ -74,13 +74,13 @@ $categoryId = $row['categoryid'];
 
     if($newRecipeName == "" || $cookingTime == "" || $preparation == ""){
     //Message if the variable is null.
-        $_SESSION['message'] = 'Complete todos los campos!';
+        $_SESSION['message'] = '¡Complete todos los campos!';
         $_SESSION['message_alert'] = "danger";
             
     //The page is redirected to the add_recipe.php
         header("Location: edit.php?recipename=". $oldName);
     } else {
-        if($cookingTime > 0){
+        if($cookingTime >= 5 && $cookingTime <= 180){
             
             $sql = "UPDATE recipe SET recipename = '$newRecipeName' WHERE recipename = '$oldName';";
             $sql .= "UPDATE recipe SET preparation = '$preparation' WHERE recipename = '$oldName';";
@@ -90,14 +90,14 @@ $categoryId = $row['categoryid'];
             
             if ($conn->multi_query($sql) === TRUE) {
             //Message if the variable is null.
-            $_SESSION['message'] = 'Receta editada correctamente!';
+            $_SESSION['message'] = '¡Receta editada correctamente!';
             $_SESSION['message_alert'] = "success";
                 
             //The page is redirected to the add_recipe.php
             header("Location: edit.php?recipename=". $newRecipeName);
             } else {
             //Message if the variable is null.
-            $_SESSION['message'] = 'Error al editar receta!';
+            $_SESSION['message'] = '¡Error al editar receta!';
             $_SESSION['message_alert'] = "danger";
 
             //The page is redirected to the add_recipe.php
@@ -105,7 +105,7 @@ $categoryId = $row['categoryid'];
             }  
         } else {
             //Message if the variable is null.
-            $_SESSION['message'] = 'Tiempo de cocción incorrecto!';
+            $_SESSION['message'] = '¡Tiempo de cocción incorrecto!';
             $_SESSION['message_alert'] = "danger";
                 
             //The page is redirected to the add_recipe.php

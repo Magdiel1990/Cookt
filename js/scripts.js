@@ -32,6 +32,18 @@ function validationNumberText(number, text, regExpText){
     return true;
 }
 
+function validationNumber(number){
+
+    let numberValue = document.getElementById(number).value;
+
+    if (numberValue <= 0 || numberValue == "") {
+        alert("¡La cantidad incorrecta!");
+        return false; 
+    }
+
+    return true;
+}
+
 /*function deleteMessage (){
     alert("¿Está seguro de eliminar?");
     return true;

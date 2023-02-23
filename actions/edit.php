@@ -124,8 +124,8 @@ $result = $conn -> query($sql);
 $row = $result -> fetch_assoc();
 
 $cookingTime = $row["cookingtime"];
-$preparation= $row["preparation"];
-$observation = $row["observation"];
+$preparation=  sanitization($row["preparation"], FILTER_SANITIZE_STRING, $conn);
+$observation = sanitization($row["observation"], FILTER_SANITIZE_STRING, $conn);
 $category = $row["category"];
 
 ?>
@@ -142,11 +142,11 @@ $category = $row["category"];
     <div class="row mt-2 text-center justify-content-center">
         <h3>EDITAR RECETA</h3>     
         <div class="mt-3 col-auto">
-            <form class="bg-form card card-body" action="update.php?editname=<?php echo $recipeName ?>" method="POST">
+            <form class="bg-form card card-body" action="update.php?editname=<?php echo $recipeName ?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="newRecipeName">Nombre: </label>
-                    <input type="text" name="newRecipeName" value="<?php echo $recipeName?>" class="form-control" id="newRecipeName">
+                    <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" max-length="50" min-length="7" required>
                 </div>
 
                 <div class="input-group mb-3 w-50">
@@ -166,12 +166,12 @@ $category = $row["category"];
 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="cookingTime">Tiempo de cocción: </label>
-                    <input type="number" name="cookingTime" value="<?php echo $cookingTime?>" class="form-control" id="cookingTime">
+                    <input type="number" name="cookingTime" value="<?php echo $cookingTime;?>" class="form-control" id="cookingTime" min="5" max="180">
                 </div>
                 <div class="row">           
                     <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
                         <label  class="form-label" for="preparation">Preparación: </label>
-                        <textarea name="preparation"  cols="30" rows="10" class="form-control" id="preparation">
+                        <textarea name="preparation"  cols="30" rows="10" class="form-control" id="preparation" required>
                             <?php echo $preparation;?>
                         </textarea>
                     </div>
@@ -200,7 +200,7 @@ $category = $row["category"];
             
             $html = "<ul>";
             while($row = $result -> fetch_assoc()){
-                $html .= "<li class='my-2'><i>". $row['indications'] ."</i>";
+                $html .= "<li class='my-2'><i>". $row['indications'] .".</i>";
                 $html .= "<a class='btn btn-danger mx-2' href='delete.php?indication=" . $row['indications'] . "&rpename=" . $recipeName . "'>Eliminar</a>";
                 $html .= "</li>";
             }
@@ -209,41 +209,43 @@ $category = $row["category"];
             ?>
             </div>
             <div class="mb-4 mt-2 text-center m-auto">
-                <form method="POST" action="create.php?rname=<?php echo $recipeName ?>">
-                    <div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="quantity">Cantidad: </label>                    
-                            <input class="form-control" type="number" name="qty" id="quantity">
-                        </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="unit">Unidad: </label>                
-                            <select class="form-select" name="units" id="unit">
-                                <?php
-                                $sql = "SELECT unit FROM units";
+                <form method="POST" action="create.php?rname=<?php echo $recipeName;?>" onsubmit="return validationNumber('quantity')">
 
-                                $result = $conn -> query($sql);
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="quantity">Cantidad: </label>                    
+                        <input class="form-control" type="number" name="qty" id="quantity" step="0.05" max="1000" min="0" required>
+                    </div>
 
-                                while($row = $result -> fetch_assoc()) {
-                                    echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="ingredient">Ingrediente: </label>                
-                            <select class="form-select" name="ing" id="ingredient">
-                                <?php
-                                $sql = "SELECT ingredient FROM ingredients";
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="unit">Unidad: </label>                
+                        <select class="form-select" name="units" id="unit">
+                            <?php
+                            $sql = "SELECT unit FROM units";
 
-                                $result = $conn -> query($sql);
+                            $result = $conn -> query($sql);
 
-                                while($row = $result -> fetch_assoc()) {
-                                    echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>            
+                            while($row = $result -> fetch_assoc()) {
+                                echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="ingredient">Ingrediente: </label>                
+                        <select class="form-select" name="ing" id="ingredient">
+                            <?php
+                            $sql = "SELECT ingredient FROM ingredients";
+
+                            $result = $conn -> query($sql);
+
+                            while($row = $result -> fetch_assoc()) {
+                                echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+            
                     <input class="btn btn-primary" type="submit" value="Agregar ingrediente">
                 </form>
             </div>

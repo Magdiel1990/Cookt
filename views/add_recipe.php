@@ -32,7 +32,7 @@ require_once ("../modules/nav.php");
                 <div class="d-sm-flex justify-content-around">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="quantity">Cantidad: </label>                    
-                        <input class="form-control" type="number" name="quantity" id="quantity" max="1000" min="1" autofocus required>
+                        <input class="form-control" type="number" name="quantity" id="quantity" step="0.05" max="1000" min="0" autofocus required>
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="unit">Unidad: </label>                
