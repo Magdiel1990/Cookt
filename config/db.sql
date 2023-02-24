@@ -13,12 +13,11 @@ USE foodbase;
 CREATE TABLE `categories` (
   `categoryid` int NOT NULL AUTO_INCREMENT,
   `category` varchar(20) NOT NULL,
-  `picture` blob,
   PRIMARY KEY (`categoryid`)
 ); 
 
 
-INSERT INTO `categories` VALUES (1,'postres',NULL),(2,'jugo',NULL),(3,'sopas',NULL);
+INSERT INTO `categories` VALUES (1,'postres'),(2,'jugo'),(3,'sopas');
 
 
 CREATE TABLE `ingredients` (
