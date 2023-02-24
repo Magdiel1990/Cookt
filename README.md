@@ -7,8 +7,8 @@ sanitizar e impedir inyeccion
 llevar todo a pdo
 comentar
 averiguar sobre dir relativas
-Validar con js y html todas las entradas.
 Agregar las categorias
+Agregar usuarios
 poner comentado los queries con los username information
-Que se quede en ultimo ingrediente seleccionado, y que los demas se organicen albitrariamente
-Poner asterisco rojo a los campos requeridos
+Paginacion
+Cuadros de dialogo no cierran

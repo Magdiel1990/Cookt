@@ -1,6 +1,9 @@
 <?php
     //Including the database connection.
     require_once ("config/db_Connection.php");
+
+    //Models.
+    require_once ("models/models.php");
     
     //Array of the columns to be querried from the database.
     $columns = ["recipeid","recipename", "category"];
@@ -8,14 +11,13 @@
     //Table to be querried from the database.
     $table = "recipeinfoview";
 
-    //If the variable search is set it's received, else it's null.    
-    $field = isset($_POST["search"]) ? $conn -> real_escape_string($_POST["search"]) : null;
-    
+    //If the variable search is set it's received, else it's null.     
+    $field = sanitization($_POST["search"], FILTER_SANITIZE_STRING, $conn);
     /*Filter where*/
     $where = "";
 
     //If the variable search isn't null, the query is done with the where.
-    if($field != null){
+    if($field != ""){
         $where = "WHERE (";
 
         $count = count($columns);

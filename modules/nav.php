@@ -23,6 +23,7 @@
                 <a class="dropdown-item" href="./views/add_units.php">Unidades</a>
                 <a class="dropdown-item" href="./views/add_ingredients.php">Ingredientes</a>
                 <a class="dropdown-item" href="./views/add_recipe.php">Recetas</a>
+                <a class="dropdown-item" href="./views/add_categories.php">Categorías</a>
                 </div>
             </li>
             </ul>

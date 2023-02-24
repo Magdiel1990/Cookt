@@ -20,6 +20,28 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` VALUES (1,'postres',NULL),(2,'jugo',NULL),(3,'sopas',NULL);
 
+
+CREATE TABLE `ingredients` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ingredient` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ingredient` (`ingredient`)
+);
+
+INSERT INTO `ingredients` VALUES (26,'azúcar'),(25,'harina'),(27,'huevos'),(28,'mantequilla'),(30,'sal');
+
+CREATE TABLE `users` (
+  `userid` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(30) NOT NULL,
+  `fullname` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `status` varchar(15) NOT NULL,
+  PRIMARY KEY (`userid`),
+  UNIQUE KEY `username` (`username`)
+);
+
+INSERT INTO `users` (username, fullname, password, status) VALUES ('Admin', 'Magdiel Castillo', '123456', 'Admin');
+
 CREATE TABLE `ingholder` (
   `ingid` int NOT NULL AUTO_INCREMENT,
   `username` varchar(30) DEFAULT NULL,
@@ -33,15 +55,6 @@ CREATE TABLE `ingholder` (
 
 INSERT INTO `ingholder` VALUES (9,NULL,'harina');
 
-CREATE TABLE `ingredients` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `ingredient` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ingredient` (`ingredient`)
-);
-
-
-INSERT INTO `ingredients` VALUES (26,'azúcar'),(25,'harina'),(27,'huevos'),(28,'mantequilla'),(30,'sal');
 
 CREATE TABLE `recipe` (
   `recipeid` int NOT NULL AUTO_INCREMENT,
@@ -54,12 +67,20 @@ CREATE TABLE `recipe` (
   PRIMARY KEY (`recipeid`),
   UNIQUE KEY `recipename` (`recipename`),
   KEY `fk_recipe_categories` (`categoryid`),
-  CONSTRAINT `fk_recipe_categories` FOREIGN KEY (`categoryid`) REFERENCES `categories` (`categoryid`)
+  CONSTRAINT `fk_recipe_categories` FOREIGN KEY (`categoryid`) REFERENCES `categories` (`categoryid`) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
 
-INSERT INTO `recipe` VALUES (21,'Sopa de pato',2,'                            Esta receta es buena                                                                                         ','Es buena                                                                                   \r\n                         \r\n                         \r\n                         \r\n                        ','2023-02-15 21:18:39',30),(22,'Bizcocho de chocolate',1,'fgsgdfgdfgdfgdfgdfgfdgfdg\r\nghghgfhgfh','','2023-02-15 21:20:21',50);
+INSERT INTO `recipe` VALUES (21,'Sopa de pato',2,'Esta receta es buena','Es buena','2023-02-15 21:18:39',30),(22,'Bizcocho de chocolate',1,'fgsgdfgdfgdfgdfgdfgfdgfdgghghgfhgfh','','2023-02-15 21:20:21',50), (23,'Bizcocho de vainilla',1,'fgsgdfgh','','2023-02-15 21:20:21',50), (24,'Flan de vainilla',2,'fdfhsdf dfdfdh','','2023-02-15 21:20:21',20);
 
+CREATE TABLE `units` (
+  `unitid` int NOT NULL AUTO_INCREMENT,
+  `unit` varchar(20) NOT NULL,
+  PRIMARY KEY (`unitid`),
+  UNIQUE KEY `unit` (`unit`)
+);
+
+INSERT INTO `units` VALUES (8,'cucharaditas'),(6,'gramos'),(7,'unidades');
 
 CREATE TABLE `recipeinfo` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -105,21 +126,6 @@ CREATE TABLE `reholder` (
 
 INSERT INTO `reholder` VALUES (56,'azúcar',6.00,'cucharaditas',NULL);
 
-CREATE TABLE `units` (
-  `unitid` int NOT NULL AUTO_INCREMENT,
-  `unit` varchar(20) NOT NULL,
-  PRIMARY KEY (`unitid`),
-  UNIQUE KEY `unit` (`unit`)
-);
 
-INSERT INTO `units` VALUES (8,'cucharaditas'),(6,'gramos'),(7,'unidades');
 
-CREATE TABLE `users` (
-  `userid` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) NOT NULL,
-  `fullname` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `status` varchar(15) NOT NULL,
-  PRIMARY KEY (`userid`),
-  UNIQUE KEY `username` (`username`)
-);
+

@@ -111,6 +111,57 @@ $unit = $row["unit"];
 
 
 /************************************************************************************************/
+/******************************************CATEGORY EDITION CODE***********************************/
+/************************************************************************************************/
+
+
+if(isset($_GET['categoryid'])){
+$categoryId = $_GET['categoryid'];
+
+$sql = "SELECT * FROM categories WHERE categoryid = '$categoryId';";
+
+$row = $conn -> query($sql) -> fetch_assoc();
+
+$category = $row["category"];
+
+?>
+<main class="container p-4">
+<?php
+//Messages that are shown in the index page
+    if(isset($_SESSION['message'])){
+    buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
+
+//Unsetting the messages variables so the message fades after refreshing the page.
+    unset($_SESSION['message_alert'], $_SESSION['message']);
+}
+?>
+    <div class="row mt-2 text-center justify-content-center">
+        <h3>EDITAR CATEGORÍA</h3>     
+        <div class="mt-3 col-auto">
+            <form  enctype="multipart/formdata" class="bg-form card card-body" action="update.php?categoryid=<?php echo $categoryId; ?>" method="POST">
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text is-required" for="categoryName">Nombre: </label>
+                    <input type="text" name="categoryName" value="<?php echo $category;?>" class="form-control" id="categoryName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" max-length="20" min-length="2" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="categoryImage">Foto de la categoría</label>
+                    <input type="file" name="categoryImage" class="form-control" id="categoryImage">
+                </div> 
+                <div class="mt-2">
+                    <input class="btn btn-primary" type="submit" value="Editar">
+                    <a href="../views/add_categories.php" class="btn btn-secondary">Regresar</a>
+                </div>
+                </form>
+            </div>
+       </div>                  
+    </div>     
+</main>
+
+<?php
+}
+/************************************************************************************************/
 /******************************************RECIPE EDITION CODE***********************************/
 /************************************************************************************************/
 
@@ -145,7 +196,7 @@ $category = $row["category"];
             <form class="bg-form card card-body" action="update.php?editname=<?php echo $recipeName ?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
 
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="newRecipeName">Nombre: </label>
+                    <label class="input-group-text is-required" for="newRecipeName">Nombre: </label>
                     <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" max-length="50" min-length="7" required>
                 </div>
 
@@ -170,7 +221,7 @@ $category = $row["category"];
                 </div>
                 <div class="row">           
                     <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
-                        <label  class="form-label" for="preparation">Preparación: </label>
+                        <label  class="form-label is-required" for="preparation">Preparación: </label>
                         <textarea name="preparation"  cols="30" rows="10" class="form-control" id="preparation" required>
                             <?php echo $preparation;?>
                         </textarea>
@@ -212,7 +263,7 @@ $category = $row["category"];
                 <form method="POST" action="create.php?rname=<?php echo $recipeName;?>" onsubmit="return validationNumber('quantity')">
 
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="quantity">Cantidad: </label>                    
+                        <label class="input-group-text is-required" for="quantity">Cantidad: </label>                    
                         <input class="form-control" type="number" name="qty" id="quantity" step="0.05" max="1000" min="0" required>
                     </div>
 

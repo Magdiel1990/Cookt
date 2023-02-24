@@ -31,7 +31,7 @@ require_once ("../modules/nav.php");
             <form class="m-4 text-center" method="POST" action="../actions/create.php">
                 <div class="d-sm-flex justify-content-around">
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="quantity">Cantidad: </label>                    
+                        <label class="input-group-text is-required" for="quantity">Cantidad: </label>                    
                         <input class="form-control" type="number" name="quantity" id="quantity" step="0.05" max="1000" min="0" autofocus required>
                     </div>
                     <div class="input-group mb-3">
@@ -106,7 +106,7 @@ require_once ("../modules/nav.php");
             <form class="m-4 col-auto text-center" id="form" method="POST" action="../actions/create.php" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
             
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="recipename">Nombre: </label>
+                    <label class="input-group-text is-required" for="recipename">Nombre: </label>
                     <input  class="form-control" type="text" id="recipename" name="recipename" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" max-length="50" min-length="7" required>             
                 </div>
                 
@@ -140,7 +140,7 @@ require_once ("../modules/nav.php");
             
                 <div class="row">
                     <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
-                        <label for="preparation" class="form-label">Preparación: </label>
+                        <label for="preparation" class="form-label is-required">Preparación: </label>
                         <textarea class="form-control" name="preparation" id="preparation" cols="30" rows="10" required></textarea>
                     </div>           
                     <div class="col-sm-6 col-md-6 col-lg-6 mb-3">

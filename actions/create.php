@@ -75,6 +75,73 @@ if(isset($_POST['add_units'])){
 
 
 /************************************************************************************************/
+/***************************************CATEGORIES ADITION CODE**************************************/
+/************************************************************************************************/
+
+
+//receive the data
+if(isset($_POST['add_categories'])){
+  $category = sanitization($_POST['add_categories'], FILTER_SANITIZE_STRING, $conn);
+
+  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
+  
+
+  if ($category == ""){
+  //Message if the variable is null.
+      $_SESSION['message'] = '¡Escriba la categoría por favor!';
+      $_SESSION['message_alert'] = "danger";
+          
+  //The page is redirected to the add_units.php
+      header('Location: ../views/add_categories.php');
+  } elseif (!preg_match($pattern, $category)){
+      //Message if the variable is null.
+      $_SESSION['message'] = '¡Categoría incorrecta!';
+      $_SESSION['message_alert'] = "danger";
+          
+  //The page is redirected to the add_units.php
+       header('Location: ../views/add_categories.php');
+  } else {
+
+  //lowercase the variable
+    $category = strtolower($category);
+
+    $sql = "SELECT category FROM categories WHERE category = '$category';";
+
+    $num_rows = $conn -> query($sql) -> num_rows;
+
+      if($num_rows != 0){
+    //It already exists.
+          $_SESSION['message'] = '¡Ya ha sido agregado!';
+          $_SESSION['message_alert'] = "success";
+
+    //The page is redirected to the add_units.php.
+          header('Location: ../views/add_categories.php');
+      }  else {
+      $sql = "INSERT INTO categories (category) VALUES ('$category');";
+
+      if ($conn->query($sql) === TRUE) {
+    //Success message.
+          $_SESSION['message'] = '¡Unidad agregada con éxito!';
+          $_SESSION['message_alert'] = "success";
+              
+    //The page is redirected to the add_units.php.
+          header('Location: ../views/add_categories.php');
+
+        } else {
+    //Failure message.
+          $_SESSION['message'] = '¡Error al agregar unidad!';
+          $_SESSION['message_alert'] = "danger";
+              
+    //The page is redirected to the add_units.php.
+          header('Location: ../views/add_categories.php');
+        }
+    }
+  }
+}
+
+
+
+/************************************************************************************************/
 /***************************************INGREDIENT ADITION CODE*********************************/
 /************************************************************************************************/
 

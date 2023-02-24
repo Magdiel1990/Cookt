@@ -23,14 +23,14 @@ $result = $conn -> query($sql);
 //If there's no record with that name, a message is sent.
     if(!$result){
 //Creation of the message of error deleting the receta.
-        $_SESSION['message'] = 'Error al eliminar la receta!';
+        $_SESSION['message'] = '¡Error al eliminar la receta!';
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the index.php.
         header('Location: ../index.php');
     } else {
 //Creation of the message of success deleting the receta.
-        $_SESSION['message'] = 'Receta eliminada!';
+        $_SESSION['message'] = '¡Receta eliminada!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the index.php.
@@ -59,14 +59,14 @@ $result = $conn -> query($sql);
 
     if($result !== true){
 //Creation of the message of error deleting the receta.
-        $_SESSION['message'] = 'Error al eliminar la unidad!';
+        $_SESSION['message'] = '¡Error al eliminar la unidad!';
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add_units.php
         header('Location: ../views/add_units.php');
     } else {
 //Creation of the message of success deleting the receta.
-        $_SESSION['message'] = 'Unidad eliminada!';
+        $_SESSION['message'] = '¡Unidad eliminada!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add_units.php.
@@ -76,8 +76,46 @@ $result = $conn -> query($sql);
 
 
 /************************************************************************************************/
+/***************************************CATEGORY DELETION CODE***************************************/
+/************************************************************************************************/
+
+
+//Verifying that the id value comes with data.
+if(isset($_GET['categoryname'])){
+    
+//Getting the name.
+$categoryName = $_GET['categoryname'];
+
+//Deleting the register with the name received.
+$sql = "DELETE FROM categories WHERE category = '$categoryName';";
+
+$result = $conn -> query($sql);
+
+//If there's no record with that name, a message is sent.
+
+    if($result !== true){
+//Creation of the message of error deleting the receta.
+        $_SESSION['message'] = '¡Error al eliminar la categoría!';
+        $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the add_units.php
+        header('Location: ../views/add_categories.php');
+    } else {
+//Creation of the message of success deleting the receta.
+        $_SESSION['message'] = '¡Categoría eliminada!';
+        $_SESSION['message_alert'] = "success";
+
+//After the receta has been deleted, the page is redirected to the add_units.php.
+        header('Location: ../views/add_categories.php');
+    }
+} 
+
+
+
+/************************************************************************************************/
 /*****************************INGREDIENT DELETION FROM REHOLDER CODE*****************************/
 /************************************************************************************************/
+
 
 //Verifying that the id value comes with data.
 if(isset($_GET['id'])){
@@ -94,14 +132,14 @@ $result = $conn -> query($sql);
 
     if(!$result){
 //Creation of the message of error deleting the receta.
-        $_SESSION['message'] = 'Error al eliminar ingrediente!';
+        $_SESSION['message'] = '¡Error al eliminar ingrediente!';
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add_units.php
         header('Location: ../views/add_recipe.php');
     } else {
 //Creation of the message of success deleting the receta.
-        $_SESSION['message'] = 'Ingrediente eliminado!';
+        $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add_units.php.
@@ -128,14 +166,14 @@ $result = $conn -> query($sql);
 
     if(!$result){
     //Creation of the message of error deleting the receta.
-        $_SESSION['message'] = 'Error al eliminar ingrediente!';
+        $_SESSION['message'] = '¡Error al eliminar ingrediente!';
         $_SESSION['message_alert'] = "danger";
 
     //The page is redirected to the add_units.php
         header('Location: ../views/add_ingredients.php');
     } else {
     //Creation of the message of success deleting the receta.
-        $_SESSION['message'] = 'Ingrediente eliminado!';
+        $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
     //After the receta has been deleted, the page is redirected to the add_units.php.
@@ -160,14 +198,14 @@ $result = $conn -> query($sql);
 
     if($result !== true){
 //Creation of the message of error deleting the receta.
-        $_SESSION['message'] = 'Error al eliminar el ingrediente!';
+        $_SESSION['message'] = '¡Error al eliminar el ingrediente!';
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add_units.php
         header('Location: ../views/custom_recipe.php');
     } else {
 //Creation of the message of success deleting the receta.
-        $_SESSION['message'] = 'Ingrediente eliminado!';
+        $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add_units.php.
@@ -201,14 +239,14 @@ $result = $conn -> query($sql);
 
     if(!$result){
 //Creation of the message of error deleting the receta.
-        $_SESSION['message'] = 'Error al eliminar ingrediente!';
+        $_SESSION['message'] = '¡Error al eliminar ingrediente!';
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add_units.php
         header("Location: edit.php?recipename=". $recipeName);
     } else {
 //Creation of the message of success deleting the receta.
-        $_SESSION['message'] = 'Ingrediente eliminado!';
+        $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add_units.php.
