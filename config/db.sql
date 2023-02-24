@@ -35,11 +35,12 @@ CREATE TABLE `users` (
   `fullname` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `status` varchar(15) NOT NULL,
+  `email`  varchar(70) unique,
   PRIMARY KEY (`userid`),
   UNIQUE KEY `username` (`username`)
 );
 
-INSERT INTO `users` (username, fullname, password, status) VALUES ('Admin', 'Magdiel Castillo', '123456', 'Admin');
+INSERT INTO `users` (username, fullname, password, status, email) VALUES ('Admin', 'Magdiel Castillo', '123456', 'Admin', 'magdielmagdiel1@gmail.com');
 
 CREATE TABLE `ingholder` (
   `ingid` int NOT NULL AUTO_INCREMENT,
@@ -124,7 +125,3 @@ CREATE TABLE `reholder` (
 
 
 INSERT INTO `reholder` VALUES (56,'azúcar',6.00,'cucharaditas',NULL);
-
-
-
-

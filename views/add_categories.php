@@ -27,11 +27,19 @@ require_once ("../modules/nav.php");
     ?>
     <h3>AGREGAR CATEGORÍAS</h3>
 <!--Form for filtering the database info-->
-        <form class="mt-3 col-auto" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
+        <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
+            
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="add_categories">Categoría: </label>
                 <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" minlength="2" maxlength="50" autofocus required>
-                <input  class="btn btn-primary" type="submit" value="Agregar">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="categoryImage">Foto de la categoría</label>
+                <input type="file" name="categoryImage" class="form-control" id="categoryImage">
+            </div> 
+            <div class="mb-3">
+                <input  class="btn btn-primary" name="categorySubmit" type="submit" value="Agregar">
             </div>
         </form>
     </div>

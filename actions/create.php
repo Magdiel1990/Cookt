@@ -80,8 +80,9 @@ if(isset($_POST['add_units'])){
 
 
 //receive the data
-if(isset($_POST['add_categories'])){
+if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
   $category = sanitization($_POST['add_categories'], FILTER_SANITIZE_STRING, $conn);
+  $categoryImage = $_FILES["categoryImage"];
 
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
   
@@ -108,6 +109,7 @@ if(isset($_POST['add_categories'])){
     $sql = "SELECT category FROM categories WHERE category = '$category';";
 
     $num_rows = $conn -> query($sql) -> num_rows;
+    
 
       if($num_rows != 0){
     //It already exists.
@@ -118,23 +120,50 @@ if(isset($_POST['add_categories'])){
           header('Location: ../views/add_categories.php');
       }  else {
       $sql = "INSERT INTO categories (category) VALUES ('$category');";
-
-      if ($conn->query($sql) === TRUE) {
-    //Success message.
-          $_SESSION['message'] = '¡Unidad agregada con éxito!';
-          $_SESSION['message_alert'] = "success";
-              
-    //The page is redirected to the add_units.php.
-          header('Location: ../views/add_categories.php');
-
-        } else {
-    //Failure message.
-          $_SESSION['message'] = '¡Error al agregar unidad!';
-          $_SESSION['message_alert'] = "danger";
-              
-    //The page is redirected to the add_units.php.
-          header('Location: ../views/add_categories.php');
+        
+      $myFolder = '../imgs/categories/' . $category;
+        if (!file_exists($myFolder)) {
+          mkdir($myFolder, 0777, true);
         }
+
+      $target_dir = "../imgs/categories/" . $category . "/";
+      $target_file = $target_dir . basename($categoryImage["name"]);
+      $uploadOk = 1;
+      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+     
+      // Check if file already exists
+      if (file_exists($target_file)) {
+        $uploadOk = 0;
+      }
+
+      // Check file size
+      if ($categoryImage["size"] > 2000000) {
+        $uploadOk = 0;
+      }
+
+      // Allow certain file formats
+      if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+      && $imageFileType != "gif" ) {
+        $uploadOk = 0;
+        echo "error 3";
+      } 
+
+    if ($conn->query($sql) === TRUE && $uploadOk == 1 && move_uploaded_file($categoryImage["tmp_name"], $target_file)) {
+  //Success message.
+        $_SESSION['message'] = '¡Unidad agregada con éxito!';
+        $_SESSION['message_alert'] = "success";
+        
+    //The page is redirected to the add_units.php.
+          header('Location: ../views/add_categories.php');    
+
+    } else {
+  //Failure message.
+        $_SESSION['message'] = '¡Error al agregar categoría!';
+        $_SESSION['message_alert'] = "danger";
+        
+    //The page is redirected to the add_units.php.
+          header('Location: ../views/add_categories.php');
+      }
     }
   }
 }
