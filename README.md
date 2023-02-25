@@ -16,3 +16,4 @@ Al borrar categoria que se borre la imagen
 edicion de categoria e imagen
 cuando imagen is null
 poner la imagen al lado de la categoria en la tabla principal
+validar agregar categoria del lado del cliente

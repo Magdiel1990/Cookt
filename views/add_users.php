@@ -25,30 +25,50 @@ require_once ("../modules/nav.php");
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>
-    <h3>AGREGAR CATEGORÍAS</h3>
+    <h3>AGREGAR USUARIOS</h3>
 <!--Form for filtering the database info-->
-        <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
+        <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="../actions/create.php" autocomplete="on">
             
             <div class="input-group mb-3">
-                <label class="input-group-text is-required" for="add_categories">Categoría: </label>
+                <label class="input-group-text is-required" for="add_categories">Nombre Completo: </label>
+                <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" minlength="2" maxlength="50" autofocus required>
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text is-required" for="add_categories">Usuario: </label>
+                <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" minlength="2" maxlength="50" autofocus required>
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text is-required" for="add_categories">Contraseña: </label>
+                <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" minlength="2" maxlength="50" autofocus required>
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text is-required" for="add_categories">Permisos: </label>
+                <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" minlength="2" maxlength="50" autofocus required>
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text is-required" for="add_categories">Email: </label>
                 <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" minlength="2" maxlength="50" autofocus required>
             </div>
 
             <div class="mb-3">
-                <label class="form-label is-required" for="categoryImage">Foto de la categoría</label>
-                <input type="file" name="categoryImage" accept=".png, .jpeg, .jpg, .gif" class="form-control" id="categoryImage" required>
-            </div> 
-            <div class="mb-3">
                 <input  class="btn btn-primary" name="categorySubmit" type="submit" value="Agregar">
             </div>
+
         </form>
     </div>
     <div>
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th>Categorías</th>
-                    <th>Acciones</th>
+                    <th>Nombre</th>
+                    <th>Usuario</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>                     
                 </tr>
             </thead>
             <tbody>                

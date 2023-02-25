@@ -86,26 +86,44 @@ if(isset($_GET['categoryname'])){
 //Getting the name.
 $categoryName = $_GET['categoryname'];
 
-//Deleting the register with the name received.
-$sql = "DELETE FROM categories WHERE category = '$categoryName';";
+$arrCategoryFiles = array();
+$iterator = new FilesystemIterator("../imgs/categories");
 
-$result = $conn -> query($sql);
+    foreach($iterator as $fileName) {
+        $arrCategoryFiles[] = pathinfo($fileName->getFilename(), PATHINFO_FILENAME);
+        $arrCategoryExt[] = pathinfo($fileName->getFilename(), PATHINFO_EXTENSION);
+    }
 
-//If there's no record with that name, a message is sent.
+    if (in_array($categoryName, $arrCategoryFiles)){
+        $fileIndex = array_search($categoryName, $arrCategoryFiles);
+        $fileExt = $arrCategoryExt[$fileIndex];
+
+        $categoryDir = "../imgs/categories/" . $categoryName . "." . $fileExt;
+
+        if(is_file($categoryDir)){
+            unlink($categoryDir);
+        }
+    }    
+    //Deleting the register with the name received.
+    $sql = "DELETE FROM categories WHERE category = '$categoryName';";
+
+    $result = $conn -> query($sql);
+
+    //If there's no record with that name, a message is sent.
 
     if($result !== true){
-//Creation of the message of error deleting the receta.
+    //Creation of the message of error deleting the receta.
         $_SESSION['message'] = '¡Error al eliminar la categoría!';
         $_SESSION['message_alert'] = "danger";
 
-//The page is redirected to the add_units.php
+    //The page is redirected to the add_units.php
         header('Location: ../views/add_categories.php');
     } else {
-//Creation of the message of success deleting the receta.
+    //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Categoría eliminada!';
         $_SESSION['message_alert'] = "success";
 
-//After the receta has been deleted, the page is redirected to the add_units.php.
+    //After the receta has been deleted, the page is redirected to the add_units.php.
         header('Location: ../views/add_categories.php');
     }
 } 

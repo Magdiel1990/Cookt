@@ -138,7 +138,7 @@ $category = $row["category"];
     <div class="row mt-2 text-center justify-content-center">
         <h3>EDITAR CATEGORÍA</h3>     
         <div class="mt-3 col-auto">
-            <form  enctype="multipart/formdata" class="bg-form card card-body" action="update.php?categoryid=<?php echo $categoryId; ?>" method="POST">
+            <form  enctype="multipart/form-data" class="bg-form card card-body" action="update.php?categoryid=<?php echo $categoryId; ?>" method="POST">
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="categoryName">Nombre: </label>
@@ -147,10 +147,10 @@ $category = $row["category"];
 
                 <div class="mb-3">
                     <label class="form-label" for="categoryImage">Foto de la categoría</label>
-                    <input type="file" name="categoryImage" class="form-control" id="categoryImage">
+                    <input type="file" name="categoryImage" accept=".png, .jpeg, .jpg, .gif" class="form-control" id="categoryImage">
                 </div> 
                 <div class="mt-2">
-                    <input class="btn btn-primary" type="submit" value="Editar">
+                    <input class="btn btn-primary" type="submit" value="Editar" name="categoryeditionsubmit">
                     <a href="../views/add_categories.php" class="btn btn-secondary">Regresar</a>
                 </div>
                 </form>
@@ -166,7 +166,7 @@ $category = $row["category"];
 /************************************************************************************************/
 
 
-if(isset($_GET['recipename'])){
+if(isset($_GET['recipename'])) {
 $recipeName = $_GET['recipename'];
 
 $sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipeName';";
@@ -305,9 +305,9 @@ $category = $row["category"];
 </main>
 
 <?php
-$conn -> close();
-    
 }
+$conn -> close();    
+
 //Footer of the page.
 require_once ("../modules/footer.php");
 ?>

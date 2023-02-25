@@ -29,18 +29,30 @@ CREATE TABLE `ingredients` (
 
 INSERT INTO `ingredients` VALUES (26,'azúcar'),(25,'harina'),(27,'huevos'),(28,'mantequilla'),(30,'sal');
 
+CREATE TABLE `type` (
+typeid int NOT NULL AUTO_INCREMENT,
+type varchar(15) NOT NULL unique,
+description text,
+primary key (typeid)
+);
+
+INSERT INTO `type` (type) VALUES ('Admin'), ('Standard');
+
 CREATE TABLE `users` (
   `userid` int NOT NULL AUTO_INCREMENT,
   `username` varchar(30) NOT NULL,
   `fullname` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `status` varchar(15) NOT NULL,
+  `type` varchar(15) NOT NULL,
   `email`  varchar(70) unique,
+  `state` boolean not null,
   PRIMARY KEY (`userid`),
-  UNIQUE KEY `username` (`username`)
+  UNIQUE KEY `username` (`username`),
+  CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO `users` (username, fullname, password, status, email) VALUES ('Admin', 'Magdiel Castillo', '123456', 'Admin', 'magdielmagdiel1@gmail.com');
+
+INSERT INTO `users` (username, fullname, password, type, email , state) VALUES ('Admin', 'Magdiel Castillo', '123456', 'Admin', 'magdielmagdiel1@gmail.com', 1);
 
 CREATE TABLE `ingholder` (
   `ingid` int NOT NULL AUTO_INCREMENT,
@@ -99,9 +111,6 @@ CREATE TABLE `recipeinfo` (
 
 
 INSERT INTO `recipeinfo` VALUES (20,'Sopa de pato',6.00,'unidades','huevos'),(21,'Sopa de pato',4.00,'gramos','mantequilla'),(22,'Sopa de pato',7.00,'gramos','harina'),(23,'Bizcocho de chocolate',7.00,'gramos','mantequilla'),(24,'Bizcocho de chocolate',4.00,'unidades','huevos'),(26,'Bizcocho de chocolate',6.00,'gramos','sal');
-
-
-DROP VIEW IF EXISTS `recipeinfoview`;
 
 CREATE VIEW `recipeinfoview` AS select `r`.`recipeid` AS `recipeid`,`r`.`recipename` AS `recipename`,`r`.`date` AS `date`,`r`.`cookingtime` AS `cookingtime`,`r`.`preparation` AS `preparation`,`r`.`observation` AS `observation`,`c`.`category` AS `category` from (`recipe` `r` join `categories` `c` on((`r`.`categoryid` = `c`.`categoryid`)));
 

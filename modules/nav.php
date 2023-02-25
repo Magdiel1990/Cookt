@@ -24,6 +24,7 @@
                 <a class="dropdown-item" href="./views/add_ingredients.php">Ingredientes</a>
                 <a class="dropdown-item" href="./views/add_recipe.php">Recetas</a>
                 <a class="dropdown-item" href="./views/add_categories.php">Categorías</a>
+                <a class="dropdown-item" href="./views/add_users.php">Usuarios</a>
                 </div>
             </li>
             </ul>

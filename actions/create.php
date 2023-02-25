@@ -53,7 +53,7 @@ if(isset($_POST['add_units'])){
       }  else {
       $sql = "INSERT INTO units (unit) VALUES ('$unit')";
 
-      if ($conn->query($sql) === TRUE) {
+      if ($conn->query($sql)) {
     //Success message.
           $_SESSION['message'] = '¡Unidad agregada con éxito!';
           $_SESSION['message_alert'] = "success";
@@ -87,9 +87,9 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
   
 
-  if ($category == ""){
+  if ($category == "" || $categoryImage ['name'] == null){
   //Message if the variable is null.
-      $_SESSION['message'] = '¡Escriba la categoría por favor!';
+      $_SESSION['message'] = '¡Escriba la categoría o cargue la imagen!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
@@ -121,49 +121,63 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
       }  else {
       $sql = "INSERT INTO categories (category) VALUES ('$category');";
         
-      $myFolder = '../imgs/categories/' . $category;
-        if (!file_exists($myFolder)) {
-          mkdir($myFolder, 0777, true);
-        }
+      $categoryImagesDir = "../imgs/categories";
+      if (!file_exists($categoryImagesDir)) {
+          mkdir($categoryImagesDir, 0777, true);
+      }
 
-      $target_dir = "../imgs/categories/" . $category . "/";
-      $target_file = $target_dir . basename($categoryImage["name"]);
-      $uploadOk = 1;
-      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-     
+      $target_dir = "../imgs/categories/";
+      $fileExtension = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
+      $target_file = $target_dir . $category . "." . $fileExtension;
+      $uploadOk = "";
+      
+      // Check if image file is a actual image or fake image
+      if(isset($_POST["categorySubmit"])) {
+        $check = getimagesize($categoryImage["tmp_name"]);
+        if($check == false) {
+            $uploadOk = "¡Este archivo no es una imagen!";
+        } 
+      }
       // Check if file already exists
       if (file_exists($target_file)) {
-        $uploadOk = 0;
+        $uploadOk = "¡Esta imagen ya existe!";
       }
 
       // Check file size
       if ($categoryImage["size"] > 2000000) {
-        $uploadOk = 0;
+        $uploadOk = "¡Esta imagen ya existe!";
       }
 
       // Allow certain file formats
-      if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-      && $imageFileType != "gif" ) {
-        $uploadOk = 0;
-        echo "error 3";
+      if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "jpeg"
+      && $fileExtension != "gif" ) {
+        $uploadOk = "¡Formato no admitido!";
       } 
 
-    if ($conn->query($sql) === TRUE && $uploadOk == 1 && move_uploaded_file($categoryImage["tmp_name"], $target_file)) {
-  //Success message.
-        $_SESSION['message'] = '¡Unidad agregada con éxito!';
-        $_SESSION['message_alert'] = "success";
-        
-    //The page is redirected to the add_units.php.
-          header('Location: ../views/add_categories.php');    
+    if ($uploadOk == "") {
+        if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $conn->query($sql)){
+          //Success message.
+          $_SESSION['message'] = '¡Categoría agregada con éxito!';
+          $_SESSION['message_alert'] = "success";
 
-    } else {
-  //Failure message.
+          //The page is redirected to the add_units.php.
+          header('Location: ../views/add_categories.php');    
+        } else {
+        //Failure message.
         $_SESSION['message'] = '¡Error al agregar categoría!';
         $_SESSION['message_alert'] = "danger";
-        
-    //The page is redirected to the add_units.php.
-          header('Location: ../views/add_categories.php');
+
+        //The page is redirected to the add_units.php.
+        header('Location: ../views/add_categories.php'); 
       }
+    } else {
+        //Failure message.
+        $_SESSION['message'] = $uploadOk;
+        $_SESSION['message_alert'] = "danger";
+
+        //The page is redirected to the add_units.php.
+        header('Location: ../views/add_categories.php'); 
+    }
     }
   }
 }
@@ -216,7 +230,7 @@ if(isset($_POST['add_ingredient'])){
 
       $sql = "INSERT INTO ingredients (ingredient) VALUES ('$ingredient')";
 
-      if ($conn->query($sql) === TRUE) {
+      if ($conn->query($sql)) {
     //Success message.
           $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
           $_SESSION['message_alert'] = "success";
@@ -266,7 +280,7 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
 
     $sql = "INSERT INTO reholder (ingredient, quantity, unit) VALUES ('$ingredient', '$quantity', '$unit');";
 
-      if ($conn->query($sql) === TRUE) {
+      if ($conn->query($sql)) {
     //Success message.
           $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
           $_SESSION['message_alert'] = "success";
@@ -318,7 +332,7 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
 
     $sql = "INSERT INTO recipeinfo (recipename, ingredient, quantity, unit) VALUES ('$recipeName', '$ingredient', '$quantity', '$unit');";
 
-      if ($conn->query($sql) === TRUE) {
+      if ($conn->query($sql)) {
     //Success message.
           $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
           $_SESSION['message_alert'] = "success";
@@ -412,7 +426,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
       $sql = "DELETE FROM reholder /*WHERE username = 'Admin'*/;";
       $conn -> query($sql);   
 
-      if ($conn -> query($sql) === TRUE) {
+      if ($conn -> query($sql)) {
       //Success message.
         $_SESSION['message'] = '¡Receta agregada exitosamente!';
         $_SESSION['message_alert'] = "success";
@@ -462,7 +476,7 @@ if(isset($_POST['customingredient'])){
 
     $sql = "INSERT INTO ingholder (ingredient) VALUES ('$ingredient');";
 
-    if ($conn->query($sql) === TRUE) {
+    if ($conn->query($sql)) {
   //Success message.
         $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
         $_SESSION['message_alert'] = "success";
