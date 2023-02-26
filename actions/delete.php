@@ -233,7 +233,7 @@ $result = $conn -> query($sql);
 
 
 /************************************************************************************************/
-/*****************************INGREDIENT DELETION FROM RECIPE CODE*****************************/
+/*****************************INGREDIENT DELETION FROM RECIPE CODE*******************************/
 /************************************************************************************************/
 
 
@@ -272,6 +272,41 @@ $result = $conn -> query($sql);
     }
 }
 
+
+/************************************************************************************************/
+/***************************************USER DELETION CODE***************************************/
+/************************************************************************************************/
+
+
+//Verifying that the id value comes with data.
+if(isset($_GET['userid'])) {
+    
+//Getting the name.
+$userId = $_GET['userid'];
+
+//Deleting the register with the name received.
+$sql = "DELETE FROM users WHERE userid = '$userId';";
+
+$result = $conn -> query($sql);
+
+//If there's no record with that name, a message is sent.
+
+    if(!$result){
+//Creation of the message of error deleting the receta.
+        $_SESSION['message'] = '¡Error al eliminar usuario!';
+        $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the add_units.php
+        header("Location: ../views/add-users.php");
+    } else {
+//Creation of the message of success deleting the receta.
+        $_SESSION['message'] = '¡Usuario eliminado!';
+        $_SESSION['message_alert'] = "success";
+
+//After the receta has been deleted, the page is redirected to the add_units.php.
+        header("Location: ../views/add-users.php");
+    }
+}
 //Exiting the connection to the database.
 $conn -> close(); 
 

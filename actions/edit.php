@@ -375,7 +375,7 @@ if($state == 1) {
                     <input class="form-control" value="<?php echo $password; ?>" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">
                 </div>
 
-                <div style="<?php echo $userNmeLaabelState;?>" class="input-group mb-3">
+                <div style="<?php echo $userNameLabelState;?>" class="input-group mb-3">
                     <label class="input-group-text" for="userrol">Rol: </label>
                     <select class="form-select" name="userrol" id="userrol" <?php echo $userNameState; ?>>
                     <?php
