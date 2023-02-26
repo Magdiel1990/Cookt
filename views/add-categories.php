@@ -12,7 +12,7 @@ require_once ("../modules/head.php");
 require_once ("../modules/nav.php");
 ?>
 
-<link rel="stylesheet" href="../styles/styles.css">
+<link rel="stylesheet" href="../css/styles.css">
 
 <main class="container p-4">
     <div class="row mt-2 text-center justify-content-center">
@@ -25,13 +25,21 @@ require_once ("../modules/nav.php");
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>
-    <h3>AGREGAR UNIDADES</h3>
+    <h3>AGREGAR CATEGORÍAS</h3>
 <!--Form for filtering the database info-->
-        <form class="mt-3 col-auto" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation('add_units', /[a-zA-Z\t\h]+|(^$)/)">
+        <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
+            
             <div class="input-group mb-3">
-                <label class="input-group-text is-required" for="add_units">Unidad: </label>
-                <input class="form-control" type="text" id="add_units" name="add_units"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="50" autofocus required>
-                <input  class="btn btn-primary" type="submit" value="Agregar">
+                <label class="input-group-text is-required" for="add_categories">Categoría: </label>
+                <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="50" autofocus required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label is-required" for="categoryImage">Foto de la categoría</label>
+                <input type="file" name="categoryImage" accept=".png, .jpeg, .jpg, .gif" class="form-control" id="categoryImage" required>
+            </div> 
+            <div class="mb-3">
+                <input  class="btn btn-primary" name="categorySubmit" type="submit" value="Agregar">
             </div>
         </form>
     </div>
@@ -39,21 +47,22 @@ require_once ("../modules/nav.php");
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th>Unidades</th>
+                    <th>Categorías</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>                
                 <?php
-                    $sql = "SELECT unit FROM units ORDER BY unit;";
+                    $sql = "SELECT * FROM categories ORDER BY category;";
 
                     $result = $conn -> query($sql);
                     if($result -> num_rows > 0){
                         while($row = $result -> fetch_assoc()){
                             $html = "<tr>";
-                            $html .= "<td>" . ucfirst($row['unit']) . "</td>";
+                            $html .= "<td>" . ucfirst($row['category']) . "</td>";
                             $html .= "<td>";
-                            $html .= "<a href='../actions/delete.php?unitname=" . $row['unit'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                            $html .= "<a href='../actions/delete.php?categoryname=" . $row['category'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                            $html .= "<a href='../actions/edit.php?categoryid=" . $row['categoryid'] . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
                             $html .= "</td>";
                             $html .= "</tr>";
                             echo $html;
@@ -61,7 +70,7 @@ require_once ("../modules/nav.php");
                     } else {
                         $html = "<tr>";
                         $html .= "<td colspan='2'>";
-                        $html .= "Agrega las unidades...";
+                        $html .= "Agrega las categorías...";
                         $html .= "</td>";
                         $html .= "</tr>";
                         echo $html;      

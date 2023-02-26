@@ -10,21 +10,21 @@
                 <a class="nav-link" href="index.php">Recetas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./views/random_recipe.php">Sugerencias</a>
+                <a class="nav-link" href="./views/random-recipe.php">Sugerencias</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./views/custom_recipe.php">Elegir por ingredientes</a>
+                <a class="nav-link" href="./views/custo-_recipe.php">Elegir por ingredientes</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Administración
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="./views/add_units.php">Unidades</a>
-                <a class="dropdown-item" href="./views/add_ingredients.php">Ingredientes</a>
-                <a class="dropdown-item" href="./views/add_recipe.php">Recetas</a>
-                <a class="dropdown-item" href="./views/add_categories.php">Categorías</a>
-                <a class="dropdown-item" href="./views/add_users.php">Usuarios</a>
+                <a class="dropdown-item" href="./views/add-units.php">Unidades</a>
+                <a class="dropdown-item" href="./views/add-ingredients.php">Ingredientes</a>
+                <a class="dropdown-item" href="./views/add-recipe.php">Recetas</a>
+                <a class="dropdown-item" href="./views/add-categories.php">Categorías</a>
+                <a class="dropdown-item" href="./views/add-users.php">Usuarios</a>
                 </div>
             </li>
             </ul>

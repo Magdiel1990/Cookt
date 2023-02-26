@@ -12,7 +12,7 @@ require_once ("../models/models.php");
 require_once ("../config/db_Connection.php");
 ?>
 
-<link rel="stylesheet" href="../styles/styles.css">
+<link rel="stylesheet" href="../css/styles.css">
 
 <?php
 /************************************************************************************************/
@@ -42,7 +42,7 @@ $unit = $row["unit"];
         $_SESSION['message_alert'] = "danger";
             
     //The page is redirected to the add_units.php
-        header('Location: ../views/add_recipe.php');
+        header('Location: ../views/add-recipe.php');
 
     } else {
 ?>        
@@ -99,7 +99,7 @@ $unit = $row["unit"];
                 
                 <div class="mb-3">
                     <input class='btn btn-primary' type="submit" name="edit" value="Actualizar"> 
-                    <a href='../views/add_recipe.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
+                    <a href='../views/add-recipe.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
                 </div>
             </form>
         </div>
@@ -151,7 +151,7 @@ $category = $row["category"];
                 </div> 
                 <div class="mt-2">
                     <input class="btn btn-primary" type="submit" value="Editar" name="categoryeditionsubmit">
-                    <a href="../views/add_categories.php" class="btn btn-secondary">Regresar</a>
+                    <a href="../views/add-categories.php" class="btn btn-secondary">Regresar</a>
                 </div>
                 </form>
             </div>

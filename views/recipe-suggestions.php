@@ -12,7 +12,7 @@ require_once ("../modules/head.php");
 require_once ("../modules/nav.php");
 ?>
 
-<link rel="stylesheet" href="../styles/styles.css">
+<link rel="stylesheet" href="../css/styles.css">
 
 <main class="container p-4">
     <div  class="my-4 text-center">
@@ -42,14 +42,14 @@ require_once ("../modules/nav.php");
         if($result -> num_rows > 0){
             $html .= "<ol>";
             while($row = $result -> fetch_assoc()) {            
-                $html .= "<li><a href='../views/recipe_viewer.php?recipe=" . $row['recipename'] . "'>" . $row['recipename'] . "</a></li>";
+                $html .= "<li><a href='../views/recipes.php?recipe=" . $row['recipename'] . "'>" . $row['recipename'] . "</a></li>";
             } 
             $html .= "</ol>";
-            $html .= "<a class='btn btn-secondary' href='custom_recipe.php'>Regresar</a>";
+            $html .= "<a class='btn btn-secondary' href='custom-recipe.php'>Regresar</a>";
             echo $html;
         } else {
                 $html .= "<p class='text-center'>Ninguna receta disponible!";
-                $html .= "<a class='btn btn-secondary' href='custom_recipe.php'>Regresar</a>";
+                $html .= "<a class='btn btn-secondary' href='custom-recipe.php'>Regresar</a>";
                 $html .= "</p>";
 
                 echo $html;

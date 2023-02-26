@@ -25,15 +25,15 @@ if(isset($_POST['add_units'])){
       $_SESSION['message'] = '¡Escriba la unidad por favor!';
       $_SESSION['message_alert'] = "danger";
           
-  //The page is redirected to the add_units.php
-      header('Location: ../views/add_units.php');
+  //The page is redirected to the add-units.php
+      header('Location: ../views/add-units.php');
   } elseif (!preg_match($pattern, $unit)){
       //Message if the variable is null.
       $_SESSION['message'] = '¡Unidad incorrecta!';
       $_SESSION['message_alert'] = "danger";
           
-  //The page is redirected to the add_units.php
-       header('Location: ../views/add_units.php');
+  //The page is redirected to the add-units.php
+       header('Location: ../views/add-units.php');
   } else {
 
   //lowercase the variable
@@ -48,8 +48,8 @@ if(isset($_POST['add_units'])){
           $_SESSION['message'] = '¡Ya ha sido agregado!';
           $_SESSION['message_alert'] = "success";
 
-    //The page is redirected to the add_units.php.
-          header('Location: ../views/add_units.php');
+    //The page is redirected to the add-units.php.
+          header('Location: ../views/add-units.php');
       }  else {
       $sql = "INSERT INTO units (unit) VALUES ('$unit')";
 
@@ -58,16 +58,16 @@ if(isset($_POST['add_units'])){
           $_SESSION['message'] = '¡Unidad agregada con éxito!';
           $_SESSION['message_alert'] = "success";
               
-    //The page is redirected to the add_units.php.
-          header('Location: ../views/add_units.php');
+    //The page is redirected to the add-units.php.
+          header('Location: ../views/add-units.php');
 
         } else {
     //Failure message.
           $_SESSION['message'] = '¡Error al agregar unidad!';
           $_SESSION['message_alert'] = "danger";
               
-    //The page is redirected to the add_units.php.
-          header('Location: ../views/add_units.php');
+    //The page is redirected to the add-units.php.
+          header('Location: ../views/add-units.php');
         }
     }
   }
@@ -93,14 +93,14 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
-      header('Location: ../views/add_categories.php');
+      header('Location: ../views/add-categories.php');
   } elseif (!preg_match($pattern, $category)){
       //Message if the variable is null.
       $_SESSION['message'] = '¡Categoría incorrecta!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
-       header('Location: ../views/add_categories.php');
+       header('Location: ../views/add-categories.php');
   } else {
 
   //lowercase the variable
@@ -117,7 +117,7 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
           $_SESSION['message_alert'] = "success";
 
     //The page is redirected to the add_units.php.
-          header('Location: ../views/add_categories.php');
+          header('Location: ../views/add-categories.php');
       }  else {
       $sql = "INSERT INTO categories (category) VALUES ('$category');";
         
@@ -161,14 +161,14 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
           $_SESSION['message_alert'] = "success";
 
           //The page is redirected to the add_units.php.
-          header('Location: ../views/add_categories.php');    
+          header('Location: ../views/add-categories.php');    
         } else {
         //Failure message.
         $_SESSION['message'] = '¡Error al agregar categoría!';
         $_SESSION['message_alert'] = "danger";
 
         //The page is redirected to the add_units.php.
-        header('Location: ../views/add_categories.php'); 
+        header('Location: ../views/add-categories.php'); 
       }
     } else {
         //Failure message.
@@ -176,7 +176,7 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
         $_SESSION['message_alert'] = "danger";
 
         //The page is redirected to the add_units.php.
-        header('Location: ../views/add_categories.php'); 
+        header('Location: ../views/add-categories.php'); 
     }
     }
   }
@@ -202,14 +202,14 @@ if(isset($_POST['add_ingredient'])){
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
-      header('Location: ../views/add_ingredients.php');
+      header('Location: ../views/add-ingredients.php');
   } elseif(!preg_match($pattern, $ingredient)){
       //Message if the variable is null.
       $_SESSION['message'] = '¡Ingrediente incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
-      header('Location: ../views/add_ingredients.php');
+      header('Location: ../views/add-ingredients.php');
   } else {
 
   //lowercase the variable
@@ -225,7 +225,7 @@ if(isset($_POST['add_ingredient'])){
           $_SESSION['message_alert'] = "success";
 
       //The page is redirected to the add_units.php.
-          header('Location: ../views/add_ingredients.php');
+          header('Location: ../views/add-ingredients.php');
       } else {
 
       $sql = "INSERT INTO ingredients (ingredient) VALUES ('$ingredient')";
@@ -236,7 +236,7 @@ if(isset($_POST['add_ingredient'])){
           $_SESSION['message_alert'] = "success";
               
     //The page is redirected to the add_units.php.
-          header('Location: ../views/add_ingredients.php');
+          header('Location: ../views/add-ingredients.php');
 
         } else {
     //Failure message.
@@ -244,7 +244,7 @@ if(isset($_POST['add_ingredient'])){
           $_SESSION['message_alert'] = "danger";
               
     //The page is redirected to the add_units.php.
-          header('Location: ../views/add_ingredients.php');
+          header('Location: ../views/add-ingredients.php');
         }
     }
   }
@@ -269,8 +269,8 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
       $_SESSION['message'] = '¡Elija la cantidad por favor!';
       $_SESSION['message_alert'] = "danger";
           
-  //The page is redirected to the add_recipe.php
-      header('Location: ../views/add_recipe.php');
+  //The page is redirected to the add-recipe.php
+      header('Location: ../views/add-recipe.php');
   } else {
     $sql = "SELECT re_id FROM reholder WHERE ingredient = '$ingredient' AND quantity = '$quantity' AND unit = '$unit';";
 
@@ -286,7 +286,7 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
           $_SESSION['message_alert'] = "success";
               
     //The page is redirected to the ingredients.php.
-          header('Location: ../views/add_recipe.php');
+          header('Location: ../views/add-recipe.php');
 
         } else {
     //Failure message.
@@ -294,7 +294,7 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
           $_SESSION['message_alert'] = "danger";
               
     //The page is redirected to the ingredients.php.
-          header('Location: ../views/add_recipe.php');
+          header('Location: ../views/add-recipe.php');
       }
     } else {
       //Success message.
@@ -302,7 +302,7 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
           $_SESSION['message_alert'] = "success";
               
       //The page is redirected to the ingredients.php.
-          header('Location: ../views/add_recipe.php');
+          header('Location: ../views/add-recipe.php');
     }
   }
 }
@@ -326,7 +326,7 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
       $_SESSION['message'] = '¡Elija la cantidad por favor!';
       $_SESSION['message_alert'] = "danger";
           
-  //The page is redirected to the add_recipe.php
+  //The page is redirected to the add-recipe.php
       header('Location: edit.php?recipename='. $recipeName);
   } else {
 
@@ -373,15 +373,15 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
       $_SESSION['message'] = '¡Falta nombre de la receta o la preparación!';
       $_SESSION['message_alert'] = "danger";
           
-  //The page is redirected to the add_recipe.php
-      header('Location: ../views/add_recipe.php');
+  //The page is redirected to the add-recipe.php
+      header('Location: ../views/add-recipe.php');
   } elseif (!preg_match($pattern, $recipename)){
       //Message if the variable is null.
       $_SESSION['message'] = '¡Nombre de receta incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
-      header('Location: ../views/add_recipe.php');
+      header('Location: ../views/add-recipe.php');
 
   } elseif ($cookingtime > 180 || $cookingtime < 5) {
       //Message if the variable is null.
@@ -389,7 +389,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
       $_SESSION['message_alert'] = "danger";
           
       //The page is redirected to the add_units.php
-      header('Location: ../views/add_recipe.php');
+      header('Location: ../views/add-recipe.php');
   } else {
 
       $_SESSION['category'] = $_POST['category'];
@@ -432,14 +432,14 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
         $_SESSION['message_alert'] = "success";
 
       //The page is redirected to the ingredients.php.
-        header('Location: ../views/add_recipe.php');
+        header('Location: ../views/add-recipe.php');
       } else {
         //Failure message.
         $_SESSION['message'] = '¡Error al agregar receta!';
         $_SESSION['message_alert'] = "danger";
                 
       //The page is redirected to the ingredients.php.
-        header('Location: ../views/add_recipe.php');
+        header('Location: ../views/add-recipe.php');
       }
     } else {
       //Failure message.
@@ -447,7 +447,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
         $_SESSION['message_alert'] = "success";
                 
       //The page is redirected to the ingredients.php.
-        header('Location: ../views/add_recipe.php');
+        header('Location: ../views/add-recipe.php');
     }
   }
 }
@@ -471,7 +471,7 @@ if(isset($_POST['customingredient'])){
       $_SESSION['message_alert'] = "success";
 
   //The page is redirected to the add_units.php.
-      header('Location: ../views/custom_recipe.php');
+      header('Location: ../views/custom-recipe.php');
   } else {
 
     $sql = "INSERT INTO ingholder (ingredient) VALUES ('$ingredient');";
@@ -482,7 +482,7 @@ if(isset($_POST['customingredient'])){
         $_SESSION['message_alert'] = "success";
             
   //The page is redirected to the add_units.php.
-        header('Location: ../views/custom_recipe.php');
+        header('Location: ../views/custom-recipe.php');
 
     } else {
 //Failure message.
@@ -490,7 +490,7 @@ if(isset($_POST['customingredient'])){
       $_SESSION['message_alert'] = "danger";
           
 //The page is redirected to the add_units.php.
-      header('Location: ../views/custom_recipe.php');
+      header('Location: ../views/custom-recipe.php');
     }
   }
 }
@@ -517,8 +517,8 @@ if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['u
       $_SESSION['message'] = '¡Complete todos los campos por favor!';
       $_SESSION['message_alert'] = "danger";
           
-  //The page is redirected to the add_recipe.php
-      header('Location: ../views/add_users.php');
+  //The page is redirected to the add-recipe.php
+      header('Location: ../views/add-users.php');
   } 
 
   if($state == "yes") {
@@ -541,7 +541,7 @@ if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['u
         $_SESSION['message_alert'] = "success";
             
   //The page is redirected to the ingredients.php.
-        header('Location: ../views/add_users.php');
+        header('Location: ../views/add-users.php');
 
       } else {
   //Failure message.
@@ -549,7 +549,7 @@ if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['u
         $_SESSION['message_alert'] = "danger";
             
   //The page is redirected to the ingredients.php.
-        header('Location: ../views/add_users.php');;
+        header('Location: ../views/add-users.php');;
     }
   } else {
     //Success message.
@@ -557,7 +557,7 @@ if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['u
         $_SESSION['message_alert'] = "success";
             
     //The page is redirected to the ingredients.php.
-        header('Location: ../views/add_users.php');
+        header('Location: ../views/add-users.php');
   }
 }
 

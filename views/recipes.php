@@ -19,7 +19,9 @@ $num_rows = $result -> num_rows;
 $row = $result->fetch_assoc();
 
 ?>
-<link rel="stylesheet" href="../styles/styles.css">
+
+<link rel="stylesheet" href="../css/styles.css">
+
 <main class="container p-4">
     <?php
     if($num_rows == 0) {

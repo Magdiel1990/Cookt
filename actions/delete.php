@@ -62,15 +62,15 @@ $result = $conn -> query($sql);
         $_SESSION['message'] = '¡Error al eliminar la unidad!';
         $_SESSION['message_alert'] = "danger";
 
-//The page is redirected to the add_units.php
-        header('Location: ../views/add_units.php');
+//The page is redirected to the add-units.php
+        header('Location: ../views/add-units.php');
     } else {
 //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Unidad eliminada!';
         $_SESSION['message_alert'] = "success";
 
-//After the receta has been deleted, the page is redirected to the add_units.php.
-        header('Location: ../views/add_units.php');
+//After the receta has been deleted, the page is redirected to the add-units.php.
+        header('Location: ../views/add-units.php');
     }
 } 
 
@@ -117,14 +117,14 @@ $iterator = new FilesystemIterator("../imgs/categories");
         $_SESSION['message_alert'] = "danger";
 
     //The page is redirected to the add_units.php
-        header('Location: ../views/add_categories.php');
+        header('Location: ../views/add-categories.php');
     } else {
     //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Categoría eliminada!';
         $_SESSION['message_alert'] = "success";
 
     //After the receta has been deleted, the page is redirected to the add_units.php.
-        header('Location: ../views/add_categories.php');
+        header('Location: ../views/add-categories.php');
     }
 } 
 
@@ -154,14 +154,14 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add_units.php
-        header('Location: ../views/add_recipe.php');
+        header('Location: ../views/add-recipe.php');
     } else {
 //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add_units.php.
-        header('Location: ../views/add_recipe.php');
+        header('Location: ../views/add-recipe.php');
     }
 }
 
@@ -188,14 +188,14 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "danger";
 
     //The page is redirected to the add_units.php
-        header('Location: ../views/add_ingredients.php');
+        header('Location: ../views/add-ingredients.php');
     } else {
     //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
     //After the receta has been deleted, the page is redirected to the add_units.php.
-        header('Location: ../views/add_ingredients.php');
+        header('Location: ../views/add-ingredients.php');
     }
 } 
 
@@ -220,14 +220,14 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add_units.php
-        header('Location: ../views/custom_recipe.php');
+        header('Location: ../views/custom-recipe.php');
     } else {
 //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add_units.php.
-        header('Location: ../views/custom_recipe.php');
+        header('Location: ../views/custom-recipe.php');
     }
 } 
 

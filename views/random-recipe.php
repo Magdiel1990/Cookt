@@ -15,7 +15,9 @@ if(isset($_POST["category"])) {
     $_SESSION['categoryName'] = $_POST["category"];
 }
 ?>
-<link rel="stylesheet" href="../styles/styles.css">
+
+<link rel="stylesheet" href="../css/styles.css">
+
 <main class="container p-4">
     <div class="row mt-2 text-center justify-content-center">
         <h3>SUGERENCIAS</h3>

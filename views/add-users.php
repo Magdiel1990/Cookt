@@ -12,7 +12,7 @@ require_once ("../modules/head.php");
 require_once ("../modules/nav.php");
 ?>
 
-<link rel="stylesheet" href="../styles/styles.css">
+<link rel="stylesheet" href="../css/styles.css">
 
 <main class="container p-4">
     <div class="row text-center justify-content-center">

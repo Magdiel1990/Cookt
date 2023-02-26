@@ -11,7 +11,7 @@ require_once ("../modules/head.php");
 //Navigation panel of the page
 require_once ("../modules/nav.php");
 ?>
-<link rel="stylesheet" href="../styles/styles.css">
+<link rel="stylesheet" href="../css/styles.css">
 
 <main class="container p-4">
 
@@ -90,7 +90,7 @@ require_once ("../modules/nav.php");
         ?>
         </div>
         <div>
-            <form action="recipe_suggestions.php?ingredients=<?php echo base64_encode(serialize($ingArray));?>" method="POST">       
+            <form action="recipe-suggestions.php?ingredients=<?php echo base64_encode(serialize($ingArray));?>" method="POST">       
                 <div class="m-2">                    
                     <input class="btn btn-secondary" type="submit" value="Buscar">
                 </div>
