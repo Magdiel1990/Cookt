@@ -1,12 +1,12 @@
 <?php
-//Head of the page.
-require_once ("../modules/head.php");
-
 //Including the database connection.
 require_once ("../config/db_Connection.php");
 
 //Models.
 require_once ("../models/models.php");
+
+//Head of the page.
+require_once ("../modules/head.php");
 
 //Navigation panel of the page
 require_once ("../modules/nav.php");
@@ -57,8 +57,6 @@ if(isset($_POST["category"])) {
     if($num_rows == 0){
         die("<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>");
     }
-    else {  
-
     $sql = "SELECT * FROM recipeinfoview WHERE category='$category' ORDER BY RAND() LIMIT 1;"; 
     $result = $conn -> query($sql);
     $row = $result -> fetch_assoc();
@@ -106,9 +104,7 @@ if(isset($_POST["category"])) {
     </div>
 </main>
 <?php
-    }  
 }
-
 $conn -> close();
 //Footer of the page.
 require_once ("../modules/footer.php");

@@ -1,14 +1,16 @@
 <?php
-//Head of the page.
-require_once ("../modules/head.php");
-
 //Including the database connection.
 require_once ("../config/db_Connection.php");
+
+//Head of the page.
+require_once ("../modules/head.php");
 
 //Navigation panel of the page
 require_once ("../modules/nav.php");
 
-$recipe = isset($_GET["recipe"]) ? $conn -> real_escape_string($_GET["recipe"]) : null;
+if(isset($_GET["recipe"])){
+    $recipe = $_GET["recipe"];
+}
 
 $sql = "SELECT * FROM recipeview WHERE recipename = '$recipe'";
 
@@ -66,8 +68,8 @@ $row = $result->fetch_assoc();
             <?php
             $sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipe'";
 
-            $result = $conn -> query($sql);
-            $row = $result->fetch_assoc();
+            $row = $conn -> query($sql) -> fetch_assoc();
+
             ?>
             <div class="collapse mt-3 bg-form" id="collapseExample">
                 <div class="card card-body text-danger"> <?php echo ucfirst($row["preparation"]); ?> </div>
@@ -79,6 +81,7 @@ $row = $result->fetch_assoc();
     ?>
 </main>
 <?php
+$conn -> close();
 //Footer of the page.
 require_once ("../modules/footer.php");
 ?>

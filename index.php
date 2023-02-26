@@ -1,12 +1,12 @@
 <?php
+//Models
+require_once ("models/models.php");
+
 //Head of the page.
 require_once ("modules/head.php");
 
 //Navigation panel of the page
 require_once ("modules/nav.php");
-
-//Models
-require_once ("models/models.php");
 ?>
 
 <main class="container py-4">
@@ -69,6 +69,7 @@ function getData(){
 }
 </script>
 <?php
+$conn -> close();
 //Footer of the page.
 require_once ("modules/footer.php");
 ?>

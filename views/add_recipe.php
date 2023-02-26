@@ -1,12 +1,12 @@
 <?php
-//Head of the page.
-require_once ("../modules/head.php");
-
 //Including the database connection.
 require_once ("../config/db_Connection.php");
 
 //Models.
 require_once ("../models/models.php");
+
+//Head of the page.
+require_once ("../modules/head.php");
 
 //Navigation panel of the page
 require_once ("../modules/nav.php");
@@ -157,6 +157,7 @@ require_once ("../modules/nav.php");
     </div>
 </main>
 <?php
+$conn -> close();
 //Footer of the page.
 require_once ("../modules/footer.php");
 ?>
