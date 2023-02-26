@@ -102,9 +102,11 @@ if(isset($_POST["category"])) {
             </div>     
         </div>
     </div>
+<?php
+    }
+?>
 </main>
 <?php
-}
 $conn -> close();
 //Footer of the page.
 require_once ("../modules/footer.php");

@@ -69,7 +69,6 @@ function getData(){
 }
 </script>
 <?php
-$conn -> close();
 //Footer of the page.
 require_once ("modules/footer.php");
 ?>
