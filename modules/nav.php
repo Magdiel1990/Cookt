@@ -13,7 +13,7 @@
                 <a class="nav-link" href="./views/random-recipe.php">Sugerencias</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./views/custo-_recipe.php">Elegir por ingredientes</a>
+                <a class="nav-link" href="./views/custom-recipe.php">Elegir por ingredientes</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

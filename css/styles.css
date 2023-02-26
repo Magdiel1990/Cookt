@@ -1,9 +1,6 @@
 * {
     font-family:'Times New Roman', Times, serif;
 }
-header {
-    height: 8rem;
-}
 main {
     min-height: calc(100vh - 12rem);
 }
@@ -82,8 +79,7 @@ label, select, input, option {
 }
 .bg-form  {
     background-color: rgb(255, 250, 234);
-    box-shadow: 1px 1px 2px #888;
-   
+    box-shadow: 1px 1px 2px #888;   
 }
 
 .jumbotron li{

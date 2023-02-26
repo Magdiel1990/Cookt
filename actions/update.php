@@ -273,7 +273,7 @@ if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['u
     $_SESSION['message_alert'] = "success";
         
     //The page is redirected to the add-recipe.php
-    header("Location: edit.php?userid=". $userId);
+    header("Location: ../views/add-users.php");
     } else {
     //Message if the variable is null.
     $_SESSION['message'] = '¡Error al editar usuario!';

@@ -322,15 +322,15 @@ $row = $result -> fetch_assoc();
 
 
 if($num_rows == 1 && $_SERVER['username'] == $row['username']){
-    $userNameState = "disabled";    
+    $userNameState = "hidden";
+    $userNameLabelState = "display: none;";    
 } else {
-    $userNameState = "";
+    $userNameState = $userNameLabelState = "";
 }
 
 $sql = "SELECT * FROM users WHERE userid = '$userId';";
 
-$result = $conn -> query($sql);
-$row = $result -> fetch_assoc();
+$row = $conn -> query($sql) -> fetch_assoc();
 
 $userName = $row["username"];
 $fullName=  $row["fullname"];
@@ -365,7 +365,7 @@ if($state == 1) {
                     <input class="form-control"  value="<?php echo $fullName; ?>" type="text" id="userfullname" name="userfullname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="7" maxlength="50">
                 </div>
 
-                <div class="input-group mb-3">
+                <div style="<?php echo $userNameLabelState;?>" class="input-group mb-3">
                     <label class="input-group-text is-required" for="username">Usuario: </label>
                     <input class="form-control" value="<?php echo $userName; ?>" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" <?php echo $userNameState; ?>>
                 </div>
@@ -375,7 +375,7 @@ if($state == 1) {
                     <input class="form-control" value="<?php echo $password; ?>" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">
                 </div>
 
-                <div class="input-group mb-3">
+                <div style="<?php echo $userNmeLaabelState;?>" class="input-group mb-3">
                     <label class="input-group-text" for="userrol">Rol: </label>
                     <select class="form-select" name="userrol" id="userrol" <?php echo $userNameState; ?>>
                     <?php
@@ -396,11 +396,13 @@ if($state == 1) {
                     <input class="form-control" value="<?php echo $email; ?>"  type="email" id="useremail" name="useremail" minlength="15" maxlength="70">
                 </div>
 
-                <div class="form-switch">
-                    <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes"  <?php echo $check; ?>  <?php echo $userNameState; ?>>
-                    <label class="form-check-label" for="activeuser">Activo</label>
+                <div>
+                    <div class="form-switch mb-3" style="<?php echo $userNameLabelState;?>">
+                        <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes" <?php echo $check; ?>  <?php echo $userNameState; ?>>
+                        <label class="form-check-label" for="activeuser">Activo</label>
+                    </div>
                     <input  class="btn btn-primary" name="usersubmit" type="submit" value="Editar">
-                    <a class="btn btn-secondary" href="../views/add_users.php">Regresar</a>
+                    <a class="btn btn-secondary" href="../views/add-users.php">Regresar</a>
                 </div>       
             </form>
         </div>                   

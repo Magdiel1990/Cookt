@@ -71,11 +71,10 @@ require_once ("../modules/nav.php");
 
         </form>
     </div>
-    <div>
-        <table class="table table-sm">
+    <div class="row">
+        <table class="table table-sm col-auto">
             <thead>
                 <tr>
-                    <th>Nombre</th>
                     <th>Usuario</th>
                     <th>Rol</th>
                     <th>Estado</th>                    
@@ -105,7 +104,6 @@ require_once ("../modules/nav.php");
                         }
                         
                         $html = "<tr>";
-                        $html .= "<td style='color:" . $color . ";'>" . $row['fullname'] . "</td>";
                         $html .= "<td style='color:" . $color . ";'>" . $row['username'] . "</td>";
                         $html .= "<td style='color:" . $color . ";'>" . $row['type'] . "</td>";
                         $html .= "<td style='color:" . $color . ";'>" . $state . "</td>";

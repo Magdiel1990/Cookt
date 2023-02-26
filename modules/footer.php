@@ -1,4 +1,4 @@
-<footer class="bg-primary text-light">
+<footer class="bg-primary text-light mt-4">
 This is the footer.
 </footer>
 <!--The bootstrap links go here.-->

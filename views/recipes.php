@@ -60,7 +60,7 @@ $row = $result->fetch_assoc();
         </div>
         <div class="lead text-center">
             <div class="mt-3">
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Preparación
                 </a>
                 <a class="btn btn-secondary" href="../index.php">Regresar</a>
@@ -73,7 +73,7 @@ $row = $result->fetch_assoc();
             $row = $conn -> query($sql) -> fetch_assoc();
 
             ?>
-            <div class="collapse mt-3 bg-form" id="collapseExample">
+            <div class="collapse mt-3 bg-form" id="collapse">
                 <div class="card card-body text-danger"> <?php echo ucfirst($row["preparation"]); ?> </div>
             </div>        
         </div>        
