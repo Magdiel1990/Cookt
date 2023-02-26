@@ -32,7 +32,7 @@ require_once ("modules/nav.php");
     <div class="mt-2">
         <table class="table table-bordered">
             <thead>
-                <tr class="bg-secondary">
+                <tr class="bg-primary">
                     <th>Receta</th>
                     <th>Categoría</th>
                     <th>Acciones</th>

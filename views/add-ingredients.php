@@ -31,7 +31,7 @@ require_once ("../modules/nav.php");
             <div class="input-group mb-4">
                 <label  class="input-group-text is-required" for="add_ingredient">Ingrediente: </label>
                 <input  class="form-control" type="text" id="add_ingredient" name="add_ingredient" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" minlength="2" maxlength="20" autofocus required>
-                <input class="btn btn-primary" type="submit" value="Agregar">
+                <input class="btn btn-success" type="submit" value="Agregar">
             </div>
         </form>
     </div>
@@ -45,7 +45,7 @@ require_once ("../modules/nav.php");
         ?>
         <table class="table table-sm p-4 col-auto">
             <thead>
-                <tr>
+                <tr class="bg-primary">
                     <th>Ingredientes</th>
                     <th>Acciones</th>
                 </tr>

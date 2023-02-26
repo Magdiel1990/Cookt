@@ -66,7 +66,7 @@ require_once ("../modules/nav.php");
             <div class="form-switch">
                 <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes" checked>
                 <label class="form-check-label" for="activeuser">Activo</label>
-                <input  class="btn btn-primary" name="usersubmit" type="submit" value="Agregar">
+                <input  class="btn btn-success" name="usersubmit" type="submit" value="Agregar">
             </div>       
 
         </form>
@@ -74,7 +74,7 @@ require_once ("../modules/nav.php");
     <div class="row">
         <table class="table table-sm col-auto">
             <thead>
-                <tr>
+                <tr class="bg-primary">
                     <th>Usuario</th>
                     <th>Rol</th>
                     <th>Estado</th>                    

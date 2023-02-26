@@ -31,14 +31,14 @@ require_once ("../modules/nav.php");
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="add_units">Unidad: </label>
                 <input class="form-control" type="text" id="add_units" name="add_units"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="50" autofocus required>
-                <input  class="btn btn-primary" type="submit" value="Agregar">
+                <input  class="btn btn-success" type="submit" value="Agregar">
             </div>
         </form>
     </div>
     <div>
         <table class="table table-sm">
             <thead>
-                <tr>
+                <tr class="bg-primary">
                     <th>Unidades</th>
                     <th>Acciones</th>
                 </tr>

@@ -39,14 +39,14 @@ require_once ("../modules/nav.php");
                 <input type="file" name="categoryImage" accept=".png, .jpeg, .jpg, .gif" class="form-control" id="categoryImage" required>
             </div> 
             <div class="mb-3">
-                <input  class="btn btn-primary" name="categorySubmit" type="submit" value="Agregar">
+                <input  class="btn btn-success" name="categorySubmit" type="submit" value="Agregar">
             </div>
         </form>
     </div>
     <div>
         <table class="table table-sm">
             <thead>
-                <tr>
+                <tr class="bg-primary">
                     <th>Categorías</th>
                     <th>Acciones</th>
                 </tr>
