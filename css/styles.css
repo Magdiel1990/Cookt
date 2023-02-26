@@ -5,7 +5,7 @@ main {
     min-height: calc(100vh - 12rem);
 }
 footer {
-    height: 4rem;
+    height: 6rem;
 }
 h3 {
     font-size: 1.5rem;

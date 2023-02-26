@@ -1,5 +1,50 @@
-<footer class="bg-primary text-light mt-4">
-This is the footer.
+<footer class="text-center bg-primary mt-4 row  p-2">
+  <!-- Copyright -->
+    <div class="text-white">
+        © <?php echo date('Y'); ?> Copyright:
+        <h6 class="text-white d-inline">Magdiel Castillo Mills.</h6>
+    </div>
+    <div>
+        <!-- Facebook -->
+        <a
+        class="btn btn-link btn-floating btn-lg m-1 text-white"
+        href="https://www.facebook.com/magdiel.castillo.94"
+        target="_blank"
+        role="button"
+        data-mdb-ripple-color="white"
+        ><i class="fab fa-facebook-f"></i
+        ></a>
+
+        <!-- Instagram -->
+        <a
+        class="btn btn-link btn-floating btn-lg m-1 text-white"
+        href="https://www.instagram.com/magdielcastillomills/?igshid=ZDdkNTZiNTM%3D"
+        target="_blank"
+        role="button"
+        data-mdb-ripple-color="white"
+        ><i class="fab fa-instagram"></i
+        ></a>
+
+        <!-- Linkedin -->
+        <a
+        class="btn btn-link btn-floating btn-lg text-white m-1"
+        href="https://www.linkedin.com/in/magdiel-de-jes%C3%BAs-castillo-mills-5a239b204"
+        target="_blank"
+        role="button"
+        data-mdb-ripple-color="white"
+        ><i class="fab fa-linkedin"></i
+        ></a>
+
+        <!-- Github -->
+        <a
+        class="btn btn-link btn-floating btn-lg text-white m-1"
+        href="https://github.com/Magdiel1990"
+        target="_blank"
+        role="button"
+        data-mdb-ripple-color="white"
+        ><i class="fab fa-github"></i
+        ></a>
+    </div>  
 </footer>
 <!--The bootstrap links go here.-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
