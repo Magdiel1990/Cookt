@@ -142,7 +142,7 @@ $category = $row["category"];
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="categoryName">Nombre: </label>
-                    <input type="text" name="categoryName" value="<?php echo $category;?>" class="form-control" id="categoryName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" max-length="20" min-length="2" required>
+                    <input type="text" name="categoryName" value="<?php echo $category;?>" class="form-control" id="categoryName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="20" min-length="2" required>
                 </div>
 
                 <div class="mb-3">
@@ -197,7 +197,7 @@ $category = $row["category"];
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="newRecipeName">Nombre: </label>
-                    <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" max-length="50" min-length="7" required>
+                    <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="50" min-length="7" required>
                 </div>
 
                 <div class="input-group mb-3 w-50">
@@ -301,6 +301,118 @@ $category = $row["category"];
                 </form>
             </div>
        </div>                  
+    </div>     
+</main>
+
+<?php
+}
+
+/************************************************************************************************/
+/********************************************USER EDITION CODE***********************************/
+/************************************************************************************************/
+
+
+if(isset($_GET['userid'])) {
+$userId = $_GET['userid'];
+/*
+$sql = "SELECT userid, count(userid) as 'totalcount' FROM users WHERE type = 'Admin';";
+$row = $conn -> query($sql) -> fetch_assoc();
+
+$totalCount = $row['totalcount'];
+
+if($totalCount == 1 && $userId == $row['userid']){
+    $userNameState = "disabled";    
+} 
+if($totalCount > 1){
+    $sql = "SELECT count(userid) as 'activecount' FROM users WHERE type = 'Admin' AND state = 1;";
+    $row = $conn -> query($sql) -> fetch_assoc();
+
+    $activeCount = $row['activecount'];
+    
+    if($totalCount - $activeCount == 1){
+        $userNameState = "disabled";    
+    } else {
+        $userNameState = "";
+    }
+}
+*/
+$sql = "SELECT * FROM users WHERE userid = '$userId';";
+
+$result = $conn -> query($sql);
+$row = $result -> fetch_assoc();
+
+$userName = $row["username"];
+$fullName=  $row["fullname"];
+$password = $row["password"];
+$type = $row["type"];
+$state = $row["state"];
+$email = $row["email"];
+
+if($state == 1) {
+    $check = "checked";
+} else {
+    $check = "";
+}
+?>
+<main class="container p-4">
+<?php
+//Messages that are shown in the index page
+    if(isset($_SESSION['message'])){
+    buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
+
+//Unsetting the messages variables so the message fades after refreshing the page.
+    unset($_SESSION['message_alert'], $_SESSION['message']);
+}
+?>
+    <div class="row mt-2 text-center justify-content-center">
+        <h3>EDITAR USUARIO</h3>     
+        <div class="mt-3 col-auto">
+            <form class="bg-form card card-body" action="update.php?userid=<?php echo $userId; ?>" method="POST">
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text is-required" for="userfullname">Nombre Completo: </label>
+                    <input class="form-control"  value="<?php echo $fullName; ?>" type="text" id="userfullname" name="userfullname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="7" maxlength="50">
+                </div>
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text is-required" for="username">Usuario: </label>
+                    <input class="form-control" value="<?php echo $userName; ?>" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" <?php echo $userNameState; ?>>
+                </div>
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text is-required" for="userpassword">Contraseña: </label>
+                    <input class="form-control" value="<?php echo $password; ?>" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">
+                </div>
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="userrol">Rol: </label>
+                    <select class="form-select" name="userrol" id="userrol" <?php echo $userNameState; ?>>
+                    <?php
+                        $sql = "SELECT type FROM type WHERE NOT type = '". $type ."'ORDER BY rand();";
+                        $result = $conn -> query($sql);
+
+                            echo "<option value='" . $type . "'>" . $type . "</option>";
+
+                        while($row = $result -> fetch_assoc()){
+                            echo "<option value='" . $row["type"] . "'>" . $row["type"] . "</option>";
+                        }
+                    ?>               
+                    </select>
+                </div>
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="useremail">Email: </label>
+                    <input class="form-control" value="<?php echo $email; ?>"  type="email" id="useremail" name="useremail" minlength="15" maxlength="70">
+                </div>
+
+                <div class="form-switch">
+                    <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes"  <?php echo $check; ?>  <?php echo $userNameState; ?>>
+                    <label class="form-check-label" for="activeuser">Activo</label>
+                    <input  class="btn btn-primary" name="usersubmit" type="submit" value="Editar">
+                    <a class="btn btn-secondary" href="../views/add_users.php">Regresar</a>
+                </div>       
+            </form>
+        </div>                   
     </div>     
 </main>
 

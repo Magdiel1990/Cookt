@@ -30,7 +30,7 @@ require_once ("../modules/nav.php");
         <form class="mt-3 col-auto" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation('add_units', /[a-zA-Z\t\h]+|(^$)/)">
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="add_units">Unidad: </label>
-                <input class="form-control" type="text" id="add_units" name="add_units"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" minlength="2" maxlength="50" autofocus required>
+                <input class="form-control" type="text" id="add_units" name="add_units"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="50" autofocus required>
                 <input  class="btn btn-primary" type="submit" value="Agregar">
             </div>
         </form>

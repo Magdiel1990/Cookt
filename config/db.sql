@@ -36,7 +36,7 @@ description text,
 primary key (typeid)
 );
 
-INSERT INTO `type` (type) VALUES ('Admin'), ('Standard');
+INSERT INTO `type` (type) VALUES ('Admin'), ('Standard'), ('Viewer');
 
 CREATE TABLE `users` (
   `userid` int NOT NULL AUTO_INCREMENT,
@@ -44,7 +44,7 @@ CREATE TABLE `users` (
   `fullname` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `type` varchar(15) NOT NULL,
-  `email`  varchar(70) unique,
+  `email`  varchar(70),
   `state` boolean not null,
   PRIMARY KEY (`userid`),
   UNIQUE KEY `username` (`username`),

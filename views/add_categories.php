@@ -31,7 +31,7 @@ require_once ("../modules/nav.php");
             
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="add_categories">Categoría: </label>
-                <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" minlength="2" maxlength="50" autofocus required>
+                <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="50" autofocus required>
             </div>
 
             <div class="mb-3">

@@ -82,13 +82,9 @@ $categoryId = $row['categoryid'];
     } else {
         if($cookingTime >= 5 && $cookingTime <= 180){
             
-            $sql = "UPDATE recipe SET recipename = '$newRecipeName' WHERE recipename = '$oldName';";
-            $sql .= "UPDATE recipe SET preparation = '$preparation' WHERE recipename = '$oldName';";
-            $sql .= "UPDATE recipe SET cookingtime = '$cookingTime' WHERE recipename = '$oldName';";
-            $sql .= "UPDATE recipe SET observation = '$observation' WHERE recipename = '$oldName';";
-            $sql .= "UPDATE recipe SET categoryid = '$categoryId' WHERE recipename = '$oldName';";
-            
-            if ($conn->multi_query($sql)) {
+            $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', observation = '$observation', categoryid = '$categoryId' WHERE recipename = '$oldName';";
+
+            if ($conn->query($sql)) {
             //Message if the variable is null.
             $_SESSION['message'] = '¡Receta editada correctamente!';
             $_SESSION['message_alert'] = "success";
@@ -238,8 +234,58 @@ $oldCategoryName = $row['category'];
     }    
 }
 
+/************************************************************************************************/
+/******************************************USER UPDATE CODE*************************************/
+/************************************************************************************************/
+
+
+//receive the data
+if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['userpassword']) || isset($_POST['userrol']) || isset($_POST['useremail'])){
+  $userId = $_GET['userid'];  
+  $fullName = $_POST['userfullname'];
+  $userName=  $_POST['username'];
+  $userPassword = $_POST['userpassword'];
+  $userRol = $_POST['userrol'];
+  $userEmail = $_POST['useremail'];
+  $state = $_POST['activeuser'];
+
+
+    if($state == "yes") {
+        $state = 1;        
+    } else {
+        $state = 0;
+    }
+
+    if ($fullName == "" || $userName == "" || $userPassword == "") {
+    //Message if the variable is null.
+        $_SESSION['message'] = '¡Complete todos los campos faltantes!';
+        $_SESSION['message_alert'] = "danger";
+            
+    //The page is redirected to the add_recipe.php
+        header('Location: edit.php?userid='. $userId);
+    } 
+
+    $sql = "UPDATE users SET fullname = '$fullName', username = '$userName', password = '$userPassword', type = '$userRol', email = '$userEmail', state='$state' WHERE userid = '$userId';";
+
+    if ($conn->query($sql)) {
+    //Message if the variable is null.
+    $_SESSION['message'] = '¡Usuario editado correctamente!';
+    $_SESSION['message_alert'] = "success";
+        
+    //The page is redirected to the add_recipe.php
+    header("Location: edit.php?userid=". $userId);
+    } else {
+    //Message if the variable is null.
+    $_SESSION['message'] = '¡Error al editar usuario!';
+    $_SESSION['message_alert'] = "danger";
+
+    //The page is redirected to the add_recipe.php
+    header("Location: edit.php?userid=". $userId);
+    }  
 ?>
 
 <?php
- $conn->close();
+}
+
+$conn->close();
 ?>
