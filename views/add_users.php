@@ -91,14 +91,14 @@ require_once ("../modules/nav.php");
                     while($row = $result -> fetch_assoc()){
 
                         if($row['state'] == 1) {
-                            $state = "Activo";
+                            $state = "activo";
                             $color = "rgb(22, 182, 4)";
                         } else {
-                            $state = "Inactivo";
+                            $state = "inactivo";
                             $color = "#aaa";
                         }
 
-                        if($row['username'] == "Admin") {
+                        if($row['type'] == "Admin") {
                             $display = "style = 'display: none;'";
                         } else {
                             $display = "";

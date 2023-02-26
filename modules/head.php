@@ -1,6 +1,11 @@
 <?php
 //Iniciating session. 
 session_start();
+
+$_SERVER['username'] = "Admin";
+$_SERVER['type'] = "Admin";
+$_SERVER['state'] = 1;
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

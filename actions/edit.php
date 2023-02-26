@@ -314,28 +314,19 @@ $category = $row["category"];
 
 if(isset($_GET['userid'])) {
 $userId = $_GET['userid'];
-/*
-$sql = "SELECT userid, count(userid) as 'totalcount' FROM users WHERE type = 'Admin';";
-$row = $conn -> query($sql) -> fetch_assoc();
 
-$totalCount = $row['totalcount'];
+$sql = "SELECT username FROM users WHERE type = 'Admin' AND userid = " . $userId . ";";
+$result = $conn -> query($sql);
+$num_rows = $result -> num_rows;
+$row = $result -> fetch_assoc();
 
-if($totalCount == 1 && $userId == $row['userid']){
+
+if($num_rows == 1 && $_SERVER['username'] == $row['username']){
     $userNameState = "disabled";    
-} 
-if($totalCount > 1){
-    $sql = "SELECT count(userid) as 'activecount' FROM users WHERE type = 'Admin' AND state = 1;";
-    $row = $conn -> query($sql) -> fetch_assoc();
-
-    $activeCount = $row['activecount'];
-    
-    if($totalCount - $activeCount == 1){
-        $userNameState = "disabled";    
-    } else {
-        $userNameState = "";
-    }
+} else {
+    $userNameState = "";
 }
-*/
+
 $sql = "SELECT * FROM users WHERE userid = '$userId';";
 
 $result = $conn -> query($sql);
