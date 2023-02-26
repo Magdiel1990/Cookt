@@ -1,13 +1,13 @@
 * {
     font-family:'Times New Roman', Times, serif;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+}
+body {
+  height: 100vh;
 }
 h3 {
     font-size: 1.5rem;
     color: #444;
-    font-weight: bold;
+    f ont-weight: bold;
 }
 .nav-item {
     font-size: 1.2rem;
