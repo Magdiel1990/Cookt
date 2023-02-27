@@ -27,14 +27,15 @@ if(isset($_POST['add_units'])){
           
   //The page is redirected to the add-units.php
       header('Location: ../views/add-units.php');
-  } elseif (!preg_match($pattern, $unit)){
+  } 
+  if (!preg_match($pattern, $unit)){
       //Message if the variable is null.
       $_SESSION['message'] = '¡Unidad incorrecta!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add-units.php
        header('Location: ../views/add-units.php');
-  } else {
+  } 
 
   //lowercase the variable
     $unit = strtolower($unit);
@@ -50,7 +51,7 @@ if(isset($_POST['add_units'])){
 
     //The page is redirected to the add-units.php.
           header('Location: ../views/add-units.php');
-      }  else {
+      }
       $sql = "INSERT INTO units (unit) VALUES ('$unit')";
 
       if ($conn->query($sql)) {
@@ -69,8 +70,7 @@ if(isset($_POST['add_units'])){
     //The page is redirected to the add-units.php.
           header('Location: ../views/add-units.php');
         }
-    }
-  }
+    
 }
 
 
@@ -94,7 +94,8 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
           
   //The page is redirected to the add_units.php
       header('Location: ../views/add-categories.php');
-  } elseif (!preg_match($pattern, $category)){
+  } 
+  if (!preg_match($pattern, $category)){
       //Message if the variable is null.
       $_SESSION['message'] = '¡Categoría incorrecta!';
       $_SESSION['message_alert'] = "danger";
@@ -118,7 +119,7 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
 
     //The page is redirected to the add_units.php.
           header('Location: ../views/add-categories.php');
-      }  else {
+      }  
       $sql = "INSERT INTO categories (category) VALUES ('$category');";
         
       $categoryImagesDir = "../imgs/categories";
@@ -179,7 +180,6 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
         header('Location: ../views/add-categories.php'); 
     }
     }
-  }
 }
 
 
@@ -203,19 +203,20 @@ if(isset($_POST['add_ingredient'])){
           
   //The page is redirected to the add_units.php
       header('Location: ../views/add-ingredients.php');
-  } elseif(!preg_match($pattern, $ingredient)){
+  } 
+  if(!preg_match($pattern, $ingredient)){
       //Message if the variable is null.
       $_SESSION['message'] = '¡Ingrediente incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add_units.php
       header('Location: ../views/add-ingredients.php');
-  } else {
+  }
 
   //lowercase the variable
     $ingredient = strtolower($ingredient);
 
-    $sql = "SELECT ingredient FROM ingredients WHERE ingredient = '$ingredient';";
+    $sql = "SELECT ingredient FROM ingredients WHERE ingredient = '$ingredient' AND username = " .  $_SESSION['username'] . ";";
 
     $num_rows = $conn -> query($sql) -> num_rows;
 
@@ -226,9 +227,9 @@ if(isset($_POST['add_ingredient'])){
 
       //The page is redirected to the add_units.php.
           header('Location: ../views/add-ingredients.php');
-      } else {
+      }
 
-      $sql = "INSERT INTO ingredients (ingredient) VALUES ('$ingredient')";
+      $sql = "INSERT INTO ingredients (ingredient, username) VALUES ('$ingredient'," .  $_SESSION['username']) . ");";
 
       if ($conn->query($sql)) {
     //Success message.
@@ -246,8 +247,6 @@ if(isset($_POST['add_ingredient'])){
     //The page is redirected to the add_units.php.
           header('Location: ../views/add-ingredients.php');
         }
-    }
-  }
 }
 
 
@@ -271,14 +270,14 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
           
   //The page is redirected to the add-recipe.php
       header('Location: ../views/add-recipe.php');
-  } else {
-    $sql = "SELECT re_id FROM reholder WHERE ingredient = '$ingredient' AND quantity = '$quantity' AND unit = '$unit';";
+  } 
+    $sql = "SELECT re_id FROM reholder WHERE ingredient = '$ingredient' AND quantity = '$quantity' AND unit = '$unit' AND username = " .  $_SESSION['username'] . ";";
 
     $num_rows = $conn -> query($sql) -> num_rows;
 
     if($num_rows == 0) {
 
-    $sql = "INSERT INTO reholder (ingredient, quantity, unit) VALUES ('$ingredient', '$quantity', '$unit');";
+    $sql = "INSERT INTO reholder (ingredient, quantity, unit, username) VALUES ('$ingredient', '$quantity', '$unit', " .  $_SESSION['username'] . ");";
 
       if ($conn->query($sql)) {
     //Success message.
@@ -304,7 +303,6 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
       //The page is redirected to the ingredients.php.
           header('Location: ../views/add-recipe.php');
     }
-  }
 }
 
 /************************************************************************************************/
@@ -319,6 +317,7 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
   $quantity = $_POST['qty'];
   $unit = $_POST['units'];
   $recipeName = $_GET['rname'];
+/******************************************Sanitizar esto***************************/
 
 
   if ($quantity == "" || $quantity <= 0) {
@@ -328,9 +327,9 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
           
   //The page is redirected to the add-recipe.php
       header('Location: edit.php?recipename='. $recipeName);
-  } else {
+  } 
 
-    $sql = "INSERT INTO recipeinfo (recipename, ingredient, quantity, unit) VALUES ('$recipeName', '$ingredient', '$quantity', '$unit');";
+    $sql = "INSERT INTO recipeinfo (recipename, ingredient, quantity, unit, username) VALUES ('$recipeName', '$ingredient', '$quantity', '$unit', " .  $_SESSION['username']) . ";";
 
       if ($conn->query($sql)) {
     //Success message.
@@ -348,7 +347,6 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
     //The page is redirected to the ingredients.php.
           header('Location: edit.php?recipename='. $recipeName);
         }
-  }
 }
 
 
@@ -375,7 +373,8 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
           
   //The page is redirected to the add-recipe.php
       header('Location: ../views/add-recipe.php');
-  } elseif (!preg_match($pattern, $recipename)){
+  } 
+  if (!preg_match($pattern, $recipename)){
       //Message if the variable is null.
       $_SESSION['message'] = '¡Nombre de receta incorrecto!';
       $_SESSION['message_alert'] = "danger";
@@ -383,18 +382,20 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
   //The page is redirected to the add_units.php
       header('Location: ../views/add-recipe.php');
 
-  } elseif ($cookingtime > 180 || $cookingtime < 5) {
+  } 
+  if ($cookingtime > 180 || $cookingtime < 5) {
       //Message if the variable is null.
       $_SESSION['message'] = '¡Tiempo de cocción debe estar entre 5 - 180 minutos!';
       $_SESSION['message_alert'] = "danger";
           
       //The page is redirected to the add_units.php
       header('Location: ../views/add-recipe.php');
-  } else {
+  } 
 
       $_SESSION['category'] = $_POST['category'];
 
-      $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename';";
+      $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename' AND username = " .  $_SESSION['username'] . ";";
+      
       $result = $conn -> query($sql);
       $num_rows = $result -> num_rows;
       
@@ -405,26 +406,28 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
         }
         
       $sql = "SELECT categoryid FROM categories WHERE category = '$category';";
-      $result = $conn -> query($sql);
-      $row = $result -> fetch_assoc();
+      
+      $row= $conn -> query($sql) -> fetch_assoc();
+      
       $categoryid = $row["categoryid"];
 
-      $sql = "INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime)
-      VALUES ('$recipename', '$categoryid', '$preparation', '$observation', '$cookingtime');";
+      $sql = "INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime, username)
+      VALUES ('$recipename', '$categoryid', '$preparation', '$observation', '$cookingtime', " . $_SESSION['username'] . ");";
+      
       $conn -> query($sql);
-      $sql = "SELECT * FROM reholder;";    
-      $result = $conn -> query($sql);
-      $row = $result -> fetch_assoc();    
+      
+      $sql = "SELECT * FROM reholder WHERE username = " .  $_SESSION['username'] . ";";   
+      
+      $result = $conn -> query($sql);    
 
       while($row = $result -> fetch_assoc()){
-        $sql = "INSERT INTO recipeinfo (recipename, quantity, unit, ingredient)
-        VALUES ('$recipename', " . $row["quantity"] . ", '" . $row["unit"] . "', '" . $row["ingredient"] . "');";
+        $sql = "INSERT INTO recipeinfo (recipename, quantity, unit, ingredient, username)
+        VALUES ('$recipename', " . $row["quantity"] . ", '" . $row["unit"] . "', '" . $row["ingredient"] . "', '" . $_SESSION['username'] . ");";
 
         $conn -> query($sql);
       }
 
-      $sql = "DELETE FROM reholder /*WHERE username = 'Admin'*/;";
-      $conn -> query($sql);   
+      $sql = "DELETE FROM reholder WHERE username = '" . $_SESSION['username'] . "';";
 
       if ($conn -> query($sql)) {
       //Success message.
@@ -449,7 +452,6 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
       //The page is redirected to the ingredients.php.
         header('Location: ../views/add-recipe.php');
     }
-  }
 }
 
 /************************************************************************************************/
@@ -472,9 +474,9 @@ if(isset($_POST['customingredient'])){
 
   //The page is redirected to the add_units.php.
       header('Location: ../views/custom-recipe.php');
-  } else {
+  } 
 
-    $sql = "INSERT INTO ingholder (ingredient) VALUES ('$ingredient');";
+    $sql = "INSERT INTO ingholder (ingredient, username) VALUES ('$ingredient', " .  $_SESSION['username']) . ";";
 
     if ($conn->query($sql)) {
   //Success message.
@@ -492,7 +494,6 @@ if(isset($_POST['customingredient'])){
 //The page is redirected to the add_units.php.
       header('Location: ../views/custom-recipe.php');
     }
-  }
 }
 
 

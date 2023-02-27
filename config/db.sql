@@ -20,14 +20,6 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` VALUES (1,'postres'),(2,'jugo'),(3,'sopas');
 
 
-CREATE TABLE `ingredients` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `ingredient` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-);
-
-INSERT INTO `ingredients` VALUES (26,'azúcar'),(25,'harina'),(27,'huevos'),(28,'mantequilla'),(30,'sal');
-
 CREATE TABLE `type` (
 typeid int NOT NULL AUTO_INCREMENT,
 `type` varchar(15) NOT NULL unique,
@@ -39,19 +31,31 @@ INSERT INTO `type` (type) VALUES ('Admin'), ('Standard'), ('Viewer');
 
 CREATE TABLE `users` (
   `userid` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) NOT NULL,
+  `username` varchar(30) NOT NULL UNIQUE,
   `fullname` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `type` varchar(15) NOT NULL,
   `email`  varchar(70),
   `state` boolean not null,
+  `reportsto` varchar(30),
   PRIMARY KEY (`userid`),
-  UNIQUE KEY `username` (`username`),
-  CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_users_users`  FOREIGN KEY (`reportsto`) references `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+  
 );
 
 
 INSERT INTO `users` (username, fullname, password, type, email , state) VALUES ('Admin', 'Magdiel Castillo', '123456', 'Admin', 'magdielmagdiel1@gmail.com', 1);
+
+CREATE TABLE `ingredients` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ingredient` varchar(50) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_ingredients_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+);
+
+INSERT INTO `ingredients` VALUES (26,'azúcar'),(25,'harina'),(27,'huevos'),(28,'mantequilla'),(30,'sal');
 
 CREATE TABLE `ingholder` (
   `ingid` int NOT NULL AUTO_INCREMENT,
@@ -95,10 +99,12 @@ CREATE TABLE `recipeinfo` (
   `quantity` double(5,2) NOT NULL,
   `unit` varchar(20) NOT NULL,
   `ingredient` varchar(50) NOT NULL,
+  `username` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_ingredients_recipeinfo` FOREIGN KEY (`ingredient`) REFERENCES `ingredients` (`ingredient`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipename`) REFERENCES `recipe` (`recipename`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_recipeinfo_units` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_recipeinfo_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  
 );
 
 
