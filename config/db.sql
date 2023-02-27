@@ -23,15 +23,14 @@ INSERT INTO `categories` VALUES (1,'postres'),(2,'jugo'),(3,'sopas');
 CREATE TABLE `ingredients` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ingredient` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ingredient` (`ingredient`)
+  PRIMARY KEY (`id`)
 );
 
 INSERT INTO `ingredients` VALUES (26,'azúcar'),(25,'harina'),(27,'huevos'),(28,'mantequilla'),(30,'sal');
 
 CREATE TABLE `type` (
 typeid int NOT NULL AUTO_INCREMENT,
-type varchar(15) NOT NULL unique,
+`type` varchar(15) NOT NULL unique,
 description text,
 primary key (typeid)
 );
@@ -56,16 +55,14 @@ INSERT INTO `users` (username, fullname, password, type, email , state) VALUES (
 
 CREATE TABLE `ingholder` (
   `ingid` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) DEFAULT NULL,
+  `username` varchar(30) NOT NULL,
   `ingredient` varchar(50) NOT NULL,
   PRIMARY KEY (`ingid`),
-  KEY `fk_ingredient_ingholder` (`ingredient`),
-  KEY `fk_user_ingholder` (`username`),
   CONSTRAINT `fk_ingredient_ingholder` FOREIGN KEY (`ingredient`) REFERENCES `ingredients` (`ingredient`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_user_ingholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO `ingholder` VALUES (9,NULL,'harina');
+INSERT INTO `ingholder` VALUES (9, 'Admin','harina');
 
 
 CREATE TABLE `recipe` (
@@ -74,11 +71,9 @@ CREATE TABLE `recipe` (
   `categoryid` int NOT NULL,
   `preparation` text NOT NULL,
   `observation` text,
-  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `cookingtime` int DEFAULT NULL,
+  `date` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `cookingtime` int,
   PRIMARY KEY (`recipeid`),
-  UNIQUE KEY `recipename` (`recipename`),
-  KEY `fk_recipe_categories` (`categoryid`),
   CONSTRAINT `fk_recipe_categories` FOREIGN KEY (`categoryid`) REFERENCES `categories` (`categoryid`) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
@@ -101,9 +96,6 @@ CREATE TABLE `recipeinfo` (
   `unit` varchar(20) NOT NULL,
   `ingredient` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_recipeinfo_recipe` (`recipename`),
-  KEY `fk_ingredients_recipeinfo` (`ingredient`),
-  KEY `fk_recipeinfo_units` (`unit`),
   CONSTRAINT `fk_ingredients_recipeinfo` FOREIGN KEY (`ingredient`) REFERENCES `ingredients` (`ingredient`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipename`) REFERENCES `recipe` (`recipename`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_recipeinfo_units` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -122,15 +114,12 @@ CREATE TABLE `reholder` (
   `ingredient` varchar(50) NOT NULL,
   `quantity` double(5,2) NOT NULL,
   `unit` varchar(20) NOT NULL,
-  `username` varchar(30) DEFAULT NULL,
+  `username` varchar(30) NOT NULL,
   PRIMARY KEY (`re_id`),
-  KEY `fk_units_reholder` (`unit`),
-  KEY `fk_ingredients_reholder` (`ingredient`),
-  KEY `fk_user_reholder` (`username`),
   CONSTRAINT `fk_ingredients_reholder` FOREIGN KEY (`ingredient`) REFERENCES `ingredients` (`ingredient`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_units_reholder` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_user_reholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
-INSERT INTO `reholder` VALUES (56,'azúcar',6.00,'cucharaditas',NULL);
+INSERT INTO `reholder` VALUES (56,'azúcar',6.00,'cucharaditas','Admin');
