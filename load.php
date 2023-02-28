@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     //Including the database connection.
     require_once ("config/db_Connection.php");
 
@@ -26,7 +28,7 @@
         }
     //The final where delection.
         $where = substr_replace($where, "", -3);
-        $where .= ")";
+        $where .= ") AND username = '" . $_SESSION['username'] . "';";
     }        
     
 
