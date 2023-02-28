@@ -208,7 +208,11 @@ if(isset($_GET['custom'])){
 //Getting the name.
 $customName = $_GET['custom'];
 
-$sql = "DELETE FROM ingholder WHERE ingredient = '$customName';";
+$sql = "SELECT id FROM ingredients WHERE ingredient = '$customName' AND username = '" . $_SESSION['username'] . "';";
+$row = $conn -> query($sql) -> fetch_assoc();
+$ingredientId = $row['id'];
+
+$sql = "DELETE FROM ingholder WHERE ingredientid = '$ingredientId' AND username = '" . $_SESSION['username'] . "';";
 
 $result = $conn -> query($sql);
 

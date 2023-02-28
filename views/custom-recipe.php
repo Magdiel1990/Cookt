@@ -34,12 +34,12 @@ require_once ("../modules/nav.php");
                 <label class="input-group-text" for="customingredient">Ingredientes: </label>                
                 <select class="form-select" name="customingredient" id="customingredient">
                     <?php
-                    $sql = "SELECT ingredient FROM ingholder/*WHERE username = 'Admin'*/;";
+                    $sql = "SELECT i.ingredient FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = ' " . $_SESSION['username'] . "';";
                     $result = $conn -> query($sql);
                     $num_rows = $result -> num_rows;
 
                     if ($num_rows == 0) {
-                        $sql = "SELECT ingredient FROM ingredients /*WHERE username = 'Admin'*/;";
+                        $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "';";
                     }
                     else {
                         $where = "WHERE NOT ingredient IN (";
@@ -49,9 +49,9 @@ require_once ("../modules/nav.php");
                         }
                         
                         $where = substr_replace($where, "", -2);
-                        $where .= ")";  
+                        $where .= ") AND username = '" . $_SESSION['username'] . "'";  
 
-                        $sql = "SELECT ingredient FROM ingredients $where/*WHERE username = 'Admin'*/;";
+                        $sql = "SELECT ingredient FROM ingredients $where;";
                     }
                     $result = $conn -> query($sql);
 
@@ -69,7 +69,7 @@ require_once ("../modules/nav.php");
     <div class="row mt-5">
         <div class="col-auto">
         <?php
-        $sql = "SELECT ingredient FROM ingholder;";
+        $sql = "SELECT i.ingredient, ih.ingredientid FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "';";
 
         $result = $conn -> query($sql);
         
@@ -82,7 +82,7 @@ require_once ("../modules/nav.php");
                 $html .= "<li>" . ucfirst($row["ingredient"]);
                 $html .= "<a class='btn btn-danger' href='../actions/delete.php?custom=" . $row['ingredient'] . "' " . "title='Eliminar'>Eliminar</a>";
                 $html .= "</li>";
-                $ingArray[] = $row["ingredient"];
+                $ingArray[] = $row["ingredientid"];
             }
             $html .= "</ol>";
             echo $html;

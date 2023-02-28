@@ -463,20 +463,24 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
 if(isset($_POST['customingredient'])){
   $ingredient = $_POST['customingredient'];
 
-  $sql = "SELECT ingredient FROM ingholder WHERE ingredient = '$ingredient';";
+  $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "';";
+  $row = $conn -> query($sql) -> fetch_assoc();
+  $ingredientId = $row['id'];
+  
+  $sql = "SELECT ingredientid FROM ingholder WHERE ingredientid = $ingredientId AND username = '" . $_SESSION['username'] . "';";
+  $result = $conn -> query($sql);
+  $num_rows = $result -> num_rows;
 
-  $num_rows = $conn -> query($sql) -> num_rows;
-
-  if($num_rows != 0){
+  if($num_rows > 0){
   //It already exists.
       $_SESSION['message'] = '¡Ya ha sido agregado!';
       $_SESSION['message_alert'] = "success";
 
   //The page is redirected to the add_units.php.
       header('Location: ../views/custom-recipe.php');
-  } 
+  } else {
 
-    $sql = "INSERT INTO ingholder (ingredient, username) VALUES ('$ingredient', '" .  $_SESSION['username'] . "';";
+    $sql = "INSERT INTO ingholder (ingredientid, username) VALUES ($ingredientId, '" .  $_SESSION['username'] . "');";
 
     if ($conn->query($sql)) {
   //Success message.
@@ -494,6 +498,7 @@ if(isset($_POST['customingredient'])){
 //The page is redirected to the add_units.php.
       header('Location: ../views/custom-recipe.php');
     }
+  }
 }
 
 

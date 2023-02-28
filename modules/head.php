@@ -2,9 +2,9 @@
 //Iniciating session. 
 session_start();
 
-$_SERVER['username'] = "Admin";
-$_SERVER['type'] = "Admin";
-$_SERVER['state'] = 1;
+$_SESSION['username'] = "Admin";
+$_SESSION['type'] = "Admin";
+$_SESSION['state'] = 1;
 
 ?>
 <!DOCTYPE html>

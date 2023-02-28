@@ -28,13 +28,15 @@ require_once ("../modules/nav.php");
 
         $count = count($ingArray);
         for($i=0; $i<$count; $i++){
-            $where .= "ingredient = '". $ingArray[$i] . "' OR ";
+            $where .= "ingredientid = '". $ingArray[$i] . "' OR ";
         }
 
         //The final where delection.
         $where = substr_replace($where, "", -4);
+
+        $where .= " AND username = '" . $_SESSION['username'] . "'";
     
-        $sql = "SELECT DISTINCT recipename FROM recipeinfo " . $where  . " ORDER BY RAND();";
+        $sql = "SELECT DISTINCT r.recipename FROM recipeinfo ri JOIN  recipe r ON r.recipeid = ri.recipeid " . $where  . " ORDER BY RAND();";
         $result = $conn -> query($sql);
 
         $html = "";
