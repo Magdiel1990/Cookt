@@ -17,3 +17,4 @@ edicion de categoria e imagen
 cuando imagen is null
 poner la imagen al lado de la categoria en la tabla principal
 validar agregar categoria del lado del cliente
+revisar las vista de la db
