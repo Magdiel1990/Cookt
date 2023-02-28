@@ -185,7 +185,7 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
 
 
 /************************************************************************************************/
-/***************************************INGREDIENT ADITION CODE*********************************/
+/***************************************INGREDIENT ADITION CODE**********************************/
 /************************************************************************************************/
 
 
@@ -216,7 +216,7 @@ if(isset($_POST['add_ingredient'])){
   //lowercase the variable
     $ingredient = strtolower($ingredient);
 
-    $sql = "SELECT ingredient FROM ingredients WHERE ingredient = '$ingredient' AND username = " .  $_SESSION['username'] . ";";
+    $sql = "SELECT ingredient FROM ingredients WHERE ingredient = '$ingredient' AND username = '" .  $_SESSION['username'] . "';";
 
     $num_rows = $conn -> query($sql) -> num_rows;
 
@@ -229,7 +229,7 @@ if(isset($_POST['add_ingredient'])){
           header('Location: ../views/add-ingredients.php');
       }
 
-      $sql = "INSERT INTO ingredients (ingredient, username) VALUES ('$ingredient'," .  $_SESSION['username']) . ");";
+      $sql = "INSERT INTO ingredients (ingredient, username) VALUES ('$ingredient', '" .  $_SESSION['username'] . "');";
 
       if ($conn->query($sql)) {
     //Success message.
@@ -271,13 +271,13 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
   //The page is redirected to the add-recipe.php
       header('Location: ../views/add-recipe.php');
   } 
-    $sql = "SELECT re_id FROM reholder WHERE ingredient = '$ingredient' AND quantity = '$quantity' AND unit = '$unit' AND username = " .  $_SESSION['username'] . ";";
+    $sql = "SELECT re_id FROM reholder WHERE ingredient = '$ingredient' AND quantity = '$quantity' AND unit = '$unit' AND username = '" .  $_SESSION['username'] . "';";
 
     $num_rows = $conn -> query($sql) -> num_rows;
 
     if($num_rows == 0) {
 
-    $sql = "INSERT INTO reholder (ingredient, quantity, unit, username) VALUES ('$ingredient', '$quantity', '$unit', " .  $_SESSION['username'] . ");";
+    $sql = "INSERT INTO reholder (ingredient, quantity, unit, username) VALUES ('$ingredient', '$quantity', '$unit', '" .  $_SESSION['username'] . "');";
 
       if ($conn->query($sql)) {
     //Success message.
@@ -329,7 +329,7 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
       header('Location: edit.php?recipename='. $recipeName);
   } 
 
-    $sql = "INSERT INTO recipeinfo (recipename, ingredient, quantity, unit, username) VALUES ('$recipeName', '$ingredient', '$quantity', '$unit', " .  $_SESSION['username']) . ";";
+    $sql = "INSERT INTO recipeinfo (recipename, ingredient, quantity, unit, username) VALUES ('$recipeName', '$ingredient', '$quantity', '$unit', '" .  $_SESSION['username'] . "';";
 
       if ($conn->query($sql)) {
     //Success message.
@@ -394,7 +394,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
 
       $_SESSION['category'] = $_POST['category'];
 
-      $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename' AND username = " .  $_SESSION['username'] . ";";
+      $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename' AND username = '" .  $_SESSION['username'] . "';";
       
       $result = $conn -> query($sql);
       $num_rows = $result -> num_rows;
@@ -422,7 +422,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
 
       while($row = $result -> fetch_assoc()){
         $sql = "INSERT INTO recipeinfo (recipename, quantity, unit, ingredient, username)
-        VALUES ('$recipename', " . $row["quantity"] . ", '" . $row["unit"] . "', '" . $row["ingredient"] . "', '" . $_SESSION['username'] . ");";
+        VALUES ('$recipename', " . $row["quantity"] . ", '" . $row["unit"] . "', '" . $row["ingredient"] . "', '" . $_SESSION['username'] . "');";
 
         $conn -> query($sql);
       }
@@ -476,7 +476,7 @@ if(isset($_POST['customingredient'])){
       header('Location: ../views/custom-recipe.php');
   } 
 
-    $sql = "INSERT INTO ingholder (ingredient, username) VALUES ('$ingredient', " .  $_SESSION['username']) . ";";
+    $sql = "INSERT INTO ingholder (ingredient, username) VALUES ('$ingredient', '" .  $_SESSION['username'] . "';";
 
     if ($conn->query($sql)) {
   //Success message.
