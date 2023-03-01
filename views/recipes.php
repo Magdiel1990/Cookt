@@ -12,7 +12,7 @@ if(isset($_GET["recipe"])){
     $recipe = $_GET["recipe"];
 }
 
-$sql = "SELECT * FROM recipeview WHERE recipename = '$recipe'";
+$sql = "SELECT * FROM recipeview WHERE recipename = '$recipe' AND username = '" . $_SESSION['username'] . "';";
 
 $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
@@ -68,7 +68,7 @@ $row = $result->fetch_assoc();
         </div>
         <div class="col-sm-8 col-md-8">
             <?php
-            $sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipe'";
+            $sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipe' AND username = '" . $_SESSION['username'] . "';";
 
             $row = $conn -> query($sql) -> fetch_assoc();
 
