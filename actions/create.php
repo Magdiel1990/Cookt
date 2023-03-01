@@ -327,26 +327,36 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
           
   //The page is redirected to the add-recipe.php
       header('Location: edit.php?recipename='. $recipeName);
-  } 
+  } else {
 
-    $sql = "INSERT INTO recipeinfo (recipename, ingredient, quantity, unit, username) VALUES ('$recipeName', '$ingredient', '$quantity', '$unit', '" .  $_SESSION['username'] . "';";
+    
+    $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
+    $row = $conn -> query($sql) -> fetch_assoc();
+    $recipeId = $row['recipeid'];
 
-      if ($conn->query($sql)) {
-    //Success message.
-          $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
-          $_SESSION['message_alert'] = "success";
-              
-    //The page is redirected to the ingredients.php.
-          header('Location: edit.php?recipename='. $recipeName);
+    $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "';";
+    $row = $conn -> query($sql) -> fetch_assoc();
+    $ingredientId = $row['id'];
 
-        } else {
-    //Failure message.
-          $_SESSION['message'] = '¡Error al agregar ingrediente!';
-          $_SESSION['message_alert'] = "danger";
-              
-    //The page is redirected to the ingredients.php.
-          header('Location: edit.php?recipename='. $recipeName);
-        }
+    $sql = "INSERT INTO recipeinfo (recipeid, ingredientid, quantity, unit) VALUES ('$recipeId', '$ingredientId', '$quantity', '$unit');";
+
+    if ($conn->query($sql)) {
+  //Success message.
+        $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
+        $_SESSION['message_alert'] = "success";
+            
+  //The page is redirected to the ingredients.php.
+        header('Location: edit.php?recipename='. $recipeName);
+
+      } else {
+  //Failure message.
+        $_SESSION['message'] = '¡Error al agregar ingrediente!';
+        $_SESSION['message_alert'] = "danger";
+            
+  //The page is redirected to the ingredients.php.
+        header('Location: edit.php?recipename='. $recipeName);
+    }
+  }
 }
 
 

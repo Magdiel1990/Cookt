@@ -82,7 +82,7 @@ $categoryId = $row['categoryid'];
     } else {
         if($cookingTime >= 5 && $cookingTime <= 180){
             
-            $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', observation = '$observation', categoryid = '$categoryId' WHERE recipename = '$oldName';";
+            $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', observation = '$observation', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '" . $_SESSION['username'] . "';";
 
             if ($conn->query($sql)) {
             //Message if the variable is null.

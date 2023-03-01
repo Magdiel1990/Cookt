@@ -169,7 +169,7 @@ $category = $row["category"];
 if(isset($_GET['recipename'])) {
 $recipeName = $_GET['recipename'];
 
-$sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipeName';";
+$sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
 
 $result = $conn -> query($sql);
 $row = $result -> fetch_assoc();
@@ -245,7 +245,7 @@ $category = $row["category"];
             <h3 class="text-center">Editar Ingredientes</h3>
             <div class="mt-2">
             <?php
-            $sql = "SELECT indications FROM recipeview WHERE recipename = '$recipeName';";
+            $sql = "SELECT indications FROM recipeview WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
 
             $result = $conn -> query($sql);
             
@@ -286,7 +286,7 @@ $category = $row["category"];
                         <label class="input-group-text" for="ingredient">Ingrediente: </label>                
                         <select class="form-select" name="ing" id="ingredient">
                             <?php
-                            $sql = "SELECT ingredient FROM ingredients";
+                            $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "';";
 
                             $result = $conn -> query($sql);
 

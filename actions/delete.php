@@ -17,7 +17,7 @@ if(isset($_GET['recipename'])){
 //Getting the name.
 $recipeName = $_GET['recipename'];
 
-$sql = "DELETE FROM recipe WHERE recipename = '$recipeName';";
+$sql = "DELETE FROM recipe WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
 $result = $conn -> query($sql);
 
 //If there's no record with that name, a message is sent.
@@ -252,8 +252,16 @@ $quantity = $ingredientFullNameArray[0];
 $unit = $ingredientFullNameArray[1];
 $ingredient = $ingredientFullNameArray[3];
 
+$sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
+$row = $conn -> query($sql) -> fetch_assoc();
+$recipeId = $row['recipeid'];
+
+$sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "';";
+$row = $conn -> query($sql) -> fetch_assoc();
+$ingredientId = $row['id'];
+
 //Deleting the register with the name received.
-$sql = "DELETE FROM recipeinfo WHERE recipename = '$recipeName' AND unit = '$unit' AND quantity = '$quantity' AND ingredient = '$ingredient';";
+$sql = "DELETE FROM recipeinfo WHERE recipeid = '$recipeId' AND unit = '$unit' AND quantity = '$quantity' AND ingredientid = '$ingredientId';";
 
 $result = $conn -> query($sql);
 

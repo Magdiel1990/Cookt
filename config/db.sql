@@ -80,15 +80,17 @@ CREATE TABLE `recipe` (
   `observation` text,
   `date` timestamp DEFAULT CURRENT_TIMESTAMP,
   `cookingtime` int,
+  `username` varchar(30) not null,
   PRIMARY KEY (`recipeid`),
-  CONSTRAINT `fk_recipe_categories` FOREIGN KEY (`categoryid`) REFERENCES `categories` (`categoryid`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_recipe_categories` FOREIGN KEY (`categoryid`) REFERENCES `categories` (`categoryid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_recipe_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
 INSERT INTO `recipe` 
-VALUES (1,'Sopa de pato',2,'Esta receta es buena','Es buena','2023-02-15 21:18:39',30),
-(2,'Bizcocho de chocolate',1,'fgsgdfgdfgdfgdfgdfgfdgfdgghghgfhgfh','','2023-02-15 21:20:21',50), 
-(3,'Bizcocho de vainilla',1,'fgsgdfgh','','2023-02-15 21:20:21',50), 
-(4,'Flan de vainilla',2,'fdfhsdf dfdfdh','','2023-02-15 21:20:21',20);
+VALUES (1,'Sopa de pato',2,'Esta receta es buena','Es buena','2023-02-15 21:18:39',30,'Admin'),
+(2,'Bizcocho de chocolate',1,'fgsgdfgdfgdfgdfgdfgfdgfdgghghgfhgfh','','2023-02-15 21:20:21',50,'Admin'), 
+(3,'Bizcocho de vainilla',1,'fgsgdfgh','','2023-02-15 21:20:21',50,'Admin'), 
+(4,'Flan de vainilla',2,'fdfhsdf dfdfdh','','2023-02-15 21:20:21','Admin');
 
 CREATE TABLE `units` (
   `unitid` int NOT NULL AUTO_INCREMENT,
@@ -105,11 +107,9 @@ CREATE TABLE `recipeinfo` (
   `quantity` double(5,2) NOT NULL,
   `unit` varchar(20) NOT NULL,
   `ingredientid` INT NOT NULL,
-  `username` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_ingredients_recipeinfo` FOREIGN KEY (`ingredientid`) REFERENCES `ingredients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_recipeinfo_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE  
 );
 
 INSERT INTO `recipeinfo` 
@@ -128,17 +128,18 @@ AS `date`,`r`.`cookingtime`
 AS `cookingtime`,`r`.`preparation` 
 AS `preparation`,`r`.`observation` 
 AS `observation`,`c`.`category` 
-AS `category` 
-from (`recipe` `r` join `categories` `c` 
-on((`r`.`categoryid` = `c`.`categoryid`)));
+AS `category`, `r`.`username`
+AS `username`
+from `recipe` `r` join `categories` `c` 
+on `r`.`categoryid` = `c`.`categoryid`;
 
 CREATE VIEW `recipeview` 
 AS select `r`.`recipename` 
 AS `recipename`,concat_ws(' ',`ri`.`quantity`,`ri`.`unit`,'de',`i`.`ingredient`) 
 AS `indications`,concat_ws('-',convert(date_format(`r`.`date`,'%d') using utf8mb4),convert(date_format(`r`.`date`,'%m') using utf8mb4),convert(date_format(`r`.`date`,'%Y') using utf8mb4)) 
 AS `date`,`r`.`cookingtime` AS `cookingtime`,`r`.`preparation` 
-AS `preparation`,`r`.`observation` AS `observation`,`c`.`category` 
-AS `category` 
+AS `preparation`,`r`.`observation` AS `observation`,`c`.`category`, `r`.`username`
+AS `username` 
 from `recipeinfo` `ri` 
 join `recipe` `r`
 on `ri`.`recipeid` = `r`.`recipeid` 
