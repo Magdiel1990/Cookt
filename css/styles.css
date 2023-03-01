@@ -2,10 +2,10 @@
     font-family:'Times New Roman', Times, serif;
 }
 main {
-    min-height: calc(100vh - 15rem);
+    min-height: calc(100vh - 12rem);
 }
 footer {
-    height: 6rem;
+    height: 5rem;
 }
 h3 {
     font-size: 1.5rem;
@@ -37,7 +37,7 @@ tbody th {
     font-size: 1.4rem;
     color:#444;
 }
-table td a, h1 {
+table td a {
     text-decoration:none;
     color: rgb(22, 182, 4);
 }
@@ -61,7 +61,7 @@ option {
     color: rgb(240, 144, 41);
 }
 
-#form, .form {
+#form {
     background-color:rgb(255, 249, 241);
     box-shadow: 1px 1px 8px 1px #888;
     padding: 1.5rem;
@@ -96,22 +96,4 @@ label, select, input, option {
   margin-left: 3px;
   color: red;
   font-weight: bold;
-}
-#loginBackground {
-    background-image: url("../imgs/loginimgs/Login picture.jfif");
-    background-color: #cccccc;   
-    background-size: cover;
-}
-
-#loginBackground label, #loginBackground h6 {
-    color: #ffffff;
-}
-
-#loginBackground a {
-    color: rgb(0, 162, 255);
-}
-.form {
-    background-color:rgba(0, 0, 0, 0.8);
-    box-shadow: 1px 1px 8px 1px #727171;
-    padding: 1.5rem;
 }

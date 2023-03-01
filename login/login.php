@@ -21,39 +21,43 @@ require_once ("../modules/head.php");
 //Unsetting the messages variables so the message fades after refreshing the page.
     unset($_SESSION['message_alert'], $_SESSION['message']);
     }
-?>
-    <div class="text-center col-auto form">
-        <form class="mb-1">
-        <!-- Username input -->
-        <div class="form-outline mb-4">
-            <input type="text" id="username" class="form-control" name="username"/>
-            <label class="form-label" for="username">Usuario</label>
-        </div>
+?>  
+    
+    <section class="my-4">
+        <div class="container-fluid h-custom my-4">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="../imgs/loginimgs/Login picture.jfif" class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <form action="" method="POST">
+                        <!-- Email input -->
+                        <div class="form-outline mb-3">
+                            <input type="text" id="username" class="form-control form-control-lg" name="username"/>
+                            <label class="form-label" for="username">Usuario</label>
+                        </div>
 
-        <!-- Password input -->
-        <div class="form-outline mb-4">
-            <input type="password" id="password" class="form-control" name="password"/>
-            <label class="form-label" for="password">Contraseña</label>
-        </div>
+                        <!-- Password input -->
+                        <div class="form-outline mb-3">
+                            <input type="password" id="password" class="form-control form-control-lg" name="password"/>
+                            <label class="form-label" for="password">Contraseña</label>
+                        </div>
 
-        <!-- 1 column grid layout for inline styling -->
-        <div class="mb-4">
-            <div>
-            <!-- Simple link -->
-            <a style = "text-decoration: none;" href="#!">Olvidaste la contraseña?</a>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#!" class="text-body" style = "text-decoration: none;">¿Olvidaste la contraseña?</a>
+                        </div>
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button type="button" class="btn btn-primary btn-lg"
+                            style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                            <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes cuenta? <a href="#!"
+                                style = "text-decoration: none;" class="link-danger">Regístrate</a></p>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-
-        <!-- Submit button -->
-        <div>
-            <button type="button" class="btn btn-primary mb-4">Sign in</button>
-        </div>
-        <!-- Register buttons -->
-        <div>
-            <h6>No te ha registrado? <a href="#!" style = "text-decoration: none;">Regístrate</a></h6>
-        </div>
-        </form>
-    </div>
+        </div>  
+    </section>
 </main>
 <?php
 $conn -> close();
