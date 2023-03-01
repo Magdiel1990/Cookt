@@ -317,8 +317,6 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
   $quantity = $_POST['qty'];
   $unit = $_POST['units'];
   $recipeName = $_GET['rname'];
-/******************************************Sanitizar esto***************************/
-
 
   if ($quantity == "" || $quantity <= 0) {
   //Message if the variable is null.

@@ -28,7 +28,7 @@
         }
     //The final where delection.
         $where = substr_replace($where, "", -3);
-        $where .= ") AND username = '" . $_SESSION['username'] . "';";
+        $where .= ") AND username = '" . $_SESSION['username'] . "'";
     }        
     
 
