@@ -59,7 +59,7 @@ if(isset($_POST["category"])) {
     if($num_rows == 0){
         die("<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>");
     }
-    $sql = "SELECT * FROM recipeinfoview WHERE category='$category' ORDER BY RAND() LIMIT 1;"; 
+    $sql = "SELECT * FROM recipeinfoview WHERE category='$category' AND username = '" . $_SESSION['username'] . "' ORDER BY RAND() LIMIT 1;"; 
     $result = $conn -> query($sql);
     $row = $result -> fetch_assoc();
 
@@ -94,10 +94,9 @@ if(isset($_POST["category"])) {
         </div>
         <div class="col-sm-8 col-md-8">
             <?php
-            $sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipename';";
+            $sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipename' AND username = '" . $_SESSION['username'] . "';";
 
-            $result = $conn -> query($sql);
-            $row = $result->fetch_assoc();
+            $row = $conn -> query($sql) -> fetch_assoc();
             ?>
             <div class="collapse mt-3 bg-form" id="collapseExample">
                 <h5 class="card card-body text-danger"> <?php echo $row["preparation"]; ?> </h5>
