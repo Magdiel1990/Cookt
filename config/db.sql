@@ -90,7 +90,7 @@ INSERT INTO `recipe`
 VALUES (1,'Sopa de pato',2,'Esta receta es buena','Es buena','2023-02-15 21:18:39',30,'Admin'),
 (2,'Bizcocho de chocolate',1,'fgsgdfgdfgdfgdfgdfgfdgfdgghghgfhgfh','','2023-02-15 21:20:21',50,'Admin'), 
 (3,'Bizcocho de vainilla',1,'fgsgdfgh','','2023-02-15 21:20:21',50,'Admin'), 
-(4,'Flan de vainilla',2,'fdfhsdf dfdfdh','','2023-02-15 21:20:21','Admin');
+(4,'Flan de vainilla',2,'fdfhsdf dfdfdh','','2023-02-15 21:20:21',30,'Admin');
 
 CREATE TABLE `units` (
   `unitid` int NOT NULL AUTO_INCREMENT,
@@ -109,16 +109,16 @@ CREATE TABLE `recipeinfo` (
   `ingredientid` INT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_ingredients_recipeinfo` FOREIGN KEY (`ingredientid`) REFERENCES `ingredients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO `recipeinfo` 
-VALUES (1,1,6.00,'unidades',3,'Admin'),
-(2,1,4.00,'gramos',4,'Admin'),
-(3,1,7.00,'gramos',2,'Admin'),
-(4,2,7.00,'gramos',4,'Admin'),
-(5,2,4.00,'unidades',3,'Admin'),
-(6,2,6.00,'gramos',5,'Admin');
+VALUES (1,1,6.00,'unidades',3),
+(2,1,4.00,'gramos',4),
+(3,1,7.00,'gramos',2),
+(4,2,7.00,'gramos',4),
+(5,2,4.00,'unidades',3),
+(6,2,6.00,'gramos',5);
 
 CREATE VIEW `recipeinfoview` 
 AS select `r`.`recipeid` 
