@@ -27,50 +27,51 @@ if(isset($_POST['add_units'])){
           
   //The page is redirected to the add-units.php
       header('Location: ../views/add-units.php');
-  } 
-  if (!preg_match($pattern, $unit)){
-      //Message if the variable is null.
-      $_SESSION['message'] = '¡Unidad incorrecta!';
-      $_SESSION['message_alert'] = "danger";
-          
-  //The page is redirected to the add-units.php
-       header('Location: ../views/add-units.php');
-  } 
+  } else {
+    if (!preg_match($pattern, $unit)){
+        //Message if the variable is null.
+        $_SESSION['message'] = '¡Unidad incorrecta!';
+        $_SESSION['message_alert'] = "danger";
+            
+    //The page is redirected to the add-units.php
+        header('Location: ../views/add-units.php');
+    } 
 
-  //lowercase the variable
-    $unit = strtolower($unit);
+//lowercase the variable
+  $unit = strtolower($unit);
 
-    $sql = "SELECT unit FROM units WHERE unit = '$unit';";
+  $sql = "SELECT unit FROM units WHERE unit = '$unit';";
 
-    $num_rows = $conn -> query($sql) -> num_rows;
+  $num_rows = $conn -> query($sql) -> num_rows;
 
-      if($num_rows != 0){
-    //It already exists.
-          $_SESSION['message'] = '¡Ya ha sido agregado!';
-          $_SESSION['message_alert'] = "success";
+  if($num_rows != 0){
+//It already exists.
+      $_SESSION['message'] = '¡Ya ha sido agregado!';
+      $_SESSION['message_alert'] = "success";
 
-    //The page is redirected to the add-units.php.
-          header('Location: ../views/add-units.php');
+//The page is redirected to the add-units.php.
+      header('Location: ../views/add-units.php');
+  } else {
+    $sql = "INSERT INTO units (unit) VALUES ('$unit')";
+
+    if ($conn->query($sql)) {
+  //Success message.
+        $_SESSION['message'] = '¡Unidad agregada con éxito!';
+        $_SESSION['message_alert'] = "success";
+            
+  //The page is redirected to the add-units.php.
+        header('Location: ../views/add-units.php');
+
+      } else {
+  //Failure message.
+        $_SESSION['message'] = '¡Error al agregar unidad!';
+        $_SESSION['message_alert'] = "danger";
+            
+  //The page is redirected to the add-units.php.
+        header('Location: ../views/add-units.php');
       }
-      $sql = "INSERT INTO units (unit) VALUES ('$unit')";
-
-      if ($conn->query($sql)) {
-    //Success message.
-          $_SESSION['message'] = '¡Unidad agregada con éxito!';
-          $_SESSION['message_alert'] = "success";
-              
-    //The page is redirected to the add-units.php.
-          header('Location: ../views/add-units.php');
-
-        } else {
-    //Failure message.
-          $_SESSION['message'] = '¡Error al agregar unidad!';
-          $_SESSION['message_alert'] = "danger";
-              
-    //The page is redirected to the add-units.php.
-          header('Location: ../views/add-units.php');
-        }
-    
+    }
+  }
 }
 
 
@@ -203,7 +204,7 @@ if(isset($_POST['add_ingredient'])){
           
   //The page is redirected to the add_units.php
       header('Location: ../views/add-ingredients.php');
-  } 
+  } else {
   if(!preg_match($pattern, $ingredient)){
       //Message if the variable is null.
       $_SESSION['message'] = '¡Ingrediente incorrecto!';
@@ -247,6 +248,7 @@ if(isset($_POST['add_ingredient'])){
     //The page is redirected to the add_units.php.
           header('Location: ../views/add-ingredients.php');
         }
+      }
 }
 
 

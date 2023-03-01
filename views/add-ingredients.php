@@ -37,7 +37,7 @@ require_once ("../modules/nav.php");
     </div>
     <div class="row">
          <?php
-            $sql = "SELECT ingredient FROM ingredients ORDER BY ingredient;";
+            $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "' ORDER BY ingredient;";
 
             $result = $conn -> query($sql);
 

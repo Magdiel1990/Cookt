@@ -36,7 +36,7 @@ require_once ("../modules/nav.php");
         </form>
     </div>
     <div>
-        <table class="table table-sm">
+        <table class="table table-sm mt-4">
             <thead>
                 <tr class="bg-primary">
                     <th>Unidades</th>

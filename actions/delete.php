@@ -177,7 +177,7 @@ if(isset($_GET['ingredientname'])){
 //Getting the name.
 $ingredientName = $_GET['ingredientname'];
 
-$sql = "DELETE FROM ingredients WHERE ingredient = '$ingredientName';";
+$sql = "DELETE FROM ingredients WHERE ingredient = '$ingredientName' AND username = '" . $_SESSION['username'] . "';";
 $result = $conn -> query($sql);
 
 //If there's no record with that name, a message is sent.
