@@ -55,7 +55,7 @@ $ingredient = $row["ingredient"];
 
 //Unsetting the messages variables so the message fades after refreshing the page.
     unset($_SESSION['message_alert'], $_SESSION['message']);
-}
+    }
 ?>
     <div class="row mt-2 text-center justify-content-center">
         <h3>EDITAR INGREDIENTE</h3>     
@@ -134,7 +134,7 @@ $category = $row["category"];
 
 //Unsetting the messages variables so the message fades after refreshing the page.
     unset($_SESSION['message_alert'], $_SESSION['message']);
-}
+    }
 ?>
     <div class="row mt-2 text-center justify-content-center">
         <h3>EDITAR CATEGORÍA</h3>     
@@ -322,7 +322,7 @@ $num_rows = $result -> num_rows;
 $row = $result -> fetch_assoc();
 
 
-if($num_rows == 1 && $_SERVER['username'] == $row['username']){
+if($num_rows == 1 && $_SESSION['username'] == $row['username']){
     $userNameState = "hidden";
     $userNameLabelState = "display: none;";    
 } else {

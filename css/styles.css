@@ -73,11 +73,14 @@ label, select, input, option {
 .banner {
     background: rgb(75,221,21);
     background: linear-gradient(39deg, rgba(75,221,21,0.8) 0%, rgba(0,241,255,0.8) 100%);
-    height: 9vh;
-    color: rgb(6, 3, 52);
+    height: 9vh;    
     font-size: 1.8rem;
     font-weight: bold;
-    font-style: italic;
+    font-style: italic;   
+}
+.banner a {
+     text-decoration: none;
+     color: rgb(255, 44, 44);
 }
 .bg-form  {
     background-color: rgb(255, 250, 234);
