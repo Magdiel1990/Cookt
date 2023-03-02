@@ -10,9 +10,17 @@ require_once ("../modules/head.php");
 
 //Navigation panel of the page
 require_once ("../modules/nav.php");
+
 ?>
 
 <link rel="stylesheet" href="../css/styles.css">
+
+<?php
+if($_SESSION['username'] != 'Admin') { 
+    require_once ("../error/error.php");
+    exit;
+}
+?>
 
 <main class="container p-4">
     <div class="row mt-2 text-center justify-content-center">

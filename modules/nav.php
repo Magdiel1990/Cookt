@@ -20,11 +20,11 @@
                 Administración
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="./views/add-units.php">Unidades</a>
+                <a <?php if($_SESSION['username'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="./views/add-units.php">Unidades</a>
                 <a class="dropdown-item" href="./views/add-ingredients.php">Ingredientes</a>
                 <a class="dropdown-item" href="./views/add-recipe.php">Recetas</a>
-                <a class="dropdown-item" href="./views/add-categories.php">Categorías</a>
-                <a class="dropdown-item" href="./views/add-users.php">Usuarios</a>
+                <a <?php if($_SESSION['username'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="./views/add-categories.php">Categorías</a>
+                <a <?php if($_SESSION['username'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="./views/add-users.php">Usuarios</a>
                 </div>
             </li>
             </ul>
