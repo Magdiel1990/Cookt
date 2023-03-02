@@ -15,16 +15,16 @@
             <li class="nav-item">
                 <a class="nav-link" href="./views/custom-recipe.php">Elegir por ingredientes</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" <?php if($_SESSION['type'] == 'Viewer') { echo "style = 'display : none;'";}?>>
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Administración
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a <?php if($_SESSION['username'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="./views/add-units.php">Unidades</a>
+                <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="./views/add-units.php">Unidades</a>
                 <a class="dropdown-item" href="./views/add-ingredients.php">Ingredientes</a>
                 <a class="dropdown-item" href="./views/add-recipe.php">Recetas</a>
-                <a <?php if($_SESSION['username'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="./views/add-categories.php">Categorías</a>
-                <a <?php if($_SESSION['username'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="./views/add-users.php">Usuarios</a>
+                <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="./views/add-categories.php">Categorías</a>
+                <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="./views/add-users.php">Usuarios</a>
                 </div>
             </li>
             </ul>

@@ -19,5 +19,6 @@ $_SESSION['state'] = 1;
     <link rel="stylesheet" href="./css/styles.css">
     <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
     <script src="../js/scripts.js"></script>   
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
 </head>
 <body>

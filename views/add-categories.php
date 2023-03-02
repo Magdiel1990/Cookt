@@ -8,17 +8,18 @@ require_once ("../models/models.php");
 //Head of the page.
 require_once ("../modules/head.php");
 
-//Navigation panel of the page
-require_once ("../modules/nav.php");
 ?>
 
 <link rel="stylesheet" href="../css/styles.css">
 
 <?php
-if($_SESSION['username'] != 'Admin') { 
+if($_SESSION['type'] != 'Admin') { 
     require_once ("../error/error.php");
     exit;
 }
+
+//Navigation panel of the page
+require_once ("../modules/nav.php");
 ?>
 
 <main class="container p-4">
