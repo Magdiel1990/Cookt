@@ -20,3 +20,4 @@ validar agregar categoria del lado del cliente
 revisar las vista de la db
 http://localhost/Cookt/views/custom-recipe.php eliminar los ingredientes mientras se vayan agregando.
 username no esta en recipe
+http://localhost/Cookt/views/custom-recipe.php eliminar los ingredientes mientras se vayan agregando.

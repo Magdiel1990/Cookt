@@ -71,7 +71,7 @@ require_once ("../modules/nav.php");
             <div class="m-2 p-2 col-auto">
                 <h3 class="text-center">Ingredientes</h3>
                 <?php
-                $sql = "SELECT re_id, concat_ws(' ', quantity, unit, 'de' ,ingredient) as fullingredient FROM reholder;";
+                $sql = "SELECT re_id, concat_ws(' ', rh.quantity, rh.unit, 'de' , i.ingredient) as fullingredient FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" . $_SESSION['username'] . "';";
 
                 $result = $conn -> query($sql);
 
@@ -103,7 +103,7 @@ require_once ("../modules/nav.php");
                 ?>
             
             </div>
-            <form class="m-4 col-auto text-center" id="form" method="POST" action="../actions/create.php" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
+            <form class="m-4 col-auto text-center form" method="POST" action="../actions/create.php" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
             
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="recipename">Nombre: </label>

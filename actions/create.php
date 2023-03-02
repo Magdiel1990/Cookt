@@ -253,7 +253,7 @@ if(isset($_POST['add_ingredient'])){
 
 
 /************************************************************************************************/
-/**********************************FULL INGREDIENT DESCRIPTION CODE******************************/
+/********************************INGREDIENTS FOR ADDING RECIPE CODE******************************/
 /************************************************************************************************/
 
 
@@ -264,7 +264,6 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
   $quantity = $_POST['quantity'];
   $unit = $_POST['unit'];
 
-
   if ($quantity == "" || $quantity <= 0) {
   //Message if the variable is null.
       $_SESSION['message'] = '¡Elija la cantidad por favor!';
@@ -272,14 +271,18 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
           
   //The page is redirected to the add-recipe.php
       header('Location: ../views/add-recipe.php');
-  } 
-    $sql = "SELECT re_id FROM reholder WHERE ingredient = '$ingredient' AND quantity = '$quantity' AND unit = '$unit' AND username = '" .  $_SESSION['username'] . "';";
+  } else {
+    $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "';";
+    $row = $conn -> query($sql) -> fetch_assoc();
+    $ingredientId = $row['id'];
+
+    $sql = "SELECT re_id FROM reholder WHERE ingredientid = '$ingredientId' AND quantity = '$quantity' AND unit = '$unit' AND username = '" .  $_SESSION['username'] . "';";
 
     $num_rows = $conn -> query($sql) -> num_rows;
 
     if($num_rows == 0) {
 
-    $sql = "INSERT INTO reholder (ingredient, quantity, unit, username) VALUES ('$ingredient', '$quantity', '$unit', '" .  $_SESSION['username'] . "');";
+    $sql = "INSERT INTO reholder (ingredientid, quantity, unit, username) VALUES ('$ingredientId', '$quantity', '$unit', '" .  $_SESSION['username'] . "');";
 
       if ($conn->query($sql)) {
     //Success message.
@@ -305,6 +308,7 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
       //The page is redirected to the ingredients.php.
           header('Location: ../views/add-recipe.php');
     }
+  }
 }
 
 /************************************************************************************************/
@@ -383,7 +387,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
           
   //The page is redirected to the add-recipe.php
       header('Location: ../views/add-recipe.php');
-  } 
+  } else {
   if (!preg_match($pattern, $recipename)){
       //Message if the variable is null.
       $_SESSION['message'] = '¡Nombre de receta incorrecto!';
@@ -422,17 +426,22 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
       $categoryid = $row["categoryid"];
 
       $sql = "INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime, username)
-      VALUES ('$recipename', '$categoryid', '$preparation', '$observation', '$cookingtime', " . $_SESSION['username'] . ");";
+      VALUES ('$recipename', '$categoryid', '$preparation', '$observation', '$cookingtime', '" . $_SESSION['username'] . "');";
       
       $conn -> query($sql);
       
-      $sql = "SELECT * FROM reholder WHERE username = " .  $_SESSION['username'] . ";";   
+      $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipename' AND username = '" . $_SESSION['username'] . "';";
+      $row = $conn -> query($sql) -> fetch_assoc();
+      $recipeId = $row['recipeid'];
+
+      $sql = "SELECT rh.unit, rh.quantity, i.id FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" .  $_SESSION['username'] . "';";   
       
       $result = $conn -> query($sql);    
 
       while($row = $result -> fetch_assoc()){
-        $sql = "INSERT INTO recipeinfo (recipename, quantity, unit, ingredient, username)
-        VALUES ('$recipename', " . $row["quantity"] . ", '" . $row["unit"] . "', '" . $row["ingredient"] . "', '" . $_SESSION['username'] . "');";
+
+        $sql = "INSERT INTO recipeinfo (recipeid, quantity, unit, ingredientid)
+        VALUES ('$recipeId', " . $row["quantity"] . ", '" . $row["unit"] . "', '" . $row["id"] . "');";
 
         $conn -> query($sql);
       }
@@ -462,6 +471,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
       //The page is redirected to the ingredients.php.
         header('Location: ../views/add-recipe.php');
     }
+  }
 }
 
 /************************************************************************************************/

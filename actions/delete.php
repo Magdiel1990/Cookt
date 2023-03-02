@@ -131,7 +131,7 @@ $iterator = new FilesystemIterator("../imgs/categories");
 
 
 /************************************************************************************************/
-/*****************************INGREDIENT DELETION FROM REHOLDER CODE*****************************/
+/********************INGREDIENT DELETION WHEN ADDING THE RECIPE CODE*****************************/
 /************************************************************************************************/
 
 
@@ -142,7 +142,7 @@ if(isset($_GET['id'])){
 $recipeid = $_GET['id'];
 
 //Deleting the register with the name received.
-$sql = "DELETE FROM reholder WHERE re_id = $recipeid;";
+$sql = "DELETE FROM reholder WHERE re_id = $recipeid AND username = '" . $_SESSION['username'] . "';";
 
 $result = $conn -> query($sql);
 

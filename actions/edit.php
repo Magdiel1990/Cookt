@@ -24,7 +24,7 @@ if(isset($_GET["id"])){
 
 $id = $_GET["id"];
 
-$sql = "SELECT * FROM reholder WHERE re_id = $id";
+$sql = "SELECT i.ingredient, rh.quantity, rh.unit FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE re_id = $id AND rh.username = '" . $_SESSION['username'] . "';";
 
 $result = $conn -> query($sql);
 
@@ -33,8 +33,9 @@ $row = $result -> fetch_assoc();
 $num_rows = $result -> num_rows;
 
 $quantity = $row["quantity"];
-$ingredient = $row["ingredient"];
 $unit = $row["unit"];
+$ingredient = $row["ingredient"];
+
 
     if ($num_rows == 0) {
         //Message if the variable is null.

@@ -30,7 +30,11 @@ $ingredient = $_POST["ingredient"];
         header('Location: edit.php');
 
     } else {
-        $sql = "UPDATE reholder SET ingredient = '$ingredient', quantity = '$quantity', unit = '$unit' WHERE re_id = $id";
+        $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "';";
+        $row = $conn -> query($sql) -> fetch_assoc();
+        $ingredientId = $row['id'];
+
+        $sql = "UPDATE reholder SET ingredientid = '$ingredientId', quantity = '$quantity', unit = '$unit' WHERE re_id = $id AND username = '" . $_SESSION['username'] . "';";
                 
         if ($conn->query($sql)) {
          //Message if the variable is null.
@@ -45,7 +49,7 @@ $ingredient = $_POST["ingredient"];
         $_SESSION['message_alert'] = "danger";
             
         //The page is redirected to the add-recipe.php
-        header('Location: edit.php');
+        header('Location: edit.php?id='.$id);
         }               
     }
 }

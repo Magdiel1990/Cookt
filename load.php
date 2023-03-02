@@ -34,7 +34,7 @@
 
     $sql = "SELECT SQL_CALC_FOUND_ROWS ". implode(", ", $columns) . " 
     FROM $table 
-    $where ORDER BY recipename;";
+    $where ORDER BY rand();";
 
     //Count of the number of rows of the query
     $result = $conn->query($sql);
