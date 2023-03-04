@@ -21,3 +21,4 @@ revisar las vista de la db
 http://localhost/Cookt/views/custom-recipe.php eliminar los ingredientes mientras se vayan agregando.
 username no esta en recipe
 http://localhost/Cookt/views/custom-recipe.php eliminar los ingredientes mientras se vayan agregando.
+Cuando se elimine un usuario, también su carpeta de imagenes
