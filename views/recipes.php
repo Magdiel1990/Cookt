@@ -10,7 +10,9 @@ require_once ("../modules/nav.php");
 
 if(isset($_GET["recipe"])){
     $recipe = $_GET["recipe"];
-}
+
+    $recipeDir = "../imgs/recipes/" . $_SESSION['username'] . "/". $recipe . ".jpg";
+   }
 
 $sql = "SELECT * FROM recipeview WHERE recipename = '$recipe' AND username = '" . $_SESSION['username'] . "';";
 
@@ -42,20 +44,32 @@ $row = $result->fetch_assoc();
     } else {   
     ?>
     <div class="jumbotron row justify-content-center">
-        <div class="bg-form p-3 mt-3 col-sm-8 col-md-8">
+        <div class="bg-form p-3 mt-3 col-sm-auto col-md-9 col-lg-8">
             <div class="text-center">
                 <h1 class="display-4 text-info"> <?php echo $row["recipename"]; ?> </h1>
                 <h5 class="text-warning"> (<?php echo $row["cookingtime"]; ?> minutos)</h5>
             </div>
-            <ul class="lead"> 
-            <?php            
-            $result = $conn -> query($sql);
-            
-            while($row = $result->fetch_assoc()){
-                echo "<li class='text-success'>" . $row["indications"]. ".</li>";
-            }        
-            ?>   
-            </ul>
+            <div class="d-flex flex-row justify-content-between">
+                <ul class="lead"> 
+                <?php            
+                $result = $conn -> query($sql);
+                
+                while($row = $result->fetch_assoc()){
+                    echo "<li class='text-success'>" . $row["indications"]. ".</li>";
+                }        
+                ?>   
+                </ul>
+                <?php
+                    if(file_exists($recipeDir)) {
+
+                ?>
+                <div class="">
+                    <img src="<?php echo $recipeDir?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
+                </div>                 
+                <?php
+                }
+                ?>
+            </div>
             <hr class="my-4">
         </div>
         <div class="lead text-center">

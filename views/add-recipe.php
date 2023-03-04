@@ -100,89 +100,19 @@ require_once ("../modules/nav.php");
                     $html .= "</p>";
                     echo $html;                                   
                 }
-                ?>
-            
+                ?>            
             </div>
-
-
-            
-<?php
-                /*
-        $target_dir = "../imgs/categories/";
-        $fileExtension = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
-        $target_file = $target_dir . $newCategoryName . "." . $fileExtension;
-        $uploadOk = "";
-
-        if(is_file($target_file)){
-            unlink($target_file);
-        }
-        
-        // Check if image file is a actual image or fake image
-        if(isset($_POST["categoryeditionsubmit"])) {
-            $check = getimagesize($categoryImage["tmp_name"]);
-            if($check == false) {
-                $uploadOk = "¡Este archivo no es una imagen!";
-            } 
-        }
-        // Check if file already exists
-        if (file_exists($target_file)) {
-            $uploadOk = "¡Esta imagen ya existe!";
-        }
-
-        // Check file size
-        if ($categoryImage["size"] > 2000000) {
-            $uploadOk = "¡Esta imagen ya existe!";
-        }
-
-        // Allow certain file formats
-        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "jpeg"
-        && $fileExtension != "gif" ) {
-            $uploadOk = "¡Formato no admitido!";
-        } 
-
-        if ($uploadOk == "") {
-            if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $conn->query($sql)){
-            //Success message.
-            $_SESSION['message'] = '¡Categoría editada con éxito!';
-            $_SESSION['message_alert'] = "success";
-
-            //The page is redirected to the add_units.php.
-            header('Location: ../views/add-categories.php');    
-            } else {
-            //Failure message.
-            $_SESSION['message'] = '¡Error al editar categoría!';
-            $_SESSION['message_alert'] = "danger";
-
-            //The page is redirected to the add_units.php.
-            header('Location: edit.php?categoryid=' . $categoryId);
-        }
-        } else {
-            //Failure message.
-            $_SESSION['message'] = $uploadOk;
-            $_SESSION['message_alert'] = "danger";
-
-            //The page is redirected to the add_units.php.
-            header('Location: edit.php?categoryid=' . $categoryId);
-        }
-    }    
- */
-?>
-
-
-
-
-
-
-
-
-
-
-            <form class="m-4 col-auto text-center form" method="POST" action="../actions/create.php" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
+            <form class="m-4 col-auto text-center form" enctype="multipart/form-data" method="POST" action="../actions/create.php" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
             
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="recipename">Nombre: </label>
                     <input  class="form-control" type="text" id="recipename" name="recipename" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" oninvalid="setCustomValidity('¡Solo letras por favor!')" max-length="50" min-length="7" required>             
                 </div>
+                
+                <div class="mb-3">
+                    <label class="form-label is-required" for="recipeImage">Foto de la categoría</label>
+                    <input type="file" name="recipeImage" accept=".jpg" class="form-control" id="recipeImage">
+                </div> 
                 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="category">Categoría: </label>                

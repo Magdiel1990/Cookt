@@ -146,8 +146,8 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
       }
 
       // Check file size
-      if ($categoryImage["size"] > 2000000) {
-        $uploadOk = "¡Esta imagen ya existe!";
+      if ($categoryImage["size"] > 1000000) {
+          $uploadOk = "¡El tamaño debe ser menor que 1 Mb!";
       }
 
       // Allow certain file formats
@@ -370,13 +370,14 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
 
 
 //receive the data
-if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['observation']) || isset($_POST['category']) || isset($_POST['cookingtime'])){
+if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES["recipeImage"]) || isset($_POST['observation']) || isset($_POST['category']) || isset($_POST['cookingtime'])){
 
   $recipename = sanitization($_POST['recipename'], FILTER_SANITIZE_STRING, $conn);
   $preparation = sanitization($_POST['preparation'], FILTER_SANITIZE_STRING, $conn);
   $observation = sanitization($_POST['observation'], FILTER_SANITIZE_STRING, $conn);
   $category = $_POST['category'];
   $cookingtime = sanitization($_POST['cookingtime'], FILTER_SANITIZE_NUMBER_INT, $conn);
+  $recipeImage = $_FILES["recipeImage"];
 
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
 
@@ -446,30 +447,86 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_POST['
         $conn -> query($sql);
       }
 
+      if($categoryImage ['name'] == null) {
+
       $sql = "DELETE FROM reholder WHERE username = '" . $_SESSION['username'] . "';";
 
-      if ($conn -> query($sql)) {
-      //Success message.
-        $_SESSION['message'] = '¡Receta agregada exitosamente!';
-        $_SESSION['message_alert'] = "success";
+         if($conn->query($sql)){
+            //Success message.
+            $_SESSION['message'] = '¡Receta agregada exitosamente!';
+            $_SESSION['message_alert'] = "success";
 
-      //The page is redirected to the ingredients.php.
-        header('Location: ../views/add-recipe.php');
-      } else {
-        //Failure message.
-        $_SESSION['message'] = '¡Error al agregar receta!';
-        $_SESSION['message_alert'] = "danger";
+          //The page is redirected to the ingredients.php.
+            header('Location: ../views/add-recipe.php');
+            } else {
+            //Failure message.
+            $_SESSION['message'] = '¡Error al agregar receta!';
+            $_SESSION['message_alert'] = "danger";
                 
-      //The page is redirected to the ingredients.php.
-        header('Location: ../views/add-recipe.php');
+            //The page is redirected to the ingredients.php.
+            header('Location: ../views/add-recipe.php');
+        }         
+      }  else {
+      $sql = "DELETE FROM reholder WHERE username = '" . $_SESSION['username'] . "';";
+      $conn->query($sql); 
+
+      $recipeImagesDir = "../imgs/recipes/". $_SESSION['username']  ."/";
+        if (!file_exists($recipeImagesDir)) {
+            mkdir($recipeImagesDir, 0777, true);
+        }
+
+        $target_dir = "../imgs/recipes/";
+        $fileExtension = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
+        $target_file = $target_dir .  $recipename . "." . $fileExtension;
+        $uploadOk = "";
+        
+        // Check if image file is a actual image or fake image
+        if(isset($_POST["addrecipe"])) {
+            $check = getimagesize($recipeImage["tmp_name"]);
+            if($check == false) {
+                $uploadOk = "¡Este archivo no es una imagen!";
+            } 
+        }
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            $uploadOk = "¡Esta imagen ya existe!";
+        }
+
+        // Check file size
+        if ($recipeImage["size"] > 1000000) {
+            $uploadOk = "¡El tamaño debe ser menor que 1 Mb!";
+        }
+
+        // Allow certain file formats
+        if($fileExtension != "jpg") {
+            $uploadOk = "¡Formato no admitido!";
+        }      
+
+        if ($uploadOk == "") {
+            if(move_uploaded_file($recipeImage["tmp_name"], $target_file)){
+            //Success message.
+            $_SESSION['message'] = '¡Receta agregada exitosamente!';
+            $_SESSION['message_alert'] = "success";
+
+          //The page is redirected to the ingredients.php.
+            header('Location: ../views/add-recipe.php');
+            } else {
+            //Failure message.
+            $_SESSION['message'] = '¡Error al agregar receta!';
+            $_SESSION['message_alert'] = "danger";
+                
+            //The page is redirected to the ingredients.php.
+            header('Location: ../views/add-recipe.php');
+        }
+        } else {
+            //Failure message.
+            $_SESSION['message'] = $uploadOk;
+            $_SESSION['message_alert'] = "danger";
+
+            //The page is redirected to the ingredients.php.
+            header('Location: ../views/add-recipe.php');
+        }
       }
-    } else {
-      //Failure message.
-        $_SESSION['message'] = '¡Esta receta ya fue agregada!';
-        $_SESSION['message_alert'] = "success";
-                
-      //The page is redirected to the ingredients.php.
-        header('Location: ../views/add-recipe.php');
     }
   }
 }
