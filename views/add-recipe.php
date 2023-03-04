@@ -48,22 +48,35 @@ require_once ("../modules/nav.php");
                             ?>
                         </select>
                     </div>
+                    <?php
+                        $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "'";
+                        $result = $conn -> query($sql);
+                        $num_rows = $result -> num_rows;
+                        if($num_rows > 0) {
+                    ?>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="ingredient">Ingrediente: </label>                
                         <select class="form-select" name="ingredient" id="ingredient">
                             <?php
-                            $sql = "SELECT ingredient FROM ingredients";
-
-                            $result = $conn -> query($sql);
-
                             while($row = $result -> fetch_assoc()) {
                                 echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
                             }
                             ?>
                         </select>
                     </div>
-                </div>            
-                <input class="btn btn-primary" type="submit" value="Agregar ingrediente">
+                    <?php
+                    } else {
+                    ?>
+                    <div class="mx-1">
+                        <a class="btn btn-secondary" href="add-ingredients.php">Ingredientes</a>
+                    </div>
+                    <?php
+                    }
+                    ?>
+                </div>  
+                <div class="mt-1">         
+                    <input class="btn btn-primary" type="submit" value="Agregar ingrediente">
+                </div> 
             </form>
         </div>
         <div class="row justify-content-center">

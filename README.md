@@ -22,3 +22,4 @@ http://localhost/Cookt/views/custom-recipe.php eliminar los ingredientes mientra
 username no esta en recipe
 http://localhost/Cookt/views/custom-recipe.php eliminar los ingredientes mientras se vayan agregando.
 Cuando se elimine un usuario, también su carpeta de imagenes
+revisar el codigo de creacion de receta, no se esta agregando la imagen

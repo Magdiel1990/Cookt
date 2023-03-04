@@ -467,17 +467,15 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES[
             header('Location: ../views/add-recipe.php');
         }         
       }  else {
-      $sql = "DELETE FROM reholder WHERE username = '" . $_SESSION['username'] . "';";
-      $conn->query($sql); 
+      $sql = "DELETE FROM reholder WHERE username = '" . $_SESSION['username'] . "';";       
 
-      $recipeImagesDir = "../imgs/recipes/". $_SESSION['username']  ."/";
+      $recipeImagesDir = "../imgs/recipes/". $_SESSION['username'];
         if (!file_exists($recipeImagesDir)) {
             mkdir($recipeImagesDir, 0777, true);
         }
 
-        $target_dir = "../imgs/recipes/";
         $fileExtension = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
-        $target_file = $target_dir .  $recipename . "." . $fileExtension;
+        $target_file = $recipeImagesDir ."/".  $recipename . "." . $fileExtension;
         $uploadOk = "";
         
         // Check if image file is a actual image or fake image
@@ -503,7 +501,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES[
         }      
 
         if ($uploadOk == "") {
-            if(move_uploaded_file($recipeImage["tmp_name"], $target_file)){
+            if(move_uploaded_file($recipeImage["tmp_name"], $target_file) && $conn->query($sql)){
             //Success message.
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
             $_SESSION['message_alert'] = "success";

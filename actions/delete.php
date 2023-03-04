@@ -296,12 +296,19 @@ if(isset($_GET['userid'])) {
 //Getting the name.
 $userId = $_GET['userid'];
 
-//Deleting the register with the name received.
-$sql = "DELETE FROM users WHERE userid = '$userId';";
+$sql = "SELECT username FROM users WHERE userid = '$userId';";
+$row = $conn -> query($sql) -> fetch_assoc();
+$username = $row['username'];
+$target_dir = "../imgs/recipes/" . $username;
 
-$result = $conn -> query($sql);
+    if(file_exists($target_dir)) {
+        unlink($target_dir);
+    }
+    
+    //Deleting the register with the name received.
+    $sql = "DELETE FROM users WHERE userid = '$userId';";
 
-//If there's no record with that name, a message is sent.
+    $result = $conn -> query($sql);
 
     if(!$result){
 //Creation of the message of error deleting the receta.

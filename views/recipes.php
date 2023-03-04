@@ -11,7 +11,7 @@ require_once ("../modules/nav.php");
 if(isset($_GET["recipe"])){
     $recipe = $_GET["recipe"];
 
-    $recipeDir = "../imgs/recipes/" . $_SESSION['username'] . "/". $recipe . ".jpg";
+    $recipeImageDir = "../imgs/recipes/" . $_SESSION['username'] . "/". $recipe . ".jpg";
    }
 
 $sql = "SELECT * FROM recipeview WHERE recipename = '$recipe' AND username = '" . $_SESSION['username'] . "';";
@@ -28,18 +28,18 @@ $row = $result->fetch_assoc();
     <?php
     if($num_rows == 0) {
     ?>
-    <div class="text-center">
-        <p>Esta receta no tiene ingredientes 
-            <a class="m-2" href="../actions/edit.php?recipename=<?php echo $recipe ?>">
-                <i class="fa-solid fa-plus">                    
-                </i>
+
+    <div class="row justify-content-center">
+        <p class="col-auto">¡Esta receta no tiene ingredientes!</p>
+        <div class="col-auto">
+            <a class="m-2 btn btn-warning" href="../actions/edit.php?recipename=<?php echo $recipe ?>">
+                <i class="fa-solid fa-plus" title="Agregar"></i>
             </a>
-            <a href="../index.php">
-                <i class="fa-regular fa-backward-fast">                    
-                </i>
-            </a>
-        </p>        
-    </div>
+            <a class="btn btn-warning" href="../index.php">
+                <i class="fa-solid fa-backward-step" title="Regresar"></i>
+            </a>                
+        </div>
+        </div> 
     <?php
     } else {   
     ?>
@@ -60,11 +60,11 @@ $row = $result->fetch_assoc();
                 ?>   
                 </ul>
                 <?php
-                    if(file_exists($recipeDir)) {
+                    if(file_exists($recipeImageDir)) {
 
                 ?>
                 <div class="">
-                    <img src="<?php echo $recipeDir?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
+                    <img src="<?php echo $recipeImageDir?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
                 </div>                 
                 <?php
                 }

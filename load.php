@@ -8,15 +8,16 @@
     require_once ("models/models.php");
     
     //Array of the columns to be querried from the database.
-    $columns = ["recipeid","recipename", "category"];
+    $columns = ["recipename", "category"];
     
     //Table to be querried from the database.
     $table = "recipeinfoview";
 
-    //If the variable search is set it's received, else it's null.     
-    $field = sanitization($_POST["search"], FILTER_SANITIZE_STRING, $conn);
+    //If the variable search is set it's received, else it's null. 
+    $field = sanitization($_POST["search"], FILTER_SANITIZE_STRING, $conn);   
+
     /*Filter where*/
-    $where = "";
+    $where = " WHERE username = '" . $_SESSION['username'] . "'";
 
     //If the variable search isn't null, the query is done with the where.
     if($field != ""){
@@ -28,9 +29,8 @@
         }
     //The final where delection.
         $where = substr_replace($where, "", -3);
-        $where .= ") AND username = '" . $_SESSION['username'] . "'";
+        $where .= "AND username = '" . $_SESSION['username'] . "')";
     }        
-    
 
     $sql = "SELECT SQL_CALC_FOUND_ROWS ". implode(", ", $columns) . " 
     FROM $table 

@@ -288,19 +288,33 @@ $category = $row["category"];
                         </select>
                     </div>
 
+                    <div class="input-group mb-3 justify-content-center">
+                    <?php
+                        $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "'";
+                        $result = $conn -> query($sql);
+                        $num_rows = $result -> num_rows;
+                        if($num_rows > 0) {
+                    ?>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="ingredient">Ingrediente: </label>                
                         <select class="form-select" name="ing" id="ingredient">
+
                             <?php
-                            $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "';";
-
-                            $result = $conn -> query($sql);
-
                             while($row = $result -> fetch_assoc()) {
                                 echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
                             }
                             ?>
                         </select>
+                    </div>
+                    <?php
+                    } else {
+                    ?>
+                    <div>
+                        <a class="btn btn-secondary" href="../views/add-ingredients.php">Ingredientes</a>
+                    </div>
+                    <?php
+                    }
+                    ?>
                     </div>
             
                     <input class="btn btn-primary" type="submit" value="Agregar ingrediente">
