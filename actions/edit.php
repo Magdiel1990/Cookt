@@ -194,13 +194,18 @@ $category = $row["category"];
     <div class="row mt-2 text-center justify-content-center">
         <h3>EDITAR RECETA</h3>     
         <div class="mt-3 col-auto">
-            <form class="bg-form card card-body" action="update.php?editname=<?php echo $recipeName ?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
+            <form class="bg-form card card-body" enctype="multipart/form-data" action="update.php?editname=<?php echo $recipeName ?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="newRecipeName">Nombre: </label>
                     <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="50" min-length="7" required>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label" for="recipeImage">Foto de la receta</label>
+                    <input type="file" name="recipeImage" accept=".jpg" class="form-control" id="recipeImage">
+                </div> 
+                
                 <div class="input-group mb-3 w-50">
                     <label class="input-group-text" for="category">Categoría: </label>                
                     <select class="form-select" name="category" id="category">

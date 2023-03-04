@@ -110,7 +110,7 @@ require_once ("../modules/nav.php");
                 </div>
                 
                 <div class="mb-3">
-                    <label class="form-label is-required" for="recipeImage">Foto de la categoría</label>
+                    <label class="form-label" for="recipeImage">Foto de la receta</label>
                     <input type="file" name="recipeImage" accept=".jpg" class="form-control" id="recipeImage">
                 </div> 
                 

@@ -80,7 +80,7 @@ label, select, input, option {
 }
 .banner a {
      text-decoration: none;
-     color: rgb(255, 44, 44);
+     color: rgb(94, 91, 254);
 }
 .bg-form  {
     background-color: rgb(255, 250, 234);
@@ -131,7 +131,7 @@ label, select, input, option {
   color: #ffffff;
 }
 
- .err2 {
+.err2 {
     color: #ffffff;
     font-size: 11rem;
     position:absolute;
