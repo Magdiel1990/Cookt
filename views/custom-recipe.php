@@ -31,38 +31,49 @@ require_once ("../modules/nav.php");
         <form class="m-3 col-auto" method="POST" action="../actions/create.php">
 
            <div class="input-group">
-                <label class="input-group-text" for="customingredient">Ingredientes: </label>                
-                <select class="form-select" name="customingredient" id="customingredient">
-                    <?php
-                    $sql = "SELECT i.ingredient FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = ' " . $_SESSION['username'] . "';";
-                    $result = $conn -> query($sql);
-                    $num_rows = $result -> num_rows;
+                <label class="input-group-text" for="customingredient">Ingredientes: </label>
+                
+                <?php
+                $sql = "SELECT i.ingredient FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "';";
+                $result = $conn -> query($sql);
+                $num_rows = $result -> num_rows;
 
-                    if ($num_rows == 0) {
-                        $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "';";
-                    }
-                    else {
-                        $where = "WHERE NOT ingredient IN (";
-
-                        while($row = $result -> fetch_assoc()) {
-                            $where .= "'" . $row["ingredient"] . "', ";
-                        }
-                        
-                        $where = substr_replace($where, "", -2);
-                        $where .= ") AND username = '" . $_SESSION['username'] . "'";  
-
-                        $sql = "SELECT ingredient FROM ingredients $where;";
-                    }
-                    $result = $conn -> query($sql);
+                if ($num_rows == 0) {
+                    $where = "WHERE username = '" . $_SESSION['username'] . "'";                                               
+                } else {
+                    $where = "WHERE NOT ingredient IN (";
 
                     while($row = $result -> fetch_assoc()) {
-                        echo '<option value="' . $row["ingredient"] . '">' . ucfirst($row["ingredient"]) . '</option>';
-           
+                        $where .= "'" . $row["ingredient"] . "', ";
                     }
                     
+                    $where = substr_replace($where, "", -2);
+                    $where .= ") AND username = '" . $_SESSION['username'] . "'";                        
+                }
+                $sql = "SELECT ingredient FROM ingredients $where;"; 
+                
+                $result = $conn -> query($sql);
+                $num_rows = $result -> num_rows;
+
+                if($num_rows > 0) {
+                ?>
+                <select class="form-select" name="customingredient" id="customingredient">
+                    <?php           
+
+                    while($row = $result -> fetch_assoc()) {          
+                        echo '<option value="' . $row["ingredient"] . '">' . ucfirst($row["ingredient"]) . '</option>';
+                    }      
+                    
                    ?>
-                </select>           
-                <input class="btn btn-primary" type="submit" value="Agregar">
+                </select> 
+                <input class="btn btn-primary" type="submit" value="Agregar"> 
+                <?php 
+                } else {
+                ?>
+                <a class="btn btn-primary" href="add-ingredients.php">Agregar</a>
+                <?php 
+                } 
+                ?> 
             </div>
         </form>
     </div>

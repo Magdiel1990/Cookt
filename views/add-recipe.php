@@ -15,9 +15,7 @@ require_once ("../modules/nav.php");
 <link rel="stylesheet" href="../css/styles.css">
 
 <main class="container p-4">
-    <div class="row m-2 justify-content-center">
-        <div class="bg-form p-3 mb-4 col-auto">
-        <?php
+     <?php
         //Messages that are shown in the add_units page
             if(isset($_SESSION['message'])){
             buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
@@ -25,11 +23,36 @@ require_once ("../modules/nav.php");
         //Unsetting the messages variables so the message fades after refreshing the page.
             unset($_SESSION['message_alert'], $_SESSION['message']);
             }
-        ?>
-            <h3 class="text-center">AGREGAR RECETA</h3>
-        <!--Form for filtering the database info-->
-            <form class="m-4 text-center" method="POST" action="../actions/create.php">
-                <div class="d-sm-flex justify-content-around">
+    ?>
+    <div class="m-2 justify-content-center row">
+        <div class="col-auto">
+            <div class="bg-form p-4 mb-4">       
+                <h3 class="text-center">AGREGAR RECETA</h3>
+            <!--Form for filtering the database info-->
+                <form class="m-4 text-center" method="POST" action="../actions/create.php">
+                    <?php
+                    $sql = "SELECT i.ingredient FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" . $_SESSION['username'] . "';";
+                    $result = $conn -> query($sql);
+                    $num_rows = $result -> num_rows;
+
+                    if ($num_rows == 0) {
+                        $where = "WHERE username = '" . $_SESSION['username'] . "'";                                               
+                    } else {
+                        $where = "WHERE NOT ingredient IN (";
+
+                        while($row = $result -> fetch_assoc()) {
+                            $where .= "'" . $row["ingredient"] . "', ";
+                        }
+                        
+                        $where = substr_replace($where, "", -2);
+                        $where .= ") AND username = '" . $_SESSION['username'] . "'";                        
+                    }
+                    $sql = "SELECT ingredient FROM ingredients $where;";                         
+                    $result = $conn -> query($sql);
+                    $num_rows = $result -> num_rows;
+
+                    if($num_rows > 0) {
+                    ?>                
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="quantity">Cantidad: </label>                    
                         <input class="form-control" type="number" name="quantity" id="quantity" step="0.05" max="1000" min="0" autofocus required>
@@ -48,40 +71,34 @@ require_once ("../modules/nav.php");
                             ?>
                         </select>
                     </div>
-                    <?php
-                        $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "'";
-                        $result = $conn -> query($sql);
-                        $num_rows = $result -> num_rows;
-                        if($num_rows > 0) {
-                    ?>
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="ingredient">Ingrediente: </label>                
+                        <label class="input-group-text" for="ingredient">Ingrediente: </label>
                         <select class="form-select" name="ingredient" id="ingredient">
                             <?php
+                            $sql = "SELECT ingredient FROM ingredients $where;";                         
+                            $result = $conn -> query($sql);
                             while($row = $result -> fetch_assoc()) {
                                 echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
                             }
                             ?>
-                        </select>
+                        </select> 
                     </div>
+                    <div>         
+                        <input class="btn btn-primary" type="submit" value="Agregar">
+                    </div>                     
                     <?php
                     } else {
                     ?>
-                    <div class="mx-1">
-                        <a class="btn btn-secondary" href="add-ingredients.php">Ingredientes</a>
+                    <div>
+                        <a class="btn btn-primary" href="add-ingredients.php">Ingredientes</a>
                     </div>
                     <?php
                     }
                     ?>
-                </div>  
-                <div class="mt-1">         
-                    <input class="btn btn-primary" type="submit" value="Agregar ingrediente">
-                </div> 
-            </form>
-        </div>
-        <div class="row justify-content-center">
+                </form>
+            </div>        
             <!-- List with ingredients that will conform the recipe-->
-            <div class="m-2 p-2 col-auto">
+            <div class="p-2">
                 <h3 class="text-center">Ingredientes</h3>
                 <?php
                 $sql = "SELECT re_id, concat_ws(' ', rh.quantity, rh.unit, 'de' , i.ingredient) as fullingredient FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" . $_SESSION['username'] . "';";
@@ -114,8 +131,10 @@ require_once ("../modules/nav.php");
                     echo $html;                                   
                 }
                 ?>            
-            </div>
-            <form class="m-4 col-auto text-center form" enctype="multipart/form-data" method="POST" action="../actions/create.php" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
+            </div>            
+        </div>
+        <div class="col-auto">
+            <form class="text-center form" enctype="multipart/form-data" method="POST" action="../actions/create.php" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
             
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="recipename">Nombre: </label>
