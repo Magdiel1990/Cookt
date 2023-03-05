@@ -12,8 +12,6 @@ require_once ("../modules/head.php");
 require_once ("../modules/nav.php");
 ?>
 
-<link rel="stylesheet" href="../css/styles.css">
-
 <main class="container p-4">
      <?php
         //Messages that are shown in the add_units page
@@ -29,7 +27,7 @@ require_once ("../modules/nav.php");
             <div class="bg-form p-4 mb-4">       
                 <h3 class="text-center">AGREGAR RECETA</h3>
             <!--Form for filtering the database info-->
-                <form class="m-4 text-center" method="POST" action="../actions/create.php">
+                <form class="m-2 text-center" method="POST" action="../actions/create.php">
                     <?php
                     $sql = "SELECT i.ingredient FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" . $_SESSION['username'] . "';";
                     $result = $conn -> query($sql);

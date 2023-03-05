@@ -8,12 +8,6 @@ require_once ("../models/models.php");
 //Head of the page.
 require_once ("../modules/head.php");
 
-?>
-
-
-<link rel="stylesheet" href="../css/styles.css">
-
-<?php
 if($_SESSION['type'] != 'Admin') { 
     require_once ("../error/error.php");
     exit;

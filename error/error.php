@@ -3,7 +3,6 @@
 require_once ("../modules/head.php");
 
 ?>
-<link rel="stylesheet" href="../css/styles.css">
 
 <!--Made by purplexmoss (https://freefrontend.com/html-css-404-page-templates/)-->
 <main class="error">

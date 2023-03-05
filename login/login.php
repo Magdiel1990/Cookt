@@ -9,8 +9,6 @@ require_once ("../models/models.php");
 require_once ("../modules/head.php");
 
 ?>
-<link rel="stylesheet" href="../css/styles.css">
-
 <main class="row justify-content-center p-5" id="loginBackground">
 
 <?php

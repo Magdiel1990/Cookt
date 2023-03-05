@@ -12,8 +12,6 @@ require_once ("../modules/head.php");
 require_once ("../modules/nav.php");
 ?>
 
-<link rel="stylesheet" href="../css/styles.css">
-
 <main class="container p-4">
     <div  class="my-4 text-center">
         <h3>RECETAS</h3>

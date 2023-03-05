@@ -12,8 +12,6 @@ require_once ("../models/models.php");
 require_once ("../config/db_Connection.php");
 ?>
 
-<link rel="stylesheet" href="../css/styles.css">
-
 <?php
 /************************************************************************************************/
 /***************************************INGREDIENTS (AGREGAR RECETA) EDITION CODE********************************/

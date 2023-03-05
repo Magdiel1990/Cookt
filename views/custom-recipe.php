@@ -11,7 +11,6 @@ require_once ("../modules/head.php");
 //Navigation panel of the page
 require_once ("../modules/nav.php");
 ?>
-<link rel="stylesheet" href="../css/styles.css">
 
 <main class="container p-4">
 
