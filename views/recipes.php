@@ -12,7 +12,7 @@ if(isset($_GET["recipe"])){
     $recipe = $_GET["recipe"];
 
     $recipeImageDir = "../imgs/recipes/" . $_SESSION['username'] . "/". $recipe . ".jpg";
-   }
+}
 
 $sql = "SELECT * FROM recipeview WHERE recipename = '$recipe' AND username = '" . $_SESSION['username'] . "';";
 
@@ -32,7 +32,7 @@ $row = $result->fetch_assoc();
     <div class="row justify-content-center">
         <p class="col-auto">¡Esta receta no tiene ingredientes!</p>
         <div class="col-auto">
-            <a class="m-2 btn btn-warning" href="../actions/edit.php?recipename=<?php echo $recipe ?>">
+            <a class="btn btn-warning" href="../actions/edit.php?recipename=<?php echo $recipe ?>">
                 <i class="fa-solid fa-plus" title="Agregar"></i>
             </a>
             <a class="btn btn-warning" href="../index.php">
