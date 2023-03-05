@@ -23,11 +23,11 @@
                 Administración
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="/Cookt/views/add-units.php">Unidades</a>
-                <a class="dropdown-item" href="/Cookt/views/add-ingredients.php">Ingredientes</a>
-                <a class="dropdown-item" href="/Cookt/views/add-recipe.php">Recetas</a>
-                <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="/Cookt/views/add-categories.php">Categorías</a>
-                <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="/Cookt/views/add-users.php">Usuarios</a>
+                    <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="/Cookt/views/add-units.php">Unidades</a>
+                    <a class="dropdown-item" href="/Cookt/views/add-ingredients.php">Ingredientes</a>
+                    <a class="dropdown-item" href="/Cookt/views/add-recipe.php">Recetas</a>
+                    <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="/Cookt/views/add-categories.php">Categorías</a>
+                    <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="/Cookt/views/add-users.php">Usuarios</a>
                 </div>
             </li>
             <li class="nav-item px-1">

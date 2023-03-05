@@ -247,7 +247,7 @@ $category = $row["category"];
          
         <div class="mt-3 bg-form card card-body col-auto">
             <h3 class="text-center">Editar Ingredientes</h3>
-            <div class="mt-2">
+            <div class="mt-3">
             <?php
             $sql = "SELECT indications FROM recipeview WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
 
@@ -263,7 +263,7 @@ $category = $row["category"];
             echo $html;
             ?>
             </div>
-            <div class="mb-4 mt-2 text-center m-auto">
+            <div class="my-4 text-center m-auto">
                 <form method="POST" action="create.php?rname=<?php echo $recipeName;?>" onsubmit="return validationNumber('quantity')">
 
                     <div class="input-group mb-3">
@@ -288,12 +288,28 @@ $category = $row["category"];
 
                     <div class="input-group mb-3 justify-content-center">
                     <?php
-                        $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "'";
+                        $sql = "SELECT i.ingredient FROM recipeinfo ri JOIN recipe r ON ri.recipeid = r.recipeid JOIN ingredients i ON i.id = ri.ingredientid WHERE r.recipename = '$recipeName' AND r.username = '" . $_SESSION['username'] . "';";
                         $result = $conn -> query($sql);
                         $num_rows = $result -> num_rows;
-                        if($num_rows > 0) {
+
+                        if($num_rows == 0) { 
+                            $where = "WHERE username = '" . $_SESSION['username'] . "';";
+                        } else {
+                            $where = "WHERE NOT ingredient IN (";
+                            while($row = $result -> fetch_assoc()){
+                                $where .= "'" . $row["ingredient"] . "', ";
+                            }
+                            $where = substr_replace($where, "", -2);
+                            $where .= ") AND username = '" . $_SESSION['username'] . "'";
+                        }
+                       
+                        $sql = "SELECT ingredient FROM ingredients " . $where;
+                        $result = $conn -> query($sql);
+                        $num_rows = $result -> num_rows;
+
+                        if($num_rows > 0) {                            
                     ?>
-                    <div class="input-group mb-3">
+                    <div class="input-group">
                         <label class="input-group-text" for="ingredient">Ingrediente: </label>                
                         <select class="form-select" name="ing" id="ingredient">
 
@@ -304,6 +320,9 @@ $category = $row["category"];
                             ?>
                         </select>
                     </div>
+                    <div class="mt-3">
+                        <input class="btn btn-primary" type="submit" title="Agregar ingredientes" value="Agregar">
+                    </div>
                     <?php
                     } else {
                     ?>
@@ -313,9 +332,8 @@ $category = $row["category"];
                     <?php
                     }
                     ?>
-                    </div>
-            
-                    <input class="btn btn-primary" type="submit" value="Agregar ingrediente">
+                    </div>            
+                    
                 </form>
             </div>
        </div>                  
