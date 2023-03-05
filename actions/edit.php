@@ -192,149 +192,154 @@ $category = $row["category"];
     <div class="row mt-2 text-center justify-content-center">
         <h3>EDITAR RECETA</h3>     
         <div class="mt-3 col-auto">
-            <form class="bg-form card card-body" enctype="multipart/form-data" action="update.php?editname=<?php echo $recipeName ?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
+            <div class="bg-form card card-body">
+                <form enctype="multipart/form-data" action="update.php?editname=<?php echo $recipeName ?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
 
-                <div class="input-group mb-3">
-                    <label class="input-group-text is-required" for="newRecipeName">Nombre: </label>
-                    <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="50" min-length="7" required>
-                </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text is-required" for="newRecipeName">Nombre: </label>
+                        <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="50" min-length="7" required>
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label" for="recipeImage">Foto de la receta</label>
-                    <input type="file" name="recipeImage" accept=".jpg" class="form-control" id="recipeImage">
-                </div> 
-                
-                <div class="input-group mb-3 w-50">
-                    <label class="input-group-text" for="category">Categoría: </label>                
-                    <select class="form-select" name="category" id="category">
-                        <?php
-                        $sql = "SELECT category FROM categories WHERE NOT category='" . $category . "';";
+                    <div class="mb-3">
+                        <label class="form-label" for="recipeImage">Foto de la receta</label>
+                        <input type="file" name="recipeImage" accept=".jpg" class="form-control" id="recipeImage">
+                    </div> 
+                    <div class="row">
+                        <div class="input-group mb-3 col">
+                            <label class="input-group-text" for="category">Categoría: </label>                
+                            <select class="form-select" name="category" id="category">
+                                <?php
+                                $sql = "SELECT category FROM categories WHERE NOT category='" . $category . "';";
 
-                        $result = $conn -> query($sql);
-                        echo '<option value="' . $category . '">' .  ucfirst($category) . '</option>';
-                        while($row = $result -> fetch_assoc()) {
-                            echo '<option value="' . $row["category"]  . '">' . ucfirst($row["category"]) . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
+                                $result = $conn -> query($sql);
+                                echo '<option value="' . $category . '">' .  ucfirst($category) . '</option>';
+                                while($row = $result -> fetch_assoc()) {
+                                    echo '<option value="' . $row["category"]  . '">' . ucfirst($row["category"]) . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>                  
 
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="cookingTime">Tiempo de cocción: </label>
-                    <input type="number" name="cookingTime" value="<?php echo $cookingTime;?>" class="form-control" id="cookingTime" min="5" max="180">
-                </div>
-                <div class="row">           
-                    <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
+                        <div class="input-group mb-3 col">
+                            <label class="input-group-text" for="cookingTime">Tiempo: </label>
+                            <input type="number" name="cookingTime" value="<?php echo $cookingTime;?>" class="form-control" id="cookingTime" min="5" max="180">
+                        </div>
+                    </div>
+                            
+                    <div class="mb-3">
                         <label  class="form-label is-required" for="preparation">Preparación: </label>
-                        <textarea name="preparation"  cols="30" rows="10" class="form-control" id="preparation" required>
+                        <textarea name="preparation"  cols="4" rows="4" class="form-control" id="preparation" required>
                             <?php echo $preparation;?>
                         </textarea>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
+                    <div class="mb-3">
                         <label  class="form-label" for="observation">Observación: </label>
-                        <textarea name="observation"  cols="30" rows="10" class="form-control" id="observation">
+                        <textarea name="observation"  cols="2" rows="2" class="form-control" id="observation">
                             <?php echo $observation;?> 
                         </textarea>
                     </div>                 
-                </div>
-                
-                <div class="mb-3">
-                    <input class='btn btn-primary' type="submit" name="edit" value="Actualizar"> 
-                    <a href='../index.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
-                </div>
-            </form>
+                  
+                    
+                    <div class="mb-3">
+                        <input class='btn btn-primary' type="submit" name="edit" value="Actualizar"> 
+                        <a href='../index.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
+                    </div>
+                </form>
+            </div>
         </div>
          
-        <div class="mt-3 bg-form card card-body col-auto">
-            <h3 class="text-center">Editar Ingredientes</h3>
-            <div class="mt-3">
-            <?php
-            $sql = "SELECT indications FROM recipeview WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
+        <div class="mt-3 col-auto">
+            <div class="card card-body bg-form">
+                <h3 class="text-center">Editar Ingredientes</h3>
+                <div class="mt-3">
+                <?php
+                $sql = "SELECT indications FROM recipeview WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
 
-            $result = $conn -> query($sql);
-            
-            $html = "<ul>";
-            while($row = $result -> fetch_assoc()){
-                $html .= "<li class='my-2'><i>". $row['indications'] .".</i>";
-                $html .= "<a class='btn btn-danger mx-2' href='delete.php?indication=" . $row['indications'] . "&rpename=" . $recipeName . "'>Eliminar</a>";
-                $html .= "</li>";
-            }
-            $html .= "</ul>";
-            echo $html;
-            ?>
-            </div>
-            <div class="my-4 text-center m-auto">
-                <form method="POST" action="create.php?rname=<?php echo $recipeName;?>" onsubmit="return validationNumber('quantity')">
+                $result = $conn -> query($sql);
+                
+                $html = "<ul>";
+                while($row = $result -> fetch_assoc()){
+                    $html .= "<li class='my-2'><i>". $row['indications'] .".</i>";
+                    $html .= "<a class='btn btn-danger mx-2' href='delete.php?indication=" . $row['indications'] . "&rpename=" . $recipeName . "'>Eliminar</a>";
+                    $html .= "</li>";
+                }
+                $html .= "</ul>";
+                echo $html;
+                ?>
+                </div>
+                <div class="my-4 text-center m-auto">
+                    <form method="POST" action="create.php?rname=<?php echo $recipeName;?>" onsubmit="return validationNumber('quantity')">
 
-                    <div class="input-group mb-3">
-                        <label class="input-group-text is-required" for="quantity">Cantidad: </label>                    
-                        <input class="form-control" type="number" name="qty" id="quantity" step="0.05" max="1000" min="0" required>
-                    </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text is-required" for="quantity">Cantidad: </label>                    
+                            <input class="form-control" type="number" name="qty" id="quantity" step="0.05" max="1000" min="0" required>
+                        </div>
 
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="unit">Unidad: </label>                
-                        <select class="form-select" name="units" id="unit">
-                            <?php
-                            $sql = "SELECT unit FROM units";
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="unit">Unidad: </label>                
+                            <select class="form-select" name="units" id="unit">
+                                <?php
+                                $sql = "SELECT unit FROM units";
 
+                                $result = $conn -> query($sql);
+
+                                while($row = $result -> fetch_assoc()) {
+                                    echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3 justify-content-center">
+                        <?php
+                            $sql = "SELECT i.ingredient FROM recipeinfo ri JOIN recipe r ON ri.recipeid = r.recipeid JOIN ingredients i ON i.id = ri.ingredientid WHERE r.recipename = '$recipeName' AND r.username = '" . $_SESSION['username'] . "';";
                             $result = $conn -> query($sql);
+                            $num_rows = $result -> num_rows;
 
-                            while($row = $result -> fetch_assoc()) {
-                                echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
+                            if($num_rows == 0) { 
+                                $where = "WHERE username = '" . $_SESSION['username'] . "';";
+                            } else {
+                                $where = "WHERE NOT ingredient IN (";
+                                while($row = $result -> fetch_assoc()){
+                                    $where .= "'" . $row["ingredient"] . "', ";
+                                }
+                                $where = substr_replace($where, "", -2);
+                                $where .= ") AND username = '" . $_SESSION['username'] . "'";
                             }
-                            ?>
-                        </select>
-                    </div>
+                        
+                            $sql = "SELECT ingredient FROM ingredients " . $where;
+                            $result = $conn -> query($sql);
+                            $num_rows = $result -> num_rows;
 
-                    <div class="input-group mb-3 justify-content-center">
-                    <?php
-                        $sql = "SELECT i.ingredient FROM recipeinfo ri JOIN recipe r ON ri.recipeid = r.recipeid JOIN ingredients i ON i.id = ri.ingredientid WHERE r.recipename = '$recipeName' AND r.username = '" . $_SESSION['username'] . "';";
-                        $result = $conn -> query($sql);
-                        $num_rows = $result -> num_rows;
+                            if($num_rows > 0) {                            
+                        ?>
+                        <div class="input-group">
+                            <label class="input-group-text" for="ingredient">Ingrediente: </label>                
+                            <select class="form-select" name="ing" id="ingredient">
 
-                        if($num_rows == 0) { 
-                            $where = "WHERE username = '" . $_SESSION['username'] . "';";
+                                <?php
+                                while($row = $result -> fetch_assoc()) {
+                                    echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mt-3">
+                            <input class="btn btn-primary" type="submit" title="Agregar ingredientes" value="Agregar">
+                        </div>
+                        <?php
                         } else {
-                            $where = "WHERE NOT ingredient IN (";
-                            while($row = $result -> fetch_assoc()){
-                                $where .= "'" . $row["ingredient"] . "', ";
-                            }
-                            $where = substr_replace($where, "", -2);
-                            $where .= ") AND username = '" . $_SESSION['username'] . "'";
+                        ?>
+                        <div>
+                            <a class="btn btn-secondary" href="../views/add-ingredients.php">Ingredientes</a>
+                        </div>
+                        <?php
                         }
-                       
-                        $sql = "SELECT ingredient FROM ingredients " . $where;
-                        $result = $conn -> query($sql);
-                        $num_rows = $result -> num_rows;
-
-                        if($num_rows > 0) {                            
-                    ?>
-                    <div class="input-group">
-                        <label class="input-group-text" for="ingredient">Ingrediente: </label>                
-                        <select class="form-select" name="ing" id="ingredient">
-
-                            <?php
-                            while($row = $result -> fetch_assoc()) {
-                                echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="mt-3">
-                        <input class="btn btn-primary" type="submit" title="Agregar ingredientes" value="Agregar">
-                    </div>
-                    <?php
-                    } else {
-                    ?>
-                    <div>
-                        <a class="btn btn-secondary" href="../views/add-ingredients.php">Ingredientes</a>
-                    </div>
-                    <?php
-                    }
-                    ?>
-                    </div>            
-                    
-                </form>
+                        ?>
+                        </div>            
+                        
+                    </form>
+                </div>
             </div>
        </div>                  
     </div>     
