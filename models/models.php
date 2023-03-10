@@ -4,9 +4,8 @@ function buttonMessage($message, $message_alert) {
     if(isset($message_alert)){
         $html = "<div class='row justify-content-center'>";
         $html .= "<div class='col-auto alert alert-" . $message_alert . " alert-dismissible fade show' role='alert'>";
-        $html .= "<span>" . $message . "</span>";
         $html .= "<button type='button' class='close border-0' data-dismiss='alert' aria-label='Close'>";
-        $html .= "<i class='fa-regular fa-circle-xmark text-secondary'></i>";
+        $html .= "<span>" . $message . "</span>";        
         $html .= "</button>";
         $html .= "</div>"; 
         $html .= "</div>";   

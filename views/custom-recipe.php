@@ -84,7 +84,7 @@ require_once ("../modules/nav.php");
         $result = $conn -> query($sql);
         
         if($result -> num_rows == 0){
-            die ("<p class='text-center'>Agregue los ingredientes para conseguir recetas...</p>");
+            echo "<p class='text-center'>Agregue los ingredientes para conseguir recetas...</p>";
 
         } else {
             $html = "<ol>";
@@ -95,17 +95,17 @@ require_once ("../modules/nav.php");
                 $ingArray[] = $row["ingredientid"];
             }
             $html .= "</ol>";
+            $html .= "<div>";
+            $html .= "<form action='recipe-suggestions.php?ingredients=" . base64_encode(serialize($ingArray)) . "' method='POST'>";       
+            $html .= "<div class='m-2'>";                    
+            $html .= "<input class='btn btn-secondary' type='submit' value='Buscar'>";
+            $html .= "</div>";
+            $html .= "</form>";
+            $html .= "</div>";        
             echo $html;
         }
         ?>
         </div>
-        <div>
-            <form action="recipe-suggestions.php?ingredients=<?php echo base64_encode(serialize($ingArray));?>" method="POST">       
-                <div class="m-2">                    
-                    <input class="btn btn-secondary" type="submit" value="Buscar">
-                </div>
-            </form>
-        </div>        
     </div>
 </main>
 <?php
