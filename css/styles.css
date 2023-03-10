@@ -61,6 +61,11 @@ option {
     color: rgb(240, 144, 41);
 }
 
+
+.close {
+    background-color: transparent;
+}
+
 .form {
     background-color:rgb(255, 249, 241);
     box-shadow: 1px 1px 8px 1px #888;
