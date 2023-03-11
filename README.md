@@ -6,9 +6,6 @@ comentar
 llevar inserts a pdo
 poner comentado los queries con los username information
 Paginacion
-Al borrar categoria que se borre la imagen
-edicion de categoria e imagen
-poner la imagen al lado de la categoria en la tabla principal
-validar agregar categoria del lado del cliente
-revisar las vista de la db
+revisar las vistas de la db
 revisar el codigo de creacion de receta, no se esta agregando la imagen
+validar todo con js and html
