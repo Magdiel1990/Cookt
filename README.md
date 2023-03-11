@@ -6,7 +6,6 @@ comentar
 llevar inserts a pdo
 poner comentado los queries con los username information
 Paginacion
-Cuadros de dialogo no cierran
 Al borrar categoria que se borre la imagen
 edicion de categoria e imagen
 poner la imagen al lado de la categoria en la tabla principal

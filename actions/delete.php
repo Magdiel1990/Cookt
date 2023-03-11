@@ -1,9 +1,12 @@
 <?php
+//Including the database connection.
+require_once ("../config/db_Connection.php");
+
 //Head of the page.
 require_once ("../modules/head.php");
 
-//Including the database connection.
-require_once ("../config/db_Connection.php");
+//Models.
+require_once ("../models/models.php");
 
 
 /************************************************************************************************/
@@ -86,30 +89,19 @@ if(isset($_GET['categoryname'])){
 //Getting the name.
 $categoryName = $_GET['categoryname'];
 
-$arrCategoryFiles = array();
-$iterator = new FilesystemIterator("../imgs/categories");
+$categoryDir = "../imgs/categories/";
 
-    foreach($iterator as $fileName) {
-        $arrCategoryFiles[] = pathinfo($fileName->getFilename(), PATHINFO_FILENAME);
-        $arrCategoryExt[] = pathinfo($fileName->getFilename(), PATHINFO_EXTENSION);
-    }
+//Function to get the image directory from the category
+$categoryImgDir = directoryFiles($categoryDir , $categoryName);
 
-    if (in_array($categoryName, $arrCategoryFiles)){
-        $fileIndex = array_search($categoryName, $arrCategoryFiles);
-        $fileExt = $arrCategoryExt[$fileIndex];
+unlink($categoryImgDir);
 
-        $categoryDir = "../imgs/categories/" . $categoryName . "." . $fileExt;
+//Deleting the register with the name received.
+$sql = "DELETE FROM categories WHERE category = '$categoryName';";
 
-        if(is_file($categoryDir)){
-            unlink($categoryDir);
-        }
-    }    
-    //Deleting the register with the name received.
-    $sql = "DELETE FROM categories WHERE category = '$categoryName';";
+$result = $conn -> query($sql);
 
-    $result = $conn -> query($sql);
-
-    //If there's no record with that name, a message is sent.
+//If there's no record with that name, a message is sent.
 
     if($result !== true){
     //Creation of the message of error deleting the receta.
