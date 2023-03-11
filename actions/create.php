@@ -146,8 +146,8 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
       }
 
       // Check file size
-      if ($categoryImage["size"] > 1000000) {
-          $uploadOk = "¡El tamaño debe ser menor que 1 Mb!";
+      if ($categoryImage["size"] > 500000) {
+          $uploadOk = "¡El tamaño debe ser menor que 500 KB!";
       }
 
       // Allow certain file formats
@@ -448,7 +448,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES[
         $conn -> query($sql);
       }
 
-      if($categoryImage ['name'] == null) {
+      if($recipeImage ['name'] == null) {
 
       $sql = "DELETE FROM reholder WHERE username = '" . $_SESSION['username'] . "';";
 
@@ -481,10 +481,10 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES[
         
         // Check if image file is a actual image or fake image
         if(isset($_POST["addrecipe"])) {
-            $check = getimagesize($recipeImage["tmp_name"]);
-            if($check == false) {
-                $uploadOk = "¡Este archivo no es una imagen!";
-            } 
+          $check = getimagesize($recipeImage["tmp_name"]);
+          if($check == false) {
+              $uploadOk = "¡Este archivo no es una imagen!";
+          } 
         }
         // Check if file already exists
         if (file_exists($target_file)) {
@@ -492,12 +492,12 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES[
         }
 
         // Check file size
-        if ($recipeImage["size"] > 1000000) {
-            $uploadOk = "¡El tamaño debe ser menor que 1 Mb!";
+        if ($recipeImage["size"] > 500000) {
+            $uploadOk = "¡El tamaño debe ser menor que 500 KB!";
         }
 
         // Allow certain file formats
-        if($fileExtension != "jpg") {
+        if($fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "png" && $fileExtension != "gif") {
             $uploadOk = "¡Formato no admitido!";
         }      
 

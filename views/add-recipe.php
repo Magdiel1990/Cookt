@@ -25,7 +25,7 @@ require_once ("../modules/nav.php");
     <div class="m-2 justify-content-center row">
         <div class="col-auto">
             <div class="bg-form p-4 mb-4">       
-                <h3 class="text-center">AGREGAR RECETA</h3>
+                <h3 class="text-center">Agregar Receta</h3>
             <!--Form for filtering the database info-->
                 <form class="m-2 text-center" method="POST" action="../actions/create.php">
                     <?php
@@ -126,7 +126,7 @@ require_once ("../modules/nav.php");
                     $html .= "<p>";
                     $html .= "Agrega los ingredientes...";
                     $html .= "</p>";
-                    echo $html;                                   
+                    echo $html;                                                  
                 }
                 ?>            
             </div>            
@@ -141,7 +141,7 @@ require_once ("../modules/nav.php");
                 
                 <div class="mb-3">
                     <label class="form-label" for="recipeImage">Foto de la receta</label>
-                    <input type="file" name="recipeImage" accept=".jpg" class="form-control" id="recipeImage">
+                    <input type="file" name="recipeImage" accept=".png, .jpeg, .jpg, .gif" class="form-control" id="recipeImage">
                 </div> 
                 
                 <div class="input-group mb-3">

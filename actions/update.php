@@ -108,6 +108,10 @@ $categoryId = $row['categoryid'];
                 $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', observation = '$observation', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '" . $_SESSION['username'] . "';";
                 
                 $target_dir = "../imgs/recipes/". $_SESSION['username']  ."/";
+
+                $imgOldRecipeDir = directoryFiles($target_dir, $oldName);
+                unlink($imgOldRecipeDir);
+
                 $fileExtension = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
                 $target_file = $target_dir . $newRecipeName . "." . $fileExtension;
                 $uploadOk = "";
@@ -124,12 +128,12 @@ $categoryId = $row['categoryid'];
                     } 
                 }
                 // Check file size
-                if ($recipeImage["size"] > 1000000) {
-                    $uploadOk = "¡El tamaño debe ser menor que 1 Mb!";
+                if ($recipeImage["size"] > 500000) {
+                    $uploadOk = "¡El tamaño debe ser menor que 500 KB!";
                 }
 
                 // Allow certain file formats
-                if($fileExtension != "jpg") {
+                if($fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "png" && $fileExtension != "gif") {
                     $uploadOk = "¡Formato no admitido!";
                 } 
 
@@ -256,8 +260,8 @@ $oldCategoryName = $row['category'];
         }
 
         // Check file size
-        if ($categoryImage["size"] > 1000000) {
-            $uploadOk = "¡El tamaño debe ser menor que 1 Mb!";
+        if ($categoryImage["size"] > 500000) {
+            $uploadOk = "¡El tamaño debe ser menor que 500 KB!";
         }
 
         // Allow certain file formats

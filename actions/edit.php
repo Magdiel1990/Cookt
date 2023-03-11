@@ -201,8 +201,8 @@ $category = $row["category"];
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="recipeImage">Foto de la receta</label>
-                        <input type="file" name="recipeImage" accept=".jpg" class="form-control" id="recipeImage">
+                        <label class="form-label" for="recipeImage">Imagen:</label>
+                        <input type="file" name="recipeImage" accept=".jpg, .jpeg, .png, .gif" class="form-control" id="recipeImage">
                     </div> 
                     <div class="row">
                         <div class="input-group mb-3 col">

@@ -32,6 +32,10 @@ $result = $conn -> query($sql);
 //The page is redirected to the index.php.
         header('Location: ../index.php');
     } else {
+        $target_dir = "../imgs/recipes/". $_SESSION['username']  ."/";
+        $imgRecipeDir = directoryFiles($target_dir, $recipeName);
+        unlink($imgRecipeDir);
+        
 //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Receta eliminada!';
         $_SESSION['message_alert'] = "success";
