@@ -52,13 +52,16 @@ if(isset($_POST['add_units'])){
 //The page is redirected to the add-units.php.
       header('Location: ../views/add-units.php');
   } else {
-    $sql = "INSERT INTO units (unit) VALUES ('$unit')";
+    // prepare and bind
+    $stmt = $conn -> prepare("INSERT INTO units (unit) VALUES (?);");
+    $stmt->bind_param("s", $unit);
 
-    if ($conn->query($sql)) {
+    if ($stmt->execute()) {
   //Success message.
         $_SESSION['message'] = '¡Unidad agregada con éxito!';
         $_SESSION['message_alert'] = "success";
-            
+
+        $stmt->close();            
   //The page is redirected to the add-units.php.
         header('Location: ../views/add-units.php');
 
@@ -70,6 +73,7 @@ if(isset($_POST['add_units'])){
   //The page is redirected to the add-units.php.
         header('Location: ../views/add-units.php');
       }
+    
     }
   }
 }
@@ -121,7 +125,9 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
     //The page is redirected to the add_units.php.
           header('Location: ../views/add-categories.php');
       }  
-      $sql = "INSERT INTO categories (category) VALUES ('$category');";
+
+      $stmt = $conn -> prepare("INSERT INTO categories (category) VALUES (?);");
+      $stmt->bind_param("s", $category);
         
       $categoryImagesDir = "../imgs/categories";
       if (!file_exists($categoryImagesDir)) {
@@ -157,10 +163,12 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
       } 
 
       if ($uploadOk == "") {
-        if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $conn->query($sql)){
+        if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $stmt -> execute()){
           //Success message.
           $_SESSION['message'] = '¡Categoría agregada con éxito!';
           $_SESSION['message_alert'] = "success";
+
+          $stmt -> close();
 
           //The page is redirected to the add_units.php.
           header('Location: ../views/add-categories.php');    
@@ -231,12 +239,15 @@ if(isset($_POST['add_ingredient'])){
           header('Location: ../views/add-ingredients.php');
       }
 
-      $sql = "INSERT INTO ingredients (ingredient, username) VALUES ('$ingredient', '" .  $_SESSION['username'] . "');";
+      $stmt = $conn -> prepare("INSERT INTO ingredients (ingredient, username) VALUES (?, ?);");
+      $stmt->bind_param("ss", $ingredient, $_SESSION['username']);
 
-      if ($conn->query($sql)) {
+      if ($stmt -> execute()) {
     //Success message.
           $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
           $_SESSION['message_alert'] = "success";
+
+          $stmt -> close();
               
     //The page is redirected to the add_units.php.
           header('Location: ../views/add-ingredients.php');
@@ -283,12 +294,14 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
 
     if($num_rows == 0) {
 
-    $sql = "INSERT INTO reholder (ingredientid, quantity, unit, username) VALUES ('$ingredientId', '$quantity', '$unit', '" .  $_SESSION['username'] . "');";
+    $stmt = $conn -> prepare("INSERT INTO reholder (ingredientid, quantity, unit, username) VALUES (?, ?, ?, ?);");
+    $stmt->bind_param("ssss", $ingredientId, $quantity, $unit, $_SESSION['username']);
 
-      if ($conn->query($sql)) {
+      if ($stmt->execute()) {
     //Success message.
           $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
           $_SESSION['message_alert'] = "success";
+          $stmt -> close();
               
     //The page is redirected to the ingredients.php.
           header('Location: ../views/add-recipe.php');
@@ -333,7 +346,6 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
   //The page is redirected to the add-recipe.php
       header('Location: edit.php?recipename='. $recipeName);
   } else {
-
     
     $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
     $row = $conn -> query($sql) -> fetch_assoc();
@@ -343,13 +355,16 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
     $row = $conn -> query($sql) -> fetch_assoc();
     $ingredientId = $row['id'];
 
-    $sql = "INSERT INTO recipeinfo (recipeid, ingredientid, quantity, unit) VALUES ('$recipeId', '$ingredientId', '$quantity', '$unit');";
+    $stmt = $conn -> prepare("INSERT INTO recipeinfo (recipeid, ingredientid, quantity, unit) VALUES (?, ?, ?, ?);");
+    $stmt->bind_param("ssss", $recipeId, $ingredientId, $quantity, $unit);
 
-    if ($conn->query($sql)) {
+    if ($stmt->execute()) {
   //Success message.
         $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
         $_SESSION['message_alert'] = "success";
-            
+
+        $stmt->close();
+
   //The page is redirected to the ingredients.php.
         header('Location: edit.php?recipename='. $recipeName);
 
@@ -427,11 +442,12 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES[
       
       $categoryid = $row["categoryid"];
 
-      $sql = "INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime, username)
-      VALUES ('$recipename', '$categoryid', '$preparation', '$observation', '$cookingtime', '" . $_SESSION['username'] . "');";
-      
-      $conn -> query($sql);
-      
+      $stmt = $conn -> prepare("INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime, username) VALUES (?, ?, ?, ?, ?, ?);");
+      $stmt->bind_param ("ssssss", $recipename, $categoryid, $preparation, $observation, $cookingtime, $_SESSION['username']);
+
+      $stmt -> execute();
+      $stmt -> close();
+
       $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipename' AND username = '" . $_SESSION['username'] . "';";
       $row = $conn -> query($sql) -> fetch_assoc();
       $recipeId = $row['recipeid'];
@@ -441,12 +457,13 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES[
       $result = $conn -> query($sql);    
 
       while($row = $result -> fetch_assoc()){
+        $stmt = $conn -> prepare("INSERT INTO recipeinfo (recipeid, quantity, unit, ingredientid) VALUES (?, ?, ?, ?);");
+        $stmt->bind_param ("ssss", $recipeId, $row["quantity"], $row["unit"], $row["id"]);
 
-        $sql = "INSERT INTO recipeinfo (recipeid, quantity, unit, ingredientid)
-        VALUES ('$recipeId', " . $row["quantity"] . ", '" . $row["unit"] . "', '" . $row["id"] . "');";
-
-        $conn -> query($sql);
+        $stmt -> execute();
       }
+
+      $stmt -> close();
 
       if($recipeImage ['name'] == null) {
 
@@ -555,14 +572,15 @@ if(isset($_POST['customingredient'])){
   //The page is redirected to the add_units.php.
       header('Location: ../views/custom-recipe.php');
   } else {
+    $stmt = $conn -> prepare("INSERT INTO ingholder (ingredientid, username) VALUES (?, ?);");
+    $stmt->bind_param ("ss", $ingredientId, $_SESSION['username']);
 
-    $sql = "INSERT INTO ingholder (ingredientid, username) VALUES ($ingredientId, '" .  $_SESSION['username'] . "');";
-
-    if ($conn->query($sql)) {
+    if ($stmt -> execute()) {
   //Success message.
         $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
         $_SESSION['message_alert'] = "success";
-            
+
+        $stmt -> close();            
   //The page is redirected to the add_units.php.
         header('Location: ../views/custom-recipe.php');
 
@@ -615,12 +633,15 @@ if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['u
 
   if($num_rows == 0) {
 
-  $sql = "INSERT INTO users (fullname, username, `password`, `type`, email, `state`) VALUES ('$fullName', '$userName', '$userPassword', '$userRol', '$userEmail', $state);";
+  $stmt = $conn -> prepare("INSERT INTO users (fullname, username, `password`, `type`, email, `state`) VALUES (?, ?, ?, ?, ?, ?);");
+  $stmt->bind_param ("ssssss", $fullName, $userName, $userPassword, $userRol, $userEmail, $state);
 
-    if ($conn->query($sql)) {
+    if ($stmt->execute()) {
   //Success message.
         $_SESSION['message'] = '¡Usuario agregado con éxito!';
         $_SESSION['message_alert'] = "success";
+
+        $stmt->close();
             
   //The page is redirected to the ingredients.php.
         header('Location: ../views/add-users.php');
