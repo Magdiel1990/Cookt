@@ -33,7 +33,7 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
 
 <link rel="stylesheet" href="../css/styles.css">
 
-<main class="container p-2 my-4"  style="background: url('<?php echo $categoryImgDir ?>') center;">
+<main class="container p-2 my-4"  style="background: url('<?php echo $categoryImgDir ?>') center; background-size: auto;">
     <?php
     if($num_rows == 0) {
     ?>
