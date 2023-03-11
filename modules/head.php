@@ -2,8 +2,8 @@
 //Iniciating session. 
 session_start();
 
-$_SESSION['username'] = "Patricia";
-$_SESSION['type'] = "Standard";
+$_SESSION['username'] = "Admin";
+$_SESSION['type'] = "Admin";
 $_SESSION['state'] = 1;
 
 ?>

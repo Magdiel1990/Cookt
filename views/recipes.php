@@ -8,6 +8,9 @@ require_once ("../modules/head.php");
 //Navigation panel of the page
 require_once ("../modules/nav.php");
 
+//Models.
+require_once ("../models/models.php");
+
 if(isset($_GET["recipe"])){
     $recipe = $_GET["recipe"];
 
@@ -19,12 +22,18 @@ $sql = "SELECT * FROM recipeview WHERE recipename = '$recipe' AND username = '" 
 $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
 $row = $result->fetch_assoc();
+$category = $row['category'];
+
+$categoryDir = "../imgs/categories/";
+
+//Function to get the image directory from the category
+$categoryImgDir = directoryFiles($categoryDir , $category);
 
 ?>
 
 <link rel="stylesheet" href="../css/styles.css">
 
-<main class="container p-4">
+<main class="container p-2 my-4"  style="background: url('<?php echo $categoryImgDir ?>') center;">
     <?php
     if($num_rows == 0) {
     ?>

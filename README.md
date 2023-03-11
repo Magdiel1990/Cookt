@@ -1,12 +1,9 @@
 # Cookt
-En edit.php, eliminar los espacios de las entradas de edición.
 En edit.php si no recibe variable get rennviar al index
 recipe_viewer no se debe entrar sin variables get
 recipe_suggestions.php no se debe entrar sin variables get
-llevar inserts a pdo
 comentar
-Agregar las categorias
-Agregar usuarios
+llevar inserts a pdo
 poner comentado los queries con los username information
 Paginacion
 Cuadros de dialogo no cierran
@@ -16,4 +13,3 @@ poner la imagen al lado de la categoria en la tabla principal
 validar agregar categoria del lado del cliente
 revisar las vista de la db
 revisar el codigo de creacion de receta, no se esta agregando la imagen
-Cuando estoy aqui http://localhost/Cookt/views/custom-recipe.php no deja entrar al dropdown

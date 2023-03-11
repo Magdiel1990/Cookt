@@ -20,5 +20,24 @@ function sanitization($input, $type, $conn) {
     $input = trim($input);
     $input = stripslashes($input);
     return $input;
-  }
+}
+
+function directoryFiles($directory, $fileName){
+
+$dir_handle = opendir($directory);
+
+while(($file = readdir($dir_handle)) !== false) {
+  $path = $directory . '/' . $file;
+    if(is_file($path)) {
+    $name = pathinfo($path, PATHINFO_FILENAME);      
+        if($name == $fileName) {
+            $ext = pathinfo($path, PATHINFO_EXTENSION); 
+        } 
+    }
+}
+closedir($dir_handle);
+
+$imgDir = $directory . $fileName . "." . $ext;
+return $imgDir;
+}
 ?>

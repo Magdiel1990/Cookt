@@ -95,23 +95,23 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
           
   //The page is redirected to the add_units.php
       header('Location: ../views/add-categories.php');
-  } 
-  if (!preg_match($pattern, $category)){
-      //Message if the variable is null.
-      $_SESSION['message'] = '¡Categoría incorrecta!';
-      $_SESSION['message_alert'] = "danger";
-          
-  //The page is redirected to the add_units.php
-       header('Location: ../views/add-categories.php');
   } else {
+    if (!preg_match($pattern, $category)){
+        //Message if the variable is null.
+        $_SESSION['message'] = '¡Categoría incorrecta!';
+        $_SESSION['message_alert'] = "danger";
+            
+    //The page is redirected to the add_units.php
+        header('Location: ../views/add-categories.php');
+    } else {
 
-  //lowercase the variable
-    $category = strtolower($category);
+    //lowercase the variable
+      $category = strtolower($category);
 
-    $sql = "SELECT category FROM categories WHERE category = '$category';";
+      $sql = "SELECT category FROM categories WHERE category = '$category';";
 
-    $num_rows = $conn -> query($sql) -> num_rows;
-    
+      $num_rows = $conn -> query($sql) -> num_rows;
+      
 
       if($num_rows != 0){
     //It already exists.
@@ -156,7 +156,7 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
         $uploadOk = "¡Formato no admitido!";
       } 
 
-    if ($uploadOk == "") {
+      if ($uploadOk == "") {
         if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $conn->query($sql)){
           //Success message.
           $_SESSION['message'] = '¡Categoría agregada con éxito!';
@@ -171,16 +171,17 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
 
         //The page is redirected to the add_units.php.
         header('Location: ../views/add-categories.php'); 
-      }
-    } else {
+        }
+      } else {
         //Failure message.
         $_SESSION['message'] = $uploadOk;
         $_SESSION['message_alert'] = "danger";
 
         //The page is redirected to the add_units.php.
         header('Location: ../views/add-categories.php'); 
+      }
     }
-    }
+  }
 }
 
 
