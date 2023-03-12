@@ -9,3 +9,4 @@ Paginacion
 revisar las vistas de la db
 revisar el codigo de creacion de receta, no se esta agregando la imagen
 validar todo con js and html
+Boton de reinicio
