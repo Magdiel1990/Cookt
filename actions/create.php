@@ -295,7 +295,7 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
     if($num_rows == 0) {
 
     $stmt = $conn -> prepare("INSERT INTO reholder (ingredientid, quantity, unit, username) VALUES (?, ?, ?, ?);");
-    $stmt->bind_param("ssss", $ingredientId, $quantity, $unit, $_SESSION['username']);
+    $stmt->bind_param("idss", $ingredientId, $quantity, $unit, $_SESSION['username']);
 
       if ($stmt->execute()) {
     //Success message.
@@ -356,7 +356,7 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
     $ingredientId = $row['id'];
 
     $stmt = $conn -> prepare("INSERT INTO recipeinfo (recipeid, ingredientid, quantity, unit) VALUES (?, ?, ?, ?);");
-    $stmt->bind_param("ssss", $recipeId, $ingredientId, $quantity, $unit);
+    $stmt->bind_param("iids", $recipeId, $ingredientId, $quantity, $unit);
 
     if ($stmt->execute()) {
   //Success message.
@@ -443,7 +443,7 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES[
       $categoryid = $row["categoryid"];
 
       $stmt = $conn -> prepare("INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime, username) VALUES (?, ?, ?, ?, ?, ?);");
-      $stmt->bind_param ("ssssss", $recipename, $categoryid, $preparation, $observation, $cookingtime, $_SESSION['username']);
+      $stmt->bind_param ("sissis", $recipename, $categoryid, $preparation, $observation, $cookingtime, $_SESSION['username']);
 
       $stmt -> execute();
       $stmt -> close();
@@ -573,7 +573,7 @@ if(isset($_POST['customingredient'])){
       header('Location: ../views/custom-recipe.php');
   } else {
     $stmt = $conn -> prepare("INSERT INTO ingholder (ingredientid, username) VALUES (?, ?);");
-    $stmt->bind_param ("ss", $ingredientId, $_SESSION['username']);
+    $stmt->bind_param ("is", $ingredientId, $_SESSION['username']);
 
     if ($stmt -> execute()) {
   //Success message.
@@ -634,7 +634,7 @@ if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['u
   if($num_rows == 0) {
 
   $stmt = $conn -> prepare("INSERT INTO users (fullname, username, `password`, `type`, email, `state`) VALUES (?, ?, ?, ?, ?, ?);");
-  $stmt->bind_param ("ssssss", $fullName, $userName, $userPassword, $userRol, $userEmail, $state);
+  $stmt->bind_param ("sssssi", $fullName, $userName, $userPassword, $userRol, $userEmail, $state);
 
     if ($stmt->execute()) {
   //Success message.
