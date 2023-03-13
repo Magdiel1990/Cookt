@@ -6,3 +6,5 @@ comentar
 Paginacion
 revisar las vistas de la db
 validar todo con js and html
+Boton de reinicio
+cuando yo le de a un usuario me permita visualizar todas sus recetas, editarlas, eliminarlas.

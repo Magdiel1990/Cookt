@@ -20,7 +20,7 @@
             </li>
             <li class="nav-item dropdown px-1" <?php if($_SESSION['type'] == 'Viewer') { echo "style = 'display : none;'";}?>>
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Administración
+                Agregar
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="/Cookt/views/add-units.php">Unidades</a>

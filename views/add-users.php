@@ -30,7 +30,7 @@ require_once ("../modules/nav.php");
     ?>
         <h3>AGREGAR USUARIOS</h3>
     <!--Form for filtering the database info-->
-        <form class="m-3 col-auto" method="POST" action="../actions/create.php">
+        <form class="m-3 col-auto" method="POST" action="../actions/create.php">            
             
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="userfullname">Nombre Completo: </label>
@@ -65,6 +65,8 @@ require_once ("../modules/nav.php");
                 <label class="input-group-text" for="useremail">Email: </label>
                 <input class="form-control" type="email" id="useremail" name="useremail" minlength="15" maxlength="70">
             </div>
+
+            <input type="hidden" name="session_user" value = "<?php echo $_SESSION['username']?>">
 
             <div class="form-switch">
                 <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes" checked>
