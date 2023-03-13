@@ -37,14 +37,17 @@ CREATE TABLE `users` (
   `type` varchar(15) NOT NULL,
   `email`  varchar(70),
   `state` boolean not null,
-  `reportsto` varchar(30),
+  `reportsto` int,
   PRIMARY KEY (`userid`),
   CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_users_users`  FOREIGN KEY (`reportsto`) references `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE  
+  CONSTRAINT `fk_users_users`  FOREIGN KEY (`reportsto`) references `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE  
 );
 
 INSERT INTO `users` (`username`, `fullname`, `password`, `type`, `email`, `state`) 
-VALUES ('Admin', 'Magdiel Castillo', '123456', 'Admin', 'magdielmagdiel1@gmail.com', 1);
+VALUES ('Admin', 'Magdiel Castillo', '123456', 'Admin', 'magdielmagdiel1@gmail.com', 1), 
+('Patricia', 'Patricia Paola', '123456', 'Admin', 'yibeli100@gmail.com', 1),
+('Missael', 'Missael Castillo', '123456', 'Viewer', '', 1),
+('Lisandro', 'Lisandro Polanco', '123456', 'Standard', '', 1);
 
 CREATE TABLE `ingredients` (
   `id` int NOT NULL AUTO_INCREMENT,

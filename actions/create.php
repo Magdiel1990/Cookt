@@ -602,7 +602,7 @@ if(isset($_POST['customingredient'])){
 
 
 //receive the data
-if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['userpassword']) || isset($_POST['userrol']) || isset($_POST['useremail'])){
+if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['userpassword']) || isset($_POST['userrol']) || isset($_POST['useremail']) || isset($_POST['session_user'])){
 
   $fullName = sanitization($_POST['userfullname'], FILTER_SANITIZE_STRING, $conn);
   $userName=  sanitization($_POST['username'], FILTER_SANITIZE_STRING, $conn);
@@ -610,57 +610,70 @@ if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['u
   $userRol = $_POST['userrol'];
   $userEmail = sanitization($_POST['useremail'], FILTER_SANITIZE_EMAIL, $conn);
   $state = $_POST['activeuser'];
+  $sessionUser = $_POST['session_user'];
 
+  $sql = "SELECT userid, `type` FROM users WHERE username ='$sessionUser';";
+  $row = $conn -> query($sql) -> fetch_assoc();
+  $sessionUserId = $row['userid'];
+  $sessionUserType = $row['type'];
 
-  if ($fullName == "" || $userName == "" || $userPassword == "") {
-  //Message if the variable is null.
-      $_SESSION['message'] = '¡Complete todos los campos por favor!';
-      $_SESSION['message_alert'] = "danger";
-          
-  //The page is redirected to the add-recipe.php
-      header('Location: ../views/add-users.php');
-  } 
-
-  if($state == "yes") {
-    $state = 1;
-  } else { 
-    $state = 0;
-  }
-
-  $sql = "SELECT userid FROM users WHERE fullname = '$fullName' AND username = '$userName' AND `password` = '$userPassword';";
-
-  $num_rows = $conn -> query($sql) -> num_rows;
-
-  if($num_rows == 0) {
-
-  $stmt = $conn -> prepare("INSERT INTO users (fullname, username, `password`, `type`, email, `state`) VALUES (?, ?, ?, ?, ?, ?);");
-  $stmt->bind_param ("sssssi", $fullName, $userName, $userPassword, $userRol, $userEmail, $state);
-
-    if ($stmt->execute()) {
-  //Success message.
-        $_SESSION['message'] = '¡Usuario agregado con éxito!';
-        $_SESSION['message_alert'] = "success";
-
-        $stmt->close();
-            
-  //The page is redirected to the ingredients.php.
-        header('Location: ../views/add-users.php');
-
-      } else {
-  //Failure message.
-        $_SESSION['message'] = '¡Error al agregar usuario!';
+  if($sessionUserType != 'Admin') {
+    //The page is redirected to the add-recipe.php
+        header('Location: ../error/error.php');
+  } else {
+    if ($fullName == "" || $userName == "" || $userPassword == "") {
+    //Message if the variable is null.
+        $_SESSION['message'] = '¡Complete todos los campos por favor!';
         $_SESSION['message_alert'] = "danger";
             
-  //The page is redirected to the ingredients.php.
-        header('Location: ../views/add-users.php');;
-    }
-  } else {
-    //Success message.
-        $_SESSION['message'] = '¡Este usuario ya existe!';
-        $_SESSION['message_alert'] = "success";
-            
-    //The page is redirected to the ingredients.php.
+    //The page is redirected to the add-recipe.php
         header('Location: ../views/add-users.php');
+    } else {   
+
+      if($state == "yes") {
+        $state = 1;
+      } else { 
+        $state = 0;
+      }
+
+      $sql = "SELECT userid FROM users WHERE fullname = '$fullName' AND username = '$userName' AND `password` = '$userPassword';";
+
+      $num_rows = $conn -> query($sql) -> num_rows;
+
+      if($num_rows == 0) {
+      
+
+
+      $stmt = $conn -> prepare("INSERT INTO users (fullname, username, `password`, `type`, email, `state`, reportsto) VALUES (?, ?, ?, ?, ?, ?, ?);");
+      $stmt->bind_param ("sssssii", $fullName, $userName, $userPassword, $userRol, $userEmail, $state, $sessionUserId);
+
+        if ($stmt->execute()) {
+      //Success message.
+            $_SESSION['message'] = '¡Usuario agregado con éxito!';
+            $_SESSION['message_alert'] = "success";
+
+            $stmt->close();
+                
+      //The page is redirected to the ingredients.php.
+            header('Location: ../views/add-users.php');
+
+          } else {
+      //Failure message.
+            $_SESSION['message'] = '¡Error al agregar usuario!';
+            $_SESSION['message_alert'] = "danger";
+                
+      //The page is redirected to the ingredients.php.
+            header('Location: ../views/add-users.php');;
+        }
+      } else {
+        //Success message.
+            $_SESSION['message'] = '¡Este usuario ya existe!';
+            $_SESSION['message_alert'] = "success";
+                
+        //The page is redirected to the ingredients.php.
+            header('Location: ../views/add-users.php');
+      }
+    }
   }
 }
 
