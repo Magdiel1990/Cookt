@@ -11,3 +11,5 @@ cuando yo le de a un usuario me permita visualizar todas sus recetas, editarlas,
 fix recipes.php line 17
 arreglar las vistas, en lugar de username usar userid
 buton regresar de recipes debe ser dinamico dependiendo desde donde se acceda
+en sugerencias hay mas ingredientes que en index para bizcocho de chocolate
+eliminar vistas y editar queries
