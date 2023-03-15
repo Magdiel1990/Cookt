@@ -11,9 +11,14 @@ require_once ("../modules/nav.php");
 //Models.
 require_once ("../models/models.php");
 
-if(isset($_GET["recipe"]) && isset($_GET["username"])){
+if(isset($_GET["recipe"]) && isset($_GET["username"]) || isset($_GET["path"])){
     $recipe = $_GET["recipe"];
     $username = $_GET["username"];
+    if($_GET["path"] == "index"){
+        $pathToReturn = "../index.php";        
+    } else {
+        $pathToReturn = urldecode($_GET["path"]) . '?username=' . $username;
+    }
 
     $recipeImageDir = "../imgs/recipes/" . $username . "/". $recipe . ".jpg";
 }
@@ -89,7 +94,7 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Preparación
                 </a>
-                <a class="btn btn-secondary" href="../index.php">Regresar</a>
+                <a class="btn btn-secondary" href="<?php echo $pathToReturn;?>">Regresar</a>
             </div>
         </div>
         <div class="col-sm-8 col-md-8">
@@ -107,7 +112,7 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
             <a class="btn btn-warning" href="../actions/edit.php?recipename=<?php echo $recipe ?>&username=<?php echo $username;?>">
                 <i class="fa-solid fa-plus" title="Agregar"></i>
             </a>
-            <a class="btn btn-warning" href="../index.php">
+            <a class="btn btn-warning" href="<?php echo $pathToReturn . '?username=' . $username;?>">
                 <i class="fa-solid fa-backward-step" title="Regresar"></i>
             </a>                
         </div>

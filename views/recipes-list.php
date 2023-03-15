@@ -31,7 +31,7 @@ $result = $conn -> query($sql);
             <?php
                 while($row = $result -> fetch_assoc()){
                     $html = "<li>"; 
-                    $html .= "<a href='recipes.php?recipe=" . $row['recipename'] . "&username=" . $username . "'>"; 
+                    $html .= "<a href='recipes.php?recipe=" . $row['recipename'] . "&username=" . $username . "&path=" .  urlencode($_SERVER['PHP_SELF']) . "'>"; 
                     $html .= $row['recipename'];
                     $html .= "</a>"; 
                     $html .= "</li>"; 

@@ -47,7 +47,7 @@
     if($num_rows > 0) {
         while($row = $result->fetch_assoc()){
             $output['data'] .= "<tr>";
-            $output['data'] .= "<td ><a href='./views/recipes.php?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "'>" . $row['recipename'] . "</a></td>";
+            $output['data'] .= "<td ><a href='./views/recipes.php?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=index'>" . $row['recipename'] . "</a></td>";
             $output['data'] .= "<td>" .ucfirst($row['category']). "</td>";
             $output['data'] .= "<td>";
             $output['data'] .= "<a href='actions/edit.php?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
