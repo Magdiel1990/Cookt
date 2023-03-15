@@ -123,34 +123,6 @@ VALUES (1,1,6.00,'unidades',3),
 (5,2,4.00,'unidades',3),
 (6,2,6.00,'gramos',5);
 
-CREATE VIEW `recipeinfoview` 
-AS select `r`.`recipeid` 
-AS `recipeid`,`r`.`recipename` 
-AS `recipename`,`r`.`date` 
-AS `date`,`r`.`cookingtime` 
-AS `cookingtime`,`r`.`preparation` 
-AS `preparation`,`r`.`observation` 
-AS `observation`,`c`.`category` 
-AS `category`, `r`.`username`
-AS `username`
-from `recipe` `r` join `categories` `c` 
-on `r`.`categoryid` = `c`.`categoryid`;
-
-CREATE VIEW `recipeview` 
-AS select `r`.`recipename` 
-AS `recipename`,concat_ws(' ',`ri`.`quantity`,`ri`.`unit`,'de',`i`.`ingredient`) 
-AS `indications`,concat_ws('-',convert(date_format(`r`.`date`,'%d') using utf8mb4),convert(date_format(`r`.`date`,'%m') using utf8mb4),convert(date_format(`r`.`date`,'%Y') using utf8mb4)) 
-AS `date`,`r`.`cookingtime` AS `cookingtime`,`r`.`preparation` 
-AS `preparation`,`r`.`observation` AS `observation`,`c`.`category`, `r`.`username`
-AS `username` 
-from `recipeinfo` `ri` 
-join `recipe` `r`
-on `ri`.`recipeid` = `r`.`recipeid` 
-join `ingredients` `i`
-on  `i`.`id` = `ri`.`ingredientid`
-join `categories` `c` 
-on `r`.`categoryid` = `c`.`categoryid`;
-
 CREATE TABLE `reholder` (
   `re_id` int NOT NULL AUTO_INCREMENT,
   `ingredientid` INT NOT NULL,
