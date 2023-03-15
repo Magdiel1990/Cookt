@@ -72,7 +72,7 @@ if(isset($_POST["category"])) {
             </div>
             <ul class="lead"> 
             <?php 
-            $sql = "SELECT * FROM recipeview WHERE recipename ='$recipename';"; 
+            $sql = "SELECT * FROM recipeview WHERE recipename ='$recipename' AND username = '" . $_SESSION['username'] . "';"; 
             $result = $conn -> query($sql);
 
             while($row = $result->fetch_assoc()){
