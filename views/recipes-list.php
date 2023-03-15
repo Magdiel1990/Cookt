@@ -38,19 +38,22 @@ $result = $conn -> query($sql);
                     echo $html;    
                 }
             ?>
-            </ol>
+            </ol>            
             <?php
             } else {
             ?>
             <div class="text-center col-auto">
                 <p>¡El usuario <?php echo $username; ?> no ha agregado recetas aún!</p>
-                <a class="btn btn-secondary" href="../views/add-users.php">Regresar</a>
             </div>
             <?php
             }
             ?>
-        </div>        
+        </div>
+               
     </div>
+    <div class="text-center">
+        <a class="btn btn-secondary" href="../views/add-users.php">Usuarios</a>
+    </div> 
 </main>
 <?php
 $conn -> close();
