@@ -169,10 +169,25 @@ if(isset($_GET['recipename']) && isset($_GET['username'])) {
 $recipeName = $_GET['recipename'];
 $userName = $_GET['username'];
 
-$sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipeName' AND username = '$userName';";
+$sql = "SELECT r.recipeid, 
+r.recipename,
+concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications, 
+r.cookingtime, 
+r.preparation, 
+r.observation, 
+c.category, 
+r.username
+from recipe r 
+join recipeinfo ri 
+on ri.recipeid = r.recipeid
+join categories c 
+on r.categoryid = c.categoryid
+join ingredients i 
+on i.id = ri.ingredientid
+WHERE r.recipename = '$recipeName' 
+AND r.username = '$userName';";
 
-$result = $conn -> query($sql);
-$row = $result -> fetch_assoc();
+$row = $conn -> query($sql) -> fetch_assoc();
 
 if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["observation"]) && isset($row["category"])) {
     $cookingTime = $row["cookingtime"];
@@ -259,7 +274,14 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["obser
                 <h3 class="text-center">Editar Ingredientes</h3>
                 <div class="mt-3">
                 <?php
-                $sql = "SELECT indications FROM recipeview WHERE recipename = '$recipeName' AND username = '$userName';";
+                $sql = "SELECT concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications, 
+                        from recipe r 
+                        join recipeinfo ri 
+                        on ri.recipeid = r.recipeid
+                        join ingredients i 
+                        on i.id = ri.ingredientid
+                        WHERE r.recipename = '$recipeName' 
+                        AND r.username = '$userName';";
 
                 $result = $conn -> query($sql);
                 

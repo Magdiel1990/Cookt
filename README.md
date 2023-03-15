@@ -7,8 +7,6 @@ Paginacion
 revisar las vistas de la db
 validar todo con js and html
 Boton de reinicio
-cuando yo le de a un usuario me permita visualizar todas sus recetas, editarlas, eliminarlas.
-fix recipes.php line 17
 arreglar las vistas, en lugar de username usar userid
-en sugerencias hay mas ingredientes que en index para bizcocho de chocolate
 eliminar vistas y editar queries
+poner imagen en cada receta random

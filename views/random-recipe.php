@@ -51,33 +51,58 @@ if(isset($_POST["category"])) {
     if(isset($_POST["category"])) {
     $category = $_POST["category"];
 
-    $sql = "SELECT category FROM recipeinfoview WHERE category='$category';"; 
-    $num_rows = $conn -> query($sql) -> num_rows;
-    
-    if($num_rows == 0){
-        die("<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>");
-    }
-    $sql = "SELECT * FROM recipeinfoview WHERE category='$category' AND username = '" . $_SESSION['username'] . "' ORDER BY RAND() LIMIT 1;"; 
+    $sql = "SELECT categoryid FROM categories WHERE category='$category';"; 
+    $row = $conn -> query($sql) -> fetch_assoc();
+    $categoryId = $row['categoryid'];
+
+    $sql = "SELECT recipeid FROM recipe WHERE categoryid = '$categoryId';";
     $result = $conn -> query($sql);
-    $row = $result -> fetch_assoc();
+    $num_rows = $result -> num_rows;
 
-    $recipename = $row["recipename"];
+        if($num_rows == 0){
+            echo "<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>";
+        } else {
+            $sql = "SELECT r.recipename, r.cookingtime
+            from recipe r 
+            join categories c 
+            on r.categoryid = c.categoryid
+            WHERE c.category = '$category' 
+            AND r.username = '" . $_SESSION['username'] . "' ORDER BY RAND() LIMIT 1;";     
 
+            $result = $conn -> query($sql);
+            $row = $result -> fetch_assoc();
+
+            $recipename = $row["recipename"];
+            $cookingtime = $row["cookingtime"];
+
+            $sql = "SELECT
+            concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications, 
+            r.preparation 
+            from recipe r 
+            join recipeinfo ri 
+            on ri.recipeid = r.recipeid
+            join ingredients i 
+            on i.id = ri.ingredientid
+            WHERE r.recipename ='$recipename' 
+            AND r.username = '" . $_SESSION['username'] . "';";
+
+            $result = $conn -> query($sql);
     ?>
     <div class="jumbotron row justify-content-center">
         <div class="bg-form p-3 mt-3 col-sm-8 col-md-8">
             <div class="text-center">
-                <h1 class="display-4 text-info"> <?php echo $row["recipename"]; ?> </h1>
-                <h5 class="text-warning"> <?php echo "(" . $row["cookingtime"] . " minutos)"; ?> </h5>
+                <h1 class="display-4 text-info"> <?php echo $recipename; ?> </h1>
+                <h5 class="text-warning"> <?php echo "(" . $cookingtime . " minutos)"; ?> </h5>
             </div>
             <ul class="lead"> 
             <?php 
-            $sql = "SELECT * FROM recipeview WHERE recipename ='$recipename' AND username = '" . $_SESSION['username'] . "';"; 
-            $result = $conn -> query($sql);
-
             while($row = $result->fetch_assoc()){
-                echo "<li class='text-success'>" . $row["indications"]. ".</li>";
-            }        
+                echo "<li class='text-success'>" . $row["indications"] . ".</li>";
+            }
+
+            $result = $conn -> query($sql);
+            $row = $result->fetch_assoc();
+
             ?>   
             </ul>
             <hr class="my-4">
@@ -91,17 +116,13 @@ if(isset($_POST["category"])) {
             </div>
         </div>
         <div class="col-sm-8 col-md-8">
-            <?php
-            $sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipename' AND username = '" . $_SESSION['username'] . "';";
-
-            $row = $conn -> query($sql) -> fetch_assoc();
-            ?>
             <div class="collapse mt-3 bg-form" id="collapseExample">
                 <h5 class="card card-body text-danger"> <?php echo $row["preparation"]; ?> </h5>
             </div>     
         </div>
     </div>
 <?php
+        }
     }
 ?>
 </main>

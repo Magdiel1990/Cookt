@@ -8,10 +8,10 @@
     require_once ("models/models.php");
     
     //Array of the columns to be querried from the database.
-    $columns = ["recipename", "category"];
+    $columns = ["r.recipename", "c.category"];
     
     //Table to be querried from the database.
-    $table = "recipeinfoview";
+    $table = "recipe r JOIN categories c ON r.categoryid = c.categoryid JOIN recipeinfo ri ON r.recipeid = ri.recipeid";
 
     //If the variable search is set it's received, else it's null. 
     $field = sanitization($_POST["search"], FILTER_SANITIZE_STRING, $conn);   
@@ -32,7 +32,7 @@
         $where .= "AND username = '" . $_SESSION['username'] . "')";
     }        
 
-    $sql = "SELECT SQL_CALC_FOUND_ROWS ". implode(", ", $columns) . " 
+    $sql = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ". implode(", ", $columns) . " 
     FROM $table 
     $where ORDER BY rand();";
 
