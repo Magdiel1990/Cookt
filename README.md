@@ -8,5 +8,4 @@ revisar las vistas de la db
 validar todo con js and html
 Boton de reinicio
 arreglar las vistas, en lugar de username usar userid
-eliminar vistas y editar queries
 poner imagen en cada receta random

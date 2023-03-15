@@ -55,7 +55,7 @@ if(isset($_POST["category"])) {
     $row = $conn -> query($sql) -> fetch_assoc();
     $categoryId = $row['categoryid'];
 
-    $sql = "SELECT recipeid FROM recipe WHERE categoryid = '$categoryId';";
+    $sql = "SELECT recipeid FROM recipe WHERE categoryid = '$categoryId' AND username = '" . $_SESSION['username'] . "';";
     $result = $conn -> query($sql);
     $num_rows = $result -> num_rows;
 
