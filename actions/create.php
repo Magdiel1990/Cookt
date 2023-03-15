@@ -331,12 +331,13 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
 
 
 //receive the data
-if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || isset($_GET['rname'])){
+if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || isset($_GET['rname']) || isset($_GET['username'])){
 
   $ingredient = $_POST['ing'];
   $quantity = $_POST['qty'];
   $unit = $_POST['units'];
   $recipeName = $_GET['rname'];
+  $userName = $_GET['username'];
 
   if ($quantity == "" || $quantity <= 0) {
   //Message if the variable is null.
@@ -344,14 +345,14 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add-recipe.php
-      header('Location: edit.php?recipename='. $recipeName);
+      header('Location: edit.php?recipename='. $recipeName . '&username=' . $userName);
   } else {
     
-    $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
+    $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipeName' AND username = '$userName';";
     $row = $conn -> query($sql) -> fetch_assoc();
     $recipeId = $row['recipeid'];
 
-    $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "';";
+    $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '$userName';";
     $row = $conn -> query($sql) -> fetch_assoc();
     $ingredientId = $row['id'];
 
@@ -366,7 +367,7 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
         $stmt->close();
 
   //The page is redirected to the ingredients.php.
-        header('Location: edit.php?recipename='. $recipeName);
+        header('Location: edit.php?recipename='. $recipeName . '&username=' . $userName);
 
       } else {
   //Failure message.
@@ -374,7 +375,7 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
         $_SESSION['message_alert'] = "danger";
             
   //The page is redirected to the ingredients.php.
-        header('Location: edit.php?recipename='. $recipeName);
+        header('Location: edit.php?recipename='. $recipeName . '&username=' . $userName);
     }
   }
 }

@@ -107,9 +107,19 @@ require_once ("../modules/nav.php");
                         } else {
                             $display = "";
                         }
+
+                        if($row['username'] == $_SESSION['username']) {
+                            $recipeList = "";
+                        } else {
+                            $recipeList = "href='../views/recipes-list.php?username=" . $row['username']. "'";
+                        }
                         
-                        $html = "<tr>";
-                        $html .= "<td style='color:" . $color . ";'>" . $row['username'] . "</td>";
+                        $html = "<tr>";                        
+                        $html .= "<td style='color:" . $color . ";'>";
+                        $html .="<a $recipeList>";
+                        $html .= $row['username'];
+                        $html .="</a>";
+                        $html .= "</td>";
                         $html .= "<td style='color:" . $color . ";'>" . $row['type'] . "</td>";
                         $html .= "<td style='color:" . $color . ";'>" . $state . "</td>";
                         $html .= "<td>";

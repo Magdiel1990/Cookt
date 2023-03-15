@@ -8,3 +8,6 @@ revisar las vistas de la db
 validar todo con js and html
 Boton de reinicio
 cuando yo le de a un usuario me permita visualizar todas sus recetas, editarlas, eliminarlas.
+fix recipes.php line 17
+arreglar las vistas, en lugar de username usar userid
+buton regresar de recipes debe ser dinamico dependiendo desde donde se acceda

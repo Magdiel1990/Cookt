@@ -61,7 +61,7 @@ $ingredient = $_POST["ingredient"];
 /************************************************************************************************/
 
 
-if(isset($_GET["editname"]) || isset($_FILES["recipeImage"]) || isset($_POST["newRecipeName"]) || isset($_POST["category"])
+if(isset($_GET["editname"]) || isset($_GET["username"]) || isset($_FILES["recipeImage"]) || isset($_POST["newRecipeName"]) || isset($_POST["category"])
 || isset($_POST["cookingTime"]) || isset($_POST["preparation"]) || isset($_POST["observation"])){
 
 $oldName = $_GET["editname"];
@@ -71,6 +71,7 @@ $cookingTime = sanitization($_POST["cookingTime"], FILTER_SANITIZE_NUMBER_INT, $
 $preparation = sanitization($_POST["preparation"], FILTER_SANITIZE_STRING, $conn);
 $observation = sanitization($_POST["observation"], FILTER_SANITIZE_STRING, $conn);
 $recipeImage = $_FILES["recipeImage"];
+$userName = $_GET["username"];
 
 $sql = "SELECT categoryid FROM categories WHERE category = '$category';";
 $row = $conn -> query($sql) -> fetch_assoc();
@@ -83,31 +84,31 @@ $categoryId = $row['categoryid'];
         $_SESSION['message_alert'] = "danger";
             
     //The page is redirected to the add-recipe.php
-        header("Location: edit.php?recipename=". $oldName);
+        header("Location: edit.php?recipename=". $oldName . '&username=' . $userName);
     } else {
         if($cookingTime >= 5 && $cookingTime <= 180){
 
             if($recipeImage['name'] == null) {            
-                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', observation = '$observation', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '" . $_SESSION['username'] . "';";
+                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', observation = '$observation', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
                 if ($conn->query($sql)) {
                     //Message if the variable is null.
                     $_SESSION['message'] = '¡Receta editada con éxito!';
                     $_SESSION['message_alert'] = "success";
                         
                     //The page is redirected to the add-recipe.php
-                    header("Location: edit.php?recipename=". $newRecipeName);
+                    header("Location: edit.php?recipename=". $newRecipeName .'&username=' . $userName);
                     } else {
                     //Message if the variable is null.
                     $_SESSION['message'] = '¡Error al editar receta!';
                     $_SESSION['message_alert'] = "danger";
 
                     //The page is redirected to the add-recipe.php
-                    header("Location: edit.php?recipename=". $oldName);
+                    header("Location: edit.php?recipename=". $oldName. '&username=' . $userName);
                     }  
                 } else {
-                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', observation = '$observation', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '" . $_SESSION['username'] . "';";
+                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', observation = '$observation', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
                 
-                $target_dir = "../imgs/recipes/". $_SESSION['username']  ."/";
+                $target_dir = "../imgs/recipes/". $userName  ."/";
 
                 $imgOldRecipeDir = directoryFiles($target_dir, $oldName);
                 unlink($imgOldRecipeDir);
@@ -144,14 +145,14 @@ $categoryId = $row['categoryid'];
                     $_SESSION['message_alert'] = "success";
 
                     //The page is redirected to the add-recipe.php
-                    header("Location: edit.php?recipename=". $newRecipeName);   
+                    header("Location: edit.php?recipename=". $newRecipeName. '&username=' . $userName);   
                     } else {
                     //Failure message.
                     $_SESSION['message'] = '¡Error al editar receta!';
                     $_SESSION['message_alert'] = "danger";
 
                     //The page is redirected to the add_units.php.
-                    header('Location: edit.php?recipename=' . $oldName);
+                    header('Location: edit.php?recipename=' . $oldName. '&username=' . $userName);
                 }
                 } else {
                     //Failure message.
@@ -159,7 +160,7 @@ $categoryId = $row['categoryid'];
                     $_SESSION['message_alert'] = "danger";
 
                     //The page is redirected to the add_units.php.
-                    header('Location: edit.php?recipename=' . $oldName);
+                    header('Location: edit.php?recipename=' . $oldName. '&username=' . $userName);
                 }     
             }
         } else {
@@ -168,7 +169,7 @@ $categoryId = $row['categoryid'];
                 $_SESSION['message_alert'] = "danger";
                     
                 //The page is redirected to the add-recipe.php
-                header("Location: edit.php?recipename=". $oldName);
+                header("Location: edit.php?recipename=". $oldName. '&username=' . $userName);
         }       
     }
 }

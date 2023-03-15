@@ -11,18 +11,43 @@ require_once ("../modules/nav.php");
 //Models.
 require_once ("../models/models.php");
 
-if(isset($_GET["recipe"])){
+if(isset($_GET["recipe"]) && isset($_GET["username"])){
     $recipe = $_GET["recipe"];
+    $username = $_GET["username"];
 
-    $recipeImageDir = "../imgs/recipes/" . $_SESSION['username'] . "/". $recipe . ".jpg";
+    $recipeImageDir = "../imgs/recipes/" . $username . "/". $recipe . ".jpg";
 }
 
-$sql = "SELECT * FROM recipeview WHERE recipename = '$recipe' AND username = '" . $_SESSION['username'] . "';";
+$sql = "SELECT r.recipeid, 
+r.recipename,
+concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications, 
+r.cookingtime, 
+r.preparation, 
+r.observation, 
+c.category, 
+r.username
+from recipe r 
+join recipeinfo ri 
+on ri.recipeid = r.recipeid
+join categories c 
+on r.categoryid = c.categoryid
+join ingredients i 
+on i.id = ri.ingredientid
+WHERE r.recipename = '$recipe' 
+AND r.username = '$username';";
 
 $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
 $row = $result->fetch_assoc();
-$category = $row['category'];
+?>
+<main class="container p-2 my-4"  style="background: url('<?php echo $categoryImgDir ?>') center; background-size: auto;">
+
+<?php
+if(isset($row["category"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"])) {
+$category = $row["category"];
+$recipeName = $row["recipename"];
+$cookingTime = $row["cookingtime"];
+$preparation = $row["preparation"];
 
 $categoryDir = "../imgs/categories/";
 
@@ -30,33 +55,11 @@ $categoryDir = "../imgs/categories/";
 $categoryImgDir = directoryFiles($categoryDir , $category);
 
 ?>
-
-<link rel="stylesheet" href="../css/styles.css">
-
-<main class="container p-2 my-4"  style="background: url('<?php echo $categoryImgDir ?>') center; background-size: auto;">
-    <?php
-    if($num_rows == 0) {
-    ?>
-
-    <div class="row justify-content-center">
-        <p class="col-auto">¡Esta receta no tiene ingredientes!</p>
-        <div class="col-auto">
-            <a class="btn btn-warning" href="../actions/edit.php?recipename=<?php echo $recipe ?>">
-                <i class="fa-solid fa-plus" title="Agregar"></i>
-            </a>
-            <a class="btn btn-warning" href="../index.php">
-                <i class="fa-solid fa-backward-step" title="Regresar"></i>
-            </a>                
-        </div>
-        </div> 
-    <?php
-    } else {   
-    ?>
     <div class="jumbotron row justify-content-center">
         <div class="bg-form p-3 mt-3 col-sm-auto col-md-9 col-lg-8">
             <div class="text-center">
-                <h1 class="display-4 text-info"> <?php echo $row["recipename"]; ?> </h1>
-                <h5 class="text-warning"> (<?php echo $row["cookingtime"]; ?> minutos)</h5>
+                <h1 class="display-4 text-info"> <?php echo $recipeName; ?> </h1>
+                <h5 class="text-warning"> (<?php echo $cookingTime; ?> minutos)</h5>
             </div>
             <div class="d-flex flex-row justify-content-between">
                 <ul class="lead"> 
@@ -72,11 +75,11 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
                     if(file_exists($recipeImageDir)) {
 
                 ?>
-                <div class="">
+                <div>
                     <img src="<?php echo $recipeImageDir?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
                 </div>                 
                 <?php
-                }
+                    }
                 ?>
             </div>
             <hr class="my-4">
@@ -90,21 +93,31 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
             </div>
         </div>
         <div class="col-sm-8 col-md-8">
-            <?php
-            $sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipe' AND username = '" . $_SESSION['username'] . "';";
-
-            $row = $conn -> query($sql) -> fetch_assoc();
-
-            ?>
             <div class="collapse mt-3 bg-form" id="collapse">
-                <div class="card card-body text-danger"> <?php echo ucfirst($row["preparation"]); ?> </div>
+                <div class="card card-body text-danger"> <?php echo ucfirst($preparation); ?> </div>
             </div>        
         </div>        
     </div>
-    <?php
-    }
-    ?>
+<?php
+} else {
+?> 
+    <div class="row justify-content-center">
+        <p class="col-auto">¡Esta receta no tiene ingredientes!</p>
+        <div class="col-auto">
+            <a class="btn btn-warning" href="../actions/edit.php?recipename=<?php echo $recipe ?>&username=<?php echo $username;?>">
+                <i class="fa-solid fa-plus" title="Agregar"></i>
+            </a>
+            <a class="btn btn-warning" href="../index.php">
+                <i class="fa-solid fa-backward-step" title="Regresar"></i>
+            </a>                
+        </div>
+    </div> 
+<?php
+} 
+?>
+
 </main>
+
 <?php
 $conn -> close();
 //Footer of the page.

@@ -165,19 +165,26 @@ $category = $row["category"];
 /************************************************************************************************/
 
 
-if(isset($_GET['recipename'])) {
+if(isset($_GET['recipename']) && isset($_GET['username'])) {
 $recipeName = $_GET['recipename'];
+$userName = $_GET['username'];
 
-$sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
+$sql = "SELECT * FROM recipeinfoview WHERE recipename = '$recipeName' AND username = '$userName';";
 
 $result = $conn -> query($sql);
 $row = $result -> fetch_assoc();
 
-$cookingTime = $row["cookingtime"];
-$preparation=  sanitization($row["preparation"], FILTER_SANITIZE_STRING, $conn);
-$observation = sanitization($row["observation"], FILTER_SANITIZE_STRING, $conn);
-$category = $row["category"];
-
+if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["observation"]) && isset($row["category"])) {
+    $cookingTime = $row["cookingtime"];
+    $preparation=  sanitization($row["preparation"], FILTER_SANITIZE_STRING, $conn);
+    $observation = sanitization($row["observation"], FILTER_SANITIZE_STRING, $conn);
+    $category = $row["category"];
+} else {
+    $cookingTime = "";
+    $preparation=  "";
+    $observation = "";
+    $category = "";
+}
 ?>
 <main class="container p-4">
 <?php
@@ -193,7 +200,7 @@ $category = $row["category"];
         <h3>EDITAR RECETA</h3>     
         <div class="mt-3 col-auto">
             <div class="bg-form card card-body">
-                <form enctype="multipart/form-data" action="update.php?editname=<?php echo $recipeName ?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
+                <form enctype="multipart/form-data" action="update.php?editname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
 
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="newRecipeName">Nombre: </label>
@@ -238,8 +245,7 @@ $category = $row["category"];
                             <?php echo $observation;?> 
                         </textarea>
                     </div>                 
-                  
-                    
+                                      
                     <div class="mb-3">
                         <input class='btn btn-primary' type="submit" name="edit" value="Actualizar"> 
                         <a href='../index.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
@@ -253,7 +259,7 @@ $category = $row["category"];
                 <h3 class="text-center">Editar Ingredientes</h3>
                 <div class="mt-3">
                 <?php
-                $sql = "SELECT indications FROM recipeview WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
+                $sql = "SELECT indications FROM recipeview WHERE recipename = '$recipeName' AND username = '$userName';";
 
                 $result = $conn -> query($sql);
                 
@@ -268,8 +274,7 @@ $category = $row["category"];
                 ?>
                 </div>
                 <div class="my-4 text-center m-auto">
-                    <form method="POST" action="create.php?rname=<?php echo $recipeName;?>" onsubmit="return validationNumber('quantity')">
-
+                    <form method="POST" action="create.php?rname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" onsubmit="return validationNumber('quantity')">
                         <div class="input-group mb-3">
                             <label class="input-group-text is-required" for="quantity">Cantidad: </label>                    
                             <input class="form-control" type="number" name="qty" id="quantity" step="0.05" max="1000" min="0" required>
@@ -292,19 +297,19 @@ $category = $row["category"];
 
                         <div class="input-group mb-3 justify-content-center">
                         <?php
-                            $sql = "SELECT i.ingredient FROM recipeinfo ri JOIN recipe r ON ri.recipeid = r.recipeid JOIN ingredients i ON i.id = ri.ingredientid WHERE r.recipename = '$recipeName' AND r.username = '" . $_SESSION['username'] . "';";
+                            $sql = "SELECT i.ingredient FROM recipeinfo ri JOIN recipe r ON ri.recipeid = r.recipeid JOIN ingredients i ON i.id = ri.ingredientid WHERE r.recipename = '$recipeName' AND r.username = '$userName';";
                             $result = $conn -> query($sql);
                             $num_rows = $result -> num_rows;
 
                             if($num_rows == 0) { 
-                                $where = "WHERE username = '" . $_SESSION['username'] . "';";
+                                $where = "WHERE username = '$userName';";
                             } else {
                                 $where = "WHERE NOT ingredient IN (";
                                 while($row = $result -> fetch_assoc()){
                                     $where .= "'" . $row["ingredient"] . "', ";
                                 }
                                 $where = substr_replace($where, "", -2);
-                                $where .= ") AND username = '" . $_SESSION['username'] . "'";
+                                $where .= ") AND username = '$userName'";
                             }
                         
                             $sql = "SELECT ingredient FROM ingredients " . $where;
