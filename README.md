@@ -8,4 +8,5 @@ revisar las vistas de la db
 validar todo con js and html
 Boton de reinicio
 arreglar las vistas, en lugar de username usar userid
-poner imagen en cada receta random
+realizar intersection en custom recipe
+http://localhost/Cookt/views/custom-recipe.php cuando le de al ingrediente encima se elimine, centralizar y fondo shadow

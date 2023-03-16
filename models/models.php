@@ -31,8 +31,10 @@ while(($file = readdir($dir_handle)) !== false) {
     if(is_file($path)) {
     $name = pathinfo($path, PATHINFO_FILENAME);      
         if($name == $fileName) {
-            $ext = pathinfo($path, PATHINFO_EXTENSION); 
+        $ext = pathinfo($path, PATHINFO_EXTENSION); 
         } 
+    } else {
+        $ext = "";
     }
 }
 closedir($dir_handle);

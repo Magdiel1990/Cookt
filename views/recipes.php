@@ -11,16 +11,22 @@ require_once ("../modules/nav.php");
 //Models.
 require_once ("../models/models.php");
 
-if(isset($_GET["recipe"]) && isset($_GET["username"]) || isset($_GET["path"])){
+if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     $recipe = $_GET["recipe"];
     $username = $_GET["username"];
+    
     if($_GET["path"] == "index"){
         $pathToReturn = "../index.php";        
+    } else if (isset($_GET["ingredients"])) {
+        $ingArray = $_GET["ingredients"];
+        $pathToReturn = unserialize(base64_decode($_GET["path"])) . "?ingredients=". $ingArray ."&username=" . $username;
+
     } else {
-        $pathToReturn = urldecode($_GET["path"]) . '?username=' . $username;
+        $pathToReturn = unserialize(base64_decode($_GET["path"])) . "?username=" . $username;
     }
 
-    $recipeImageDir = "../imgs/recipes/" . $username . "/". $recipe . ".jpg";
+    $imageDir = "../imgs/recipes/" . $username . "/";
+    $recipeImageDir = directoryFiles($imageDir, $recipe);
 }
 
 $sql = "SELECT r.recipeid, 
@@ -78,7 +84,6 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
                 </ul>
                 <?php
                     if(file_exists($recipeImageDir)) {
-
                 ?>
                 <div>
                     <img src="<?php echo $recipeImageDir?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
@@ -112,7 +117,7 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
             <a class="btn btn-warning" href="../actions/edit.php?recipename=<?php echo $recipe ?>&username=<?php echo $username;?>">
                 <i class="fa-solid fa-plus" title="Agregar"></i>
             </a>
-            <a class="btn btn-warning" href="<?php echo $pathToReturn . '?username=' . $username;?>">
+            <a class="btn btn-warning" href="<?php echo $pathToReturn;?>">
                 <i class="fa-solid fa-backward-step" title="Regresar"></i>
             </a>                
         </div>

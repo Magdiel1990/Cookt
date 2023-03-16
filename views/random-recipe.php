@@ -55,38 +55,28 @@ if(isset($_POST["category"])) {
     $row = $conn -> query($sql) -> fetch_assoc();
     $categoryId = $row['categoryid'];
 
-    $sql = "SELECT recipeid FROM recipe WHERE categoryid = '$categoryId' AND username = '" . $_SESSION['username'] . "';";
-    $result = $conn -> query($sql);
-    $num_rows = $result -> num_rows;
-
-        if($num_rows == 0){
-            echo "<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>";
-        } else {
-            $sql = "SELECT r.recipename, r.cookingtime
-            from recipe r 
-            join categories c 
-            on r.categoryid = c.categoryid
-            WHERE c.category = '$category' 
-            AND r.username = '" . $_SESSION['username'] . "' ORDER BY RAND() LIMIT 1;";     
-
-            $result = $conn -> query($sql);
-            $row = $result -> fetch_assoc();
-
-            $recipename = $row["recipename"];
-            $cookingtime = $row["cookingtime"];
-
-            $sql = "SELECT
-            concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications, 
+    $sql = "SELECT DISTINCT
+            r.recipename,
+            r.cookingtime,
+            concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications,
             r.preparation 
             from recipe r 
             join recipeinfo ri 
             on ri.recipeid = r.recipeid
             join ingredients i 
             on i.id = ri.ingredientid
-            WHERE r.recipename ='$recipename' 
-            AND r.username = '" . $_SESSION['username'] . "';";
+            WHERE r.categoryid = '$categoryId'
+            AND r.username = '" . $_SESSION['username'] . "' ORDER BY rand();";
+    $result = $conn -> query($sql);    
+    $num_rows = $result -> num_rows;
 
-            $result = $conn -> query($sql);
+        if($num_rows == 0){
+            echo "<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>";
+        } else {
+        $row = $result -> fetch_assoc();
+        $recipename = $row['recipename'];
+        $cookingtime = $row['cookingtime'];
+        $preparation = $row["preparation"];        
     ?>
     <div class="jumbotron row justify-content-center">
         <div class="bg-form p-3 mt-3 col-sm-8 col-md-8">
@@ -94,18 +84,30 @@ if(isset($_POST["category"])) {
                 <h1 class="display-4 text-info"> <?php echo $recipename; ?> </h1>
                 <h5 class="text-warning"> <?php echo "(" . $cookingtime . " minutos)"; ?> </h5>
             </div>
+            <div class="d-flex flex-row justify-content-between">
             <ul class="lead"> 
             <?php 
+            $result = $conn -> query($sql);      
+
             while($row = $result->fetch_assoc()){
                 echo "<li class='text-success'>" . $row["indications"] . ".</li>";
             }
-
-            $result = $conn -> query($sql);
-            $row = $result->fetch_assoc();
-
             ?>   
             </ul>
             <hr class="my-4">
+            <?php
+                $imageDir = "../imgs/recipes/" .  $_SESSION['username'] . "/";
+                $recipeImageDir = directoryFiles($imageDir, $recipename);
+
+                if(file_exists($recipeImageDir)) {
+            ?>
+            <div>
+                <img src="<?php echo $recipeImageDir?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
+            </div>                 
+            <?php
+                }
+            ?>
+            </div>
         </div>
         <div class="lead text-center">
             <div class="mt-3">
@@ -117,7 +119,7 @@ if(isset($_POST["category"])) {
         </div>
         <div class="col-sm-8 col-md-8">
             <div class="collapse mt-3 bg-form" id="collapseExample">
-                <h5 class="card card-body text-danger"> <?php echo $row["preparation"]; ?> </h5>
+                <h5 class="card card-body text-danger"> <?php echo $preparation; ?> </h5>
             </div>     
         </div>
     </div>

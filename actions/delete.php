@@ -238,7 +238,7 @@ $result = $conn -> query($sql);
 
 
 //Verifying that the id value comes with data.
-if(isset($_GET['indication']) && isset($_GET['rpename'])){
+if(isset($_GET['indication']) && isset($_GET['rpename']) && isset($_GET['username'])){
     
 //Getting the name.
 $ingredientFullName = $_GET['indication'];
@@ -247,6 +247,7 @@ $ingredientFullNameArray = explode(" ",$ingredientFullName);
 $quantity = $ingredientFullNameArray[0];
 $unit = $ingredientFullNameArray[1];
 $ingredient = $ingredientFullNameArray[3];
+$userName = $_GET['username'];
 
 $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
 $row = $conn -> query($sql) -> fetch_assoc();
@@ -269,14 +270,14 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add_units.php
-        header("Location: edit.php?recipename=". $recipeName);
+        header("Location: edit.php?recipename=" . $recipeName . '&username=' . $userName);
     } else {
 //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add_units.php.
-        header("Location: edit.php?recipename=". $recipeName);
+        header("Location: edit.php?recipename=". $recipeName . '&username=' . $userName);
     }
 }
 

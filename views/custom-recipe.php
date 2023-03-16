@@ -96,7 +96,7 @@ require_once ("../modules/nav.php");
             }
             $html .= "</ol>";
             $html .= "<div>";
-            $html .= "<form action='recipe-suggestions.php?ingredients=" . base64_encode(serialize($ingArray)) . "' method='POST'>";       
+            $html .= "<form action='recipe-suggestions.php?ingredients=" . base64_encode(serialize($ingArray)) . "&username=" . $_SESSION['username'] . "' method='POST'>";       
             $html .= "<input class='btn btn-secondary' type='submit' value='Buscar'>";
             $html .= "</form>";
             $html .= "</div>";        

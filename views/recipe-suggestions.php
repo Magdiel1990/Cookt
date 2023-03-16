@@ -18,9 +18,10 @@ require_once ("../modules/nav.php");
     </div>
     <div class="mt-4">
     <?php
-    if(isset($_GET['ingredients'])){
+    if(isset($_GET['ingredients']) && isset($_GET['username'])){
 
         $ingArray = (unserialize(base64_decode($_GET['ingredients'])));
+        $userName = $_GET['username'];
 
         $where = "WHERE ";
 
@@ -32,7 +33,7 @@ require_once ("../modules/nav.php");
         //The final where delection.
         $where = substr_replace($where, "", -4);
 
-        $where .= " AND username = '" . $_SESSION['username'] . "'";
+        $where .= " AND username = '$userName'";
     
         $sql = "SELECT DISTINCT r.recipename FROM recipeinfo ri JOIN  recipe r ON r.recipeid = ri.recipeid " . $where  . " ORDER BY RAND();";
         $result = $conn -> query($sql);
@@ -42,7 +43,7 @@ require_once ("../modules/nav.php");
         if($result -> num_rows > 0){
             $html .= "<ol>";
             while($row = $result -> fetch_assoc()) {            
-                $html .= "<li><a href='../views/recipes.php?recipe=" . $row['recipename'] . "'>" . $row['recipename'] . "</a></li>";
+                $html .= "<li><a href='../views/recipes.php?recipe=" . $row['recipename'] . "&username=" . $userName . "&path=" . base64_encode(serialize($_SERVER['PHP_SELF'])) . "&ingredients=" . base64_encode(serialize($ingArray)) ."'>" . $row['recipename'] . "</a></li>";
             } 
             $html .= "</ol>";
             $html .= "<a class='btn btn-secondary' href='custom-recipe.php'>Regresar</a>";
