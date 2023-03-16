@@ -173,8 +173,7 @@ $sql = "SELECT r.recipeid,
 r.recipename,
 concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications, 
 r.cookingtime, 
-r.preparation, 
-r.observation, 
+r.preparation,
 c.category, 
 r.username
 from recipe r 
@@ -254,12 +253,6 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["obser
                             <?php echo $preparation;?>
                         </textarea>
                     </div>
-                    <div class="mb-3">
-                        <label  class="form-label" for="observation">Observación: </label>
-                        <textarea name="observation"  cols="2" rows="2" class="form-control" id="observation">
-                            <?php echo $observation;?> 
-                        </textarea>
-                    </div>                 
                                       
                     <div class="mb-3">
                         <input class='btn btn-primary' type="submit" name="edit" value="Actualizar"> 

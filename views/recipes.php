@@ -32,9 +32,9 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
 $sql = "SELECT r.recipeid, 
 r.recipename,
 concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications, 
-r.cookingtime, 
+r.cookingtime,
+r.date, 
 r.preparation, 
-r.observation, 
 c.category, 
 r.username
 from recipe r 
@@ -54,11 +54,13 @@ $row = $result->fetch_assoc();
 <main class="container p-2 my-4"  style="background: url('<?php echo $categoryImgDir ?>') center; background-size: auto;">
 
 <?php
-if(isset($row["category"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"])) {
+if(isset($row["category"]) && isset($row["observation"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["date"])) {
 $category = $row["category"];
 $recipeName = $row["recipename"];
 $cookingTime = $row["cookingtime"];
 $preparation = $row["preparation"];
+$date = date ("d-M-Y", strtotime($row["date"]));
+$observation = trim($row["observation"]);
 
 $categoryDir = "../imgs/categories/";
 
@@ -104,7 +106,9 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
         </div>
         <div class="col-sm-8 col-md-8">
             <div class="collapse mt-3 bg-form" id="collapse">
-                <div class="card card-body text-danger"> <?php echo ucfirst($preparation); ?> </div>
+                <div class="card card-body text-danger"> <?php echo ucfirst($preparation); ?> 
+                    <span class="text-primary mt-4 text-center"> <?php echo $date; ?> </span>            
+                </div>
             </div>        
         </div>        
     </div>
