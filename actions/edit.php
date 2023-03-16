@@ -188,17 +188,11 @@ AND r.username = '$userName';";
 
 $row = $conn -> query($sql) -> fetch_assoc();
 
-if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["observation"]) && isset($row["category"])) {
+if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["category"])) {
     $cookingTime = $row["cookingtime"];
     $preparation=  sanitization($row["preparation"], FILTER_SANITIZE_STRING, $conn);
-    $observation = sanitization($row["observation"], FILTER_SANITIZE_STRING, $conn);
     $category = $row["category"];
-} else {
-    $cookingTime = "";
-    $preparation=  "";
-    $observation = "";
-    $category = "";
-}
+} 
 ?>
 <main class="container p-4">
 <?php
@@ -230,7 +224,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["obser
                             <label class="input-group-text" for="category">Categoría: </label>                
                             <select class="form-select" name="category" id="category">
                                 <?php
-                                $sql = "SELECT category FROM categories WHERE NOT category='" . $category . "';";
+                                $sql = "SELECT category FROM categories WHERE NOT category='$category';";
 
                                 $result = $conn -> query($sql);
                                 echo '<option value="' . $category . '">' .  ucfirst($category) . '</option>';

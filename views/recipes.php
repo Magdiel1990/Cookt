@@ -54,13 +54,12 @@ $row = $result->fetch_assoc();
 <main class="container p-2 my-4"  style="background: url('<?php echo $categoryImgDir ?>') center; background-size: auto;">
 
 <?php
-if(isset($row["category"]) && isset($row["observation"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["date"])) {
+if(isset($row["category"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["date"])) {
 $category = $row["category"];
 $recipeName = $row["recipename"];
 $cookingTime = $row["cookingtime"];
 $preparation = $row["preparation"];
 $date = date ("d-M-Y", strtotime($row["date"]));
-$observation = trim($row["observation"]);
 
 $categoryDir = "../imgs/categories/";
 
