@@ -1,11 +1,15 @@
 # Cookt
-En edit.php si no recibe variable get rennviar al index
-recipe_viewer no se debe entrar sin variables get
-recipe_suggestions.php no se debe entrar sin variables get
-comentar
-Paginacion
-revisar las vistas de la db
-validar todo con js and html
-Boton de reinicio
-arreglar las vistas, en lugar de username usar userid
-realizar intersection en custom recipe
+What is in this package/library and what’s it used for.
+Who to contact.
+Status: whether this package/library is deprecated, or not for general release, etc.
+More info: where to go for more detailed documentation, such as:
+An overview.md file for more detailed conceptual information.
+Any API documentation for using this package/library.
+
+
+This is the top-level directory for all externally-visible APIs, plus some
+private APIs under `internal/` directories.
+See [API Style Guide](docs/apistyle.md) for more information.
+
+*TL;DR*: API definitions and configurations should be defined in `.proto` files,
+checked into `apis/`.
