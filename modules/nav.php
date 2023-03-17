@@ -1,6 +1,6 @@
 <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
 <header>
-    <div class="banner text-center pt-2">
+    <div class="banner text-center py-1">
         <a href="#">R3CP</a>        
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary px-2">
@@ -31,7 +31,7 @@
                 </div>
             </li>
             <li class="nav-item px-1">
-                <a class="nav-link" style = "font-size:1.2rem;" href="#" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>
+                <a class="nav-link" href="#" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>
             </li>
             </ul>
         </div>
