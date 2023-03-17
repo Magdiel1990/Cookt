@@ -15,6 +15,9 @@ h3 {
 .nav-item {
     font-size: 1rem;
 }
+.dropdown-menu a {
+    font-size: 1rem;
+}
 .btn-outline-danger {
     margin-left: 0.2rem;
 }
