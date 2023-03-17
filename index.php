@@ -34,6 +34,7 @@ require_once ("modules/nav.php");
             <thead>
                 <tr class="bg-primary">
                     <th>Receta</th>
+                    <th>Duración</th>
                     <th>Categoría</th>
                     <th>Acciones</th>
                 </tr>

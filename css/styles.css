@@ -13,7 +13,10 @@ h3 {
     font-weight: bold;
 }
 .nav-item {
-    font-size: 1.2rem;
+    font-size: 1rem;
+}
+.dropdown-menu a {
+    font-size: 1rem;
 }
 .btn-outline-danger {
     margin-left: 0.2rem;
@@ -81,11 +84,12 @@ label, select, input, option {
 .banner {
     background: rgb(75,221,21);
     background: linear-gradient(39deg, rgba(75,221,21,0.8) 0%, rgba(0,241,255,0.8) 100%);
-    height: 9vh;    
+    height: 10vh;    
     font-size: 1.8rem;
     font-weight: bold;
     font-style: italic;   
 }
+
 .banner a {
      text-decoration: none;
      color: rgb(94, 91, 254);

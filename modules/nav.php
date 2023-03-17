@@ -1,7 +1,7 @@
 <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
 <header>
-    <div class="banner text-center pt-2">
-        <a href="/Cookt/index.php" title="Inicio">R3CP</a>        
+    <div class="banner text-center py-1">
+        <a href="/Cookt/index.php">Recipes23</a>        
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary px-2">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
                 </div>
             </li>
             <li class="nav-item px-1">
-                <a class="nav-link" style = "font-size:1.2rem;" href="#" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>
+                <a class="nav-link" href="#" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>
             </li>
             </ul>
         </div>

@@ -32,9 +32,9 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
 $sql = "SELECT r.recipeid, 
 r.recipename,
 concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications, 
-r.cookingtime, 
+r.cookingtime,
+r.date, 
 r.preparation, 
-r.observation, 
 c.category, 
 r.username
 from recipe r 
@@ -51,14 +51,15 @@ $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
 $row = $result->fetch_assoc();
 ?>
-<main class="container p-2 my-4"  style="background: url('<?php echo $categoryImgDir ?>') center; background-size: auto;">
+<main class="container p-2 my-4">
 
 <?php
-if(isset($row["category"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"])) {
+if(isset($row["category"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["date"])) {
 $category = $row["category"];
 $recipeName = $row["recipename"];
 $cookingTime = $row["cookingtime"];
 $preparation = $row["preparation"];
+$date = date ("d-M-Y", strtotime($row["date"]));
 
 $categoryDir = "../imgs/categories/";
 
@@ -66,47 +67,51 @@ $categoryDir = "../imgs/categories/";
 $categoryImgDir = directoryFiles($categoryDir , $category);
 
 ?>
-    <div class="jumbotron row justify-content-center">
-        <div class="bg-form p-3 mt-3 col-sm-auto col-md-9 col-lg-8">
-            <div class="text-center">
-                <h1 class="display-4 text-info"> <?php echo $recipeName; ?> </h1>
-                <h5 class="text-warning"> (<?php echo $cookingTime; ?> minutos)</h5>
+    <div style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">
+        <div class="jumbotron row justify-content-center">
+            <div class="bg-form p-3 mt-3 col-sm-auto col-md-9 col-lg-8">
+                <div class="text-center">
+                    <h1 class="display-4 text-info"> <?php echo $recipeName; ?> </h1>
+                    <h5 class="text-warning"> (<?php echo $cookingTime; ?> minutos)</h5>
+                </div>
+                <div class="d-flex flex-row justify-content-between">
+                    <ul class="lead"> 
+                    <?php            
+                    $result = $conn -> query($sql);
+                    
+                    while($row = $result->fetch_assoc()){
+                        echo "<li class='text-success'>" . $row["indications"]. ".</li>";
+                    }        
+                    ?>   
+                    </ul>
+                    <?php
+                        if(file_exists($recipeImageDir)) {
+                    ?>
+                    <div>
+                        <img src="<?php echo $recipeImageDir?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
+                    </div>                 
+                    <?php
+                        }
+                    ?>
+                </div>
+                <hr class="my-4">
             </div>
-            <div class="d-flex flex-row justify-content-between">
-                <ul class="lead"> 
-                <?php            
-                $result = $conn -> query($sql);
-                
-                while($row = $result->fetch_assoc()){
-                    echo "<li class='text-success'>" . $row["indications"]. ".</li>";
-                }        
-                ?>   
-                </ul>
-                <?php
-                    if(file_exists($recipeImageDir)) {
-                ?>
-                <div>
-                    <img src="<?php echo $recipeImageDir?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
-                </div>                 
-                <?php
-                    }
-                ?>
+            <div class="lead text-center">
+                <div class="mt-3">
+                    <a class="btn btn-primary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Preparación
+                    </a>
+                    <a class="btn btn-secondary" href="<?php echo $pathToReturn;?>">Regresar</a>
+                </div>
             </div>
-            <hr class="my-4">
-        </div>
-        <div class="lead text-center">
-            <div class="mt-3">
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Preparación
-                </a>
-                <a class="btn btn-secondary" href="<?php echo $pathToReturn;?>">Regresar</a>
-            </div>
-        </div>
-        <div class="col-sm-8 col-md-8">
-            <div class="collapse mt-3 bg-form" id="collapse">
-                <div class="card card-body text-danger"> <?php echo ucfirst($preparation); ?> </div>
+            <div class="col-sm-8 col-md-8">
+                <div class="collapse mt-3 bg-form" id="collapse">
+                    <div class="card card-body text-danger"> <?php echo ucfirst($preparation); ?> 
+                        <span class="text-primary mt-4 text-center"> <?php echo $date; ?> </span>            
+                    </div>
+                </div>        
             </div>        
-        </div>        
+        </div>
     </div>
 <?php
 } else {

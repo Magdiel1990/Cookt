@@ -172,15 +172,9 @@ require_once ("../modules/nav.php");
                     <input class="form-control" type="number" id="cookingtime" name="cookingtime" max="180" min="5"  placeholder="en minutos">             
                 </div>            
             
-                <div class="row">
-                    <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
-                        <label for="preparation" class="form-label is-required">Preparación: </label>
-                        <textarea class="form-control" name="preparation" id="preparation" cols="30" rows="10" required></textarea>
-                    </div>           
-                    <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
-                        <label for="observation" class="form-label">Observaciones: </label>
-                        <textarea class="form-control" name="observation" id="observation" cols="2" rows="2"></textarea>
-                    </div>
+                <div class="row mb-3">
+                    <label for="preparation" class="form-label is-required">Preparación: </label>
+                    <textarea class="form-control" name="preparation" id="preparation" cols="5" rows="4" required></textarea>
                 </div>
             
                 <div>

@@ -76,7 +76,7 @@ require_once ("../modules/nav.php");
             </div>
         </form>
     </div>
-    <div class="row mt-5">
+    <div class="row mt-4 justify-content-center">
         <div class="col-auto">
         <?php
         $sql = "SELECT i.ingredient, ih.ingredientid FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "';";
@@ -87,19 +87,23 @@ require_once ("../modules/nav.php");
             echo "<p class='text-center'>Agregue los ingredientes para conseguir recetas...</p>";
 
         } else {
-            $html = "<ol>";
+            $html = "<div class='form d-flex flex-column'>";
+            $html .= "<ul>";
             while($row = $result -> fetch_assoc()) {
-                $html .= "<li>" . ucfirst($row["ingredient"]);
-                $html .= "<a class='btn btn-danger' href='../actions/delete.php?custom=" . $row['ingredient'] . "' " . "title='Eliminar'>Eliminar</a>";
+                $html .= "<li>";
+                $html .= "<a href='../actions/delete.php?custom=" . $row['ingredient'] . "' " . "title='Eliminar'>";
+                $html .= ucfirst($row["ingredient"]);
+                $html .= "</a>";
                 $html .= "</li>";
                 $ingArray[] = $row["ingredientid"];
             }
-            $html .= "</ol>";
-            $html .= "<div>";
+            $html .= "</ul>";
+            $html .= "<div class='text-center'>";
             $html .= "<form action='recipe-suggestions.php?ingredients=" . base64_encode(serialize($ingArray)) . "&username=" . $_SESSION['username'] . "' method='POST'>";       
             $html .= "<input class='btn btn-secondary' type='submit' value='Buscar'>";
-            $html .= "</form>";
-            $html .= "</div>";        
+            $html .= "</form>";            
+            $html .= "</div>";  
+            $html .= "</div>";      
             echo $html;
         }
         ?>
