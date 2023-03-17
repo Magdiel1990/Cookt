@@ -1,7 +1,7 @@
 <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
 <header>
     <div class="banner text-center pt-2">
-        <a href="#">R3CP</a>        
+        <a href="/Cookt/index.php" title="Inicio">R3CP</a>        
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary px-2">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
