@@ -1,9 +1,9 @@
 <?php
-//Models
-require_once ("models/models.php");
-
 //Head of the page.
 require_once ("modules/head.php");
+
+//Models
+require_once ("models/models.php");
 
 //Navigation panel of the page
 require_once ("modules/nav.php");

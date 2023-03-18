@@ -1,6 +1,14 @@
 <?php
+//Reviso el estado de la sesión.
+session_name("Login");
 //Iniciating session. 
 session_start();
+
+//Si ningún usuario se ha logueado se redirige hacia el login.
+if (!isset($_SESSION['userid'])) {
+    header("Location: /Cookt/login.php");
+    exit;
+} 
 
 //Including the database connection.
 require_once ("../config/db_Connection.php");

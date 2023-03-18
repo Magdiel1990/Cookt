@@ -1,10 +1,31 @@
 <?php
-//Iniciating session. 
+//Reviso el estado de la sesión.
+session_name("Login");
+//Inicio una nueva sesión.
 session_start();
 
-$_SESSION['username'] = "Admin";
-$_SESSION['type'] = "Admin";
-$_SESSION['state'] = 1;
+//Si ningún usuario se ha logueado se redirige hacia el login.
+if (!isset($_SESSION['userid'])) {
+    header("Location: /Cookt/login.php");
+    exit;
+} else {
+    //Sino, calculamos el tiempo transcurrido desde la última actualización.
+    $lastAccess = $_SESSION["last_access"];
+    $current = date("Y-n-j H:i:s");
+    //Se resta el tiempo de la página del login y el tiempo de esta página. 
+    $time = (strtotime($current) - strtotime($lastAccess));
+
+    //Comparamos el tiempo transcurrido.
+    if ($time >= 100) {
+        //Si pasa del tiempo establecido se destruye la sesión.
+        session_destroy();
+        //Envío al usuario a la página de login.
+        header("Location: /Cookt/login.php");
+        //Sino, actualizo la fecha de la sesión.
+    } else {
+        $_SESSION["last_access"] = $current;
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -12,6 +33,7 @@ $_SESSION['state'] = 1;
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="Magdiel Castillo Mills">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="Keywords" content="receta, recipe, cocina, kitchen, sugerencias, recommendations">
     <meta name="ltm:project" content="recetaspersonalizadas">
@@ -27,3 +49,4 @@ $_SESSION['state'] = 1;
     <script src="/Cookt/js/scripts.js"></script>    
 </head>
 <body>
+    
