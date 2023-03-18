@@ -4,9 +4,9 @@ session_name("Login");
 
 session_start();
 
-unset($_SESSION['userid']);
+session_unset();
 
-unset($_SESSION['lastpage']);
+session_destroy();
 
 header('Location: /Cookt/login.php');
 

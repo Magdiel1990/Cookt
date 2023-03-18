@@ -31,7 +31,7 @@
                 </div>
             </li>
             <li class="nav-item px-1">
-                <a class="nav-link" href="/Cookt/logout.php" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>
+                <a class="nav-link" href="/Cookt/user-handler/logout.php" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>
             </li>
             </ul>
         </div>

@@ -33,7 +33,7 @@ CREATE TABLE `users` (
   `userid` int NOT NULL AUTO_INCREMENT,
   `username` varchar(30) NOT NULL UNIQUE,
   `fullname` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `type` varchar(15) NOT NULL,
   `email`  varchar(70),
   `state` boolean not null,
