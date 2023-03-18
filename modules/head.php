@@ -16,7 +16,7 @@ if (!isset($_SESSION['userid'])) {
     $timeDiff = (strtotime($currentTime) - strtotime($lastTime));
 
     //Comparamos el tiempo transcurrido.
-    if ($timeDiff >= 5) {
+    if ($timeDiff >= 300) {
         //Si pasa del tiempo establecido se destruye la sesión.
         session_destroy();
 

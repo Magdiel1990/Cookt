@@ -22,6 +22,11 @@ if (!empty($_POST)) {
 
         $row = $result -> fetch_assoc();
 
+        //When a new user logs in, the index page is always the first page to load.
+        if($_SESSION['username'] != $row['username']) {
+            unset($_SESSION['lastpage']);
+        }
+
         if ($password = $row['password'] && $row['state'] = 1) {
             //Creo la cookie.        
             session_set_cookie_params(0, "/", $_SERVER["HTTP_HOST"], 0);
@@ -35,8 +40,8 @@ if (!empty($_POST)) {
             $_SESSION['type'] = $row['type'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['state'] = $row['state'];
-            //Si los datos coinciden con los de la bd se redirecciona al index.
             
+
             if(!isset($_SESSION['lastpage'])){
                 $_SESSION['lastpage'] = "/Cookt/index.php";
             }
