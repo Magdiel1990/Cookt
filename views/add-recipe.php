@@ -81,6 +81,10 @@ require_once ("../modules/nav.php");
                             ?>
                         </select> 
                     </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="detail">Detalle:</label>
+                        <input class="form-control" type="text" name="detail" id="detail" maxlength="100">
+                    </div>
                     <div>         
                         <input class="btn btn-primary" type="submit" value="Agregar">
                     </div>                     
@@ -99,7 +103,7 @@ require_once ("../modules/nav.php");
             <div class="p-2">
                 <h3 class="text-center">Ingredientes</h3>
                 <?php
-                $sql = "SELECT re_id, concat_ws(' ', rh.quantity, rh.unit, 'de' , i.ingredient) as fullingredient FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" . $_SESSION['username'] . "';";
+                $sql = "SELECT re_id, concat_ws(' ', rh.quantity, rh.unit, 'de' , i.ingredient, rh.detail) as fullingredient FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" . $_SESSION['username'] . "';";
 
                 $result = $conn -> query($sql);
 

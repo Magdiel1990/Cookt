@@ -14,3 +14,4 @@ router
 poner quien agrego la receta
 contar las veces que un  usuario entra a la pagina
 almacenar la ultima vez que entro
+hashing

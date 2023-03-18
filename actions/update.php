@@ -61,17 +61,17 @@ $ingredient = $_POST["ingredient"];
 /************************************************************************************************/
 
 
-if(isset($_GET["editname"]) || isset($_GET["username"]) || isset($_FILES["recipeImage"]) || isset($_POST["newRecipeName"]) || isset($_POST["category"])
-|| isset($_POST["cookingTime"]) || isset($_POST["preparation"]) || isset($_POST["observation"])){
+if(isset($_GET["editname"]) && isset($_GET["username"]) && isset($_FILES["recipeImage"]) && isset($_POST["newRecipeName"]) && isset($_POST["category"])
+&& isset($_POST["cookingTime"]) && isset($_POST["preparation"])){
 
 $oldName = $_GET["editname"];
 $newRecipeName = sanitization($_POST["newRecipeName"], FILTER_SANITIZE_STRING, $conn);
 $category = $_POST["category"];
 $cookingTime = sanitization($_POST["cookingTime"], FILTER_SANITIZE_NUMBER_INT, $conn);
 $preparation = sanitization($_POST["preparation"], FILTER_SANITIZE_STRING, $conn);
-$observation = sanitization($_POST["observation"], FILTER_SANITIZE_STRING, $conn);
 $recipeImage = $_FILES["recipeImage"];
 $userName = $_GET["username"];
+
 
 $sql = "SELECT categoryid FROM categories WHERE category = '$category';";
 $row = $conn -> query($sql) -> fetch_assoc();
@@ -89,7 +89,7 @@ $categoryId = $row['categoryid'];
         if($cookingTime >= 5 && $cookingTime <= 180){
 
             if($recipeImage['name'] == null) {            
-                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', observation = '$observation', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
+                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
                 if ($conn->query($sql)) {
                     //Message if the variable is null.
                     $_SESSION['message'] = '¡Receta editada con éxito!';

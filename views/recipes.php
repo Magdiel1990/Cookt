@@ -31,7 +31,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
 
 $sql = "SELECT r.recipeid, 
 r.recipename,
-concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications, 
+concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient, ri.detail) as indications, 
 r.cookingtime,
 r.date, 
 r.preparation, 

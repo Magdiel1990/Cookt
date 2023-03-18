@@ -88,7 +88,7 @@ CREATE TABLE `units` (
   UNIQUE KEY `unit` (`unit`)
 );
 
-INSERT INTO `units` VALUES (8,'cucharadas'),(1,'cucharaditas'),(2,'gramos'),(11,'kilogramos'),(7,'libras'),(6,'litros'),(4,'mililitros'),(10,'onzas'),(9,'pizca'),(5,'tazas'),(3,'unidades');
+INSERT INTO `units` VALUES (8,'cucharadas'),(1,'cucharaditas'),(2,'gramos'),(11,'kilogramos'),(7,'libras'),(6,'litros'),(4,'mililitros'),(10,'onzas'),(9,'pizca'),(5,'tazas'),(3,'unidades'),(12,'al gusto'),(13,'tallo');
 
 CREATE TABLE `recipeinfo` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -96,6 +96,7 @@ CREATE TABLE `recipeinfo` (
   `quantity` double(5,2) NOT NULL,
   `unit` varchar(20) NOT NULL,
   `ingredientid` INT NOT NULL,
+  `detail` varchar(100);
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_ingredients_recipeinfo` FOREIGN KEY (`ingredientid`) REFERENCES `ingredients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -108,6 +109,7 @@ CREATE TABLE `reholder` (
   `quantity` double(5,2) NOT NULL,
   `unit` varchar(20) NOT NULL,
   `username` varchar(30) NOT NULL,
+  `detail` varchar(100),
   PRIMARY KEY (`re_id`),
   CONSTRAINT `fk_ingredients_reholder` FOREIGN KEY (`ingredientid`) REFERENCES `ingredients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_units_reholder` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`) ON DELETE CASCADE ON UPDATE CASCADE,

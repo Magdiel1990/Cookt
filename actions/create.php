@@ -278,11 +278,12 @@ if(isset($_POST['add_ingredient'])){
 
 
 //receive the data
-if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredient'])){
+if(isset($_POST['quantity']) && isset($_POST['unit']) && isset($_POST['ingredient'])|| isset($_POST['detail'])){
 
   $ingredient = $_POST['ingredient'];
   $quantity = $_POST['quantity'];
   $unit = $_POST['unit'];
+  $detail =  sanitization($_POST['detail'], FILTER_SANITIZE_STRING, $conn);
 
   if ($quantity == "" || $quantity <= 0) {
   //Message if the variable is null.
@@ -302,8 +303,8 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
 
     if($num_rows == 0) {
 
-    $stmt = $conn -> prepare("INSERT INTO reholder (ingredientid, quantity, unit, username) VALUES (?, ?, ?, ?);");
-    $stmt->bind_param("idss", $ingredientId, $quantity, $unit, $_SESSION['username']);
+    $stmt = $conn -> prepare("INSERT INTO reholder (ingredientid, quantity, unit, username, detail) VALUES (?, ?, ?, ?, ?);");
+    $stmt->bind_param("idsss", $ingredientId, $quantity, $unit, $_SESSION['username'], $detail);
 
       if ($stmt->execute()) {
     //Success message.
@@ -339,20 +340,20 @@ if(isset($_POST['quantity']) || isset($_POST['unit']) || isset($_POST['ingredien
 
 
 //receive the data
-if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || isset($_GET['rname']) || isset($_GET['username'])){
+if(isset($_POST['qty']) && isset($_POST['units']) && isset($_POST['ing']) && isset($_GET['rname']) && isset($_GET['username']) || isset($_POST['detail'])){
 
   $ingredient = $_POST['ing'];
   $quantity = $_POST['qty'];
   $unit = $_POST['units'];
   $recipeName = $_GET['rname'];
   $userName = $_GET['username'];
+  $detail = sanitization($_POST['detail'], FILTER_SANITIZE_STRING, $conn);
 
   if ($quantity == "" || $quantity <= 0) {
   //Message if the variable is null.
       $_SESSION['message'] = '¡Elija la cantidad por favor!';
       $_SESSION['message_alert'] = "danger";
           
-  //The page is redirected to the add-recipe.php
       header('Location: edit.php?recipename='. $recipeName . '&username=' . $userName);
   } else {
     
@@ -364,8 +365,8 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
     $row = $conn -> query($sql) -> fetch_assoc();
     $ingredientId = $row['id'];
 
-    $stmt = $conn -> prepare("INSERT INTO recipeinfo (recipeid, ingredientid, quantity, unit) VALUES (?, ?, ?, ?);");
-    $stmt->bind_param("iids", $recipeId, $ingredientId, $quantity, $unit);
+    $stmt = $conn -> prepare("INSERT INTO recipeinfo (recipeid, ingredientid, quantity, unit, detail) VALUES (?, ?, ?, ?, ?);");
+    $stmt->bind_param("iidss", $recipeId, $ingredientId, $quantity, $unit, $detail);
 
     if ($stmt->execute()) {
   //Success message.
@@ -395,11 +396,10 @@ if(isset($_POST['qty']) || isset($_POST['units']) || isset($_POST['ing']) || iss
 
 
 //receive the data
-if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES["recipeImage"]) || isset($_POST['observation']) || isset($_POST['category']) || isset($_POST['cookingtime'])){
+if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES["recipeImage"]) || isset($_POST['category']) || isset($_POST['cookingtime'] )){
 
   $recipename = sanitization($_POST['recipename'], FILTER_SANITIZE_STRING, $conn);
   $preparation = sanitization($_POST['preparation'], FILTER_SANITIZE_STRING, $conn);
-  $observation = sanitization($_POST['observation'], FILTER_SANITIZE_STRING, $conn);
   $category = $_POST['category'];
   $cookingtime = sanitization($_POST['cookingtime'], FILTER_SANITIZE_NUMBER_INT, $conn);
   $recipeImage = $_FILES["recipeImage"];
@@ -451,8 +451,8 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES[
       
       $categoryid = $row["categoryid"];
 
-      $stmt = $conn -> prepare("INSERT INTO recipe (recipename, categoryid, preparation, observation, cookingtime, username) VALUES (?, ?, ?, ?, ?, ?);");
-      $stmt->bind_param ("sissis", $recipename, $categoryid, $preparation, $observation, $cookingtime, $_SESSION['username']);
+      $stmt = $conn -> prepare("INSERT INTO recipe (recipename, categoryid, preparation, cookingtime, username) VALUES (?, ?, ?, ?, ?);");
+      $stmt->bind_param ("sisis", $recipename, $categoryid, $preparation, $cookingtime, $_SESSION['username']);
 
       $stmt -> execute();
       $stmt -> close();
@@ -461,13 +461,13 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES[
       $row = $conn -> query($sql) -> fetch_assoc();
       $recipeId = $row['recipeid'];
 
-      $sql = "SELECT rh.unit, rh.quantity, i.id FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" .  $_SESSION['username'] . "';";   
+      $sql = "SELECT rh.unit, rh.quantity, i.id, rh.detail FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" .  $_SESSION['username'] . "';";   
       
       $result = $conn -> query($sql);    
 
       while($row = $result -> fetch_assoc()){
-        $stmt = $conn -> prepare("INSERT INTO recipeinfo (recipeid, quantity, unit, ingredientid) VALUES (?, ?, ?, ?);");
-        $stmt->bind_param ("ssss", $recipeId, $row["quantity"], $row["unit"], $row["id"]);
+        $stmt = $conn -> prepare("INSERT INTO recipeinfo (recipeid, quantity, unit, ingredientid, detail) VALUES (?, ?, ?, ?, ?);");
+        $stmt->bind_param ("sssss", $recipeId, $row["quantity"], $row["unit"], $row["id"], $row['detail']);
 
         $stmt -> execute();
       }

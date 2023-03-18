@@ -76,7 +76,7 @@ require_once ("../modules/nav.php");
 
         </form>
     </div>
-    <div class="row">
+    <div class="row mt-3">
         <table class="table table-sm col-auto">
             <thead>
                 <tr class="bg-primary">

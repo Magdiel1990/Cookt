@@ -171,18 +171,13 @@ $userName = $_GET['username'];
 
 $sql = "SELECT r.recipeid, 
 r.recipename,
-concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications, 
 r.cookingtime, 
 r.preparation,
 c.category, 
 r.username
 from recipe r 
-join recipeinfo ri 
-on ri.recipeid = r.recipeid
 join categories c 
 on r.categoryid = c.categoryid
-join ingredients i 
-on i.id = ri.ingredientid
 WHERE r.recipename = '$recipeName' 
 AND r.username = '$userName';";
 
@@ -190,9 +185,9 @@ $row = $conn -> query($sql) -> fetch_assoc();
 
 if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["category"])) {
     $cookingTime = $row["cookingtime"];
-    $preparation=  sanitization($row["preparation"], FILTER_SANITIZE_STRING, $conn);
+    $preparation = sanitization($row["preparation"], FILTER_SANITIZE_STRING, $conn);
     $category = $row["category"];
-} 
+}
 ?>
 <main class="container p-4">
 <?php
@@ -256,12 +251,12 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
             </div>
         </div>
          
-        <div class="mt-3 col-auto">
+        <div class="mt-3 col-md-8 col-sm-10 col-lg-5 col-xl-4">
             <div class="card card-body bg-form">
                 <h3 class="text-center">Editar Ingredientes</h3>
                 <div class="mt-3">
                 <?php
-                $sql = "SELECT concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications 
+                $sql = "SELECT concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient, ri.detail) as indications 
                         from recipe r 
                         join recipeinfo ri 
                         on ri.recipeid = r.recipeid
@@ -282,7 +277,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
                 echo $html;
                 ?>
                 </div>
-                <div class="my-4 text-center m-auto">
+                <div class="my-4 text-center">
                     <form method="POST" action="create.php?rname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" onsubmit="return validationNumber('quantity')">
                         <div class="input-group mb-3">
                             <label class="input-group-text is-required" for="quantity">Cantidad: </label>                    
@@ -327,7 +322,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
 
                             if($num_rows > 0) {                            
                         ?>
-                        <div class="input-group">
+                        <div class="input-group mb-3">
                             <label class="input-group-text" for="ingredient">Ingrediente: </label>                
                             <select class="form-select" name="ing" id="ingredient">
 
@@ -338,7 +333,11 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
                                 ?>
                             </select>
                         </div>
-                        <div class="mt-3">
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="detail">Detalle:</label>
+                            <input class="form-control" type="text" name="detail" id="detail" maxlength="100">
+                        </div>
+                        <div>
                             <input class="btn btn-primary" type="submit" title="Agregar ingredientes" value="Agregar">
                         </div>
                         <?php
@@ -350,8 +349,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
                         <?php
                         }
                         ?>
-                        </div>            
-                        
+                        </div>                       
                     </form>
                 </div>
             </div>
