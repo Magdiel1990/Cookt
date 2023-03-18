@@ -16,8 +16,7 @@ CREATE TABLE `categories` (
   PRIMARY KEY (`categoryid`)
 ); 
 
-INSERT INTO `categories` 
-VALUES (1,'postres'),(2,'jugo'),(3,'sopas');
+INSERT INTO `categories` VALUES (1,'jugos'),(2,'batidos'),(3,'postres'),(4,'salsas'),(5,'sopas'),(6,'pastas'),(7,'ensaladas'),(8,'tés'),(9,'almuerzos'),(10,'desayunos y cenas'),(11,'bebidas calientes'),(12,'snacks');
 
 CREATE TABLE `type` (
 typeid int NOT NULL AUTO_INCREMENT,
@@ -58,13 +57,6 @@ CREATE TABLE `ingredients` (
   CONSTRAINT `fk_ingredients_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 );
 
-INSERT INTO `ingredients` 
-VALUES (1,'azúcar', 'Admin'),
-(2,'harina','Admin'),
-(3,'huevos','Admin'),
-(4,'mantequilla','Admin'),
-(5,'sal','Admin');
-
 CREATE TABLE `ingholder` (
   `ingid` INT NOT NULL AUTO_INCREMENT,
   `username` varchar(30) NOT NULL,
@@ -74,7 +66,6 @@ CREATE TABLE `ingholder` (
   CONSTRAINT `fk_user_ingholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO `ingholder` VALUES (9, 'Admin', 2);
 
 CREATE TABLE `recipe` (
   `recipeid` int NOT NULL AUTO_INCREMENT,
@@ -89,11 +80,6 @@ CREATE TABLE `recipe` (
   CONSTRAINT `fk_recipe_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
-INSERT INTO `recipe` 
-VALUES (1,'Sopa de pato',2,'Esta receta es buena','Es buena','2023-02-15 21:18:39',30,'Admin'),
-(2,'Bizcocho de chocolate',1,'fgsgdfgdfgdfgdfgdfgfdgfdgghghgfhgfh','','2023-02-15 21:20:21',50,'Admin'), 
-(3,'Bizcocho de vainilla',1,'fgsgdfgh','','2023-02-15 21:20:21',50,'Admin'), 
-(4,'Flan de vainilla',2,'fdfhsdf dfdfdh','','2023-02-15 21:20:21',30,'Admin');
 
 CREATE TABLE `units` (
   `unitid` int NOT NULL AUTO_INCREMENT,
@@ -102,7 +88,7 @@ CREATE TABLE `units` (
   UNIQUE KEY `unit` (`unit`)
 );
 
-INSERT INTO `units` VALUES (1,'cucharaditas'),(2,'gramos'),(3,'unidades');
+INSERT INTO `units` VALUES (8,'cucharadas'),(1,'cucharaditas'),(2,'gramos'),(11,'kilogramos'),(7,'libras'),(6,'litros'),(4,'mililitros'),(10,'onzas'),(9,'pizca'),(5,'tazas'),(3,'unidades');
 
 CREATE TABLE `recipeinfo` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -115,13 +101,6 @@ CREATE TABLE `recipeinfo` (
   CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO `recipeinfo` 
-VALUES (1,1,6.00,'unidades',3),
-(2,1,4.00,'gramos',4),
-(3,1,7.00,'gramos',2),
-(4,2,7.00,'gramos',4),
-(5,2,4.00,'unidades',3),
-(6,2,6.00,'gramos',5);
 
 CREATE TABLE `reholder` (
   `re_id` int NOT NULL AUTO_INCREMENT,
@@ -134,5 +113,3 @@ CREATE TABLE `reholder` (
   CONSTRAINT `fk_units_reholder` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_user_reholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-INSERT INTO `reholder` VALUES (1,1,6.00,'cucharaditas','Admin');

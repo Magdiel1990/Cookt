@@ -160,8 +160,8 @@ if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
       }
 
       // Check file size
-      if ($categoryImage["size"] > 500000) {
-          $uploadOk = "¡El tamaño debe ser menor que 500 KB!";
+      if ($categoryImage["size"] > 300000) {
+          $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
       }
 
       // Allow certain file formats
@@ -518,8 +518,8 @@ if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES[
         }
 
         // Check file size
-        if ($recipeImage["size"] > 500000) {
-            $uploadOk = "¡El tamaño debe ser menor que 500 KB!";
+        if ($recipeImage["size"] > 300000) {
+            $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
         }
 
         // Allow certain file formats

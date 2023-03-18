@@ -20,6 +20,9 @@ if (!isset($_SESSION['userid'])) {
         //Si pasa del tiempo establecido se destruye la sesión.
         session_destroy();
 
+        //Reviso el estado de la sesión.
+        session_name("Login");
+
         session_start();
 
         $_SESSION['lastpage'] = $_SERVER['PHP_SELF'];

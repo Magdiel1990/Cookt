@@ -15,13 +15,13 @@ if (!empty($_POST)) {
     //Verifico los datos del usuario.
     $sql = "SELECT * FROM users WHERE username = '$userName';";
     $result = $conn -> query($sql);
-    $num_rows =  $result -> num_rows;
+    $num_rows =  $result -> num_rows;    
   
     //Si el usuario existe verifico la contraseña.
     if ($num_rows > 0) {
 
         $row = $result -> fetch_assoc();
-
+       
         //When a new user logs in, the index page is always the first page to load.
         if($_SESSION['username'] != $row['username']) {
             unset($_SESSION['lastpage']);

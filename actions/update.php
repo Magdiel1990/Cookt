@@ -129,8 +129,8 @@ $categoryId = $row['categoryid'];
                     } 
                 }
                 // Check file size
-                if ($recipeImage["size"] > 500000) {
-                    $uploadOk = "¡El tamaño debe ser menor que 500 KB!";
+                if ($recipeImage["size"] > 300000) {
+                    $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
                 }
 
                 // Allow certain file formats
@@ -261,8 +261,8 @@ $oldCategoryName = $row['category'];
         }
 
         // Check file size
-        if ($categoryImage["size"] > 500000) {
-            $uploadOk = "¡El tamaño debe ser menor que 500 KB!";
+        if ($categoryImage["size"] > 300000) {
+            $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
         }
 
         // Allow certain file formats
