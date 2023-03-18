@@ -99,6 +99,12 @@ label, select, input, option {
     box-shadow: 1px 1px 2px #888;   
 }
 
+.fa-user{
+    font-size: 1.3rem;
+}
+.username {
+    font-size: 1.1rem;
+}
 .jumbotron li{
     font-size: 1.6rem;
 }
