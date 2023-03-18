@@ -5,25 +5,31 @@ session_name("Login");
 session_start();
 
 //Si ningún usuario se ha logueado se redirige hacia el login.
-if (!isset($_SESSION['userid'])) {
+if (!isset($_SESSION['userid'])) {    
     header("Location: /Cookt/login.php");
     exit;
 } else {
     //Sino, calculamos el tiempo transcurrido desde la última actualización.
-    $lastAccess = $_SESSION["last_access"];
-    $current = date("Y-n-j H:i:s");
+    $lastTime = $_SESSION["last_access"];
+    $currentTime = date("Y-n-j H:i:s");
     //Se resta el tiempo de la página del login y el tiempo de esta página. 
-    $time = (strtotime($current) - strtotime($lastAccess));
+    $timeDiff = (strtotime($currentTime) - strtotime($lastTime));
 
     //Comparamos el tiempo transcurrido.
-    if ($time >= 100) {
+    if ($timeDiff >= 5) {
         //Si pasa del tiempo establecido se destruye la sesión.
         session_destroy();
+
+        session_start();
+
+        $_SESSION['lastpage'] = $_SERVER['PHP_SELF'];
+
         //Envío al usuario a la página de login.
-        header("Location: /Cookt/login.php");
+        header("Location: /Cookt/login.php");        
+
         //Sino, actualizo la fecha de la sesión.
     } else {
-        $_SESSION["last_access"] = $current;
+        $_SESSION["last_access"] = $currentTime;
     }
 }
 

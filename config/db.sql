@@ -22,6 +22,7 @@ VALUES (1,'postres'),(2,'jugo'),(3,'sopas');
 CREATE TABLE `type` (
 typeid int NOT NULL AUTO_INCREMENT,
 `type` varchar(15) NOT NULL unique,
+-- Determine what goes here. --
 description text,
 primary key (typeid)
 );
@@ -80,7 +81,6 @@ CREATE TABLE `recipe` (
   `recipename` varchar(50) NOT NULL,
   `categoryid` int NOT NULL,
   `preparation` text NOT NULL,
-  `observation` text,
   `date` timestamp DEFAULT CURRENT_TIMESTAMP,
   `cookingtime` int,
   `username` varchar(30) not null,

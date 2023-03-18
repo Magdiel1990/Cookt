@@ -6,6 +6,8 @@ session_start();
 
 unset($_SESSION['userid']);
 
+unset($_SESSION['lastpage']);
+
 header('Location: /Cookt/login.php');
 
 die();

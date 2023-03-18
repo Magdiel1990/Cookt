@@ -36,7 +36,12 @@ if (!empty($_POST)) {
             $_SESSION['email'] = $row['email'];
             $_SESSION['state'] = $row['state'];
             //Si los datos coinciden con los de la bd se redirecciona al index.
-            header("Location: /Cookt/index.php");
+            
+            if(!isset($_SESSION['lastpage'])){
+                $_SESSION['lastpage'] = "/Cookt/index.php";
+            }
+
+            header("Location: ". $_SESSION['lastpage']);
         }
     } else {
         $_SESSION['message'] = "¡Usuario o contraseña incorrectos!";
@@ -46,7 +51,6 @@ if (!empty($_POST)) {
 
 //Models.
 require_once ("models/models.php");
-
 ?>
 <!DOCTYPE html>
 <html lang="es" data-lt-installed="true">
