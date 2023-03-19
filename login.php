@@ -96,7 +96,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 <div class="col-md-9 col-lg-6 col-xl-5">
                     <img src="imgs/login/Picture.png" class="img-fluid" alt="Sample image">
                 </div>
-                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 mt-sm-4">
                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                         <!-- Email input -->
                         <div class="form-outline mb-3">
