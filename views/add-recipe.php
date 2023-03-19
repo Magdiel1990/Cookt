@@ -23,7 +23,7 @@ require_once ("../modules/nav.php");
             }
     ?>
     <div class="m-2 justify-content-center row">
-        <div class="col-auto">
+        <div class="col-auto col-xl-4">
             <div class="bg-form p-4 mb-4">       
                 <h3 class="text-center">Agregar Receta</h3>
             <!--Form for filtering the database info-->
@@ -98,7 +98,9 @@ require_once ("../modules/nav.php");
                     }
                     ?>
                 </form>
-            </div>        
+            </div> 
+        </div>
+        <div class="col-auto col-xl-4">       
             <!-- List with ingredients that will conform the recipe-->
             <div class="p-2">
                 <h3 class="text-center">Ingredientes</h3>
@@ -115,11 +117,8 @@ require_once ("../modules/nav.php");
                     $html .= "<ol>";            
                     while($row = $result -> fetch_assoc()){                    
                         $html .= "<li>";
-                        $html .= "<a href='../actions/edit.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"] . ".";
+                        $html .= "<a href='../actions/delete.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
                         $html .= "</a>";
-                        $html .= "<a class='btn btn-danger' href='../actions/delete.php?id=" . $row["re_id"] . "'>";
-                        $html .= "Eliminar"; 
-                        $html .=  "</a>";
                         $html .= "</li>";
                                     
                     }
@@ -135,7 +134,7 @@ require_once ("../modules/nav.php");
                 ?>            
             </div>            
         </div>
-        <div class="col-auto">
+        <div class="col-auto col-xl-4">
             <form class="text-center form" enctype="multipart/form-data" method="POST" action="../actions/create.php" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
             
                 <div class="input-group mb-3">

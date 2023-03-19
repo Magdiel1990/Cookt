@@ -304,7 +304,7 @@ $oldCategoryName = $row['category'];
 
 
 //receive the data
-if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['userpassword']) || isset($_POST['userrol']) || isset($_POST['useremail'])){
+if(isset($_POST['userfullname']) && isset($_POST['username']) && isset($_POST['userpassword']) && isset($_POST['userrol']) && isset($_POST['useremail'])){
   $userId = $_GET['userid'];  
   $fullName = $_POST['userfullname'];
   $userName=  $_POST['username'];

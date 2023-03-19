@@ -93,7 +93,7 @@ if(isset($_POST['add_units'])){
 
 
 //receive the data
-if(isset($_POST['add_categories']) || isset($_FILES["categoryImage"])){
+if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
   $category = sanitization($_POST['add_categories'], FILTER_SANITIZE_STRING, $conn);
   $categoryImage = $_FILES["categoryImage"];
 
@@ -245,7 +245,7 @@ if(isset($_POST['add_ingredient'])){
 
       //The page is redirected to the add_units.php.
           header('Location: ../views/add-ingredients.php');
-      }
+      } else {
 
       $stmt = $conn -> prepare("INSERT INTO ingredients (ingredient, username) VALUES (?, ?);");
       $stmt->bind_param("ss", $ingredient, $_SESSION['username']);
@@ -269,6 +269,7 @@ if(isset($_POST['add_ingredient'])){
           header('Location: ../views/add-ingredients.php');
         }
       }
+    }
 }
 
 
@@ -278,7 +279,7 @@ if(isset($_POST['add_ingredient'])){
 
 
 //receive the data
-if(isset($_POST['quantity']) && isset($_POST['unit']) && isset($_POST['ingredient'])|| isset($_POST['detail'])){
+if(isset($_POST['quantity']) && isset($_POST['unit']) && isset($_POST['ingredient']) && isset($_POST['detail'])){
 
   $ingredient = $_POST['ingredient'];
   $quantity = $_POST['quantity'];
@@ -340,7 +341,7 @@ if(isset($_POST['quantity']) && isset($_POST['unit']) && isset($_POST['ingredien
 
 
 //receive the data
-if(isset($_POST['qty']) && isset($_POST['units']) && isset($_POST['ing']) && isset($_GET['rname']) && isset($_GET['username']) || isset($_POST['detail'])){
+if(isset($_POST['qty']) && isset($_POST['units']) && isset($_POST['ing']) && isset($_GET['rname']) && isset($_GET['username']) && isset($_POST['detail'])){
 
   $ingredient = $_POST['ing'];
   $quantity = $_POST['qty'];
@@ -396,7 +397,7 @@ if(isset($_POST['qty']) && isset($_POST['units']) && isset($_POST['ing']) && iss
 
 
 //receive the data
-if(isset($_POST['recipename']) || isset($_POST['preparation']) || isset($_FILES["recipeImage"]) || isset($_POST['category']) || isset($_POST['cookingtime'] )){
+if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES["recipeImage"]) && isset($_POST['category']) && isset($_POST['cookingtime'] )){
 
   $recipename = sanitization($_POST['recipename'], FILTER_SANITIZE_STRING, $conn);
   $preparation = sanitization($_POST['preparation'], FILTER_SANITIZE_STRING, $conn);
@@ -611,7 +612,7 @@ if(isset($_POST['customingredient'])){
 
 
 //receive the data
-if(isset($_POST['userfullname']) || isset($_POST['username']) || isset($_POST['userpassword']) || isset($_POST['userrol']) || isset($_POST['useremail']) || isset($_POST['session_user'])){
+if(isset($_POST['userfullname']) && isset($_POST['username']) && isset($_POST['userpassword']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['session_user'])){
 
   $fullName = sanitization($_POST['userfullname'], FILTER_SANITIZE_STRING, $conn);
   $userName=  sanitization($_POST['username'], FILTER_SANITIZE_STRING, $conn);
