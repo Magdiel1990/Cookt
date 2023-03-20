@@ -72,7 +72,7 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
             <div class="bg-form p-3 mt-3 col-sm-auto col-md-9 col-lg-8">
                 <div class="text-center">
                     <h1 class="display-4 text-info"> <?php echo $recipeName; ?> </h1>
-                    <h5 class="text-warning"> (<?php echo $cookingTime; ?> minutos)</h5>
+                    <h5 class="text-warning" style='font-size: 1.5rem;'> (<?php echo $cookingTime; ?> minutos)</h5>
                 </div>
                 <div class="d-flex flex-row justify-content-between">
                     <ul class="lead"> 
@@ -80,7 +80,7 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
                     $result = $conn -> query($sql);
                     
                     while($row = $result->fetch_assoc()){
-                        echo "<li class='text-success'>" . $row["indications"]. ".</li>";
+                        echo "<li class='text-success' style='font-size: 1.5rem;'>" . $row["indications"]. ".</li>";
                     }        
                     ?>   
                     </ul>
@@ -94,7 +94,7 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
                         }
                     ?>
                 </div>
-                <hr class="my-4">
+                <hr class="my-2">
             </div>
             <div class="lead text-center">
                 <div class="mt-3">
@@ -104,10 +104,10 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
                     <a class="btn btn-secondary" href="<?php echo $pathToReturn;?>">Regresar</a>
                 </div>
             </div>
-            <div class="col-sm-8 col-md-8">
-                <div class="collapse mt-3 bg-form" id="collapse">
-                    <div class="card card-body text-danger"> <?php echo ucfirst($preparation); ?> 
-                        <span class="text-primary mt-4 text-center"> <?php echo $date; ?> </span>            
+            <div class="col-sm-8 col-md-8 py-4">
+                <div class="collapse bg-form" id="collapse">
+                    <div class="card card-body text-dark" style="font-size: 1.5rem;"> <?php echo ucfirst($preparation); ?> 
+                        <span class="text-info mt-4 text-center"> <?php echo $date; ?> </span>            
                     </div>
                 </div>        
             </div>        

@@ -34,7 +34,7 @@ require_once ("../modules/nav.php");
                     $num_rows = $result -> num_rows;
 
                     if ($num_rows == 0) {
-                        $where = "WHERE username = '" . $_SESSION['username'] . "'";                                               
+                        $where = "WHERE username = '" . $_SESSION['username'] . "' ORDER BY ingredient";                                               
                     } else {
                         $where = "WHERE NOT ingredient IN (";
 
@@ -43,7 +43,7 @@ require_once ("../modules/nav.php");
                         }
                         
                         $where = substr_replace($where, "", -2);
-                        $where .= ") AND username = '" . $_SESSION['username'] . "'";                        
+                        $where .= ") AND username = '" . $_SESSION['username'] . "' ORDER BY ingredient";                        
                     }
                     $sql = "SELECT ingredient FROM ingredients $where;";                         
                     $result = $conn -> query($sql);

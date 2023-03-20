@@ -88,7 +88,7 @@ CREATE TABLE `units` (
   UNIQUE KEY `unit` (`unit`)
 );
 
-INSERT INTO `units` VALUES (8,'cucharadas'),(1,'cucharaditas'),(2,'gramos'),(11,'kilogramos'),(7,'libras'),(6,'litros'),(4,'mililitros'),(10,'onzas'),(9,'pizca'),(5,'tazas'),(3,'unidades'),(12,'al gusto'),(13,'tallo'), (14,'rodaja'), (15,'lata'),  (15,'diente');
+INSERT INTO `units` VALUES (8,'cucharadas'),(1,'cucharaditas'),(2,'gramos'),(11,'kilogramos'),(7,'libras'),(6,'litros'),(4,'mililitros'),(10,'onzas'),(9,'pizca'),(5,'tazas'),(3,'unidades'),(12,'al gusto'),(13,'tallo'),(14,'rodaja'),(15,'lata'),(16,'diente'),(17,'platos principales'),(18,'guarniciones');
 
 CREATE TABLE `recipeinfo` (
   `id` int NOT NULL AUTO_INCREMENT,

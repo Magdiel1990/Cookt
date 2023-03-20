@@ -254,7 +254,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
         <div class="mt-3 col-md-8 col-sm-10 col-lg-5 col-xl-4">
             <div class="card card-body bg-form">
                 <h3 class="text-center">Editar Ingredientes</h3>
-                <div class="mt-3">
+                <div class="mt-2">
                 <?php
                 $sql = "SELECT concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient, ri.detail) as indications 
                         from recipe r 
@@ -269,8 +269,10 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
                 
                 $html = "<ul>";
                 while($row = $result -> fetch_assoc()){
-                    $html .= "<li class='my-2'><i>". $row['indications'] .".</i>";
-                    $html .= "<a class='btn btn-danger mx-2' href='delete.php?indication=" . $row['indications'] . "&rpename=" . $recipeName . "&username=" . $userName . "'>Eliminar</a>";
+                    $html .= "<li class='my-2'>";
+                    $html .= "<i><a href='delete.php?indication=" . $row['indications'] . "&rpename=" . $recipeName . "&username=" . $userName . "'>";
+                    $html .= $row['indications'];
+                    $html .= "</i></a>";
                     $html .= "</li>";
                 }
                 $html .= "</ul>";
