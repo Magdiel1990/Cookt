@@ -16,3 +16,4 @@ contar las veces que un  usuario entra a la pagina
 almacenar la ultima vez que entro
 hashing
 profile edition
+normalizar las cantidades con condicional en el query su es 0.5 poner 1/2
