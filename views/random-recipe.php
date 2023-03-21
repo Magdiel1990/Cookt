@@ -58,8 +58,14 @@ if(isset($_POST["category"])) {
 
     $sql = "SELECT recipename FROM recipe WHERE categoryid = '$categoryId'
     AND username = '" . $_SESSION['username'] . "' ORDER BY rand() LIMIT 1;";
+    
+    $result = $conn -> query($sql);
+    $num_rows = $result -> num_rows;
 
-    $row = $conn -> query($sql) -> fetch_assoc();
+        if($num_rows == 0){
+            echo "<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>";
+        } else {
+    $row = $result -> fetch_assoc();
     $recipename= $row['recipename'];
 
     $sql = "SELECT DISTINCT
@@ -72,13 +78,8 @@ if(isset($_POST["category"])) {
             join ingredients i 
             on i.id = ri.ingredientid
             WHERE r.recipename = '$recipename' AND r.username = '" . $_SESSION['username'] . "'";
-    $result = $conn -> query($sql);    
-    $num_rows = $result -> num_rows;
-
-        if($num_rows == 0){
-            echo "<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>";
-        } else {
-        $row = $result -> fetch_assoc();
+        
+        $row = $conn -> query($sql) -> fetch_assoc();
         $cookingtime = $row['cookingtime'];
         $preparation = $row["preparation"];        
     ?>
