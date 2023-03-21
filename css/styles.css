@@ -82,18 +82,26 @@ label, select, input, option {
 }
 
 .banner {
-    background: rgb(75,221,21);
-    background: linear-gradient(39deg, rgba(75,221,21,0.8) 0%, rgba(0,241,255,0.8) 100%);
-    height: 10vh;    
-    font-size: 1.8rem;
+    background: #ffffff;
+    height: 8vh;    
+    font-size: 1.2rem;
     font-weight: bold;
     font-style: italic;   
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
 }
-
+.banner .d-flex {
+    padding-right: 2rem;
+}
+.banner .logo {
+    font-size: 1.8rem;
+}
 .banner a {
      text-decoration: none;
      color: rgb(94, 91, 254);
 }
+
 .bg-form  {
     background-color: rgb(255, 250, 234);
     box-shadow: 1px 1px 2px #888;   
@@ -102,9 +110,7 @@ label, select, input, option {
 .fa-user{
     font-size: 1.3rem;
 }
-.username {
-    font-size: 1.1rem;
-}
+
 .jumbotron li{
     font-size: 1.6rem;
 }
