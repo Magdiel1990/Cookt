@@ -1,17 +1,24 @@
 * {
     font-family:'Times New Roman', Times, serif;
+    box-sizing: border-box;
 }
 main {
-    min-height: calc(100vh - 12rem);
+    min-height: calc(100vh - 7.1rem);
 }
 footer {
-    height: 5.5rem;
+    height: 6rem;
 }
 h3 {
     font-size: 1.5rem;
     color: #444;
     font-weight: bold;
 }
+
+.sticky {
+    position: sticky;
+    top: 0px;
+}
+
 .nav-item {
     font-size: 1rem;
 }

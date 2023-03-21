@@ -13,7 +13,7 @@
             <a class="nav-link text-dark" href="/Cookt/user-handler/logout.php" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     
         </div>        
     </div>
-    <nav class="navbar navbar-expand-md navbar-dark bg-secondary px-2">
+    <nav class="sticky navbar navbar-expand-md navbar-dark bg-secondary px-2">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
