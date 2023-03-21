@@ -111,13 +111,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="#!" class="text-body" style = "text-decoration: none;">¿Olvidaste la contraseña?</a>
+                            <a href="users/recovery.php" class="text-body" style = "text-decoration: none;">¿Olvidaste la contraseña?</a>
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
                             <input type="submit" name="Login" value="Login" class="btn btn-primary btn-lg"
                             style="padding-left: 2.5rem; padding-right: 2.5rem;">
-                            <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes cuenta? <a href="#!"
+                            <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes cuenta? <a href="users/signup.php"
                                 style = "text-decoration: none;" class="link-danger">Regístrate</a></p>
                         </div>
                     </form>

@@ -10,7 +10,7 @@
             <a class="px-3 text-dark"  href="#" style="text-decoration: none;" title="Usuario">
             <?php echo $_SESSION['fullname']?> <i class="fa-regular fa-user"></i>
             </a>        
-            <a class="nav-link text-dark" href="/Cookt/user-handler/logout.php" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     
+            <a class="nav-link text-dark" href="/Cookt/users/logout.php" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     
         </div>        
     </div>
     <nav class="sticky navbar navbar-expand-md navbar-dark bg-secondary px-2">

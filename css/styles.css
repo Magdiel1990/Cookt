@@ -79,10 +79,15 @@ option {
     font-family: "Comic Sans MS", "Comic Sans", "cursive";
     color: rgb(58, 117, 123);
 }
-.form {
+.form, .recovery-form {
     background-color:rgb(255, 249, 241);
     box-shadow: 1px 1px 8px 1px #888;
     padding: 1.5rem;
+}
+.recovery-form {
+    background-color:#fff;
+    box-shadow: 1px 1px 8px 1px #888;
+    padding: 3rem;    
 }
 label, select, input, option {
     font-size: 1.2rem;
@@ -186,5 +191,9 @@ label, select, input, option {
 
 .errorlink:hover {
   text-decoration: underline;
+}
+
+h2{
+    color: #fff;
 }
 
