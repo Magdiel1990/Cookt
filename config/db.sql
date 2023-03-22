@@ -42,7 +42,7 @@ CREATE TABLE `users` (
   CONSTRAINT `fk_users_users`  FOREIGN KEY (`reportsto`) references `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE  
 );
 
-INSERT INTO `users` VALUES (1,'Admin','Magdiel Castillo','123456','Admin','magdielmagdiel1@gmail.com',1,NULL),(6,'Patricia','Patricia Paola','$2y$10$WMWs3KtNW2CyY6Xeo5yqbe1p8gj6L.kDOHDuyhQmuyIca/ntuZLd2','Admin','yibeli100@gmail.com',1,NULL),(7,'Missael','Missael Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,NULL),(10,'Lisandro','Lisandro Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,NULL);
+INSERT INTO `users` VALUES (1,'Admin','Magdiel Castillo','$2y$10$YYmOuD0hBlD.Lb3f6EpxKekpcNG6ogf5CaVfEy4LmIPwqSImW/abC','Admin','magdielmagdiel1@gmail.com',1,NULL),(2,'Patricia','Patricia Paola','$2y$10$CntUz0zV/ndiovMs1Pkf..lltlCUq3yMrT3jIJXAFrbFtk.7ur4W.','Admin','yibeli100@gmail.com',1,NULL),(3,'Missael','Missael Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,NULL),(4,'Lisandro','Lisandro Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,NULL);
 
 CREATE TABLE `ingredients` (
   `id` int NOT NULL AUTO_INCREMENT,
