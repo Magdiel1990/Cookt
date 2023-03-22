@@ -16,7 +16,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     //Verifico los datos del usuario.
-    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password';";
+    $sql = "SELECT * FROM users WHERE username = '$username';";
     $result = $conn -> query($sql);
     $num_rows =  $result -> num_rows;    
   
@@ -25,7 +25,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
         $row = $result -> fetch_assoc();
        
-        if ($password == $row['password'] && $row['state'] = 1) {
+        if (password_verify($password, $row['password']) && $row['state'] = 1) {
              //When a new user logs in, the index page is always the first page to load.
             if($_SESSION['username'] != $row['username']) {
                 unset($_SESSION['lastpage']);
@@ -49,6 +49,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             $_SESSION['state'] = $row['state'];       
 
             header("Location: ". $_SESSION['lastpage']);
+        } else {
+            $_SESSION['message'] = "¡Usuario o contraseña incorrectos!";
+            $_SESSION['message_alert'] = "danger";
         }
     } else {
         $_SESSION['message'] = "¡Usuario o contraseña incorrectos!";

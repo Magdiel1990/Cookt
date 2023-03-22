@@ -9,7 +9,7 @@ require_once ("../models/models.php");
 require_once ("../modules/head.php");
 
 if($_SESSION['type'] != 'Admin') { 
-    require_once ("../error/error.php");
+    require_once ("/Cookt/error/error.php");
     exit;
 }
 
@@ -71,7 +71,7 @@ require_once ("../modules/nav.php");
             <div class="form-switch">
                 <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes" checked>
                 <label class="form-check-label" for="activeuser">Activo</label>
-                <input  class="btn btn-success" name="usersubmit" type="submit" value="Agregar">
+                <input class="btn btn-success" name="usersubmit" type="submit" value="Agregar">
             </div>       
 
         </form>
