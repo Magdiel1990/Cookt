@@ -1,17 +1,24 @@
 * {
     font-family:'Times New Roman', Times, serif;
+    box-sizing: border-box;
 }
 main {
-    min-height: calc(100vh - 12rem);
+    min-height: calc(100vh - 7.1rem);
 }
 footer {
-    height: 5.5rem;
+    height: 6rem;
 }
 h3 {
     font-size: 1.5rem;
     color: #444;
     font-weight: bold;
 }
+
+.sticky {
+    position: sticky;
+    top: 0px;
+}
+
 .nav-item {
     font-size: 1rem;
 }
@@ -72,28 +79,41 @@ option {
     font-family: "Comic Sans MS", "Comic Sans", "cursive";
     color: rgb(58, 117, 123);
 }
-.form {
+.form, .recovery-form {
     background-color:rgb(255, 249, 241);
     box-shadow: 1px 1px 8px 1px #888;
     padding: 1.5rem;
+}
+.recovery-form {
+    background-color:#fff;
+    box-shadow: 1px 1px 8px 1px #888;
+    padding: 3rem;    
 }
 label, select, input, option {
     font-size: 1.2rem;
 }
 
 .banner {
-    background: rgb(75,221,21);
-    background: linear-gradient(39deg, rgba(75,221,21,0.8) 0%, rgba(0,241,255,0.8) 100%);
-    height: 10vh;    
-    font-size: 1.8rem;
+    background: #ffffff;
+    height: 8vh;    
+    font-size: 1.2rem;
     font-weight: bold;
     font-style: italic;   
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
 }
-
+.banner .d-flex {
+    padding-right: 2rem;
+}
+.banner .logo {
+    font-size: 1.8rem;
+}
 .banner a {
      text-decoration: none;
      color: rgb(94, 91, 254);
 }
+
 .bg-form  {
     background-color: rgb(255, 250, 234);
     box-shadow: 1px 1px 2px #888;   
@@ -102,9 +122,7 @@ label, select, input, option {
 .fa-user{
     font-size: 1.3rem;
 }
-.username {
-    font-size: 1.1rem;
-}
+
 .jumbotron li{
     font-size: 1.6rem;
 }
@@ -173,5 +191,9 @@ label, select, input, option {
 
 .errorlink:hover {
   text-decoration: underline;
+}
+
+h2{
+    color: #fff;
 }
 

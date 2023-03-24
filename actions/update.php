@@ -304,15 +304,16 @@ $oldCategoryName = $row['category'];
 
 
 //receive the data
-if(isset($_POST['userfullname']) && isset($_POST['username']) && isset($_POST['userpassword']) && isset($_POST['userrol']) && isset($_POST['useremail'])){
+if(isset($_POST['userfullname']) && isset($_POST['username']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['new_password']) && isset($_POST['repite_password']) && isset($_POST['current_password'])){
   $userId = $_GET['userid'];  
   $fullName = $_POST['userfullname'];
   $userName=  $_POST['username'];
-  $userPassword = $_POST['userpassword'];
   $userRol = $_POST['userrol'];
   $userEmail = $_POST['useremail'];
   $state = $_POST['activeuser'];
-
+  $actualPassword = $_POST['current_password'];
+  $newPassword = $_POST['new_password'];
+  $againNewPassword = $_POST['repite_password'];  
 
     if($state == "yes") {
         $state = 1;        
@@ -320,7 +321,7 @@ if(isset($_POST['userfullname']) && isset($_POST['username']) && isset($_POST['u
         $state = 0;
     }
 
-    if ($fullName == "" || $userName == "" || $userPassword == "") {
+    if ($fullName == "" || $userName == "") {
     //Message if the variable is null.
         $_SESSION['message'] = '¡Complete todos los campos faltantes!';
         $_SESSION['message_alert'] = "danger";
@@ -328,24 +329,64 @@ if(isset($_POST['userfullname']) && isset($_POST['username']) && isset($_POST['u
     //The page is redirected to the add-recipe.php
         header('Location: edit.php?userid='. $userId);
     } 
+    if($actualPassword != "" && $newPassword != "" && $againNewPassword != ""){
+         if($newPassword == $againNewPassword){
+            $sql = "SELECT password FROM users WHERE userid = '$userId ';";
+            $row = $conn -> query($sql) -> fetch_assoc();
+            if (password_verify($actualPassword, $row['password'])){
+                $hash_password = password_hash($newPassword, PASSWORD_DEFAULT);
+                $sql = "UPDATE users SET password = '$hash_password', fullname = '$fullName', username = '$userName', type = '$userRol', email = '$userEmail', state='$state' WHERE userid = '$userId';";
 
-    $sql = "UPDATE users SET fullname = '$fullName', username = '$userName', password = '$userPassword', type = '$userRol', email = '$userEmail', state='$state' WHERE userid = '$userId';";
+                if ($conn->query($sql)) {
+                //Message if the variable is null.
+                $_SESSION['message'] = '¡Usuario editado correctamente!';
+                $_SESSION['message_alert'] = "success";
+                    
+                //The page is redirected to the add-recipe.php
+                header("Location: ../views/add-users.php");
+                } else {
+                //Message if the variable is null.
+                $_SESSION['message'] = '¡Error al editar usuario!';
+                $_SESSION['message_alert'] = "danger";
 
-    if ($conn->query($sql)) {
-    //Message if the variable is null.
-    $_SESSION['message'] = '¡Usuario editado correctamente!';
-    $_SESSION['message_alert'] = "success";
-        
-    //The page is redirected to the add-recipe.php
-    header("Location: ../views/add-users.php");
+                //The page is redirected to the add-recipe.php
+                header("Location: edit.php?userid=". $userId);
+                }  
+            } else {
+                //Message if the variable is null.
+                $_SESSION['message'] = '¡Contraseña actual incorrecta!';
+                $_SESSION['message_alert'] = "danger";
+                    
+                //The page is redirected to the add-recipe.php
+                header("Location: edit.php?userid=". $userId);
+            }
+         } else {
+            //Message if the variable is null.
+            $_SESSION['message'] = '¡Contraseñas nuevas no coinciden!';
+            $_SESSION['message_alert'] = "danger";
+                
+            //The page is redirected to the add-recipe.php
+            header("Location: edit.php?userid=". $userId);
+         }
     } else {
-    //Message if the variable is null.
-    $_SESSION['message'] = '¡Error al editar usuario!';
-    $_SESSION['message_alert'] = "danger";
+        $sql = "UPDATE users SET fullname = '$fullName', username = '$userName', type = '$userRol', email = '$userEmail', state='$state' WHERE userid = '$userId';";
 
-    //The page is redirected to the add-recipe.php
-    header("Location: edit.php?userid=". $userId);
-    }  
+        if ($conn->query($sql)) {
+        //Message if the variable is null.
+        $_SESSION['message'] = '¡Usuario editado correctamente!';
+        $_SESSION['message_alert'] = "success";
+            
+        //The page is redirected to the add-recipe.php
+        header("Location: ../views/add-users.php");
+        } else {
+        //Message if the variable is null.
+        $_SESSION['message'] = '¡Error al editar usuario!';
+        $_SESSION['message_alert'] = "danger";
+
+        //The page is redirected to the add-recipe.php
+        header("Location: edit.php?userid=". $userId);
+        }  
+    }
 ?>
 
 <?php

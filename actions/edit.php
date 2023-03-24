@@ -375,7 +375,6 @@ $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
 $row = $result -> fetch_assoc();
 
-
 if($num_rows == 1 && $_SESSION['username'] == $row['username']){
     $userNameState = "hidden";
     $userNameLabelState = "display: none;";    
@@ -389,10 +388,10 @@ $row = $conn -> query($sql) -> fetch_assoc();
 
 $userName = $row["username"];
 $fullName=  $row["fullname"];
-$password = $row["password"];
 $type = $row["type"];
 $state = $row["state"];
 $email = $row["email"];
+$currentPassword = $row["password"];
 
 if($state == 1) {
     $check = "checked";
@@ -424,11 +423,21 @@ if($state == 1) {
                     <label class="input-group-text is-required" for="username">Usuario: </label>
                     <input class="form-control" value="<?php echo $userName; ?>" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" <?php echo $userNameState; ?>>
                 </div>
+                
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="current_password">Contraseña actual: </label>
+                    <input class="form-control" type="password" id="current_password" name="current_password"  minlength="8">
+                </div>      
+                
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="new_password">Nueva contraseña: </label>
+                    <input class="form-control" type="password" id="new_password" name="new_password"  minlength="8">
+                </div>   
 
                 <div class="input-group mb-3">
-                    <label class="input-group-text is-required" for="userpassword">Contraseña: </label>
-                    <input class="form-control" value="<?php echo $password; ?>" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">
-                </div>
+                    <label class="input-group-text" for="repite_password">Repite nueva contraseña: </label>
+                    <input class="form-control" type="password" id="repite_password" name="repite_password" minlength="8">
+                </div>   
 
                 <div style="<?php echo $userNameLabelState;?>" class="input-group mb-3">
                     <label class="input-group-text" for="userrol">Rol: </label>

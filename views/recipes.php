@@ -51,7 +51,7 @@ $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
 $row = $result->fetch_assoc();
 ?>
-<main class="container p-2 my-4">
+<main class="container p-2 mt-4">
 
 <?php
 if(isset($row["category"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["date"])) {

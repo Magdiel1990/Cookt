@@ -76,7 +76,7 @@ require_once ("../modules/nav.php");
             </div>
         </form>
     </div>
-    <div class="row mt-4 justify-content-center">
+    <div class="row mt-4">
         <div class="col-auto">
         <?php
         $sql = "SELECT i.ingredient, ih.ingredientid FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "';";
@@ -87,8 +87,8 @@ require_once ("../modules/nav.php");
             echo "<p class='text-center'>Agregue los ingredientes para conseguir recetas...</p>";
 
         } else {
-            $html = "<div class='form d-flex flex-column'>";
-            $html .= "<ul>";
+            $html = "<div>";
+            $html .= "<ol>";
             while($row = $result -> fetch_assoc()) {
                 $html .= "<li>";
                 $html .= "<a href='../actions/delete.php?custom=" . $row['ingredient'] . "' " . "title='Eliminar'>";
@@ -97,12 +97,12 @@ require_once ("../modules/nav.php");
                 $html .= "</li>";
                 $ingArray[] = $row["ingredientid"];
             }
-            $html .= "</ul>";
+            $html .= "</ol>";
+            $html .= "</div>";  
             $html .= "<div class='text-center'>";
             $html .= "<form action='recipe-suggestions.php?ingredients=" . base64_encode(serialize($ingArray)) . "&username=" . $_SESSION['username'] . "' method='POST'>";       
             $html .= "<input class='btn btn-secondary' type='submit' value='Buscar'>";
-            $html .= "</form>";            
-            $html .= "</div>";  
+            $html .= "</form>";           
             $html .= "</div>";      
             echo $html;
         }
