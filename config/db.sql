@@ -114,3 +114,15 @@ CREATE TABLE `reholder` (
   CONSTRAINT `fk_units_reholder` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_user_reholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+/*CREATE TABLE recipeimgs (
+imgid int NOT NULL AUTO_INCREMENT,
+imgname varchar(50),
+imgext varchar(5),
+userid int NOT NULL,
+recipeid int NOT NULL,
+PRIMARY KEY (imgid),
+CHECK (imgext in ("jpg", "png", "jpeg","giff")),
+CONSTRAINT `fk_recipeimgs_recipes` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) on delete cascade on update cascade,
+CONSTRAINT `fk_recipeimgs_users` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) on delete cascade on update cascade
+);*/
