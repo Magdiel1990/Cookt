@@ -42,7 +42,7 @@ CREATE TABLE `users` (
   CONSTRAINT `fk_users_users`  FOREIGN KEY (`reportsto`) references `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE  
 );
 
-INSERT INTO `users` VALUES (1,'Admin','Magdiel Castillo','123456','Admin','magdielmagdiel1@gmail.com',1,NULL),(2,'Patricia','Patricia Paola','123456','Admin','yibeli100@gmail.com',1,NULL),(3,'Missael','Missael Castillo','123456','Viewer','',1,NULL),(4,'Lisandro','Lisandro Polanco','123456','Standard','',1,NULL);
+INSERT INTO `users` VALUES (1,'Admin','Magdiel Castillo','$2y$10$YYmOuD0hBlD.Lb3f6EpxKekpcNG6ogf5CaVfEy4LmIPwqSImW/abC','Admin','magdielmagdiel1@gmail.com',1,NULL),(2,'Patricia','Patricia Paola','$2y$10$CntUz0zV/ndiovMs1Pkf..lltlCUq3yMrT3jIJXAFrbFtk.7ur4W.','Admin','yibeli100@gmail.com',1,NULL),(3,'Missael','Missael Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,NULL),(4,'Lisandro','Lisandro Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,NULL);
 
 /*CREATE TABLE access (
 id int not null auto_increment,
@@ -81,6 +81,7 @@ CREATE TABLE `recipe` (
   `cookingtime` int,
   `username` varchar(30) not null,
   PRIMARY KEY (`recipeid`),
+  CHECK (`cookingtime` >= 0),
   CONSTRAINT `fk_recipe_categories` FOREIGN KEY (`categoryid`) REFERENCES `categories` (`categoryid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_recipe_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
@@ -104,6 +105,7 @@ CREATE TABLE `recipeinfo` (
   `ingredientid` INT NOT NULL,
   `detail` varchar(100),
   PRIMARY KEY (`id`),
+  Check (`quantity` > 0);
   CONSTRAINT `fk_ingredients_recipeinfo` FOREIGN KEY (`ingredientid`) REFERENCES `ingredients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -118,6 +120,7 @@ CREATE TABLE `reholder` (
   `username` varchar(30) NOT NULL,
   `detail` varchar(100),
   PRIMARY KEY (`re_id`),
+  CHECK (`quantity` > 0),
   CONSTRAINT `fk_ingredients_reholder` FOREIGN KEY (`ingredientid`) REFERENCES `ingredients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_units_reholder` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_user_reholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -129,8 +132,10 @@ imgname varchar(50),
 imgext varchar(5),
 userid int NOT NULL,
 recipeid int NOT NULL,
+`size` int not null,
 PRIMARY KEY (imgid),
 CHECK (imgext in ("jpg", "png", "jpeg","giff")),
 CONSTRAINT `fk_recipeimgs_recipes` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) on delete cascade on update cascade,
 CONSTRAINT `fk_recipeimgs_users` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) on delete cascade on update cascade
 );*/
+

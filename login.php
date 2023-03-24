@@ -16,7 +16,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     //Verifico los datos del usuario.
-    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password';";
+    $sql = "SELECT * FROM users WHERE username = '$username';";
     $result = $conn -> query($sql);
     $num_rows =  $result -> num_rows;    
   
@@ -25,7 +25,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
         $row = $result -> fetch_assoc();
        
-        if ($password == $row['password'] && $row['state'] = 1) {
+        if (password_verify($password, $row['password']) && $row['state'] = 1) {
              //When a new user logs in, the index page is always the first page to load.
             if($_SESSION['username'] != $row['username']) {
                 unset($_SESSION['lastpage']);
@@ -49,6 +49,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             $_SESSION['state'] = $row['state'];       
 
             header("Location: ". $_SESSION['lastpage']);
+        } else {
+            $_SESSION['message'] = "¡Usuario o contraseña incorrectos!";
+            $_SESSION['message_alert'] = "danger";
         }
     } else {
         $_SESSION['message'] = "¡Usuario o contraseña incorrectos!";
@@ -111,13 +114,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="#!" class="text-body" style = "text-decoration: none;">¿Olvidaste la contraseña?</a>
+                            <a href="users/recovery.php" class="text-body" style = "text-decoration: none;">¿Olvidaste la contraseña?</a>
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
                             <input type="submit" name="Login" value="Login" class="btn btn-primary btn-lg"
                             style="padding-left: 2.5rem; padding-right: 2.5rem;">
-                            <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes cuenta? <a href="#!"
+                            <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes cuenta? <a href="users/signup.php"
                                 style = "text-decoration: none;" class="link-danger">Regístrate</a></p>
                         </div>
                     </form>

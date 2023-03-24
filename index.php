@@ -56,7 +56,7 @@ function getData(){
     let content = document.getElementById("content")
     let input = document.getElementById("search").value
 
-    let url = "load.php";
+    let url = "ajax/index-ajax.php";
     let formaData = new FormData()
     formaData.append("search", input)
     fetch(url, {

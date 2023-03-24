@@ -55,8 +55,20 @@ if(isset($_POST["category"])) {
     $row = $conn -> query($sql) -> fetch_assoc();
     $categoryId = $row['categoryid'];
 
+
+    $sql = "SELECT recipename FROM recipe WHERE categoryid = '$categoryId'
+    AND username = '" . $_SESSION['username'] . "' ORDER BY rand() LIMIT 1;";
+    
+    $result = $conn -> query($sql);
+    $num_rows = $result -> num_rows;
+
+        if($num_rows == 0){
+            echo "<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>";
+        } else {
+    $row = $result -> fetch_assoc();
+    $recipename= $row['recipename'];
+
     $sql = "SELECT DISTINCT
-            r.recipename,
             r.cookingtime,
             concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications,
             r.preparation 
@@ -65,16 +77,9 @@ if(isset($_POST["category"])) {
             on ri.recipeid = r.recipeid
             join ingredients i 
             on i.id = ri.ingredientid
-            WHERE r.categoryid = '$categoryId'
-            AND r.username = '" . $_SESSION['username'] . "' ORDER BY rand();";
-    $result = $conn -> query($sql);    
-    $num_rows = $result -> num_rows;
-
-        if($num_rows == 0){
-            echo "<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>";
-        } else {
-        $row = $result -> fetch_assoc();
-        $recipename = $row['recipename'];
+            WHERE r.recipename = '$recipename' AND r.username = '" . $_SESSION['username'] . "'";
+        
+        $row = $conn -> query($sql) -> fetch_assoc();
         $cookingtime = $row['cookingtime'];
         $preparation = $row["preparation"];        
     ?>
