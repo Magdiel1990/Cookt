@@ -105,7 +105,7 @@ CREATE TABLE `recipeinfo` (
   `ingredientid` INT NOT NULL,
   `detail` varchar(100),
   PRIMARY KEY (`id`),
-  Check (`quantity` > 0);
+  Check (`quantity` > 0),
   CONSTRAINT `fk_ingredients_recipeinfo` FOREIGN KEY (`ingredientid`) REFERENCES `ingredients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) ON DELETE CASCADE ON UPDATE CASCADE
 );
