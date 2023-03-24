@@ -651,9 +651,7 @@ if(isset($_POST['userfullname']) && isset($_POST['username']) && isset($_POST['u
       $num_rows = $conn -> query($sql) -> num_rows;
 
       if($num_rows == 0) {
-      
-
-
+        
       $stmt = $conn -> prepare("INSERT INTO users (fullname, username, `password`, `type`, email, `state`, reportsto) VALUES (?, ?, ?, ?, ?, ?, ?);");
       $stmt->bind_param ("sssssii", $fullName, $userName, $userPassword, $userRol, $userEmail, $state, $sessionUserId);
 

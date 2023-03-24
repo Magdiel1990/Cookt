@@ -16,3 +16,4 @@ contar las veces que un  usuario entra a la pagina
 almacenar la ultima vez que entro
 hashing
 profile edition
+poner cuantos kibites ocupa cada usuario, en imagenes
