@@ -615,23 +615,23 @@ if(isset($_POST['customingredient'])){
 if(isset($_POST['userfullname']) && isset($_POST['username']) && isset($_POST['userpassword']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['session_user'])){
 
   $fullName = sanitization($_POST['userfullname'], FILTER_SANITIZE_STRING, $conn);
-  $userName=  sanitization($_POST['username'], FILTER_SANITIZE_STRING, $conn);
-  $userPassword = $_POST['userpassword'];
-  $userRol = $_POST['userrol'];
+  $username=  sanitization($_POST['username'], FILTER_SANITIZE_STRING, $conn);
+  $password = $_POST['userpassword'];
+  $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+  $rol = $_POST['userrol'];
   $userEmail = sanitization($_POST['useremail'], FILTER_SANITIZE_EMAIL, $conn);
   $state = $_POST['activeuser'];
   $sessionUser = $_POST['session_user'];
 
   $sql = "SELECT userid, `type` FROM users WHERE username ='$sessionUser';";
   $row = $conn -> query($sql) -> fetch_assoc();
-  $sessionUserId = $row['userid'];
   $sessionUserType = $row['type'];
 
   if($sessionUserType != 'Admin') {
     //The page is redirected to the add-recipe.php
         header('Location: ../error/error.php');
   } else {
-    if ($fullName == "" || $userName == "" || $userPassword == "") {
+    if ($fullName == "" || $username == "" || $password == "") {
     //Message if the variable is null.
         $_SESSION['message'] = '¡Complete todos los campos por favor!';
         $_SESSION['message_alert'] = "danger";
@@ -646,14 +646,14 @@ if(isset($_POST['userfullname']) && isset($_POST['username']) && isset($_POST['u
         $state = 0;
       }
 
-      $sql = "SELECT userid FROM users WHERE fullname = '$fullName' AND username = '$userName' AND `password` = '$userPassword';";
+      $sql = "SELECT userid FROM users WHERE fullname = '$fullName' AND username = '$username' AND `password` = '$hashed_password';";
 
       $num_rows = $conn -> query($sql) -> num_rows;
 
       if($num_rows == 0) {
         
       $stmt = $conn -> prepare("INSERT INTO users (fullname, username, `password`, `type`, email, `state`, reportsto) VALUES (?, ?, ?, ?, ?, ?, ?);");
-      $stmt->bind_param ("sssssii", $fullName, $userName, $userPassword, $userRol, $userEmail, $state, $sessionUserId);
+      $stmt->bind_param ("sssssii", $fullName, $username, $hashed_password, $rol, $userEmail, $state, $sessionUserId);
 
         if ($stmt->execute()) {
       //Success message.
