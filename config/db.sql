@@ -44,6 +44,14 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` VALUES (1,'Admin','Magdiel Castillo','123456','Admin','magdielmagdiel1@gmail.com',1,NULL),(2,'Patricia','Patricia Paola','123456','Admin','yibeli100@gmail.com',1,NULL),(3,'Missael','Missael Castillo','123456','Viewer','',1,NULL),(4,'Lisandro','Lisandro Polanco','123456','Standard','',1,NULL);
 
+/*CREATE TABLE access (
+id int not null auto_increment,
+userid int not null,
+lastlogin timestamp DEFAULT CURRENT_TIMESTAMP,
+primary key (id),
+CONSTRAINT `fk_access_users` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
+);*/
+
 CREATE TABLE `ingredients` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ingredient` varchar(50) NOT NULL,
