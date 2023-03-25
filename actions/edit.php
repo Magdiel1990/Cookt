@@ -460,14 +460,14 @@ if($state == 1) {
                     <input class="form-control" value="<?php echo $email; ?>"  type="email" id="useremail" name="useremail" minlength="15" maxlength="70">
                 </div>
                 <div class="col text-center mb-3">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sex" id="M" value="M" required>
-                    <label class="form-check-label" for="M">M</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sex" id="F" value="F">
-                    <label class="form-check-label" for="F">F</label>
-                </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="sex" id="M" value="M" required>
+                        <label class="form-check-label" for="M">M</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="sex" id="F" value="F">
+                        <label class="form-check-label" for="F">F</label>
+                    </div>
                 </div>  
 
                 <div class="m-auto">
