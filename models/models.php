@@ -1,5 +1,5 @@
 <?php
-//Method for the message.
+//Method for the butto message.
 function buttonMessage($message, $message_alert) {
     if(isset($message_alert)){
         $html = "<div class='row justify-content-center'>";
@@ -9,6 +9,16 @@ function buttonMessage($message, $message_alert) {
         $html .= "</button>";
         $html .= "</div>"; 
         $html .= "</div>";   
+        echo $html;             
+    }
+}
+
+//Method for the text message.
+function textMessage($message, $message_alert) {
+    if(isset($message_alert)){
+        $html = "<p class='pb-2 mb-0 pb-0 text-" . $message_alert . " small'>";
+        $html .= $message;
+        $html .= "</p>"; 
         echo $html;             
     }
 }

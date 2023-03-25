@@ -1,15 +1,11 @@
 
 <?php
-//Including the database connection.
-require_once ("../config/db_Connection.php");
+session_name("recovery");
 
+session_start();
 //Models.
 require_once ("../models/models.php");
 
-/*if(isset($POST['email'])){
-
-
-}*/
 ?>
 
 <!DOCTYPE html>
@@ -42,27 +38,43 @@ require_once ("../models/models.php");
             </div>
             <div class="row p-4 align-items-center justify-content-center">
                 <div class="col-auto">
-                    <form class="text-center recovery-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                    <form class="text-center recovery-form" action="email.php" method="POST">
                         <!-- Email input -->
-                        <div class="form-outline mb-4">
+                        <div class="form-outline mb-3">
                             <label class="form-label mb-4" for="email">¿Olvidaste tu contraseña?</label>
                             <input type="email" id="email" class="form-control" name="email" size="35" placeholder="Escribe tu correo electrónico"/>                        
-                        </div>            
+                        </div>
+                        <?php
+                        //Messages that are shown in the add_units page
+                        if(isset($_SESSION['message'])){
+                        echo "<div class='my-1'>";
+                        textMessage($_SESSION['message'], $_SESSION['alert']);        
+
+                        //Unsetting the messages variables so the message fades after refreshing the page.
+                        unset($_SESSION['alert'], $_SESSION['message']);
+                       
+                        session_destroy();
+
+                        echo "</div>";
+                        } else {
+                            echo "<div class='mt-4'></div>";
+                        }
+                        ?>
+                           
                         <div class="text-center">
                             <input type="submit" name="Recovery" value="Reestablecer contraseña" class="btn btn-primary">                              
                             <p class="small fw-bold mb-0 mt-4">
                                 <a class="text-decoration-none px-2" href="../login.php">Login</a>
                                 ¿Si no tienes cuenta? 
                                 <a href="users/signup.php" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
-                            </p>
-                        </div>
+                            </p>                  
+                        </div>                                    
                     </form>
                 </div>
             </div>
         </section>
     </main>
 <?php
-$conn -> close();
 //Footer of the page.
 require_once ("../modules/footer.php");
 ?>

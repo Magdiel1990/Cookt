@@ -32,18 +32,19 @@ CREATE TABLE `users` (
   `userid` int NOT NULL AUTO_INCREMENT,
   `username` varchar(30) NOT NULL UNIQUE,
   `fullname` varchar(50) NOT NULL,
+  `sex` char(1) not null;
   `password` varchar(255) NOT NULL,
   `type` varchar(15) NOT NULL,
   `email`  varchar(70),
   `state` boolean not null,
   `reportsto` int,
   PRIMARY KEY (`userid`),
+  CHECK (`sex` in ("M","F")),
   CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_users_users`  FOREIGN KEY (`reportsto`) references `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE  
 );
 
-INSERT INTO `users` VALUES (1,'Admin','Magdiel Castillo','$2y$10$YYmOuD0hBlD.Lb3f6EpxKekpcNG6ogf5CaVfEy4LmIPwqSImW/abC','Admin','magdielmagdiel1@gmail.com',1,NULL),(2,'Patricia','Patricia Paola','$2y$10$CntUz0zV/ndiovMs1Pkf..lltlCUq3yMrT3jIJXAFrbFtk.7ur4W.','Admin','yibeli100@gmail.com',1,NULL),(3,'Missael','Missael Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,NULL),(4,'Lisandro','Lisandro Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,NULL);
-
+INSERT INTO `users` VALUES (1,'Admin','Magdiel Castillo','$2y$10$YYmOuD0hBlD.Lb3f6EpxKekpcNG6ogf5CaVfEy4LmIPwqSImW/abC','Admin','magdielmagdiel1@gmail.com',1,NULL,'M'),(2,'Patricia','Patricia Paola','$2y$10$CntUz0zV/ndiovMs1Pkf..lltlCUq3yMrT3jIJXAFrbFtk.7ur4W.','Admin','yibeli100@gmail.com',1,NULL,'F'),(3,'Missael','Missael Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,NULL,'M'),(4,'Lisandro','Lisandro Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,NULL,'M');
 /*CREATE TABLE access (
 id int not null auto_increment,
 userid int not null,
@@ -51,6 +52,14 @@ lastlogin timestamp DEFAULT CURRENT_TIMESTAMP,
 primary key (id),
 CONSTRAINT `fk_access_users` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
 );*/
+
+create table recovery (
+id int not null auto_increment,
+userid int not null,
+forgot_pass_identity varchar(32) not null COLLATE utf8mb4_unicode_ci,
+primary key(id),
+constraint fk_recovery_users FOREIGN KEY (`userid`) references `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 CREATE TABLE `ingredients` (
   `id` int NOT NULL AUTO_INCREMENT,
