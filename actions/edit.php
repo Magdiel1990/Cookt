@@ -392,6 +392,7 @@ $type = $row["type"];
 $state = $row["state"];
 $email = $row["email"];
 $currentPassword = $row["password"];
+$sex = $row["sex"];
 
 if($state == 1) {
     $check = "checked";
@@ -461,11 +462,11 @@ if($state == 1) {
                 </div>
                 <div class="col text-center mb-3">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="sex" id="M" value="M" required>
+                        <input class="form-check-input" type="radio" name="sex" id="M" value="M" <?php if($sex == "M"){ echo "checked";}?> required>
                         <label class="form-check-label" for="M">M</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="sex" id="F" value="F">
+                        <input class="form-check-input" type="radio" name="sex" id="F" value="F" <?php if($sex == "F"){ echo "checked";}?>>
                         <label class="form-check-label" for="F">F</label>
                     </div>
                 </div>  

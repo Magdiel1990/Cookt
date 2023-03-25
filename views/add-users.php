@@ -91,19 +91,29 @@ require_once ("../modules/nav.php");
                 <tr class="bg-primary">
                     <th>Usuario</th>
                     <th>Rol</th>
-                    <th>Estado</th>                    
+                    <th>Estado</th> 
+                    <th>Recetas</th>                   
                     <th>Acciones</th>                     
                 </tr>
             </thead>
             <tbody>                
                 <?php
-                    $sql = "SELECT * FROM users ORDER BY type;";
+                    $sql = "SELECT type, username, state, userid FROM users ORDER BY type;";
 
                     $result = $conn -> query($sql);                    
 
                     while($row = $result -> fetch_assoc()){
+                        $type = $row['type'];
+                        $username = $row['username'];
+                        $state = $row['state'];
+                        $userid = $row['userid'];
 
-                        if($row['state'] == 1) {
+                        //Recipes of each user
+                        $sql = "SELECT count(recipeid) as `count` FROM recipe WHERE username = '$username';";
+                        $row = $conn -> query($sql) -> fetch_assoc();   
+                        $recipeCount = $row ['count'];
+                        
+                        if($state == 1) {
                             $state = "activo";
                             $color = "rgb(22, 182, 4)";
                         } else {
@@ -111,29 +121,30 @@ require_once ("../modules/nav.php");
                             $color = "#aaa";
                         }
 
-                        if($row['type'] == "Admin") {
+                        if($type == "Admin") {
                             $display = "style = 'display: none;'";
                         } else {
                             $display = "";
                         }
 
-                        if($row['username'] == $_SESSION['username']) {
+                        if($username == $_SESSION['username']) {
                             $recipeList = "";
                         } else {
-                            $recipeList = "href='../views/recipes-list.php?username=" . $row['username']. "'";
+                            $recipeList = "href='../views/recipes-list.php?username=" . $username . "'";
                         }
                         
                         $html = "<tr>";                        
                         $html .= "<td style='color:" . $color . ";'>";
                         $html .="<a $recipeList>";
-                        $html .= $row['username'];
+                        $html .= $username;
                         $html .="</a>";
                         $html .= "</td>";
-                        $html .= "<td style='color:" . $color . ";'>" . $row['type'] . "</td>";
+                        $html .= "<td style='color:" . $color . ";'>" . $type . "</td>";
                         $html .= "<td style='color:" . $color . ";'>" . $state . "</td>";
+                        $html .= "<td style='color:" . $color . ";'>" . $recipeCount . "</td>";
                         $html .= "<td>";
-                        $html .= "<a href='../actions/edit.php?userid=" . $row['userid'] . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
-                        $html .= "<a $display href='../actions/delete.php?userid=" . $row['userid'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                        $html .= "<a href='../actions/edit.php?userid=" . $userid . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
+                        $html .= "<a $display href='../actions/delete.php?userid=" . $userid . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                         $html .= "</td>";
                         $html .= "</tr>";
                         echo $html;
