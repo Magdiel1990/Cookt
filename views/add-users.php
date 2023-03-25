@@ -67,6 +67,15 @@ require_once ("../modules/nav.php");
             </div>
 
             <input type="hidden" name="session_user" value = "<?php echo $_SESSION['username']?>">
+           
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="sex" id="M" value="M" required>
+                <label class="form-check-label" for="M">M</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="sex" id="F" value="F">
+                <label class="form-check-label" for="F">F</label>
+            </div>      
 
             <div class="form-switch">
                 <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes" checked>

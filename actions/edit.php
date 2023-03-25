@@ -409,8 +409,8 @@ if($state == 1) {
     unset($_SESSION['message_alert'], $_SESSION['message']);
 }
 ?>
-    <div class="row mt-2 text-center justify-content-center">
-        <h3>EDITAR USUARIO</h3>     
+    <div class="row mt-2 justify-content-center">
+        <h3 class="text-center">EDITAR USUARIO</h3>     
         <div class="mt-3 col-auto">
             <form class="bg-form card card-body" action="update.php?userid=<?php echo $userId; ?>" method="POST">
 
@@ -459,14 +459,26 @@ if($state == 1) {
                     <label class="input-group-text" for="useremail">Email: </label>
                     <input class="form-control" value="<?php echo $email; ?>"  type="email" id="useremail" name="useremail" minlength="15" maxlength="70">
                 </div>
+                <div class="col text-center mb-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sex" id="M" value="M" required>
+                    <label class="form-check-label" for="M">M</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sex" id="F" value="F">
+                    <label class="form-check-label" for="F">F</label>
+                </div>
+                </div>  
 
-                <div>
+                <div class="m-auto">
                     <div class="form-switch mb-3" style="<?php echo $userNameLabelState;?>">
                         <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes" <?php echo $check; ?>  <?php echo $userNameState; ?>>
                         <label class="form-check-label" for="activeuser">Activo</label>
                     </div>
-                    <input  class="btn btn-primary" name="usersubmit" type="submit" value="Editar">
-                    <a class="btn btn-secondary" href="../views/add-users.php">Regresar</a>
+                    <div class="text-center">
+                        <input  class="btn btn-primary" name="usersubmit" type="submit" value="Editar">
+                        <a class="btn btn-secondary" href="../views/add-users.php">Regresar</a>
+                    </div>
                 </div>       
             </form>
         </div>                   
