@@ -31,13 +31,13 @@ INSERT INTO `type` VALUES (1,'Admin',NULL),(2,'Standard',NULL),(3,'Viewer',NULL)
 CREATE TABLE `users` (
   `userid` int NOT NULL AUTO_INCREMENT,
   `username` varchar(30) NOT NULL UNIQUE,
-  `fullname` varchar(50) NOT NULL,
-  `sex` char(1) not null;
+  `fullname` varchar(50) NOT NULL,  
   `password` varchar(255) NOT NULL,
   `type` varchar(15) NOT NULL,
   `email`  varchar(70),
   `state` boolean not null,
   `reportsto` int,
+  `sex` char(1) not null,
   PRIMARY KEY (`userid`),
   CHECK (`sex` in ("M","F")),
   CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -146,5 +146,5 @@ PRIMARY KEY (imgid),
 CHECK (imgext in ("jpg", "png", "jpeg","giff")),
 CONSTRAINT `fk_recipeimgs_recipes` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) on delete cascade on update cascade,
 CONSTRAINT `fk_recipeimgs_users` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) on delete cascade on update cascade
-);*/
-
+);
+*/

@@ -134,8 +134,8 @@ require_once ("../modules/nav.php");
                         }
                         
                         $html = "<tr>";                        
-                        $html .= "<td style='color:" . $color . ";'>";
-                        $html .="<a $recipeList>";
+                        $html .= "<td>";
+                        $html .="<a style='color:" . $color . ";' $recipeList>";
                         $html .= $username;
                         $html .="</a>";
                         $html .= "</td>";

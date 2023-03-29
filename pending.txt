@@ -23,3 +23,6 @@ delete account option
 compartir recetas con otros usuarios
 estilo de css en conflicto con estilo en linea en username
 poner cuantos kibites ocupa cada usuario, en imagenes
+alternative sintax
+
+http://localhost/Cookt/actions/edit.php no devuelve si se cierra la session
