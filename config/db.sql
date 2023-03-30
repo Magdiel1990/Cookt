@@ -47,6 +47,7 @@ CREATE TABLE `users` (
 );
 
 INSERT INTO `users` VALUES (1,'Admin','Magdiel Castillo','$2y$10$YYmOuD0hBlD.Lb3f6EpxKekpcNG6ogf5CaVfEy4LmIPwqSImW/abC','Admin','magdielmagdiel1@gmail.com',1,NULL,'M'),(2,'Patricia','Patricia Paola','$2y$10$CntUz0zV/ndiovMs1Pkf..lltlCUq3yMrT3jIJXAFrbFtk.7ur4W.','Admin','yibeli100@gmail.com',1,NULL,'F'),(3,'Missael','Missael Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,NULL,'M'),(4,'Lisandro','Lisandro Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,NULL,'M');
+
 /*CREATE TABLE access (
 id int not null auto_increment,
 userid int not null,
@@ -67,6 +68,8 @@ CREATE TABLE `ingredients` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ingredient` varchar(50) NOT NULL,
   `username` varchar(30) NOT NULL,
+  `created_at` timestamp default current_timestamp,
+  `updated_at` timestamp default current_timestamp,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_ingredients_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 );
@@ -91,6 +94,8 @@ CREATE TABLE `recipe` (
   `date` timestamp DEFAULT CURRENT_TIMESTAMP,
   `cookingtime` int,
   `username` varchar(30) not null,
+  `created_at` timestamp default current_timestamp,
+  `updated_at` timestamp default current_timestamp,
   PRIMARY KEY (`recipeid`),
   CHECK (`cookingtime` >= 0),
   CONSTRAINT `fk_recipe_categories` FOREIGN KEY (`categoryid`) REFERENCES `categories` (`categoryid`) ON DELETE CASCADE ON UPDATE CASCADE,
