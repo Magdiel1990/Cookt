@@ -14,15 +14,19 @@ router
 poner quien agrego la receta
 contar las veces que un  usuario entra a la pagina
 almacenar la ultima vez que entro
-hashing
 profile edition (desde aqui se cambia la contraseña)
 normalizar las cantidades con condicional en el query su es 0.5 poner 1/2
 http://localhost/Cookt/views/custom-recipe.php mientras se vayan agregando los ingredientes, ajax vaya mostrandolo al lado, eliminar recipe_suggestion file
 guardar los enlaces de las imagenes en la base de datos
 delete account option
 compartir recetas con otros usuarios
-estilo de css en conflicto con estilo en linea en username
 poner cuantos kibites ocupa cada usuario, en imagenes
 alternative sintax
-
 http://localhost/Cookt/actions/edit.php no devuelve si se cierra la session
+http://localhost/Cookt/users/recovery.php phpmail
+updated_at de los usuarios cuando se actualice
+en todo lo que se agregue:
+ `created_at` timestamp default current_timestamp,
+  `updated_at` timestamp default current_timestamp,
+
+en lugar de fullname, firstname and lastname

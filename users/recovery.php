@@ -66,7 +66,7 @@ require_once ("../models/models.php");
                             <p class="small fw-bold mb-0 mt-4">
                                 <a class="text-decoration-none px-2" href="../login.php">Login</a>
                                 ¿Si no tienes cuenta? 
-                                <a href="users/signup.php" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
+                                <a href="/Cookt/users/signup.php" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
                             </p>                  
                         </div>                                    
                     </form>

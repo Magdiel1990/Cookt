@@ -38,6 +38,8 @@ CREATE TABLE `users` (
   `state` boolean not null,
   `reportsto` int,
   `sex` char(1) not null,
+  `created_at` timestamp default current_timestamp,
+  `updated_at` timestamp default current_timestamp,
   PRIMARY KEY (`userid`),
   CHECK (`sex` in ("M","F")),
   CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE,
