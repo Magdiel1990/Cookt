@@ -1,7 +1,7 @@
 <?php
-$hostname = "Localhost:3306";
+$hostname = "Localhost:3308";
 $username = "root";
-$password = "123456";
+$password = "";
 $database = "foodbase";
 
 //Connection to the database.

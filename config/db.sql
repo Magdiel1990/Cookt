@@ -46,7 +46,7 @@ CREATE TABLE `users` (
   CONSTRAINT `fk_users_users`  FOREIGN KEY (`reportsto`) references `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE  
 );
 
-INSERT INTO `users` VALUES (1,'Admin','Magdiel Castillo','$2y$10$YYmOuD0hBlD.Lb3f6EpxKekpcNG6ogf5CaVfEy4LmIPwqSImW/abC','Admin','magdielmagdiel1@gmail.com',1,NULL,'M'),(2,'Patricia','Patricia Paola','$2y$10$CntUz0zV/ndiovMs1Pkf..lltlCUq3yMrT3jIJXAFrbFtk.7ur4W.','Admin','yibeli100@gmail.com',1,NULL,'F'),(3,'Missael','Missael Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,NULL,'M'),(4,'Lisandro','Lisandro Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,NULL,'M');
+INSERT INTO `users` (userid, username, fullname, password, type, email, state, reportsto, sex) VALUES (1,'Admin','Magdiel Castillo','$2y$10$YYmOuD0hBlD.Lb3f6EpxKekpcNG6ogf5CaVfEy4LmIPwqSImW/abC','Admin','magdielmagdiel1@gmail.com',1,NULL,'M'),(2,'Patricia','Patricia Paola','$2y$10$CntUz0zV/ndiovMs1Pkf..lltlCUq3yMrT3jIJXAFrbFtk.7ur4W.','Admin','yibeli100@gmail.com',1,NULL,'F'),(3,'Missael','Missael Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,NULL,'M'),(4,'Lisandro','Lisandro Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,NULL,'M');
 
 /*CREATE TABLE access (
 id int not null auto_increment,
@@ -74,7 +74,7 @@ CREATE TABLE `ingredients` (
   CONSTRAINT `fk_ingredients_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 );
 
-INSERT INTO `ingredients` VALUES (1,'habichuela','Admin'),(2,'cebolla','Admin'),(3,'ajo','Admin'),(4,'apio','Admin'),(6,'ají','Admin'),(7,'puerro','Admin'),(8,'arroz','Admin'),(9,'agua','Admin'),(11,'sal','Admin'),(12,'aceite','Admin'),(13,'carne','Admin'),(14,'salsa de tomate','Admin'),(15,'pimienta','Admin');
+INSERT INTO `ingredients` (id, ingredient, username) VALUES (1,'habichuela','Admin'),(2,'cebolla','Admin'),(3,'ajo','Admin'),(4,'apio','Admin'),(6,'ají','Admin'),(7,'puerro','Admin'),(8,'arroz','Admin'),(9,'agua','Admin'),(11,'sal','Admin'),(12,'aceite','Admin'),(13,'carne','Admin'),(14,'salsa de tomate','Admin'),(15,'pimienta','Admin');
 
 CREATE TABLE `ingholder` (
   `ingid` INT NOT NULL AUTO_INCREMENT,
@@ -102,7 +102,7 @@ CREATE TABLE `recipe` (
   CONSTRAINT `fk_recipe_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
-INSERT INTO `recipe` VALUES (1,'Habichuelas dominicanas',13,'Pon a hervir las habichuelas con agua y sal 25 minutos. Sofríelas con la cebolla, el ajo, ají, el apio, los puerros y la sal. Mezcla las habichuelas con el sofrito y deja hervir por 30 minutos hasta que la mezcla espese.','2023-03-19 23:19:52',55,'Admin'),(2,'Arroz blanco',14,'En una olla vierte el arroz, la sal, el aceite y el agua y cocina hasta que esté listo.','2023-03-19 23:47:25',30,'Admin'),(3,'Carne para arroz blanco',13,'Sofríe la carne con la cebolla, el ajo, el ají y el apio. Vierte la pasta de tomate y deja hervir. Añade sal y pimienta. Sirve las habichuelas, el arroz y la carne y disfruta la bandera dominicana en todo su esplendor.','2023-03-19 23:50:43',40,'Admin');
+INSERT INTO `recipe` (recipeid, recipename, categoryid, preparation, date, cookingtime, username) VALUES (1,'Habichuelas dominicanas',13,'Pon a hervir las habichuelas con agua y sal 25 minutos. Sofríelas con la cebolla, el ajo, ají, el apio, los puerros y la sal. Mezcla las habichuelas con el sofrito y deja hervir por 30 minutos hasta que la mezcla espese.','2023-03-19 23:19:52',55,'Admin'),(2,'Arroz blanco',14,'En una olla vierte el arroz, la sal, el aceite y el agua y cocina hasta que esté listo.','2023-03-19 23:47:25',30,'Admin'),(3,'Carne para arroz blanco',13,'Sofríe la carne con la cebolla, el ajo, el ají y el apio. Vierte la pasta de tomate y deja hervir. Añade sal y pimienta. Sirve las habichuelas, el arroz y la carne y disfruta la bandera dominicana en todo su esplendor.','2023-03-19 23:50:43',40,'Admin');
 
 CREATE TABLE `units` (
   `unitid` int NOT NULL AUTO_INCREMENT,
