@@ -41,7 +41,7 @@ CREATE TABLE `users` (
   `created_at` timestamp default current_timestamp,
   `updated_at` timestamp default current_timestamp,
   PRIMARY KEY (`userid`),
-  CHECK (`sex` in ("M","F")),
+  CHECK (`sex` in ("M","F","O")),
   CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_users_users`  FOREIGN KEY (`reportsto`) references `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE  
 );

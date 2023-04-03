@@ -41,49 +41,60 @@ require_once ("../models/models.php");
                             <div class="col-md-9 col-lg-6 col-xl-5">
                                 <form action="" method="POST" class="card-body p-md-5 text-black">
                                     <h3 class="mb-3 text-center">Regístrate</h3>                                
-                                    <div class="row">
+                                    <div class="row">                                   
                                         <div class="col-md-6 mb-3">
                                             <div class="form-outline">
-                                            <input type="text" id="form3Example1m" class="form-control form-control-md" />
-                                            <label class="form-label" for="form3Example1m">Usuario</label>
+                                                <input type="text" id="firstname" class="form-control form-control-md" name="firstname"/>
+                                                <label class="form-label is-required" for="firstname">Nombre</label>
+                                            </div>
+                                        </div>
+
+                                         <div class="col-md-6 mb-3">
+                                            <div class="form-outline">
+                                                <input type="text" id="lastname" class="form-control form-control-md" name="lastname"/>
+                                                <label class="form-label is-required" for="lastname">Apellido</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <div class="form-outline">
-                                            <input type="text" id="form3Example1n" class="form-control form-control-md" />
-                                            <label class="form-label" for="form3Example1n">Nombre completo</label>
+                                                <input type="text" id="username" class="form-control form-control-md" name="username"/>
+                                                <label class="form-label is-required" for="username">Usuario</label>
                                             </div>
+                                        </div>
+                                        <div class="form-outline col-md-6 mb-3">
+                                            <input type="password" id="password" class="form-control form-control-md" name="password"/>
+                                            <label class="form-label is-required" for="password">Contraseña</label>
                                         </div>
                                     </div>
 
                                     <div class="d-md-flex justify-content-start align-items-center mb-3 py-2">
-                                        <h6 class="me-4">Género: </h6>
+                                        <h6 class="me-4 is-required">Género: </h6>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                                            value="option1" />
+                                            <input class="form-check-input" type="radio" name="sex" id="femaleGender"
+                                            value="F" />
                                             <label class="form-check-label" for="femaleGender">Mujer</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-                                            value="option2" />
+                                            <input class="form-check-input" type="radio" name="sex" id="maleGender"
+                                            value="M" />
                                             <label class="form-check-label" for="maleGender">Hombre</label>
-                                        </div>                                    
-                                    </div>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sex" id="otherGender"
+                                            value="O" />
+                                            <label class="form-check-label" for="otherGender">Otro</label>
+                                        </div>                                         
+                                    </div>                                   
 
-                                    <div class="form-outline mb-3">
-                                        <input type="password" id="form3Example9" class="form-control form-control-md" />
-                                        <label class="form-label" for="form3Example9">Contraseña</label>
-                                    </div>
-
-                                    <div class="form-outline mb-3">
-                                        <input type="email" id="form3Example90" class="form-control form-control-md" />
-                                        <label class="form-label" for="form3Example90">Correo electrónico</label>
+                                    <div class="form-outline col-md-8 mb-3">
+                                        <input type="email" id="email" class="form-control form-control-md" name="email"/>
+                                        <label class="form-label" for="email">Correo electrónico</label>
                                     </div>
 
                                     <div class="form-check d-flex justify-content-center mb-3">
-                                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                                        <label class="form-check-label" for="form2Example3">
-                                        Estoy de acuerdo con los <a href="#!">Términos de servicio.</a>
+                                        <input class="form-check-input me-2" type="checkbox" value="yes" id="acceptance" name="acceptance" required/>
+                                        <label class="form-check-label is-required" for="acceptance">
+                                        Estoy de acuerdo con los <a href="#!">Términos de Servicio.</a>
                                         </label>
                                     </div> 
 
