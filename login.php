@@ -16,7 +16,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     //Verifico los datos del usuario.
-    $sql = "SELECT * FROM users WHERE username = '$username';";
+    $sql = "SELECT * FROM users WHERE username = '$username' AND `state` = 1;";
     $result = $conn -> query($sql);
     $num_rows =  $result -> num_rows;    
   

@@ -1,4 +1,5 @@
 <?php
+    
 //Method for the butto message.
 function buttonMessage($message, $message_alert) {
     if(isset($message_alert)){
@@ -52,4 +53,113 @@ closedir($dir_handle);
 $imgDir = $directory . $fileName . "." . $ext;
 return $imgDir;
 }
+
+
+/*class User {
+public $firstname;
+public $lastname;
+public $username;
+public $password;
+public $passrepeat;
+public $sex;
+public $email;
+public $terms;
+public $rol;
+public $state;
+public $sessionUser;
+public $url;
+public $conn;
+
+function __construct ($firstname, $lastname, $username, $password, $passrepeat, $sex, $email, $terms, $rol, $state, $sessionUser, $url, $conn) {
+    $this -> firstname = $firstname;
+    $this -> lastname = $lastname;
+    $this -> username = $username;
+    $this -> password = $password;
+    $this -> passrepeat = $passrepeat;
+    $this -> sex = $sex;
+    $this -> email = $email;
+    $this -> terms = $terms;
+    $this -> rol = $rol;
+    $this -> state = $state;
+    $this -> sessionUser =  $sessionUser;
+    $this -> url = $url;
+    $this -> conn = $conn;
+}
+
+public function sessionAdminVerif() {
+    $sql = "SELECT userid, `type` FROM users WHERE username ='$this -> sessionUser';";
+    $row = $this -> conn -> query($sql) -> fetch_assoc();
+    $sessionUserType = $row['type'];
+
+    if($sessionUserType != 'Admin') {
+    //The page is redirected to the add-recipe.php
+        header('Location: /Cookt/error/error.php');
+    } 
+}
+public function newUser() {
+    if ($this -> firstname == "" || $this -> lastname == "" || $this -> username == "" || $this -> password == ""  || $this -> passrepeat == "" || $this -> sex == "") {
+
+        //Message if the variable is null.
+        $_SESSION['message'] = '¡Complete o seleccione todos los campos por favor!';
+        $_SESSION['message_alert'] = "danger";
+            
+    //The page is redirected to the add-recipe.php
+        header('Location: ' . $this -> url);
+    } else {   
+        if($this -> password != $this -> passrepeat) {
+        //Message if the variable is null.
+        $_SESSION['message'] = '¡Contraseñas no coinciden!';
+        $_SESSION['message_alert'] = "danger";  
+        
+        //The page is redirected to the add-recipe.php
+        header('Location: ' . $this -> url);
+        } else {
+
+            $hashed_password = password_hash($this -> password, PASSWORD_DEFAULT);
+
+            if($this -> state == "yes") {
+            $this -> state = 1;
+            } else { 
+            $this -> state = 0;
+            }
+
+            $sql = "SELECT userid FROM users WHERE firstname = '" . $this -> firstname . "' AND lastname = '" . $this -> lastname . "' AND username = '" . $this -> username . "' AND `password` = '$hashed_password';";
+
+            $num_rows = $this -> conn -> query($sql) -> num_rows;
+
+            if($num_rows == 0) {
+            
+            $stmt = $this -> conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, reportsto, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            $stmt->bind_param ("ssssssiis", $this -> firstname, $this -> lastname, $this -> username, $hashed_password, $this -> rol, $this -> email, $this -> state, $this -> sessionUserId, $this -> sex);
+
+            if ($stmt->execute()) {
+            //Success message.
+                $_SESSION['message'] = '¡Usuario agregado con éxito!';
+                $_SESSION['message_alert'] = "success";
+
+                $stmt->close();
+                    
+            //The page is redirected to the ingredients.php.
+                header('Location: ' . $this -> url);
+
+                } else {
+            //Failure message.
+                $_SESSION['message'] = '¡Error al agregar usuario!';
+                $_SESSION['message_alert'] = "danger";
+                    
+            //The page is redirected to the ingredients.php.
+                header('Location: ' . $this -> url);
+            }
+            } else {
+            //Success message.
+                $_SESSION['message'] = '¡Este usuario ya existe!';
+                $_SESSION['message_alert'] = "success";
+                    
+            //The page is redirected to the ingredients.php.
+                header('Location: ' . $this -> url);
+            }
+        }
+    }
+}
+}*/
 ?>

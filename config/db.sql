@@ -42,20 +42,20 @@ CREATE TABLE `users` (
   `created_at` timestamp default current_timestamp,
   `updated_at` timestamp default current_timestamp,
   PRIMARY KEY (`userid`),
-  -- CHECK (`sex` in ("M","F","O")),
+  CHECK (`sex` in ("M","F","O")),
   CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_users_users`  FOREIGN KEY (`reportsto`) references `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE  
 );
 
 INSERT INTO `users` (userid, username, firstname, lastname, password, type, email, state, reportsto, sex) VALUES (1,'Admin','Magdiel', 'Castillo','$2y$10$YYmOuD0hBlD.Lb3f6EpxKekpcNG6ogf5CaVfEy4LmIPwqSImW/abC','Admin','magdielmagdiel1@gmail.com',1,NULL,'M'),(2,'Patricia','Patricia', 'Paola','$2y$10$CntUz0zV/ndiovMs1Pkf..lltlCUq3yMrT3jIJXAFrbFtk.7ur4W.','Admin','yibeli100@gmail.com',1,NULL,'F'),(3,'Missael','Missael', 'Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,NULL,'M'),(4,'Lisandro','Lisandro', 'Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,NULL,'M');
 
-/*CREATE TABLE access (
+CREATE TABLE access (
 id int not null auto_increment,
 userid int not null,
 lastlogin timestamp DEFAULT CURRENT_TIMESTAMP,
 primary key (id),
 CONSTRAINT `fk_access_users` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
-);*/
+);
 
 create table recovery (
 id int not null auto_increment,
@@ -143,7 +143,7 @@ CREATE TABLE `reholder` (
   CONSTRAINT `fk_user_reholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-/*CREATE TABLE recipeimgs (
+CREATE TABLE recipeimgs (
 imgid int NOT NULL AUTO_INCREMENT,
 imgname varchar(50),
 imgext varchar(5),
@@ -155,4 +155,4 @@ CHECK (imgext in ("jpg", "png", "jpeg","giff")),
 CONSTRAINT `fk_recipeimgs_recipes` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) on delete cascade on update cascade,
 CONSTRAINT `fk_recipeimgs_users` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) on delete cascade on update cascade
 );
-*/
+

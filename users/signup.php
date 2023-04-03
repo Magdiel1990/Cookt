@@ -1,11 +1,76 @@
-
 <?php
-session_name("recovery");
+session_name("signup");
 
 session_start();
+//Including the database connection.
+require_once ("../config/db_Connection.php");
+
 //Models.
 require_once ("../models/models.php");
 
+if(!empty($_POST)) {
+    $firstname =  sanitization($_POST ["firstname"], FILTER_SANITIZE_STRING, $conn);
+    $lastname = sanitization($_POST ["lastname"], FILTER_SANITIZE_STRING, $conn);
+    $username = sanitization($_POST ["username"], FILTER_SANITIZE_STRING, $conn);
+    $password = sanitization($_POST ["password"], FILTER_SANITIZE_STRING, $conn);
+    $passrepeat = sanitization($_POST ["passrepeat"], FILTER_SANITIZE_STRING, $conn);
+    $sex = $_POST ["sex"];
+    $email = sanitization($_POST ["email"], FILTER_VALIDATE_EMAIL, $conn);
+    $terms = $_POST ["terms"];
+    $rol = $_POST ["rol"];
+    $state = $_POST ["state"];
+    
+    if ($firstname == "" || $lastname == "" || $username == "" || $password == ""  || $passrepeat == "" || $sex == "") {
+
+        //Message if the variable is null.
+        $_SESSION['message'] = '¡Complete o seleccione todos los campos por favor!';
+        $_SESSION['message_alert'] = "danger";
+            
+    } else {   
+        if($password != $passrepeat) {
+        //Message if the variable is null.
+        $_SESSION['message'] = '¡Contraseñas no coinciden!';
+        $_SESSION['message_alert'] = "danger";  
+        
+        } else {
+
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            if($state == "yes") {
+            $state = 1;
+            } else { 
+            $state = 0;
+            }
+
+            $sql = "SELECT userid FROM users WHERE firstname = '" . $firstname . "' AND lastname = '" . $lastname . "' AND username = '" . $username . "' AND `password` = '$hashed_password';";
+
+            $num_rows = $conn -> query($sql) -> num_rows;
+
+            if($num_rows == 0) {
+            
+            $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, reportsto, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            $stmt->bind_param ("ssssssiis", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sessionUserId, $sex);
+
+            if ($stmt->execute()) {            
+            //The page is redirected to the add-recipe.php
+            header('Location: /Cookt/login.php');
+            } else {
+            //Failure message.
+                $_SESSION['message'] = '¡Error al agregar usuario!';
+                $_SESSION['message_alert'] = "danger";
+            }
+            } else {
+            //Success message.
+                $_SESSION['message'] = '¡Este usuario ya existe!';
+                $_SESSION['message_alert'] = "success";
+                    
+            }
+        }
+    }
+}
+
+/*$userCreation = new User($firstname, $lastname, $username, $password, $passrepeat, $sex, $email, $terms, $rol, $state, "", $url, $conn);
+$userCreation -> newUser();*/
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +94,7 @@ require_once ("../models/models.php");
     <script src="/Cookt/js/scripts.js"></script>    
 </head>
 <body>
-    <main class="bg-dark">
+    <main class="bg-dark">        
         <div class="container py-4">
             <div class="row d-flex justify-content-center">
                 <div class="col">
@@ -38,9 +103,9 @@ require_once ("../models/models.php");
                             <div class="col-md-8 col-lg-6 col-xl-5">
                                 <img src="/Cookt/imgs/login/Picture.png" class="img-fluid" alt="Sample image">
                             </div>
-                            <div class="col-md-9 col-lg-6 col-xl-5">
-                                <form action="" method="POST" class="card-body p-md-5 text-black">
-                                    <h3 class="mb-3 text-center">Regístrate</h3>                                
+                            <div class="col-md-9 col-lg-6 col-xl-6">
+                                <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST" class="card-body p-md-5 text-black">
+                                    <h3 class="mb-3 text-center">Regístrate</h3>                        
                                     <div class="row">                                   
                                         <div class="col-md-6 mb-3">
                                             <div class="form-outline">
@@ -60,10 +125,19 @@ require_once ("../models/models.php");
                                                 <input type="text" id="username" class="form-control form-control-md" name="username"/>
                                                 <label class="form-label is-required" for="username">Usuario</label>
                                             </div>
-                                        </div>
+                                        </div>                                      
+
                                         <div class="form-outline col-md-6 mb-3">
                                             <input type="password" id="password" class="form-control form-control-md" name="password"/>
                                             <label class="form-label is-required" for="password">Contraseña</label>
+                                        </div>
+                                          <div class="form-outline col-md-6 mb-3">
+                                            <input type="password" id="passrepeat" class="form-control form-control-md" name="passrepeat"/>
+                                            <label class="form-label is-required" for="passrepeat">Repita contraseña</label>
+                                        </div>
+                                        <div class="form-outline col-md-6 mb-3">
+                                            <input type="email" id="email" class="form-control form-control-md" name="email"/>
+                                            <label class="form-label" for="email">Correo electrónico</label>
                                         </div>
                                     </div>
 
@@ -84,25 +158,34 @@ require_once ("../models/models.php");
                                             value="O" />
                                             <label class="form-check-label" for="otherGender">Otro</label>
                                         </div>                                         
-                                    </div>                                   
-
-                                    <div class="form-outline col-md-8 mb-3">
-                                        <input type="email" id="email" class="form-control form-control-md" name="email"/>
-                                        <label class="form-label" for="email">Correo electrónico</label>
-                                    </div>
-
+                                    </div>          
                                     <div class="form-check d-flex justify-content-center mb-3">
-                                        <input class="form-check-input me-2" type="checkbox" value="yes" id="acceptance" name="acceptance" required/>
-                                        <label class="form-check-label is-required" for="acceptance">
+                                        <input class="form-check-input me-2" type="checkbox" value="yes" id="terms" name="terms" required/>
+                                        <label class="form-check-label is-required" for="terms">
                                         Estoy de acuerdo con los <a href="#!">Términos de Servicio.</a>
                                         </label>
                                     </div> 
+
+                                    <input type="hidden" id="rol" name="rol" value = "Viewer"/>
+
+                                    <input type="hidden" id="state" name="state" value = ""/>
+
+                                    <input type="hidden" id="url" name="url" value = "<?php echo $_SERVER["PHP_SELF"];?>"/>
 
                                     <div class="d-flex justify-content-center">
                                         <input type="reset" class="btn btn-light btn-lg" value="Limpiar todo">
                                         <input type="submit" class="btn btn-warning btn-lg ms-2" value="Registrarse">
                                     </div>
                                 </form>
+                                <?php
+                                    //Messages that are shown in the add_units page
+                                    if(isset($_SESSION['message'])){
+                                    buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
+
+                                    //Unsetting the messages variables so the message fades after refreshing the page.
+                                    unset($_SESSION['message_alert'], $_SESSION['message']);
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>

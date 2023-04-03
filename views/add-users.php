@@ -52,6 +52,11 @@ require_once ("../modules/nav.php");
                 <input class="form-control" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">
             </div>
 
+             <div class="input-group mb-3">
+                <label class="input-group-text is-required" for="passrepeat">Repetir contraseña: </label>
+                <input class="form-control" type="password" id="passrepeat" name="passrepeat" minlength="8" maxlength="50">
+            </div>
+
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="userrol">Rol: </label>
                 <select class="form-select" name="userrol" id="userrol">
@@ -88,10 +93,12 @@ require_once ("../modules/nav.php");
                 <label class="form-check-label" for="O">O</label>
             </div>      
 
-            <div class="form-switch">
+            <input type="hidden" id="url" name="url" value = "<?php echo $_SERVER["PHP_SELF"];?>"/>
+
+            <div class="form-switch mt-2">
                 <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes" checked>
                 <label class="form-check-label" for="activeuser">Activo</label>
-                <input class="btn btn-success" name="usersubmit" type="submit" value="Agregar">
+                <input class="btn btn-success mx-4" name="usersubmit" type="submit" value="Agregar">
             </div>       
 
         </form>

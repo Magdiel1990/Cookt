@@ -612,18 +612,21 @@ if(isset($_POST['customingredient'])){
 
 
 //receive the data
-if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userpassword']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['session_user'])){
+if(isset($_POST['firstname']) && isset($_POST['url']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userpassword']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['session_user'])){
 
   $firstname = sanitization($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
   $lastname = sanitization($_POST['lastname'], FILTER_SANITIZE_STRING, $conn);  
   $username=  sanitization($_POST['username'], FILTER_SANITIZE_STRING, $conn);
   $password = $_POST['userpassword'];
-  $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+  // $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+  $passrepeat = $_POST['passrepeat'];
+  $sex = $_POST['sex'];
+  $email = sanitization($_POST['useremail'], FILTER_SANITIZE_EMAIL, $conn);
+  $terms = "yes";
   $rol = $_POST['userrol'];
-  $userEmail = sanitization($_POST['useremail'], FILTER_SANITIZE_EMAIL, $conn);
   $state = $_POST['activeuser'];
   $sessionUser = $_POST['session_user'];
-  $sex = $_POST['sex'];
+
 
   $sql = "SELECT userid, `type` FROM users WHERE username ='$sessionUser';";
   $row = $conn -> query($sql) -> fetch_assoc();

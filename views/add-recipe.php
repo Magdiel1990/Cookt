@@ -13,7 +13,7 @@ require_once ("../modules/nav.php");
 ?>
 
 <main class="container p-4">
-     <?php
+    <?php
         //Messages that are shown in the add_units page
             if(isset($_SESSION['message'])){
             buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
