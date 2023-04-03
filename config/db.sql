@@ -37,14 +37,12 @@ CREATE TABLE `users` (
   `type` varchar(15) NOT NULL,
   `email`  varchar(70),
   `state` boolean not null,
-  `reportsto` int,
   `sex` char(1) not null,
   `created_at` timestamp default current_timestamp,
   `updated_at` timestamp default current_timestamp,
   PRIMARY KEY (`userid`),
   CHECK (`sex` in ("M","F","O")),
-  CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_users_users`  FOREIGN KEY (`reportsto`) references `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE  
+  CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO `users` (userid, username, firstname, lastname, password, type, email, state, reportsto, sex) VALUES (1,'Admin','Magdiel', 'Castillo','$2y$10$YYmOuD0hBlD.Lb3f6EpxKekpcNG6ogf5CaVfEy4LmIPwqSImW/abC','Admin','magdielmagdiel1@gmail.com',1,NULL,'M'),(2,'Patricia','Patricia', 'Paola','$2y$10$CntUz0zV/ndiovMs1Pkf..lltlCUq3yMrT3jIJXAFrbFtk.7ur4W.','Admin','yibeli100@gmail.com',1,NULL,'F'),(3,'Missael','Missael', 'Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,NULL,'M'),(4,'Lisandro','Lisandro', 'Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,NULL,'M');

@@ -25,8 +25,4 @@ alternative sintax
 http://localhost/Cookt/actions/edit.php no devuelve si se cierra la session
 http://localhost/Cookt/users/recovery.php phpmail
 updated_at de los usuarios cuando se actualice
-en todo lo que se agregue:
- `created_at` timestamp default current_timestamp,
-  `updated_at` timestamp default current_timestamp,
-
-en lugar de fullname, firstname and lastname
+el drop down menu esta por debajo de formularios

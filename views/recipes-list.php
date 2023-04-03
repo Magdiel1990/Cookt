@@ -27,7 +27,8 @@ $result = $conn -> query($sql);
             <div>
                 <table class="table table-sm">
                     <thead>
-                        <tr class="bg-primary">                
+                        <tr class="bg-primary">
+                            <th>Nombre completo</th>                
                             <th>Tiempo de uso</th>
                             <th>Último acceso</th>                
                         </tr>
@@ -37,17 +38,18 @@ $result = $conn -> query($sql);
                         date_default_timezone_set("America/Santo_Domingo");        
 
                         //Recipes of each user
-                        $sql = "SELECT u.created_at  as `time`, a.lastlogin FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
+                        $sql = "SELECT u.created_at  as `time`, a.lastlogin, concat_ws(' ', u.firstname, u.lastname) as `fullname` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
                         $row = $conn -> query($sql) -> fetch_assoc();   
                         
                         $time_days = round((strtotime(date("Y-m-d H:i:s")) - strtotime($row ['time'])) / 86400);
-
+                        $fullname = $row ['fullname'];
                         $lastlogin = $row ['lastlogin'];
                         if($lastlogin == "") {
                             $lastlogin = "Ninguno";
                         }
 
-                        $html = "<tr>";                        
+                        $html = "<tr>";     
+                        $html .= "<td>" . $fullname . "</td>";                   
                         $html .= "<td>" . $time_days . " días</td>";
                         $html .= "<td>" . $lastlogin . "</td>";
                         $html .= "</tr>";
@@ -57,7 +59,7 @@ $result = $conn -> query($sql);
                 </table>
             </div>
         </div>
-        <div class="col-auto">
+        <div class="col-lg-6 col-xl-6 col-md-6">
             <div class="text-center">
             <?php
                 if($result -> num_rows > 0) {

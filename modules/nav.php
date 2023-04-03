@@ -1,4 +1,5 @@
 <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
+
 <header>
     <div class="banner text-center py-1">
         <div></div>
@@ -28,7 +29,7 @@
             <li class="nav-item px-1">
                 <a class="nav-link" href="/Cookt/views/custom-recipe.php">Elegir por ingredientes</a>
             </li>
-            <li class="nav-item dropdown px-1" <?php if($_SESSION['type'] == 'Viewer') { echo "style = 'display : none;'";}?>>
+            <li class="nav-item dropdown px-1"  <?php if($_SESSION['type'] == 'Viewer') { echo "style = 'display : none;'";}?>>
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa-solid fa-gears"></i>
                 </a>
