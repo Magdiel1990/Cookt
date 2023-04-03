@@ -26,45 +26,54 @@ if(!empty($_POST)) {
         $_SESSION['message'] = '¡Complete o seleccione todos los campos por favor!';
         $_SESSION['message_alert'] = "danger";
             
-    } else {   
-        if($password != $passrepeat) {
-        //Message if the variable is null.
-        $_SESSION['message'] = '¡Contraseñas no coinciden!';
-        $_SESSION['message_alert'] = "danger";  
-        
-        } else {
+    } else {
+        $sql = "SELECT userid FROM users WHERE username = '$username';";
+        $num_rows = $conn -> query($sql) -> num_rows;
 
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-            if($state == "yes") {
-            $state = 1;
-            } else { 
-            $state = 0;
-            }
-
-            $sql = "SELECT userid FROM users WHERE firstname = '" . $firstname . "' AND lastname = '" . $lastname . "' AND username = '" . $username . "' AND `password` = '$hashed_password';";
-
-            $num_rows = $conn -> query($sql) -> num_rows;
-
-            if($num_rows == 0) {
+        if($num_rows == 0){   
+            if($password != $passrepeat) {
+            //Message if the variable is null.
+            $_SESSION['message'] = '¡Contraseñas no coinciden!';
+            $_SESSION['message_alert'] = "danger";  
             
-            $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, reportsto, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
-            $stmt->bind_param ("ssssssiis", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sessionUserId, $sex);
+            } else {
 
-            if ($stmt->execute()) {            
-            //The page is redirected to the add-recipe.php
-            header('Location: /Cookt/login.php');
-            } else {
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                if($state == "yes") {
+                $state = 1;
+                } else { 
+                $state = 0;
+                }
+
+                $sql = "SELECT userid FROM users WHERE firstname = '" . $firstname . "' AND lastname = '" . $lastname . "' AND username = '" . $username . "' AND `password` = '$hashed_password';";
+
+                $num_rows = $conn -> query($sql) -> num_rows;
+
+                if($num_rows == 0) {
+                
+                $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, reportsto, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                $stmt->bind_param ("ssssssiis", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sessionUserId, $sex);
+
+                if ($stmt->execute()) {            
+                //The page is redirected to the add-recipe.php
+                header('Location: /Cookt/login.php');
+                } else {
+                //Failure message.
+                    $_SESSION['message'] = '¡Error al agregar usuario!';
+                    $_SESSION['message_alert'] = "danger";
+                }
+                } else {
+                //Success message.
+                    $_SESSION['message'] = '¡Este usuario ya existe!';
+                    $_SESSION['message_alert'] = "success";
+                        
+                }
+            }
+        } else {
             //Failure message.
-                $_SESSION['message'] = '¡Error al agregar usuario!';
-                $_SESSION['message_alert'] = "danger";
-            }
-            } else {
-            //Success message.
-                $_SESSION['message'] = '¡Este usuario ya existe!';
-                $_SESSION['message_alert'] = "success";
-                    
-            }
+            $_SESSION['message'] = '¡Este usuario no está disponible!';
+            $_SESSION['message_alert'] = "danger";
         }
     }
 }
@@ -173,6 +182,9 @@ $userCreation -> newUser();*/
                                     <input type="hidden" id="url" name="url" value = "<?php echo $_SERVER["PHP_SELF"];?>"/>
 
                                     <div class="d-flex justify-content-center">
+                                        <h5 class="mt-2 pt-1">
+                                            <a class="text-decoration-none px-2" href="../login.php">Login</a>
+                                        </h5>
                                         <input type="reset" class="btn btn-light btn-lg" value="Limpiar todo">
                                         <input type="submit" class="btn btn-warning btn-lg ms-2" value="Registrarse">
                                     </div>

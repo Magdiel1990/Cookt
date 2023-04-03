@@ -305,18 +305,21 @@ $oldCategoryName = $row['category'];
 
 //receive the data
 if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['new_password']) && isset($_POST['repite_password']) && isset($_POST['current_password'])){
-  $userId = $_GET['userid'];  
-  $firstname = $_POST['firstname'];
-  $lastname = $_POST['lastname'];
-  $userName =  $_POST['username'];
-  $userRol = $_POST['userrol'];
-  $userEmail = $_POST['useremail'];
-  $state = isset($_POST['activeuser']) ? "yes" : "no";
-  $actualPassword = $_POST['current_password'];
-  $newPassword = $_POST['new_password'];
-  $againNewPassword = $_POST['repite_password'];  
-  $sex = $_POST['sex'];
-
+  
+    date_default_timezone_set("America/Santo_Domingo");
+  
+    $userId = $_GET['userid'];  
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $userName =  $_POST['username'];
+    $userRol = $_POST['userrol'];
+    $userEmail = $_POST['useremail'];
+    $state = isset($_POST['activeuser']) ? "yes" : "no";
+    $actualPassword = $_POST['current_password'];
+    $newPassword = $_POST['new_password'];
+    $againNewPassword = $_POST['repite_password'];  
+    $sex = $_POST['sex'];
+    $updateTime =  date("Y-m-d H:i:s");
  
     if($state == "yes") {
         $state = 1;        
@@ -338,7 +341,7 @@ if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex'
                 $row = $conn -> query($sql) -> fetch_assoc();
                 if (password_verify($actualPassword, $row['password'])){
                     $hash_password = password_hash($newPassword, PASSWORD_DEFAULT);
-                    $sql = "UPDATE users SET password = '$hash_password', firstname = '$firstname',  lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex' WHERE userid = '$userId';";
+                    $sql = "UPDATE users SET password = '$hash_password', firstname = '$firstname',  lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
 
                     if ($conn->query($sql)) {
                     //Message if the variable is null.
@@ -372,7 +375,7 @@ if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex'
                 header("Location: edit.php?userid=". $userId);
             }
         } else {
-            $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex' WHERE userid = '$userId';";
+            $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
 
             if ($conn->query($sql)) {
             //Message if the variable is null.
