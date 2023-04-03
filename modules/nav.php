@@ -8,7 +8,7 @@
         </div>
         <div class="d-flex">            
             <a class="px-3 text-dark"  href="#" style="text-decoration: none;" title="Usuario">
-            <?php echo $_SESSION['fullname']?> <i class="fa-regular fa-user"></i>
+            <?php echo $_SESSION['title'] . $_SESSION['firstname'] . " " .  $_SESSION['lastname'];?> <i class="fa-regular fa-user"></i>
             </a>        
             <a class="nav-link text-dark" href="/Cookt/users/logout.php" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     
         </div>        

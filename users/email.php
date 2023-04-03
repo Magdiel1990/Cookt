@@ -10,7 +10,7 @@ if(isset($_POST['email'])){
 
     if(!empty($email)){
     
-    $sql = "SELECT email, sex, fullname FROM users WHERE email = '$email';";
+    $sql = "SELECT email, sex, firstname, lastname FROM users WHERE email = '$email';";
     $result = $conn -> query($sql);
     $num_rows = $result -> num_rows;
     
@@ -22,7 +22,7 @@ if(isset($_POST['email'])){
             $row = $result -> fetch_assoc();
             $sex = $row ["sex"];
             $email = $row ["email"];
-            $fullname = $row ["fullname"];
+            $fullname = $row ["firstname"] . " " . $row ["lastname"];
 
             switch($sex)
             {

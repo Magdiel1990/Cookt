@@ -304,9 +304,10 @@ $oldCategoryName = $row['category'];
 
 
 //receive the data
-if(isset($_POST['userfullname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['new_password']) && isset($_POST['repite_password']) && isset($_POST['current_password'])){
+if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['new_password']) && isset($_POST['repite_password']) && isset($_POST['current_password'])){
   $userId = $_GET['userid'];  
-  $fullName = $_POST['userfullname'];
+  $firstname = $_POST['firstname'];
+  $lastname = $_POST['lastname'];
   $userName =  $_POST['username'];
   $userRol = $_POST['userrol'];
   $userEmail = $_POST['useremail'];
@@ -323,7 +324,7 @@ if(isset($_POST['userfullname']) && isset($_POST['sex']) && isset($_POST['userna
         $state = 0;
     }
 
-    if ($fullName == "" || $userName == "" || $sex == "") {
+    if ($firstname == "" || $lastname == "" || $userName == "" || $sex == "") {
     //Message if the variable is null.
         $_SESSION['message'] = '¡Complete todos los campos faltantes!';
         $_SESSION['message_alert'] = "danger";
@@ -337,7 +338,7 @@ if(isset($_POST['userfullname']) && isset($_POST['sex']) && isset($_POST['userna
                 $row = $conn -> query($sql) -> fetch_assoc();
                 if (password_verify($actualPassword, $row['password'])){
                     $hash_password = password_hash($newPassword, PASSWORD_DEFAULT);
-                    $sql = "UPDATE users SET password = '$hash_password', fullname = '$fullName', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex' WHERE userid = '$userId';";
+                    $sql = "UPDATE users SET password = '$hash_password', firstname = '$firstname',  lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex' WHERE userid = '$userId';";
 
                     if ($conn->query($sql)) {
                     //Message if the variable is null.
@@ -371,7 +372,7 @@ if(isset($_POST['userfullname']) && isset($_POST['sex']) && isset($_POST['userna
                 header("Location: edit.php?userid=". $userId);
             }
         } else {
-            $sql = "UPDATE users SET fullname = '$fullName', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex' WHERE userid = '$userId';";
+            $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex' WHERE userid = '$userId';";
 
             if ($conn->query($sql)) {
             //Message if the variable is null.

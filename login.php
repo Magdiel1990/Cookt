@@ -42,11 +42,23 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             //Calcula la hora y fecha del momento en el que se crea la sesión.
             $_SESSION["last_access"] = date("Y-n-j H:i:s");
             $_SESSION['userid'] = $row['userid'];
-            $_SESSION['fullname'] = $row['fullname'];
+            $_SESSION['firstname'] = $row['firstname'];
+            $_SESSION['lastname'] = $row['lastname'];
             $_SESSION['username'] = $row['username'];
             $_SESSION['type'] = $row['type'];
             $_SESSION['email'] = $row['email'];
-            $_SESSION['state'] = $row['state'];       
+            $_SESSION['state'] = $row['state'];     
+            
+            switch ($row['sex']){
+                case "M": $_SESSION['title'] = "Sr. ";
+                break;
+
+                case "F": $_SESSION['title'] = "Sra. ";
+                break;
+
+                default: $_SESSION['title'] = "";
+            }
+
 
             header("Location: ". $_SESSION['lastpage']);
         } else {

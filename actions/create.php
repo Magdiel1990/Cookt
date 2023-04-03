@@ -612,9 +612,10 @@ if(isset($_POST['customingredient'])){
 
 
 //receive the data
-if(isset($_POST['userfullname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userpassword']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['session_user'])){
+if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userpassword']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['session_user'])){
 
-  $fullName = sanitization($_POST['userfullname'], FILTER_SANITIZE_STRING, $conn);
+  $firstname = sanitization($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
+  $lastname = sanitization($_POST['lastname'], FILTER_SANITIZE_STRING, $conn);  
   $username=  sanitization($_POST['username'], FILTER_SANITIZE_STRING, $conn);
   $password = $_POST['userpassword'];
   $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -632,7 +633,7 @@ if(isset($_POST['userfullname']) && isset($_POST['sex']) && isset($_POST['userna
     //The page is redirected to the add-recipe.php
         header('Location: ../error/error.php');
   } else {
-    if ($fullName == "" || $username == "" || $password == ""  || $sex = "") {
+    if ($firstname == "" || $lastname == "" || $username == "" || $password == ""  || $sex == "") {
     //Message if the variable is null.
         $_SESSION['message'] = '¡Complete todos los campos por favor!';
         $_SESSION['message_alert'] = "danger";
@@ -647,14 +648,14 @@ if(isset($_POST['userfullname']) && isset($_POST['sex']) && isset($_POST['userna
         $state = 0;
       }
 
-      $sql = "SELECT userid FROM users WHERE fullname = '$fullName' AND username = '$username' AND `password` = '$hashed_password';";
+      $sql = "SELECT userid FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
 
       $num_rows = $conn -> query($sql) -> num_rows;
 
       if($num_rows == 0) {
         
-      $stmt = $conn -> prepare("INSERT INTO users (fullname, username, `password`, `type`, email, `state`, reportsto, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-      $stmt->bind_param ("sssssiis", $fullName, $username, $hashed_password, $rol, $userEmail, $state, $sessionUserId, $sex);
+      $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, reportsto, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+      $stmt->bind_param ("ssssssiis", $firstname, $lastname, $username, $hashed_password, $rol, $userEmail, $state, $sessionUserId, $sex);
 
         if ($stmt->execute()) {
       //Success message.

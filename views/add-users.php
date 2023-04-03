@@ -33,8 +33,13 @@ require_once ("../modules/nav.php");
         <form class="m-3 col-auto" method="POST" action="../actions/create.php">            
             
             <div class="input-group mb-3">
-                <label class="input-group-text is-required" for="userfullname">Nombre Completo: </label>
-                <input class="form-control" type="text" id="userfullname" name="userfullname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="7" maxlength="50">
+                <label class="input-group-text is-required" for="firstname">Nombre: </label>
+                <input class="form-control" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30">
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text is-required" for="lastname">Apellido: </label>
+                <input class="form-control" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="40">
             </div>
 
             <div class="input-group mb-3">
@@ -72,9 +77,15 @@ require_once ("../modules/nav.php");
                 <input class="form-check-input" type="radio" name="sex" id="M" value="M" required>
                 <label class="form-check-label" for="M">M</label>
             </div>
+
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="sex" id="F" value="F">
                 <label class="form-check-label" for="F">F</label>
+            </div>      
+
+            <div class="form-check form-check-inline my-2">
+                <input class="form-check-input" type="radio" name="sex" id="O" value="O">
+                <label class="form-check-label" for="O">O</label>
             </div>      
 
             <div class="form-switch">

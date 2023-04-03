@@ -387,7 +387,8 @@ $sql = "SELECT * FROM users WHERE userid = '$userId';";
 $row = $conn -> query($sql) -> fetch_assoc();
 
 $userName = $row["username"];
-$fullName=  $row["fullname"];
+$firstName=  $row["firstname"];
+$lastName=  $row["lastname"];
 $type = $row["type"];
 $state = $row["state"];
 $email = $row["email"];
@@ -416,8 +417,13 @@ if($state == 1) {
             <form class="bg-form card card-body" action="update.php?userid=<?php echo $userId; ?>" method="POST">
 
                 <div class="input-group mb-3">
-                    <label class="input-group-text is-required" for="userfullname">Nombre Completo: </label>
-                    <input class="form-control"  value="<?php echo $fullName; ?>" type="text" id="userfullname" name="userfullname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="7" maxlength="50">
+                    <label class="input-group-text is-required" for="firstname">Nombre: </label>
+                    <input class="form-control"  value="<?php echo $firstName; ?>" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30">
+                </div>
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text is-required" for="lastname">Apellido: </label>
+                    <input class="form-control"  value="<?php echo $lastName; ?>" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="40">
                 </div>
 
                 <div style="<?php echo $userNameLabelState;?>" class="input-group mb-3">
@@ -468,6 +474,10 @@ if($state == 1) {
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="sex" id="F" value="F" <?php if($sex == "F"){ echo "checked";}?>>
                         <label class="form-check-label" for="F">F</label>
+                    </div>
+                     <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="sex" id="O" value="O" <?php if($sex == "O"){ echo "checked";}?>>
+                        <label class="form-check-label" for="O">O</label>
                     </div>
                 </div>  
 
