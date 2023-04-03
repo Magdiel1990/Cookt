@@ -110,7 +110,7 @@ require_once ("../modules/nav.php");
                     <th>Usuario</th>
                     <th>Rol</th>
                     <th>Estado</th> 
-                    <th>Recetas</th>                   
+                    <th>Recetas</th>             
                     <th>Acciones</th>                     
                 </tr>
             </thead>

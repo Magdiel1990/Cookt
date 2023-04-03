@@ -20,6 +20,43 @@ $result = $conn -> query($sql);
 ?>
 <main class="container p-4 mt-4">
     <div class="row justify-content-center table form">
+        <div class="col-lg-8 col-xl-8 col-md-8 mb-5">
+            <div class="text-center">
+                <h3>Datos del usuario <?php echo $username;?></h3>                
+            </div>
+            <div>
+                <table class="table table-sm">
+                    <thead>
+                        <tr class="bg-primary">                
+                            <th>Tiempo de uso</th>
+                            <th>Último acceso</th>                
+                        </tr>
+                    </thead>
+                    <tbody>   
+                    <?php 
+                        date_default_timezone_set("America/Santo_Domingo");        
+
+                        //Recipes of each user
+                        $sql = "SELECT u.created_at  as `time`, a.lastlogin FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
+                        $row = $conn -> query($sql) -> fetch_assoc();   
+                        
+                        $time_days = round((strtotime(date("Y-m-d H:i:s")) - strtotime($row ['time'])) / 86400);
+
+                        $lastlogin = $row ['lastlogin'];
+                        if($lastlogin == "") {
+                            $lastlogin = "Ninguno";
+                        }
+
+                        $html = "<tr>";                        
+                        $html .= "<td>" . $time_days . " días</td>";
+                        $html .= "<td>" . $lastlogin . "</td>";
+                        $html .= "</tr>";
+                        echo $html;
+                    ?>
+                    </tbody> 
+                </table>
+            </div>
+        </div>
         <div class="col-auto">
             <div class="text-center">
             <?php
@@ -49,9 +86,9 @@ $result = $conn -> query($sql);
             }
             ?>
         </div>
-               
+           
     </div>
-    <div class="text-center">
+    <div class="text-center mb-4">
         <a class="btn btn-secondary" href="../views/add-users.php">Usuarios</a>
     </div> 
 </main>

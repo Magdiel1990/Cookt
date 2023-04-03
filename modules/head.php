@@ -29,7 +29,6 @@ if (!isset($_SESSION['username'])) {
         //Start the session.
         session_start();
 
-        //Save the the last page before the user is logged out.
         $_SESSION['lastpage'] = $_SERVER['PHP_SELF'];
 
         //Reasign the user that was logged out.
