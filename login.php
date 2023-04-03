@@ -38,16 +38,16 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             //Creo la cookie.        
             session_set_cookie_params(0, "/", $_SERVER["HTTP_HOST"], 0);
             //Declaro las variables de la sesión.
-            $_SESSION["login"] = "yes";
-            //Calcula la hora y fecha del momento en el que se crea la sesión.
-            $_SESSION["last_access"] = date("Y-n-j H:i:s");
             $_SESSION['userid'] = $row['userid'];
             $_SESSION['firstname'] = $row['firstname'];
             $_SESSION['lastname'] = $row['lastname'];
             $_SESSION['username'] = $row['username'];
             $_SESSION['type'] = $row['type'];
             $_SESSION['email'] = $row['email'];
-            $_SESSION['state'] = $row['state'];     
+            $_SESSION['state'] = $row['state'];  
+
+            //Calcula la hora y fecha del momento en el que se crea la sesión.
+            $_SESSION["last_access"] = date("Y-n-j H:i:s");               
             
             switch ($row['sex']){
                 case "M": $_SESSION['title'] = "Sr. ";
@@ -58,8 +58,10 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
                 default: $_SESSION['title'] = "";
             }
-
             
+            $sql = "INSERT INTO access (userid) VALUES (" . $_SESSION['userid'] . ");";
+            
+            $conn -> query($sql);
 
             header("Location: ". $_SESSION['lastpage']);
         } else {

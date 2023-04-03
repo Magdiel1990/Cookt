@@ -30,7 +30,8 @@ $result = $conn -> query($sql);
                         <tr class="bg-primary">
                             <th>Nombre completo</th>                
                             <th>Tiempo de uso</th>
-                            <th>Último acceso</th>                
+                            <th>Último acceso</th>
+                            <th>Accesos</th>                 
                         </tr>
                     </thead>
                     <tbody>   
@@ -38,12 +39,14 @@ $result = $conn -> query($sql);
                         date_default_timezone_set("America/Santo_Domingo");        
 
                         //Recipes of each user
-                        $sql = "SELECT u.created_at  as `time`, a.lastlogin, concat_ws(' ', u.firstname, u.lastname) as `fullname` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
+                        $sql = "SELECT u.created_at  as `time`, max(a.lastlogin) as `lastlogin`, concat_ws(' ', u.firstname, u.lastname) as `fullname`, count(a.userid) as `quantity` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
                         $row = $conn -> query($sql) -> fetch_assoc();   
                         
                         $time_days = round((strtotime(date("Y-m-d H:i:s")) - strtotime($row ['time'])) / 86400);
                         $fullname = $row ['fullname'];
-                        $lastlogin = $row ['lastlogin'];
+                        $lastlogin = date("d-m-Y g:i A", strtotime($row ['lastlogin']));
+                        $accesses = $row ['quantity'];
+
                         if($lastlogin == "") {
                             $lastlogin = "Ninguno";
                         }
@@ -52,6 +55,7 @@ $result = $conn -> query($sql);
                         $html .= "<td>" . $fullname . "</td>";                   
                         $html .= "<td>" . $time_days . " días</td>";
                         $html .= "<td>" . $lastlogin . "</td>";
+                        $html .= "<td>" . $accesses . "</td>";
                         $html .= "</tr>";
                         echo $html;
                     ?>
