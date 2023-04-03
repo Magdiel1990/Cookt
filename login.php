@@ -25,7 +25,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
         $row = $result -> fetch_assoc();
        
-        if (password_verify($password, $row['password']) && $row['state'] = 1) {
+        if (password_verify($password, $row['password'])) {
              //When a new user logs in, the index page is always the first page to load.
             if($_SESSION['username'] != $row['username']) {
                 unset($_SESSION['lastpage']);
@@ -59,6 +59,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 default: $_SESSION['title'] = "";
             }
 
+            
 
             header("Location: ". $_SESSION['lastpage']);
         } else {
