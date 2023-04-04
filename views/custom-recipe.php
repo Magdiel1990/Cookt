@@ -91,25 +91,42 @@ require_once ("../modules/nav.php");
             $html .= "<ol>";
             while($row = $result -> fetch_assoc()) {
                 $html .= "<li>";
-                $html .= "<a href='../actions/delete.php?custom=" . $row['ingredient'] . "' " . "title='Eliminar'>";
+                $html .= "<a href='../actions/delete.php?custom=" . $row['ingredient'] . "' " . "title='Eliminar' class='ingredients'>";
                 $html .= ucfirst($row["ingredient"]);
                 $html .= "</a>";
                 $html .= "</li>";
                 $ingArray[] = $row["ingredientid"];
             }
             $html .= "</ol>";
-            $html .= "</div>";  
-            $html .= "<div class='text-center'>";
-            $html .= "<form action='recipe-suggestions.php?ingredients=" . base64_encode(serialize($ingArray)) . "&username=" . $_SESSION['username'] . "' method='POST'>";       
-            $html .= "<input class='btn btn-secondary' type='submit' value='Buscar'>";
-            $html .= "</form>";           
+            $html .= "</div>";                   
             $html .= "</div>";      
             echo $html;
         }
         ?>
         </div>
+            
+        <div class="col-auto">
+            <ol id="ingredientlist">
+            </ol>
+        </div>
     </div>
 </main>
+
+<script>
+var miJSON = <?php echo json_encode($ingArray); ?>;
+
+var request = new Request({
+   url: "/Cookt/ajax/suggestion-ajax.php",
+   data: "datos=" + miJSON,
+   onSuccess: function(textoRespuesta){
+      $('ingredientlist').set("html", textoRespuesta);
+   },
+   onFailure: function(){
+      $('ingredientlist').set("html", "fallo en la conexión Ajax");
+   }
+})
+request.send();
+</script>
 <?php
 $conn -> close();
 //Footer of the page.
