@@ -51,71 +51,84 @@ $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
 $row = $result->fetch_assoc();
 ?>
-<main class="container p-2 mt-4">
+<main class="container mt-4">
+    <?php
+    if(isset($row["category"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["date"])) {
+    $category = $row["category"];
+    $recipeName = $row["recipename"];
+    $cookingTime = $row["cookingtime"];
+    $preparation = $row["preparation"];
 
-<?php
-if(isset($row["category"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["date"])) {
-$category = $row["category"];
-$recipeName = $row["recipename"];
-$cookingTime = $row["cookingtime"];
-$preparation = $row["preparation"];
-$date = date ("d-M-Y", strtotime($row["date"]));
+    $day = $date = date ("d", strtotime($row["date"]));      
 
-$categoryDir = "../imgs/categories/";
+    $month = date ("M", strtotime($row["date"]));
+    //Function to convert to spanish months
+    $spanishMonth = spanishMonth($month);  
+    
+    $year = $date = date ("Y", strtotime($row["date"]));
 
-//Function to get the image directory from the category
-$categoryImgDir = directoryFiles($categoryDir , $category);
 
-?>
-    <div style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">
-        <div class="jumbotron row justify-content-center">
-            <div class="bg-form p-3 mt-3 col-sm-auto col-md-9 col-lg-8">
-                <div class="text-center">
-                    <h1 class="display-4 text-info"> <?php echo $recipeName; ?> </h1>
-                    <h5 class="text-warning" style='font-size: 1.5rem;'> (<?php echo $cookingTime; ?> minutos)</h5>
-                </div>
-                <div class="d-flex flex-row justify-content-between">
-                    <ul class="lead"> 
-                    <?php            
-                    $result = $conn -> query($sql);
-                    
-                    while($row = $result->fetch_assoc()){
-                        echo "<li class='text-success' style='font-size: 1.5rem;'>" . $row["indications"]. ".</li>";
-                    }        
-                    ?>   
-                    </ul>
-                    <?php
-                        if(file_exists($recipeImageDir)) {
-                    ?>
-                    <div>
-                        <img src="<?php echo $recipeImageDir?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
-                    </div>                 
-                    <?php
-                        }
-                    ?>
-                </div>
-                <hr class="my-2">
-            </div>
-            <div class="lead text-center">
-                <div class="mt-3">
-                    <a class="btn btn-primary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Preparación
-                    </a>
-                    <a class="btn btn-secondary" href="<?php echo $pathToReturn;?>">Regresar</a>
-                </div>
-            </div>
-            <div class="col-sm-8 col-md-8 py-4">
-                <div class="collapse bg-form" id="collapse">
-                    <div class="card card-body text-dark" style="font-size: 1.5rem;"> <?php echo ucfirst($preparation); ?> 
-                        <span class="text-info mt-4 text-center"> <?php echo $date; ?> </span>            
+    $date = $day . "/" . $spanishMonth . "/" .  $year;
+
+    $categoryDir = "../imgs/categories/";
+
+    //Function to get the image directory from the category
+    $categoryImgDir = directoryFiles($categoryDir , $category);
+
+    ?>
+    <div class="my-5" style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">
+        <div class="row m-auto">
+            <div class="d-flex flex-column justify-content-center align-items-center jumbotron">
+
+                <div class="bg-form p-2 my-4 col-lg-9 col-xl-9">
+                    <div class="text-center">
+                        <h1 class="display-4 text-info"> <?php echo $recipeName; ?> </h1>
+                        <h5 class="text-warning" style='font-size: 1.5rem;'> (<?php echo $cookingTime; ?> minutos)</h5>
                     </div>
-                </div>        
-            </div>        
+                    <div class="my-4">
+                        <div class="text-center">
+                            <img src="<?php echo $recipeImageDir?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
+                        </div> 
+                        <ul class="lead py-4"> 
+                        <?php            
+                        $result = $conn -> query($sql);
+                        
+                        while($row = $result->fetch_assoc()){
+                            echo "<li class='text-success' style='font-size: 1.5rem;'>" . $row["indications"]. ".</li>";
+                        }        
+                        ?>   
+                        </ul>
+                        <?php
+                            if(file_exists($recipeImageDir)) {
+                        ?>                         
+                        <?php
+                            }
+                        ?>
+                    </div>
+                    <hr class="my-4">
+                </div>
+
+                <div class="p-2 col-lg-9 col-xl-9">
+                    <div class="lead text-center">
+                        <a class="btn btn-primary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Preparación
+                        </a>
+                        <a class="btn btn-secondary" href="<?php echo $pathToReturn;?>">Regresar</a>
+                    </div>
+                    <div class="py-4">
+                        <div class="collapse bg-form" id="collapse">
+                            <div class="card card-body text-dark" style="font-size: 1.5rem;"> <?php echo ucfirst($preparation); ?> 
+                                <span class="text-info mt-4 text-center"> <?php echo $date; ?> </span>            
+                            </div>
+                        </div>        
+                    </div> 
+                </div>       
+            </div>
         </div>
     </div>
-<?php
-} else {
-?> 
+    <?php
+    } else {
+    ?> 
     <div class="row justify-content-center">
         <p class="col-auto">¡Esta receta no tiene ingredientes!</p>
         <div class="col-auto">
@@ -127,12 +140,10 @@ $categoryImgDir = directoryFiles($categoryDir , $category);
             </a>                
         </div>
     </div> 
-<?php
-} 
-?>
-
+    <?php
+    } 
+    ?>
 </main>
-
 <?php
 $conn -> close();
 //Footer of the page.
