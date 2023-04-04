@@ -106,27 +106,47 @@ require_once ("../modules/nav.php");
         </div>
             
         <div class="col-auto">
-            <ol id="ingredientlist">
-            </ol>
+        <?php
+        if(isset($ingArray)){
+        $where = "WHERE ";
+
+        $count = count($ingArray);
+        for($i=0; $i<$count; $i++){
+            $where .= "ingredientid = '". $ingArray[$i] . "' OR ";
+        }
+
+        //The final where delection.
+        $where = substr_replace($where, "", -4);
+
+        $where .= " AND username = '" . $_SESSION['username'] . "'";
+    
+        $sql = "SELECT DISTINCT r.recipename FROM recipeinfo ri JOIN  recipe r ON r.recipeid = ri.recipeid " . $where  . " ORDER BY RAND();";
+        $result = $conn -> query($sql);
+
+        $html = "";
+
+            if($result -> num_rows > 0){
+                $html .= "<div class='suggestion_container'>";
+                $html .= "<ul>";
+                while($row = $result -> fetch_assoc()) {            
+                    $html .= "<li><a href='../views/recipes.php?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['PHP_SELF'])) . "&ingredients=" . base64_encode(serialize($ingArray)) ."'>" . $row['recipename'] . "</a></li>";
+                } 
+                $html .= "</ul>";
+                $html .= "</div>";
+                echo $html;
+            } else {
+                $html .= "<p class='text-center'>Ninguna receta disponible!";
+                $html .= "<a class='btn btn-secondary' href='custom-recipe.php'>Regresar</a>";
+                $html .= "</p>";
+
+                echo $html;
+            }
+        }
+        ?>
         </div>
     </div>
 </main>
 
-<script>
-var miJSON = <?php echo json_encode($ingArray); ?>;
-
-var request = new Request({
-   url: "/Cookt/ajax/suggestion-ajax.php",
-   data: "datos=" + miJSON,
-   onSuccess: function(textoRespuesta){
-      $('ingredientlist').set("html", textoRespuesta);
-   },
-   onFailure: function(){
-      $('ingredientlist').set("html", "fallo en la conexión Ajax");
-   }
-})
-request.send();
-</script>
 <?php
 $conn -> close();
 //Footer of the page.

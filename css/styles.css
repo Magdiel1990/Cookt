@@ -13,11 +13,6 @@ h3 {
     font-weight: bold;
 }
 
-.sticky {
-    position: sticky;
-    top: 0px;
-}
-
 .nav-item {
     font-size: 1rem;
 }
@@ -58,6 +53,17 @@ table td, p, ul li, ol li, li a {
     font-size: 1.5rem;
     color: rgb(22, 182, 4);  
     text-decoration: none;
+}
+
+.suggestion_container {
+    border: solid 2px #999;
+    margin: 2rem 1rem;
+    padding: 1rem;
+}
+
+.suggestion_container ul li a, .suggestion_container ul li {
+    color: rgb(22, 93, 244); 
+    margin: 1rem 0;
 }
 
 ol li a, b {
@@ -113,8 +119,8 @@ label, select, input, option {
     font-size: 1.8rem;
 }
 .banner a {
-     text-decoration: none;
-     color: rgb(94, 91, 254);
+    text-decoration: none;
+    color: rgb(94, 91, 254);
 }
 
 .bg-form  {
@@ -135,23 +141,23 @@ label, select, input, option {
 }
 
 .is-required:after {
-  content: '*';
-  margin-left: 3px;
-  color: red;
-  font-weight: bold;
+    content: '*';
+    margin-left: 3px;
+    color: red;
+    font-weight: bold;
 }
 
 /*Error page made by purplexmoss (https://freefrontend.com/html-css-404-page-templates/)*/
 .error {
-  background-color: #95c2de;
+    background-color: #95c2de;
 }
 
 .mainbox {
-  background-color: #95c2de;
-  margin: auto;
-  height: 600px;
-  width: 600px;
-  position: relative;
+    background-color: #95c2de;
+    margin: auto;
+    height: 600px;
+    width: 600px;
+    position: relative;
 }
 
 .err {
@@ -163,11 +169,11 @@ label, select, input, option {
 }
 
 .far {
-  position: absolute;
-  font-size: 8.5rem;
-  left: 42%;
-  top: 15%;
-  color: #ffffff;
+    position: absolute;
+    font-size: 8.5rem;
+    left: 42%;
+    top: 15%;
+    color: #ffffff;
 }
 
 .err2 {
@@ -188,12 +194,12 @@ label, select, input, option {
   }
 
 .errorlink {
-  text-decoration: none;
-  color: white;
+    text-decoration: none;
+    color: white;
 }
 
 .errorlink:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 h2{
