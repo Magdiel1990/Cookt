@@ -45,7 +45,7 @@ CREATE TABLE `users` (
   CONSTRAINT `fk_users_type`  FOREIGN KEY (`type`) references `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO `users` (userid, username, firstname, lastname, password, type, email, state, reportsto, sex) VALUES (1,'Admin','Magdiel', 'Castillo','$2y$10$YYmOuD0hBlD.Lb3f6EpxKekpcNG6ogf5CaVfEy4LmIPwqSImW/abC','Admin','magdielmagdiel1@gmail.com',1,NULL,'M'),(2,'Patricia','Patricia', 'Paola','$2y$10$CntUz0zV/ndiovMs1Pkf..lltlCUq3yMrT3jIJXAFrbFtk.7ur4W.','Admin','yibeli100@gmail.com',1,NULL,'F'),(3,'Missael','Missael', 'Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,NULL,'M'),(4,'Lisandro','Lisandro', 'Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,NULL,'M');
+INSERT INTO `users` (userid, username, firstname, lastname, password, type, email, state, sex) VALUES (1,'Admin','Magdiel', 'Castillo','$2y$10$YYmOuD0hBlD.Lb3f6EpxKekpcNG6ogf5CaVfEy4LmIPwqSImW/abC','Admin','magdielmagdiel1@gmail.com',1,'M'),(2,'Patricia','Patricia', 'Paola','$2y$10$CntUz0zV/ndiovMs1Pkf..lltlCUq3yMrT3jIJXAFrbFtk.7ur4W.','Admin','yibeli100@gmail.com',1,'F'),(3,'Missael','Missael', 'Castillo','$2y$10$Z.xyp82ioWU.fXRMJxUtKuudHPeNKyYhoROTyJ4qc3PDHj9Q4MTFO','Viewer','',1,'M'),(4,'Lisandro','Lisandro', 'Polanco','$2y$10$EhvxQ/0kstgRoT326dbkPOyfw2E34c0NG8IkkBqX745HcRLi6zKFu','Standard','',1,'M');
 
 CREATE TABLE access (
 id int not null auto_increment,
