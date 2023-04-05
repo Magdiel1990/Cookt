@@ -121,7 +121,7 @@ class TimeConvertor {
     }
     
     //Function to convert to spanish units
-    public function spanishunit (){
+    public function spanishmonth(){
         switch($this -> unit){
             case "Jan": return "Enero";
             break;
@@ -146,33 +146,6 @@ class TimeConvertor {
             case "Nov": return "Noviembre";
             break;
             default: return "Diciembre";
-        }
-    }
-}
-
-class UnitConvertor {
-    public $unit;
-    private $diff;
-
-    function __construct($unit, $diff){
-        $this -> unit = $unit;   
-        $this -> diff = $diff; 
-    }
-    
-    private function diff(){
-        $this -> diff = $this -> unit - floor($this -> unit);
-    }
-
-    //Function to convert to spanish units
-    public function unitToFraction (){
-        switch($this -> diff){            
-            case 0.25: return $this -> unit = floor($this -> unit) . "1/4";
-            break;
-            case 0.50: return $this -> unit = floor($this -> unit) . "1/2";
-            break;
-            case 0.75: return $this -> unit = floor($this -> unit) . "3/4";
-            break;       
-            default: $this -> unit = floor($this -> unit);
         }
     }
 }
