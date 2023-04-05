@@ -647,13 +647,11 @@ if(isset($_POST['firstname']) && isset($_POST['url']) && isset($_POST['lastname'
   $filter = new Filter ($_POST['passrepeat'], FILTER_SANITIZE_STRING, $conn);
   $passrepeat = $filter -> sanitization();
   
-  $hashed_password = password_hash($password, PASSWORD_DEFAULT);
   $sex = $_POST['sex']; 
   $terms = "yes";
   $rol = $_POST['userrol'];
   $state = $_POST['activeuser'];
   $sessionUser = $_POST['session_user'];
-
 
   $sql = "SELECT userid, `type` FROM users WHERE username ='$sessionUser';";
   $row = $conn -> query($sql) -> fetch_assoc();
@@ -671,47 +669,59 @@ if(isset($_POST['firstname']) && isset($_POST['url']) && isset($_POST['lastname'
     //The page is redirected to the add-recipe.php
         header('Location: ../views/add-users.php');
     } else {   
-
-      if($state == "yes") {
-        $state = 1;
-      } else { 
-        $state = 0;
-      }
-
-      $sql = "SELECT userid FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
-
-      $num_rows = $conn -> query($sql) -> num_rows;
-
-      if($num_rows == 0) {
+      if($password != $passrepeat) {
+        //Message if the variable is null.
+        $_SESSION['message'] = '¡Contraseñas no coinciden!';
+        $_SESSION['message_alert'] = "danger";  
         
-      $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, reportsto, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
-      $stmt->bind_param ("ssssssiis", $firstname, $lastname, $username, $hashed_password, $rol, $userEmail, $state, $sessionUserId, $sex);
-
-        if ($stmt->execute()) {
-      //Success message.
-            $_SESSION['message'] = '¡Usuario agregado con éxito!';
-            $_SESSION['message_alert'] = "success";
-
-            $stmt->close();
-                
-      //The page is redirected to the ingredients.php.
-            header('Location: ../views/add-users.php');
-
-          } else {
-      //Failure message.
-            $_SESSION['message'] = '¡Error al agregar usuario!';
-            $_SESSION['message_alert'] = "danger";
-                
-      //The page is redirected to the ingredients.php.
-            header('Location: ../views/add-users.php');;
-        }
+        //The page is redirected to the add-recipe.php
+        header('Location: ../views/add-users.php');
+            
       } else {
+
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        if($state == "yes") {
+          $state = 1;
+        } else { 
+          $state = 0;
+        }
+
+        $sql = "SELECT userid FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
+
+        $num_rows = $conn -> query($sql) -> num_rows;
+
+        if($num_rows == 0) {
+          
+        $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, reportsto, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+        $stmt->bind_param ("ssssssiis", $firstname, $lastname, $username, $hashed_password, $rol, $userEmail, $state, $sessionUserId, $sex);
+
+          if ($stmt->execute()) {
         //Success message.
-            $_SESSION['message'] = '¡Este usuario ya existe!';
-            $_SESSION['message_alert'] = "success";
-                
+              $_SESSION['message'] = '¡Usuario agregado con éxito!';
+              $_SESSION['message_alert'] = "success";
+
+              $stmt->close();
+                  
         //The page is redirected to the ingredients.php.
-            header('Location: ../views/add-users.php');
+              header('Location: ../views/add-users.php');
+
+            } else {
+        //Failure message.
+              $_SESSION['message'] = '¡Error al agregar usuario!';
+              $_SESSION['message_alert'] = "danger";
+                  
+        //The page is redirected to the ingredients.php.
+              header('Location: ../views/add-users.php');;
+          }
+        } else {
+          //Success message.
+              $_SESSION['message'] = '¡Este usuario ya existe!';
+              $_SESSION['message_alert'] = "success";
+                  
+          //The page is redirected to the ingredients.php.
+              header('Location: ../views/add-users.php');
+        }
       }
     }
   }
