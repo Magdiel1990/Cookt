@@ -25,7 +25,7 @@ require_once ("../modules/nav.php");
     ?>
 
     <div  class="row mt-2 text-center justify-content-center">
-        <h3>ELEGIR POR INGREDIENTE</h3>
+        <h3>Elegir por Ingrediente</h3>
 <!--Form for filtering the database info-->
         <form class="m-3 col-auto" method="POST" action="../actions/create.php">
 
@@ -129,7 +129,7 @@ require_once ("../modules/nav.php");
                 $html .= "<div class='suggestion_container'>";
                 $html .= "<ul>";
                 while($row = $result -> fetch_assoc()) {            
-                    $html .= "<li><a href='../views/recipes.php?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['PHP_SELF'])) . "&ingredients=" . base64_encode(serialize($ingArray)) ."'>" . $row['recipename'] . "</a></li>";
+                    $html .= "<li><a href='/Cookt/views/recipes.php?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['PHP_SELF'])) . "&ingredients=" . base64_encode(serialize($ingArray)) ."'>" . $row['recipename'] . "</a></li>";
                 } 
                 $html .= "</ul>";
                 $html .= "</div>";
