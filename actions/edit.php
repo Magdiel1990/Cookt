@@ -199,8 +199,8 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
     unset($_SESSION['message_alert'], $_SESSION['message']);
 }
 ?>
-    <div class="row mt-2 text-center justify-content-center">
-        <h3>EDITAR RECETA</h3>     
+    <div class="row mt-2 justify-content-center">
+        <h3 class="text-center">Editar Receta</h3>     
         <div class="mt-3 col-auto">
             <div class="bg-form card card-body">
                 <form enctype="multipart/form-data" action="update.php?editname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
@@ -210,7 +210,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
                         <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="50" min-length="7" required>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 text-center">
                         <label class="form-label" for="recipeImage">Imagen:</label>
                         <input type="file" name="recipeImage" accept=".jpg, .jpeg, .png, .gif" class="form-control" id="recipeImage">
                     </div> 
@@ -236,14 +236,14 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
                         </div>
                     </div>
                             
-                    <div class="mb-3">
+                    <div class="mb-3 text-center">
                         <label  class="form-label is-required" for="preparation">Preparación: </label>
                         <textarea name="preparation"  cols="4" rows="4" class="form-control" id="preparation" required>
                             <?php echo $preparation;?>
                         </textarea>
                     </div>
                                       
-                    <div class="mb-3">
+                    <div class="mb-3 text-center">
                         <input class='btn btn-primary' type="submit" name="edit" value="Actualizar"> 
                         <a href='../index.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
                     </div>
@@ -251,7 +251,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
             </div>
         </div>
          
-        <div class="mt-3 col-md-8 col-sm-10 col-lg-5 col-xl-4">
+        <div class="mt-3 col-md-9 col-sm-11 col-lg-6 col-xl-5">
             <div class="card card-body bg-form">
                 <h3 class="text-center">Editar Ingredientes</h3>
                 <div class="mt-2">
