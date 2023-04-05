@@ -38,8 +38,10 @@ $result = $conn -> query($sql);
                     <tbody>   
                     <?php 
                         $imgDirectory = "../imgs/recipes/" . $username . "/";
-
-                        $size = directorySize($imgDirectory) . " MB";
+                        
+                        //Size of the images directory
+                        $files = new Directories($imgDirectory, null);
+                        $size = $files -> directorySize() . " MB";
                         
                         date_default_timezone_set("America/Santo_Domingo");        
 

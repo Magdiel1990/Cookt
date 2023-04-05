@@ -109,8 +109,10 @@ $categoryId = $row['categoryid'];
                 $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', observation = '$observation', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
                 
                 $target_dir = "../imgs/recipes/". $userName  ."/";
+                
+                $files = new Directories($target_dir, $oldName);
+                $imgOldRecipeDir = $files -> directoryFiles();
 
-                $imgOldRecipeDir = directoryFiles($target_dir, $oldName);
                 unlink($imgOldRecipeDir);
 
                 $fileExtension = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));

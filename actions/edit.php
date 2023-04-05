@@ -49,7 +49,8 @@ $ingredient = $row["ingredient"];
 <?php
 //Messages that are shown in the index page
     if(isset($_SESSION['message'])){
-    buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
+    $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+    echo $message -> buttonMessage();           
 
 //Unsetting the messages variables so the message fades after refreshing the page.
     unset($_SESSION['message_alert'], $_SESSION['message']);
@@ -127,8 +128,9 @@ $category = $row["category"];
 <main class="container p-4">
 <?php
 //Messages that are shown in the index page
-    if(isset($_SESSION['message'])){
-    buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
+    if(isset($_SESSION['message'])) {
+    $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+    echo $message -> buttonMessage();         
 
 //Unsetting the messages variables so the message fades after refreshing the page.
     unset($_SESSION['message_alert'], $_SESSION['message']);
@@ -193,7 +195,8 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
 <?php
 //Messages that are shown in the index page
     if(isset($_SESSION['message'])){
-    buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
+    $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+    echo $message -> buttonMessage();       
 
 //Unsetting the messages variables so the message fades after refreshing the page.
     unset($_SESSION['message_alert'], $_SESSION['message']);
@@ -404,10 +407,11 @@ if($state == 1) {
 <main class="container p-4">
 <?php
 //Messages that are shown in the index page
-    if(isset($_SESSION['message'])){
-    buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
+if(isset($_SESSION['message'])){
+    $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+    echo $message -> buttonMessage();        
 
-//Unsetting the messages variables so the message fades after refreshing the page.
+    //Unsetting the messages variables so the message fades after refreshing the page.
     unset($_SESSION['message_alert'], $_SESSION['message']);
 }
 ?>

@@ -101,7 +101,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 <?php
 //Messages that are shown in the add_units page
     if(isset($_SESSION['message'])){
-    buttonMessage($_SESSION['message'], $_SESSION['message_alert']);        
+    $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+    echo $message -> buttonMessage();          
 
 //Unsetting the messages variables so the message fades after refreshing the page.
     unset($_SESSION['message_alert'], $_SESSION['message']);

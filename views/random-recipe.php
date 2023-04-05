@@ -87,7 +87,9 @@ if(isset($_POST["category"])) {
             <p class="text-info"> <?php echo $recipename . " (" . $cookingtime . " minutos)"; ?> </p>
             <?php
             $imageDir = "../imgs/recipes/" .  $_SESSION['username'] . "/";
-            $recipeImageDir = directoryFiles($imageDir, $recipename);
+
+            $files = new Directories($imageDir, $recipename);
+            $recipeImageDir = $files -> directoryFiles();
 
             if(file_exists($recipeImageDir)) {
             ?>

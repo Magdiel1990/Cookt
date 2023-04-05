@@ -26,7 +26,10 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     }
 
     $imageDir = "../imgs/recipes/" . $username . "/";
-    $recipeImageDir = directoryFiles($imageDir, $recipe);
+
+    $files = new Directories($imageDir, $recipe);
+    $recipeImageDir = $files -> directoryFiles();
+
 }
 
 $sql = "SELECT r.recipeid, 
@@ -73,7 +76,8 @@ $row = $result->fetch_assoc();
     $categoryDir = "../imgs/categories/";
 
     //Function to get the image directory from the category
-    $categoryImgDir = directoryFiles($categoryDir , $category);
+    $files = new Directories($categoryDir , $category);
+    $categoryImgDir = $files -> directoryFiles();
 
     ?>
     <div class="my-5" style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">

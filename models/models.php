@@ -1,26 +1,94 @@
 <?php
-    
-//Method for the butto message.
-function buttonMessage($message, $message_alert) {
-    if(isset($message_alert)){
-        $html = "<div class='row justify-content-center'>";
-        $html .= "<div class='col-auto alert alert-" . $message_alert . " alert-dismissible fade show' role='alert'>";
-        $html .= "<button type='button' class='close border-0' data-dismiss='alert' aria-label='Close'>";
-        $html .= "<span>" . $message . "</span>";        
-        $html .= "</button>";
-        $html .= "</div>"; 
-        $html .= "</div>";   
-        echo $html;             
+
+class Messages {
+    public $message;
+    public $message_alert;
+
+    function __construct($message, $message_alert){
+        $this -> message = $message;
+        $this -> message_alert = $message_alert;
+    }    
+
+    //Method for the button message.
+    public function buttonMessage() {
+        if(isset($this -> message_alert)){
+            $html = "<div class='row justify-content-center'>";
+            $html .= "<div class='col-auto alert alert-" . $this -> message_alert . " alert-dismissible fade show' role='alert'>";
+            $html .= "<button type='button' class='close border-0' data-dismiss='alert' aria-label='Close'>";
+            $html .= "<span>" . $this -> message . "</span>";        
+            $html .= "</button>";
+            $html .= "</div>"; 
+            $html .= "</div>";   
+            return $html;             
+        }
     }
+
+    //Method for the text message.
+    public function textMessage() {
+        if(isset($this -> message_alert)){
+            $html = "<p class='pb-2 mb-0 pb-0 text-" . $this -> message_alert . " small'>";
+            $html .= $this -> message;
+            $html .= "</p>"; 
+            return $html;             
+        }
+    }    
 }
 
-//Method for the text message.
-function textMessage($message, $message_alert) {
-    if(isset($message_alert)){
-        $html = "<p class='pb-2 mb-0 pb-0 text-" . $message_alert . " small'>";
-        $html .= $message;
-        $html .= "</p>"; 
-        echo $html;             
+
+class Directories {
+    public $directory;
+    public $fileName;
+
+    function __construct($directory, $fileName){
+        $this -> directory = $directory;
+        $this -> fileName = $fileName;
+    }
+    
+    public function directoryFiles(){
+
+    $dir_handle = opendir($this -> directory);
+
+    while(($file = readdir($dir_handle)) !== false) {
+    $path = $this -> directory . '/' . $file;
+        if(is_file($path)) {
+        $name = pathinfo($path, PATHINFO_FILENAME);      
+            if($name == $this -> fileName) {
+            $ext = pathinfo($path, PATHINFO_EXTENSION); 
+            } 
+        } else {
+            $ext = "";
+        }
+    }
+    closedir($dir_handle);
+
+    $imgDir = $this -> directory . $this -> fileName . "." . $ext;
+
+    return $imgDir;
+    }
+
+
+    //Directory size
+    public function directorySize(){
+        
+    if(is_dir($this -> directory)) {
+        $dir_handle = opendir($this -> directory);
+
+        $size = 0;
+
+        while(($file = readdir($dir_handle)) !== false) {
+        $path = $this -> directory . '/' . $file;
+            if(is_file($path)) {
+                $size += filesize($path);
+            } 
+        }
+        closedir($dir_handle);
+
+        $sizeMegabites = round($size/1048576, 2);
+    } else {
+        $sizeMegabites = 0;
+    }
+
+    return $sizeMegabites;
     }
 }
 
@@ -31,52 +99,6 @@ function sanitization($input, $type, $conn) {
     $input = trim($input);
     $input = stripslashes($input);
     return $input;
-}
-
-function directoryFiles($directory, $fileName){
-
-$dir_handle = opendir($directory);
-
-while(($file = readdir($dir_handle)) !== false) {
-  $path = $directory . '/' . $file;
-    if(is_file($path)) {
-    $name = pathinfo($path, PATHINFO_FILENAME);      
-        if($name == $fileName) {
-        $ext = pathinfo($path, PATHINFO_EXTENSION); 
-        } 
-    } else {
-        $ext = "";
-    }
-}
-closedir($dir_handle);
-
-$imgDir = $directory . $fileName . "." . $ext;
-return $imgDir;
-}
-
-
-//Directory size
-function directorySize($directory){
-    
-if(is_dir($directory)) {
-    $dir_handle = opendir($directory);
-
-    $size = 0;
-
-    while(($file = readdir($dir_handle)) !== false) {
-    $path = $directory . '/' . $file;
-        if(is_file($path)) {
-            $size += filesize($path);
-        } 
-    }
-    closedir($dir_handle);
-
-    $sizeMegabites = round($size/1048576, 2);
-} else {
-    $sizeMegabites = 0;
-}
-
-return $sizeMegabites;
 }
 
 //Function to convert to spanish months

@@ -33,7 +33,10 @@ $result = $conn -> query($sql);
         header('Location: ../index.php');
     } else {
         $target_dir = "../imgs/recipes/". $_SESSION['username']  ."/";
-        $imgRecipeDir = directoryFiles($target_dir, $recipeName);
+
+        $files = new Directories($target_dir, $recipeName);
+        $imgRecipeDir = $files -> directoryFiles();
+
         unlink($imgRecipeDir);
         
 //Creation of the message of success deleting the receta.
@@ -96,7 +99,8 @@ $categoryName = $_GET['categoryname'];
 $categoryDir = "../imgs/categories/";
 
 //Function to get the image directory from the category
-$categoryImgDir = directoryFiles($categoryDir , $categoryName);
+$files = new Directories($categoryDir , $categoryName);
+$categoryImgDir = $files -> directoryFiles();
 
 unlink($categoryImgDir);
 
