@@ -17,7 +17,8 @@
     $table = "recipe r JOIN categories c ON r.categoryid = c.categoryid LEFT JOIN recipeinfo ri ON r.recipeid = ri.recipeid";
 
     //If the variable search is set it's received, else it's null. 
-    $field = sanitization($_POST["search"], FILTER_SANITIZE_STRING, $conn);   
+    $filter = new Filter ($_POST["search"], FILTER_SANITIZE_STRING, $conn);
+    $field = $filter -> sanitization(); 
 
     /*Filter where*/
     $where = " WHERE username = '" . $_SESSION['username'] . "'";
