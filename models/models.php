@@ -54,6 +54,31 @@ $imgDir = $directory . $fileName . "." . $ext;
 return $imgDir;
 }
 
+
+//Directory size
+function directorySize($directory){
+    
+if(is_dir($directory)) {
+    $dir_handle = opendir($directory);
+
+    $size = 0;
+
+    while(($file = readdir($dir_handle)) !== false) {
+    $path = $directory . '/' . $file;
+        if(is_file($path)) {
+            $size += filesize($path);
+        } 
+    }
+    closedir($dir_handle);
+
+    $sizeMegabites = round($size/1048576, 2);
+} else {
+    $sizeMegabites = 0;
+}
+
+return $sizeMegabites;
+}
+
 //Function to convert to spanish months
 function spanishMonth ($month){
     switch($month){

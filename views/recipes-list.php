@@ -31,11 +31,16 @@ $result = $conn -> query($sql);
                             <th>Nombre completo</th>                
                             <th>Tiempo de uso</th>
                             <th>Último acceso</th>
-                            <th>Accesos</th>                 
+                            <th>Accesos</th>
+                            <th>Imágenes</th>                 
                         </tr>
                     </thead>
                     <tbody>   
                     <?php 
+                        $imgDirectory = "../imgs/recipes/" . $username . "/";
+
+                        $size = directorySize($imgDirectory) . " MB";
+                        
                         date_default_timezone_set("America/Santo_Domingo");        
 
                         //Recipes of each user
@@ -56,6 +61,7 @@ $result = $conn -> query($sql);
                         $html .= "<td>" . $time_days . " días</td>";
                         $html .= "<td>" . $lastlogin . "</td>";
                         $html .= "<td>" . $accesses . "</td>";
+                        $html .= "<td>" . $size . "</td>";
                         $html .= "</tr>";
                         echo $html;
                     ?>

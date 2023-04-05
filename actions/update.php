@@ -376,7 +376,7 @@ if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex'
             }
         } else {
             $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
-
+            
             if ($conn->query($sql)) {
             //Message if the variable is null.
             $_SESSION['message'] = '¡Usuario editado correctamente!';

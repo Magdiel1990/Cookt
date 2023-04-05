@@ -24,5 +24,3 @@ poner cuantos kibites ocupa cada usuario, en imagenes
 alternative sintax
 http://localhost/Cookt/actions/edit.php no devuelve si se cierra la session
 http://localhost/Cookt/users/recovery.php phpmail
-updated_at de los usuarios cuando se actualice
-el drop down menu esta por debajo de formularios
