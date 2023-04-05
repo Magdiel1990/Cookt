@@ -70,25 +70,36 @@ class Directories {
     //Directory size
     public function directorySize(){
         
-    if(is_dir($this -> directory)) {
-        $dir_handle = opendir($this -> directory);
+        if(is_dir($this -> directory)) {
+            $dir_handle = opendir($this -> directory);
 
-        $size = 0;
+            $sizeBytes = 0;
 
-        while(($file = readdir($dir_handle)) !== false) {
-        $path = $this -> directory . '/' . $file;
-            if(is_file($path)) {
-                $size += filesize($path);
-            } 
+            while(($file = readdir($dir_handle)) !== false) {
+            $path = $this -> directory . '/' . $file;
+                if(is_file($path)) {
+                    $sizeBytes += filesize($path);
+                } 
+            }
+            closedir($dir_handle);
+            
+        } else {
+            $sizeBytes = 0;
         }
-        closedir($dir_handle);
 
-        $sizeMegabites = round($size/1048576, 2);
-    } else {
-        $sizeMegabites = 0;
-    }
+        if($sizeBytes < 1024){
+            $size = round ($sizeBytes, 2) . " Bytes";
+        } else if($sizeBytes/1024 < 1024){
+            $size = round ($sizeBytes/1024, 2) . " KB";
+        } else if ($sizeBytes/1024/1024 < 1024) {
+            $size = round ($sizeBytes/1024/1024, 2) . " MB";
+        } else if ($sizeBytes/1024/1024/1024 < 1024) {
+            $size = round ($sizeBytes/1024/1024/1024, 2) . " GB";
+        } else {
+            $size = round ($sizeBytes/1024/1024/1024/1024, 2) . " TB";
+        }
 
-    return $sizeMegabites;
+        return $size;
     }
 }
 
