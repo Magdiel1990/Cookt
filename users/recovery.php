@@ -48,7 +48,9 @@ require_once ("../models/models.php");
                         //Messages that are shown in the add_units page
                         if(isset($_SESSION['message'])){
                         echo "<div class='my-1'>";
-                        textMessage($_SESSION['message'], $_SESSION['alert']);        
+
+                        $message = new Messages ($_SESSION['message'], $_SESSION['alert']);
+                        echo $message -> textMessage();  
 
                         //Unsetting the messages variables so the message fades after refreshing the page.
                         unset($_SESSION['alert'], $_SESSION['message']);
