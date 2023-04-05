@@ -115,7 +115,7 @@ INSERT INTO `units` VALUES (12,'al gusto'),(8,'cucharadas'),(1,'cucharaditas'),(
 CREATE TABLE `recipeinfo` (
   `id` int NOT NULL AUTO_INCREMENT,
   `recipeid` INT NOT NULL,
-  `quantity` double(5,2) NOT NULL,
+  `quantity` varchar(8) NOT NULL,
   `unit` varchar(20) NOT NULL,
   `ingredientid` INT NOT NULL,
   `detail` varchar(100),
@@ -130,7 +130,7 @@ INSERT INTO `recipeinfo` VALUES (1,1,0.50,'tazas',1,''),(2,1,0.50,'unidades',2,'
 CREATE TABLE `reholder` (
   `re_id` int NOT NULL AUTO_INCREMENT,
   `ingredientid` INT NOT NULL,
-  `quantity` double(5,2) NOT NULL,
+  `quantity` varchar(8) NOT NULL,
   `unit` varchar(20) NOT NULL,
   `username` varchar(30) NOT NULL,
   `detail` varchar(100),

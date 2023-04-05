@@ -289,7 +289,18 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
                     <form method="POST" action="create.php?rname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" onsubmit="return validationNumber('quantity')">
                         <div class="input-group mb-3">
                             <label class="input-group-text is-required" for="quantity">Cantidad: </label>                    
-                            <input class="form-control" type="number" name="qty" id="quantity" step="0.05" max="1000" min="0" required>
+                            <input class="form-control" type="number" name="qty" id="quantity" max="1000" min="0" required>
+                        </div>
+                        <div class="input-group mb-3">
+                        <label class="input-group-text" for="fraction">Fraction: </label>       
+                            <select class="form-select" name="fraction" id="fraction">
+                                <?php   
+                                    $fraction = ["", "1/8", "1/4", "1/3", "1/2", "2/3", "3/4"];
+                                    for($i=0; $i < count($fraction); $i++){
+                                        echo '<option value="' . $fraction[$i] . '">' . $fraction[$i] . '</option>';                          
+                                    }    
+                                ?>
+                            </select>                       
                         </div>
 
                         <div class="input-group mb-3">

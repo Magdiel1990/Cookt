@@ -114,15 +114,15 @@ public function sanitization() {
 }
 
 class TimeConvertor {
-    public $month;
+    public $unit;
 
-    function __construct($month){
-        $this -> month = $month;    
+    function __construct($unit){
+        $this -> unit = $unit;    
     }
     
-    //Function to convert to spanish months
-    public function spanishMonth (){
-        switch($this -> month){
+    //Function to convert to spanish units
+    public function spanishunit (){
+        switch($this -> unit){
             case "Jan": return "Enero";
             break;
             case "Feb": return "Febrero";
@@ -150,6 +150,32 @@ class TimeConvertor {
     }
 }
 
+class UnitConvertor {
+    public $unit;
+    private $diff;
+
+    function __construct($unit, $diff){
+        $this -> unit = $unit;   
+        $this -> diff = $diff; 
+    }
+    
+    private function diff(){
+        $this -> diff = $this -> unit - floor($this -> unit);
+    }
+
+    //Function to convert to spanish units
+    public function unitToFraction (){
+        switch($this -> diff){            
+            case 0.25: return $this -> unit = floor($this -> unit) . "1/4";
+            break;
+            case 0.50: return $this -> unit = floor($this -> unit) . "1/2";
+            break;
+            case 0.75: return $this -> unit = floor($this -> unit) . "3/4";
+            break;       
+            default: $this -> unit = floor($this -> unit);
+        }
+    }
+}
 
 /*class User {
 public $firstname;

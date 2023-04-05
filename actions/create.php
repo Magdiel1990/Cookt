@@ -283,36 +283,52 @@ if(isset($_POST['add_ingredient'])){
 
 
 //receive the data
-if(isset($_POST['quantity']) && isset($_POST['unit']) && isset($_POST['ingredient']) && isset($_POST['detail'])){
+if(isset($_POST['quantity']) && isset($_POST['fraction']) && isset($_POST['unit']) && isset($_POST['ingredient']) && isset($_POST['detail'])){
 
   $ingredient = $_POST['ingredient'];
   $quantity = $_POST['quantity'];
   $unit = $_POST['unit'];
+  $fraction = $_POST['fraction'];
 
   $filter = new Filter ($_POST['detail'], FILTER_SANITIZE_STRING, $conn);
   $detail = $filter -> sanitization();
 
 
-  if ($quantity == "" || $quantity <= 0) {
+  if ($quantity == "" || $quantity < 0) {
   //Message if the variable is null.
       $_SESSION['message'] = '¡Elija la cantidad por favor!';
       $_SESSION['message_alert'] = "danger";
           
   //The page is redirected to the add-recipe.php
       header('Location: ../views/add-recipe.php');
+  } else if ($quantity == "" && $fraction == "") {
+    //Message if the variable is null.
+    $_SESSION['message'] = '¡Elija la cantidad por favor!';
+    $_SESSION['message_alert'] = "danger";
+        
+    header('Location: ../views/add-recipe.php');
   } else {
+    
+    if($quantity == 0){
+      $strQuantity = "";
+    } else {
+      $strQuantity = strval($quantity);
+    }
+
+    $completeQuantity = $strQuantity . $fraction;
+
     $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "';";
     $row = $conn -> query($sql) -> fetch_assoc();
     $ingredientId = $row['id'];
 
-    $sql = "SELECT re_id FROM reholder WHERE ingredientid = '$ingredientId' AND quantity = '$quantity' AND unit = '$unit' AND username = '" .  $_SESSION['username'] . "';";
+    $sql = "SELECT re_id FROM reholder WHERE ingredientid = '$ingredientId' AND quantity = '$completeQuantity' AND unit = '$unit' AND username = '" .  $_SESSION['username'] . "';";
 
     $num_rows = $conn -> query($sql) -> num_rows;
 
     if($num_rows == 0) {
 
     $stmt = $conn -> prepare("INSERT INTO reholder (ingredientid, quantity, unit, username, detail) VALUES (?, ?, ?, ?, ?);");
-    $stmt->bind_param("idsss", $ingredientId, $quantity, $unit, $_SESSION['username'], $detail);
+    $stmt->bind_param("issss", $ingredientId, $completeQuantity, $unit, $_SESSION['username'], $detail);
 
       if ($stmt->execute()) {
     //Success message.
@@ -348,25 +364,40 @@ if(isset($_POST['quantity']) && isset($_POST['unit']) && isset($_POST['ingredien
 
 
 //receive the data
-if(isset($_POST['qty']) && isset($_POST['units']) && isset($_POST['ing']) && isset($_GET['rname']) && isset($_GET['username']) && isset($_POST['detail'])){
+if(isset($_POST['qty']) && isset($_POST['fraction']) && isset($_POST['units']) && isset($_POST['ing']) && isset($_GET['rname']) && isset($_GET['username']) && isset($_POST['detail'])){
 
   $ingredient = $_POST['ing'];
   $quantity = $_POST['qty'];
   $unit = $_POST['units'];
   $recipeName = $_GET['rname'];
   $userName = $_GET['username'];
+  $fraction = $_POST['fraction'];
 
   $filter = new Filter ($_POST['detail'], FILTER_SANITIZE_STRING, $conn);
   $detail = $filter -> sanitization();
 
-  if ($quantity == "" || $quantity <= 0) {
-  //Message if the variable is null.
-      $_SESSION['message'] = '¡Elija la cantidad por favor!';
-      $_SESSION['message_alert'] = "danger";
-          
-      header('Location: edit.php?recipename='. $recipeName . '&username=' . $userName);
+  if ($quantity == "" || $quantity < 0) {
+    //Message if the variable is null.
+    $_SESSION['message'] = '¡Elija la cantidad por favor!';
+    $_SESSION['message_alert'] = "danger";
+        
+    header('Location: edit.php?recipename='. $recipeName . '&username=' . $userName);
+  } else if ($quantity == "" && $fraction == "") {
+    //Message if the variable is null.
+    $_SESSION['message'] = '¡Elija la cantidad por favor!';
+    $_SESSION['message_alert'] = "danger";
+        
+    header('Location: edit.php?recipename='. $recipeName . '&username=' . $userName);
   } else {
-    
+
+    if($quantity == 0){
+      $strQuantity = "";
+    } else {
+      $strQuantity = strval($quantity);
+    }
+
+    $completeQuantity = $strQuantity . $fraction;
+
     $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipeName' AND username = '$userName';";
     $row = $conn -> query($sql) -> fetch_assoc();
     $recipeId = $row['recipeid'];
@@ -376,7 +407,7 @@ if(isset($_POST['qty']) && isset($_POST['units']) && isset($_POST['ing']) && iss
     $ingredientId = $row['id'];
 
     $stmt = $conn -> prepare("INSERT INTO recipeinfo (recipeid, ingredientid, quantity, unit, detail) VALUES (?, ?, ?, ?, ?);");
-    $stmt->bind_param("iidss", $recipeId, $ingredientId, $quantity, $unit, $detail);
+    $stmt->bind_param("iisss", $recipeId, $ingredientId, $completeQuantity, $unit, $detail);
 
     if ($stmt->execute()) {
   //Success message.
@@ -418,7 +449,7 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
   $cookingtime = $filter -> sanitization();
 
   $category = $_POST['category']; 
-  $recipeImage = $_FILES["recipeImage"];
+  $recipeImage = $_FILES["recipeImage"];  
 
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
 
@@ -483,7 +514,7 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
 
       while($row = $result -> fetch_assoc()){
         $stmt = $conn -> prepare("INSERT INTO recipeinfo (recipeid, quantity, unit, ingredientid, detail) VALUES (?, ?, ?, ?, ?);");
-        $stmt->bind_param ("sssss", $recipeId, $row["quantity"], $row["unit"], $row["id"], $row['detail']);
+        $stmt->bind_param ("sssis", $recipeId, $row["quantity"], $row["unit"], $row["id"], $row['detail']);
 
         $stmt -> execute();
       }
