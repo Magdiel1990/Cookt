@@ -19,3 +19,4 @@ alternative sintax
 http://localhost/Cookt/actions/edit.php no devuelve si se cierra la session
 http://localhost/Cookt/users/recovery.php phpmail
 Agregar categoria Tés con su imagen
+private and restricted properties
