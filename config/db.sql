@@ -120,12 +120,11 @@ CREATE TABLE `recipeinfo` (
   `ingredientid` INT NOT NULL,
   `detail` varchar(100),
   PRIMARY KEY (`id`),
-  Check (`quantity` > 0),
   CONSTRAINT `fk_ingredients_recipeinfo` FOREIGN KEY (`ingredientid`) REFERENCES `ingredients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_recipeinfo_recipe` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO `recipeinfo` VALUES (1,1,0.50,'tazas',1,''),(2,1,0.50,'unidades',2,'finamente picada'),(3,1,1.00,'diente',3,'pequeño machucado'),(4,1,0.50,'tallo',4,'picado'),(5,1,0.50,'unidades',6,'picado'),(6,1,1.00,'al gusto',11,''),(7,1,1.00,'al gusto',15,''),(8,2,1.00,'tazas',8,''),(9,2,2.00,'tazas',9,''),(10,2,1.00,'cucharadas',11,''),(11,2,2.00,'cucharadas',12,''),(12,3,0.50,'libras',13,''),(13,3,1.00,'unidades',2,'finamente picada'),(14,3,1.00,'diente',3,'picado'),(15,3,1.00,'unidades',6,'picado'),(16,3,1.00,'lata',14,'pequeña'),(17,3,1.00,'al gusto',11,''),(18,3,1.00,'al gusto',15,'');
+INSERT INTO `recipeinfo` VALUES (1,1,'1/2','tazas',1,''),(2,1,'1/2','unidades',2,'finamente picada'),(3,1,'1','diente',3,'pequeño machucado'),(4,1,'1/2','tallo',4,'picado'),(5,1,'1/2','unidades',6,'picado'),(6,1,'1','al gusto',11,''),(7,1,'1','al gusto',15,''),(8,2,'1','tazas',8,''),(9,2,'2','tazas',9,''),(10,2,'1','cucharadas',11,''),(11,2,'2','cucharadas',12,''),(12,3,'1/2','libras',13,''),(13,3,'1','unidades',2,'finamente picada'),(14,3,'1','diente',3,'picado'),(15,3,'1','unidades',6,'picado'),(16,3,'1','lata',14,'pequeña'),(17,3,'1','al gusto',11,''),(18,3,'1','al gusto',15,'');
 
 CREATE TABLE `reholder` (
   `re_id` int NOT NULL AUTO_INCREMENT,
@@ -135,7 +134,6 @@ CREATE TABLE `reholder` (
   `username` varchar(30) NOT NULL,
   `detail` varchar(100),
   PRIMARY KEY (`re_id`),
-  CHECK (`quantity` > 0),
   CONSTRAINT `fk_ingredients_reholder` FOREIGN KEY (`ingredientid`) REFERENCES `ingredients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_units_reholder` FOREIGN KEY (`unit`) REFERENCES `units` (`unit`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_user_reholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE

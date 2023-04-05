@@ -312,7 +312,7 @@ if(isset($_POST['quantity']) && isset($_POST['fraction']) && isset($_POST['unit'
     if($quantity == 0){
       $strQuantity = "";
     } else {
-      $strQuantity = strval($quantity);
+      $strQuantity = strval($quantity) . " ";
     }
 
     $completeQuantity = $strQuantity . $fraction;
@@ -393,7 +393,7 @@ if(isset($_POST['qty']) && isset($_POST['fraction']) && isset($_POST['units']) &
     if($quantity == 0){
       $strQuantity = "";
     } else {
-      $strQuantity = strval($quantity);
+      $strQuantity = strval($quantity) . " " ;
     }
 
     $completeQuantity = $strQuantity . $fraction;
