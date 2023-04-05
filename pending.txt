@@ -4,23 +4,17 @@ recipe_suggestions.php no se debe entrar sin variables get
 comentar
 Paginacion
 validar todo con js and html
-Boton de reinicio
 realizar intersection en custom recipe
-este usuario tiene tantas recetas
 reiniciar un usuario
-pagina registro
 pagina de cambiar contraseña
 router
 poner quien agrego la receta
-contar las veces que un  usuario entra a la pagina
-almacenar la ultima vez que entro
 profile edition (desde aqui se cambia la contraseña)
 normalizar las cantidades con condicional en el query su es 0.5 poner 1/2
 http://localhost/Cookt/views/custom-recipe.php mientras se vayan agregando los ingredientes, ajax vaya mostrandolo al lado, eliminar recipe_suggestion file
 guardar los enlaces de las imagenes en la base de datos
 delete account option
 compartir recetas con otros usuarios
-poner cuantos kibites ocupa cada usuario, en imagenes
 alternative sintax
 http://localhost/Cookt/actions/edit.php no devuelve si se cierra la session
 http://localhost/Cookt/users/recovery.php phpmail
