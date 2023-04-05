@@ -65,10 +65,17 @@ if(isset($_GET["editname"]) && isset($_GET["username"]) && isset($_FILES["recipe
 && isset($_POST["cookingTime"]) && isset($_POST["preparation"])){
 
 $oldName = $_GET["editname"];
-$newRecipeName = sanitization($_POST["newRecipeName"], FILTER_SANITIZE_STRING, $conn);
+
+$filter = new Filter ($_POST["newRecipeName"], FILTER_SANITIZE_STRING, $conn);  
+$newRecipeName = $filter -> sanitization();
+
+$filter = new Filter ($_POST["cookingTime"], FILTER_SANITIZE_NUMBER_INT, $conn);  
+$cookingTime = $filter -> sanitization();
+
+$filter = new Filter ($_POST["preparation"], FILTER_SANITIZE_STRING, $conn);  
+$preparation = $filter -> sanitization();
+
 $category = $_POST["category"];
-$cookingTime = sanitization($_POST["cookingTime"], FILTER_SANITIZE_NUMBER_INT, $conn);
-$preparation = sanitization($_POST["preparation"], FILTER_SANITIZE_STRING, $conn);
 $recipeImage = $_FILES["recipeImage"];
 $userName = $_GET["username"];
 
@@ -185,7 +192,10 @@ $categoryId = $row['categoryid'];
 if(isset($_POST['categoryName']) || isset($_FILES["categoryImage"])){
 
 $categoryId = $_GET["categoryid"];
-$newCategoryName = sanitization($_POST["categoryName"], FILTER_SANITIZE_STRING, $conn);
+
+$filter = new Filter ($_POST["categoryName"], FILTER_SANITIZE_STRING, $conn);  
+$newCategoryName = $filter -> sanitization();
+
 $categoryImage = $_FILES["categoryImage"];
 
 $sql = "SELECT category FROM categories WHERE categoryid = '$categoryId';";

@@ -23,7 +23,8 @@ require_once ("../models/models.php");
 
 //receive the data
 if(isset($_POST['add_units'])){
-  $unit = sanitization($_POST['add_units'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['add_units'], FILTER_SANITIZE_STRING, $conn);
+  $unit = $filter -> sanitization();
 
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
   
@@ -93,8 +94,10 @@ if(isset($_POST['add_units'])){
 
 
 //receive the data
-if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
-  $category = sanitization($_POST['add_categories'], FILTER_SANITIZE_STRING, $conn);
+if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){  
+  $filter = new Filter ($_POST['add_categories'], FILTER_SANITIZE_STRING, $conn);
+  $category = $filter -> sanitization();
+
   $categoryImage = $_FILES["categoryImage"];
 
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
@@ -209,7 +212,8 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
 
 //receive the data
 if(isset($_POST['add_ingredient'])){
-  $ingredient = sanitization($_POST['add_ingredient'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['add_ingredient'], FILTER_SANITIZE_STRING, $conn);
+  $ingredient = $filter -> sanitization();
   
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
  
@@ -284,7 +288,10 @@ if(isset($_POST['quantity']) && isset($_POST['unit']) && isset($_POST['ingredien
   $ingredient = $_POST['ingredient'];
   $quantity = $_POST['quantity'];
   $unit = $_POST['unit'];
-  $detail =  sanitization($_POST['detail'], FILTER_SANITIZE_STRING, $conn);
+
+  $filter = new Filter ($_POST['detail'], FILTER_SANITIZE_STRING, $conn);
+  $detail = $filter -> sanitization();
+
 
   if ($quantity == "" || $quantity <= 0) {
   //Message if the variable is null.
@@ -348,7 +355,9 @@ if(isset($_POST['qty']) && isset($_POST['units']) && isset($_POST['ing']) && iss
   $unit = $_POST['units'];
   $recipeName = $_GET['rname'];
   $userName = $_GET['username'];
-  $detail = sanitization($_POST['detail'], FILTER_SANITIZE_STRING, $conn);
+
+  $filter = new Filter ($_POST['detail'], FILTER_SANITIZE_STRING, $conn);
+  $detail = $filter -> sanitization();
 
   if ($quantity == "" || $quantity <= 0) {
   //Message if the variable is null.
@@ -399,10 +408,16 @@ if(isset($_POST['qty']) && isset($_POST['units']) && isset($_POST['ing']) && iss
 //receive the data
 if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES["recipeImage"]) && isset($_POST['category']) && isset($_POST['cookingtime'] )){
 
-  $recipename = sanitization($_POST['recipename'], FILTER_SANITIZE_STRING, $conn);
-  $preparation = sanitization($_POST['preparation'], FILTER_SANITIZE_STRING, $conn);
-  $category = $_POST['category'];
-  $cookingtime = sanitization($_POST['cookingtime'], FILTER_SANITIZE_NUMBER_INT, $conn);
+  $filter = new Filter ($_POST['recipename'], FILTER_SANITIZE_STRING, $conn);
+  $recipename = $filter -> sanitization();
+
+  $filter = new Filter ($_POST['preparation'], FILTER_SANITIZE_STRING, $conn);
+  $preparation = $filter -> sanitization();
+
+  $filter = new Filter ($_POST['cookingtime'], FILTER_SANITIZE_NUMBER_INT, $conn);
+  $cookingtime = $filter -> sanitization();
+
+  $category = $_POST['category']; 
   $recipeImage = $_FILES["recipeImage"];
 
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
@@ -614,14 +629,26 @@ if(isset($_POST['customingredient'])){
 //receive the data
 if(isset($_POST['firstname']) && isset($_POST['url']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userpassword']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['session_user'])){
 
-  $firstname = sanitization($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
-  $lastname = sanitization($_POST['lastname'], FILTER_SANITIZE_STRING, $conn);  
-  $username=  sanitization($_POST['username'], FILTER_SANITIZE_STRING, $conn);
-  $password = $_POST['userpassword'];
-  // $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-  $passrepeat = $_POST['passrepeat'];
-  $sex = $_POST['sex'];
-  $email = sanitization($_POST['useremail'], FILTER_SANITIZE_EMAIL, $conn);
+  $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
+  $firstname = $filter -> sanitization();
+
+  $filter = new Filter ($_POST['lastname'], FILTER_SANITIZE_STRING, $conn);
+  $lastname = $filter -> sanitization();
+
+  $filter = new Filter ($_POST['username'], FILTER_SANITIZE_STRING, $conn);
+  $username = $filter -> sanitization();
+  
+  $filter = new Filter ($_POST['useremail'], FILTER_SANITIZE_EMAIL, $conn);
+  $email = $filter -> sanitization();
+
+  $filter = new Filter ($_POST['userpassword'], FILTER_SANITIZE_STRING, $conn);
+  $password = $filter -> sanitization();
+
+  $filter = new Filter ($_POST['passrepeat'], FILTER_SANITIZE_STRING, $conn);
+  $passrepeat = $filter -> sanitization();
+  
+  $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+  $sex = $_POST['sex']; 
   $terms = "yes";
   $rol = $_POST['userrol'];
   $state = $_POST['activeuser'];

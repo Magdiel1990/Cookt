@@ -187,7 +187,10 @@ $row = $conn -> query($sql) -> fetch_assoc();
 
 if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["category"])) {
     $cookingTime = $row["cookingtime"];
-    $preparation = sanitization($row["preparation"], FILTER_SANITIZE_STRING, $conn);
+
+    $filter = new Filter ($row["preparation"], FILTER_SANITIZE_STRING, $conn);  
+    $preparation = $filter -> sanitization();
+
     $category = $row["category"];
 }
 ?>

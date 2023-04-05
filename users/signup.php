@@ -9,13 +9,25 @@ require_once ("../config/db_Connection.php");
 require_once ("../models/models.php");
 
 if(!empty($_POST)) {
-    $firstname =  sanitization($_POST ["firstname"], FILTER_SANITIZE_STRING, $conn);
-    $lastname = sanitization($_POST ["lastname"], FILTER_SANITIZE_STRING, $conn);
-    $username = sanitization($_POST ["username"], FILTER_SANITIZE_STRING, $conn);
-    $password = sanitization($_POST ["password"], FILTER_SANITIZE_STRING, $conn);
-    $passrepeat = sanitization($_POST ["passrepeat"], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
+    $firstname = $filter -> sanitization();
+
+    $filter = new Filter ($_POST['lastname'], FILTER_SANITIZE_STRING, $conn);
+    $lastname = $filter -> sanitization();
+
+    $filter = new Filter ($_POST['username'], FILTER_SANITIZE_STRING, $conn);
+    $username = $filter -> sanitization();
+
+    $filter = new Filter ($_POST ["email"], FILTER_SANITIZE_EMAIL, $conn);
+    $email = $filter -> sanitization();
+
+    $filter = new Filter ($_POST ["password"], FILTER_SANITIZE_STRING, $conn);
+    $password = $filter -> sanitization();
+
+    $filter = new Filter ($_POST ["passrepeat"], FILTER_SANITIZE_STRING, $conn);
+    $passrepeat = $filter -> sanitization();
+
     $sex = $_POST ["sex"];
-    $email = sanitization($_POST ["email"], FILTER_VALIDATE_EMAIL, $conn);
     $terms = $_POST ["terms"];
     $rol = $_POST ["rol"];
     $state = $_POST ["state"];

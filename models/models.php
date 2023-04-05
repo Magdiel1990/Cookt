@@ -92,13 +92,25 @@ class Directories {
     }
 }
 
-function sanitization($input, $type, $conn) {
-    $input = mysqli_real_escape_string($conn, $input);   
-    $input = htmlspecialchars($input);
-    $input = filter_var($input, $type);
-    $input = trim($input);
-    $input = stripslashes($input);
-    return $input;
+class Filter {
+public $input;
+public $type; 
+public $conn;
+
+function __construct($input, $type, $conn){
+    $this -> input = $input;
+    $this -> type = $type;
+    $this -> conn = $conn;
+}
+
+public function sanitization() {
+    $this -> input = mysqli_real_escape_string($this -> conn, $this -> input);   
+    $this -> input = htmlspecialchars($this -> input);
+    $this -> input = filter_var($this -> input, $this -> type);
+    $this -> input = trim($this -> input);
+    $this -> input = stripslashes($this -> input);
+    return $this -> input;
+}
 }
 
 //Function to convert to spanish months
@@ -163,7 +175,7 @@ function __construct ($firstname, $lastname, $username, $password, $passrepeat, 
 }
 
 public function sessionAdminVerif() {
-    $sql = "SELECT userid, `type` FROM users WHERE username ='$this -> sessionUser';";
+    $sql = "SELECT userid, `type` FROM users WHERE username ='".$this -> sessionUser."';";
     $row = $this -> conn -> query($sql) -> fetch_assoc();
     $sessionUserType = $row['type'];
 
