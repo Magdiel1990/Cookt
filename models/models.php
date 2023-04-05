@@ -113,32 +113,40 @@ public function sanitization() {
 }
 }
 
-//Function to convert to spanish months
-function spanishMonth ($month){
-    switch($month){
-        case "Jan": return "Enero";
-        break;
-        case "Feb": return "Febrero";
-        break;
-        case "Mar": return "Marzo";
-        break;
-        case "Apr": return "Abril";
-        break;
-        case "May": return "Mayo";
-        break;
-        case "Jun": return "Junio";
-        break;
-        case "Jul": return "Julio";
-        break;
-        case "Aug": return "Agosto";
-        break;
-        case "Sep": return "Septiembre";
-        break;
-        case "Oct": return "Octubre";
-        break;
-        case "Nov": return "Noviembre";
-        break;
-        default: return "Diciembre";
+class TimeConvertor {
+    public $month;
+
+    function __construct($month){
+        $this -> month = $month;    
+    }
+    
+    //Function to convert to spanish months
+    public function spanishMonth (){
+        switch($this -> month){
+            case "Jan": return "Enero";
+            break;
+            case "Feb": return "Febrero";
+            break;
+            case "Mar": return "Marzo";
+            break;
+            case "Apr": return "Abril";
+            break;
+            case "May": return "Mayo";
+            break;
+            case "Jun": return "Junio";
+            break;
+            case "Jul": return "Julio";
+            break;
+            case "Aug": return "Agosto";
+            break;
+            case "Sep": return "Septiembre";
+            break;
+            case "Oct": return "Octubre";
+            break;
+            case "Nov": return "Noviembre";
+            break;
+            default: return "Diciembre";
+        }
     }
 }
 

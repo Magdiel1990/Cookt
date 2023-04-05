@@ -61,15 +61,14 @@ $row = $result->fetch_assoc();
     $recipeName = $row["recipename"];
     $cookingTime = $row["cookingtime"];
     $preparation = $row["preparation"];
-
-    $day = $date = date ("d", strtotime($row["date"]));      
-
+    $day = $date = date ("d", strtotime($row["date"]));     
     $month = date ("M", strtotime($row["date"]));
+
     //Function to convert to spanish months
-    $spanishMonth = spanishMonth($month);  
+    $timeConvertor = new TimeConvertor ($month);
+    $spanishMonth = $timeConvertor -> spanishMonth();  
     
     $year = $date = date ("Y", strtotime($row["date"]));
-
 
     $date = $day . "/" . $spanishMonth . "/" .  $year;
 
