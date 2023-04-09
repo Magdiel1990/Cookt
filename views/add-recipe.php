@@ -35,8 +35,8 @@ require_once ("../modules/nav.php");
                     IngredientList::$column = "ingredient";
                     IngredientList::$username = $_SESSION['username'];
 
-                    $num_rows = IngredientList::ingredientsQty();
-
+                    $num_rows = IngredientList::ingQuantity();
+                    
                     if($num_rows > 0) {
                     ?>                
                     <div class="input-group mb-3">
@@ -72,8 +72,8 @@ require_once ("../modules/nav.php");
                         <label class="input-group-text" for="ingredient">Ingrediente: </label>
                         <select class="form-select" name="ingredient" id="ingredient">
                             <?php
-                            $sql = "SELECT ingredient FROM ingredients $where;";                         
-                            $result = $conn -> query($sql);
+                            $result = IngredientList::ingResults();
+
                             while($row = $result -> fetch_assoc()) {
                                 echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
                             }

@@ -184,14 +184,23 @@ class IngredientList {
     static $table2;
     static $column;
     static $username;
-
-    public static function ingAval() {
+  
+    //Results of ingredients for adding recipes
+    public static function ingForRecipe(){
 
     $conn = DatabaseConnection::dbConnection();
 
     $sql = "SELECT " . self::$table2 ."." . self::$column . " FROM " . self::$table1 . " JOIN " . self::$table2 . " ON " . self::$table2 . ".id = " . self::$table1 . ".ingredientid WHERE " . self::$table1 . ".username = '" . self::$username . "';";
     $result = $conn -> query($sql);
-    $num_rows = $result -> num_rows;
+    
+    return $result;
+    }
+
+    //Condition for selecting ingredients different from the one already added for adding recipes
+    public static function ingConditions() {
+        
+        $result = self::ingForRecipe();
+        $num_rows = $result -> num_rows;        
 
         if ($num_rows == 0) {
             $where = "WHERE username = '" . self::$username . "'";                                               
@@ -203,20 +212,28 @@ class IngredientList {
             }
             
             $where = substr_replace($where, "", -2);
-            $where .= ") AND username = '" . self::$username . " ORDER BY " . self::$column ."'";                        
+            $where .= ") AND username = '" . self::$username . "' ORDER BY " . self::$column;                        
         }
-        
-    $sql = "SELECT " . self::$column . " FROM " . self::$table2 . " $where;"; 
-    $result = $conn -> query($sql);
+        return $where;
+    }  
 
-    return $result;
-    }
+    //result of user ingredients except the ones already added for the recipe
+    public static function ingResults() {
+
+    $conn = DatabaseConnection::dbConnection();
+    $where = self::ingConditions();
+
+    $sql = "SELECT " . self::$column . " FROM " . self::$table2 . " " . $where;
+    $result = $conn -> query($sql);
     
-    public static function ingredientsQty() {
-        $num_rows = self::ingAval() -> num_rows;
+    return $result;
+    }   
+    
+    //Quantity of user ingredients except the ones already added for the recipe
+    public static function ingQuantity() {
+        $num_rows = self::ingResults() -> num_rows;
         return $num_rows;
     }
-
 }
 
 
