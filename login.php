@@ -119,13 +119,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                         <!-- Email input -->
                         <div class="form-outline mb-3">
-                            <input type="text" id="username" class="form-control form-control-lg" name="username"/>
+                            <input type="text" id="username" class="form-control form-control-lg" name="username" autocomplete="off"/>
                             <label class="form-label" for="username">Usuario</label>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-3">
-                            <input type="password" id="password" class="form-control form-control-lg" name="password"/>
+                            <input type="password" id="password" class="form-control form-control-lg" name="password"  autocomplete="off"/>
                             <label class="form-label" for="password">Contraseña</label>
                         </div>
 

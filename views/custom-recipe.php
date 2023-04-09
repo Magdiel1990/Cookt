@@ -34,31 +34,18 @@ require_once ("../modules/nav.php");
                 <label class="input-group-text" for="customingredient">Ingredientes: </label>
                 
                 <?php
-                $sql = "SELECT i.ingredient FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "';";
-                $result = $conn -> query($sql);
-                $num_rows = $result -> num_rows;
+                IngredientList::$table1 = "ingholder";
+                IngredientList::$table2 = "ingredients";
+                IngredientList::$column = "ingredient";
+                IngredientList::$username = $_SESSION['username'];
 
-                if ($num_rows == 0) {
-                    $where = "WHERE username = '" . $_SESSION['username'] . "'";                                               
-                } else {
-                    $where = "WHERE NOT ingredient IN (";
-
-                    while($row = $result -> fetch_assoc()) {
-                        $where .= "'" . $row["ingredient"] . "', ";
-                    }
-                    
-                    $where = substr_replace($where, "", -2);
-                    $where .= ") AND username = '" . $_SESSION['username'] . "'";                        
-                }
-                $sql = "SELECT ingredient FROM ingredients $where;"; 
+                $num_rows = IngredientList::ingredientsQty();
                 
-                $result = $conn -> query($sql);
-                $num_rows = $result -> num_rows;
-
                 if($num_rows > 0) {
                 ?>
                 <select class="form-select" name="customingredient" id="customingredient">
                     <?php           
+                    $result = IngredientList::ingAval();
 
                     while($row = $result -> fetch_assoc()) {          
                         echo '<option value="' . $row["ingredient"] . '">' . ucfirst($row["ingredient"]) . '</option>';

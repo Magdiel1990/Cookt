@@ -30,25 +30,12 @@ require_once ("../modules/nav.php");
             <!--Form for filtering the database info-->
                 <form class="m-2 text-center" method="POST" action="../actions/create.php">
                     <?php
-                    $sql = "SELECT i.ingredient FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" . $_SESSION['username'] . "';";
-                    $result = $conn -> query($sql);
-                    $num_rows = $result -> num_rows;
+                    IngredientList::$table1 = "reholder";
+                    IngredientList::$table2 = "ingredients";
+                    IngredientList::$column = "ingredient";
+                    IngredientList::$username = $_SESSION['username'];
 
-                    if ($num_rows == 0) {
-                        $where = "WHERE username = '" . $_SESSION['username'] . "' ORDER BY ingredient";                                               
-                    } else {
-                        $where = "WHERE NOT ingredient IN (";
-
-                        while($row = $result -> fetch_assoc()) {
-                            $where .= "'" . $row["ingredient"] . "', ";
-                        }
-                        
-                        $where = substr_replace($where, "", -2);
-                        $where .= ") AND username = '" . $_SESSION['username'] . "' ORDER BY ingredient";                        
-                    }
-                    $sql = "SELECT ingredient FROM ingredients $where;";                         
-                    $result = $conn -> query($sql);
-                    $num_rows = $result -> num_rows;
+                    $num_rows = IngredientList::ingredientsQty();
 
                     if($num_rows > 0) {
                     ?>                

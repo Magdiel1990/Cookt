@@ -24,7 +24,7 @@ require_once ("../modules/nav.php");
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>
-    <h3>AGREGAR INGREDIENTES</h3>
+    <h3>Agregar Ingredientes</h3>
 <!--Form for filtering the database info-->
         <form method="POST" action="../actions/create.php" autocomplete="on" class="mt-3 col-auto" onsubmit="return validation('add_ingredient', /[a-zA-Z\t\h]+|(^$)/ )">
             <div class="input-group mb-4">

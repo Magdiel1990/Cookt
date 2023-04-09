@@ -32,7 +32,7 @@ require_once ("../modules/nav.php");
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>
-    <h3>AGREGAR UNIDADES</h3>
+    <h3>Agregar Unidades</h3>
 <!--Form for filtering the database info-->
         <form class="mt-3 col-auto" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation('add_units', /[a-zA-Z\t\h]+|(^$)/)">
             <div class="input-group mb-3">

@@ -1,5 +1,23 @@
 <?php
 
+class DatabaseConnection {
+    static $hostname = "Localhost:3306";
+    static $username = "root";
+    static $password = "123456";
+    static $database = "foodbase";
+
+    //Connection to the database.
+    public static function dbConnection(){
+        $conn = new mysqli(self::$hostname, self::$username, self::$password, self::$database);
+        
+        // Check connection
+        if ($conn->connect_error) {
+            die("Error en conexión: " . $conn->connect_error);
+        }
+        return $conn;
+    }
+}
+
 class Messages {
     public $message;
     public $message_alert;
@@ -160,6 +178,47 @@ class TimeConvertor {
         }
     }
 }
+
+class IngredientList {
+    static $table1;
+    static $table2;
+    static $column;
+    static $username;
+
+    public static function ingAval() {
+
+    $conn = DatabaseConnection::dbConnection();
+
+    $sql = "SELECT " . self::$table2 ."." . self::$column . " FROM " . self::$table1 . " JOIN " . self::$table2 . " ON " . self::$table2 . ".id = " . self::$table1 . ".ingredientid WHERE " . self::$table1 . ".username = '" . self::$username . "';";
+    $result = $conn -> query($sql);
+    $num_rows = $result -> num_rows;
+
+        if ($num_rows == 0) {
+            $where = "WHERE username = '" . self::$username . "'";                                               
+        } else {
+            $where = "WHERE NOT ingredient IN (";
+
+            while($row = $result -> fetch_assoc()) {
+                $where .= "'" . $row["ingredient"] . "', ";
+            }
+            
+            $where = substr_replace($where, "", -2);
+            $where .= ") AND username = '" . self::$username . " ORDER BY " . self::$column ."'";                        
+        }
+        
+    $sql = "SELECT " . self::$column . " FROM " . self::$table2 . " $where;"; 
+    $result = $conn -> query($sql);
+
+    return $result;
+    }
+    
+    public static function ingredientsQty() {
+        $num_rows = self::ingAval() -> num_rows;
+        return $num_rows;
+    }
+
+}
+
 
 /*class User {
 public $firstname;
