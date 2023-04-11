@@ -724,8 +724,8 @@ if(isset($_POST['firstname']) && isset($_POST['url']) && isset($_POST['lastname'
 
         if($num_rows == 0) {
           
-        $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, reportsto, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
-        $stmt->bind_param ("ssssssiis", $firstname, $lastname, $username, $hashed_password, $rol, $userEmail, $state, $sessionUserId, $sex);
+        $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+        $stmt->bind_param ("ssssssis", $firstname, $lastname, $username, $hashed_password, $rol, $userEmail, $state, $sex);
 
           if ($stmt->execute()) {
         //Success message.

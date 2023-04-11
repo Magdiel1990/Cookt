@@ -167,7 +167,7 @@ require_once ("../modules/nav.php");
                             $html .= "<td>";
                             $html .= "<a href='../actions/edit.php?userid=" . $userid . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
                             $html .= "<a $display href='../actions/delete.php?userid=" . $userid . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
-                            $html .= "<a $display href='../actions/delete.php?userid=" . $userid . "&reset=1' " . "class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
+                            $html .= "<a $display href='../actions/delete.php?user_id=" . $userid . "&reset=1' class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
                             $html .= "</td>";
                             $html .= "</tr>";
                             echo $html;

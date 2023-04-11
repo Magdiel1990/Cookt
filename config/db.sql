@@ -70,7 +70,7 @@ CREATE TABLE `ingredients` (
   `created_at` timestamp default current_timestamp,
   `updated_at` timestamp default current_timestamp,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_ingredients_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+  CONSTRAINT `fk_ingredients_users` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO `ingredients` (id, ingredient, username) VALUES (1,'habichuela','Admin'),(2,'cebolla','Admin'),(3,'ajo','Admin'),(4,'apio','Admin'),(6,'ají','Admin'),(7,'puerro','Admin'),(8,'arroz','Admin'),(9,'agua','Admin'),(11,'sal','Admin'),(12,'aceite','Admin'),(13,'carne','Admin'),(14,'salsa de tomate','Admin'),(15,'pimienta','Admin');
