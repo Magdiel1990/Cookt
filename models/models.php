@@ -236,7 +236,47 @@ class IngredientList {
     }
 }
 
+class Units {
+    public $unit;
 
+    function __construct($unit){
+        $this -> unit = $unit;
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+    
+    public function unitQuery(){
+        $conn = DatabaseConnection::dbConnection();        
+        $sql = "SELECT unit FROM units ORDER BY unit;";
+        $result = $conn -> query($sql);
+        return $result;
+    }
+    
+    public function unitOptions(){
+        $result = $this -> unitQuery();
+        
+        while($row = $result -> fetch_assoc()) {
+            echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
+        }
+    }
+
+    private function unitQuery2(){
+        $conn = DatabaseConnection::dbConnection();   
+        $sql = "SELECT unit FROM units WHERE unit = '" . $this -> unit . "';";
+        $result = $conn -> query($sql);
+        return $result;
+    }
+
+    public function unitCount(){
+        $result = $this -> unitQuery();        
+        $num_rows = $result -> num_rows;
+        return $num_rows;
+    } 
+
+    public function unitCount2(){
+        $result = $this -> unitQuery2();        
+        $num_rows = $result -> num_rows;
+        return $num_rows;
+    }   
+}
 /*class User {
 public $firstname;
 public $lastname;

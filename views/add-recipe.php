@@ -58,13 +58,8 @@ require_once ("../modules/nav.php");
                         <label class="input-group-text" for="unit">Unidad: </label>                
                         <select class="form-select" name="unit" id="unit">
                             <?php
-                            $sql = "SELECT unit FROM units";
-
-                            $result = $conn -> query($sql);
-
-                            while($row = $result -> fetch_assoc()) {
-                                echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
-                            }
+                            $unitOptions = new Units(null);
+                            $unitOptions = $unitOptions -> unitOptions();   
                             ?>
                         </select>
                     </div>

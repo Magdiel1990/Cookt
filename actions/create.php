@@ -48,11 +48,10 @@ if(isset($_POST['add_units'])){
 
 //lowercase the variable
   $unit = strtolower($unit);
-
-  $sql = "SELECT unit FROM units WHERE unit = '$unit';";
-
-  $num_rows = $conn -> query($sql) -> num_rows;
-
+  
+  $unitCount = new Units($unit);
+  $unitCount = $unitCount -> unitCount2();
+                                
   if($num_rows != 0){
 //It already exists.
       $_SESSION['message'] = '¡Ya ha sido agregado!';

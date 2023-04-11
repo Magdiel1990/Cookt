@@ -52,10 +52,13 @@ require_once ("../modules/nav.php");
             </thead>
             <tbody>                
                 <?php
-                    $sql = "SELECT unit FROM units ORDER BY unit;";
+                    $result = new Units(null);
+                    $result = $result -> unitQuery();
 
-                    $result = $conn -> query($sql);
-                    if($result -> num_rows > 0){
+                    $unitCount = new Units(null);
+                    $unitCount = $unitCount -> unitCount();
+
+                    if($unitCount > 0){
                         while($row = $result -> fetch_assoc()){
                             $html = "<tr>";
                             $html .= "<td>" . ucfirst($row['unit']) . "</td>";
