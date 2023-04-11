@@ -139,7 +139,7 @@ CREATE TABLE `reholder` (
   CONSTRAINT `fk_user_reholder` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE recipeimgs (
+/*CREATE TABLE recipeimgs (
 imgid int NOT NULL AUTO_INCREMENT,
 imgname varchar(50),
 imgext varchar(5),
@@ -150,5 +150,5 @@ PRIMARY KEY (imgid),
 CHECK (imgext in ("jpg", "png", "jpeg","giff")),
 CONSTRAINT `fk_recipeimgs_recipes` FOREIGN KEY (`recipeid`) REFERENCES `recipe` (`recipeid`) on delete cascade on update cascade,
 CONSTRAINT `fk_recipeimgs_users` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) on delete cascade on update cascade
-);
+);*/
 
