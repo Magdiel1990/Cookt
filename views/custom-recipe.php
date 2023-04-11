@@ -39,13 +39,13 @@ require_once ("../modules/nav.php");
                 IngredientList::$column = "ingredient";
                 IngredientList::$username = $_SESSION['username'];
 
-                $num_rows = IngredientList::ingredientsQty();
+                $num_rows = IngredientList::ingQuantity();
                 
                 if($num_rows > 0) {
                 ?>
                 <select class="form-select" name="customingredient" id="customingredient">
                     <?php           
-                    $result = IngredientList::ingAval();
+                    $result = IngredientList::ingResults();
 
                     while($row = $result -> fetch_assoc()) {          
                         echo '<option value="' . $row["ingredient"] . '">' . ucfirst($row["ingredient"]) . '</option>';
