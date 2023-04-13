@@ -315,24 +315,9 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
 
                         <div class="input-group mb-3 justify-content-center">
                         <?php
-                            $sql = "SELECT i.ingredient FROM recipeinfo ri JOIN recipe r ON ri.recipeid = r.recipeid JOIN ingredients i ON i.id = ri.ingredientid WHERE r.recipename = '$recipeName' AND r.username = '$userName';";
-                            $result = $conn -> query($sql);
-                            $num_rows = $result -> num_rows;
-
-                            if($num_rows == 0) { 
-                                $where = "WHERE username = '$userName';";
-                            } else {
-                                $where = "WHERE NOT ingredient IN (";
-                                while($row = $result -> fetch_assoc()){
-                                    $where .= "'" . $row["ingredient"] . "', ";
-                                }
-                                $where = substr_replace($where, "", -2);
-                                $where .= ") AND username = '$userName'";
-                            }
-                        
-                            $sql = "SELECT ingredient FROM ingredients " . $where;
-                            $result = $conn -> query($sql);
-                            $num_rows = $result -> num_rows;
+                            $ingredientObj = new IngredientListChild("recipeinfo", "ingredients", "recipe", "ingredient", $recipeName, $_SESSION['username']);
+                            $result = $ingredientObj -> ingResults();
+                            $num_rows = $ingredientObj -> ingQuantity();
 
                             if($num_rows > 0) {                            
                         ?>

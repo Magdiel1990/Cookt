@@ -34,19 +34,16 @@ require_once ("../modules/nav.php");
                 <label class="input-group-text" for="customingredient">Ingredientes: </label>
                 
                 <?php
-                IngredientList::$table1 = "ingholder";
-                IngredientList::$table2 = "ingredients";
-                IngredientList::$column = "ingredient";
-                IngredientList::$username = $_SESSION['username'];
+                $num_rows = new IngredientList("ingholder", "ingredients", "ingredient", $_SESSION['username']);
+                $num_rows = $num_rows -> ingQuantity();
 
-                $num_rows = IngredientList::ingQuantity();
-                
                 if($num_rows > 0) {
                 ?>
                 <select class="form-select" name="customingredient" id="customingredient">
-                    <?php           
-                    $result = IngredientList::ingResults();
-
+                    <?php 
+                    $result = new IngredientList("ingholder", "ingredients", "ingredient", $_SESSION['username']);
+                    $result = $result -> ingResults();          
+            
                     while($row = $result -> fetch_assoc()) {          
                         echo '<option value="' . $row["ingredient"] . '">' . ucfirst($row["ingredient"]) . '</option>';
                     }      

@@ -30,12 +30,8 @@ require_once ("../modules/nav.php");
             <!--Form for filtering the database info-->
                 <form class="m-2 text-center" method="POST" action="../actions/create.php">
                     <?php
-                    IngredientList::$table1 = "reholder";
-                    IngredientList::$table2 = "ingredients";
-                    IngredientList::$column = "ingredient";
-                    IngredientList::$username = $_SESSION['username'];
-
-                    $num_rows = IngredientList::ingQuantity();
+                    $num_rows = new IngredientList("reholder", "ingredients", "ingredient", $_SESSION['username']);                    
+                    $num_rows = $num_rows -> ingQuantity();
                     
                     if($num_rows > 0) {
                     ?>                
@@ -67,7 +63,8 @@ require_once ("../modules/nav.php");
                         <label class="input-group-text" for="ingredient">Ingrediente: </label>
                         <select class="form-select" name="ingredient" id="ingredient">
                             <?php
-                            $result = IngredientList::ingResults();
+                            $result = new IngredientList("reholder", "ingredients", "ingredient", $_SESSION['username']);
+                            $result = $result -> ingResults();
 
                             while($row = $result -> fetch_assoc()) {
                                 echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
