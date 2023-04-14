@@ -193,7 +193,7 @@ class IngredientList {
     }
   
     //Results of ingredients for adding recipes
-    public function ingForRecipe(){
+    protected function ingForRecipe(){
 
     $conn = DatabaseConnection::dbConnection();
 
@@ -203,10 +203,15 @@ class IngredientList {
     return $result;
     }
 
+    public function ingForRecipeResult(){
+        $result = $this -> ingForRecipe();
+        return $result;
+    }
+
     //Condition for selecting ingredients different from the one already added for adding recipes
     public function ingConditions() {
         
-        $result = $this -> ingForRecipe();
+        $result = $this -> ingForRecipeResult();
         $num_rows = $result -> num_rows;        
 
         if ($num_rows == 0) {
@@ -243,21 +248,14 @@ class IngredientList {
     }
 }
 
-class IngredientListChild {
-    public $table1;
-    public $table2;
+class IngredientListChild extends IngredientList {
     public $table3;
     public $recipename;
-    public $column;
-    public $username;
 
-    function __construct($table1, $table2, $table3, $column, $recipename, $username){        
-        $this -> table1 = $table1;
-        $this -> table2 = $table2;
+    function __construct($table1, $table2, $table3, $column, $recipename, $username){
+        parent::__construct($table1, $table2, $column, $username);      
         $this -> table3 = $table3;
         $this -> recipename = $recipename;        
-        $this -> column = $column;
-        $this -> username = $username;
     }
 
     //Results of ingredients for adding recipes
@@ -268,45 +266,7 @@ class IngredientListChild {
     $sql = "SELECT " . $this -> table2 . "." . $this -> column . " FROM " . $this -> table1 . " JOIN " . $this -> table3 . " ON " . $this -> table1 . ".recipeid = " . $this -> table3 . ".recipeid JOIN " . $this -> table2 . " ON " . $this -> table2 . ".id = " . $this -> table1 . ".ingredientid WHERE " . $this -> table3 . ".recipename = '" . $this -> recipename . "' AND " . $this -> table3 . ".username = '" . $this -> username . "';";
     $result = $conn -> query($sql);    
     return $result;
-    }
-    //Condition for selecting ingredients different from the one already added for adding recipes
-    public function ingConditions() {
-        
-        $result = $this -> ingForRecipe();
-        $num_rows = $result -> num_rows;        
-
-        if ($num_rows == 0) {
-            $where = "WHERE username = '" . $this -> username . "'";                                               
-        } else {
-            $where = "WHERE NOT ingredient IN (";
-
-            while($row = $result -> fetch_assoc()) {
-                $where .= "'" . $row["ingredient"] . "', ";
-            }
-            
-            $where = substr_replace($where, "", -2);
-            $where .= ") AND username = '" . $this -> username . "' ORDER BY " . $this -> column;                        
-        }
-        return $where;
-    }  
-
-    //result of user ingredients except the ones already added for the recipe
-    public function ingResults() {
-
-    $conn = DatabaseConnection::dbConnection();
-    $where = $this -> ingConditions();
-
-    $sql = "SELECT " . $this -> column . " FROM " . $this -> table2 . " " . $where;
-    $result = $conn -> query($sql);
-
-    return $result;
-}   
-    
-    //Quantity of user ingredients except the ones already added for the recipe
-    public function ingQuantity() {
-        $num_rows = $this -> ingResults() -> num_rows;
-        return $num_rows;
-    }
+    }    
 }
 
 class Units {
