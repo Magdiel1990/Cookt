@@ -5,10 +5,10 @@ comentar
 Paginacion
 validar todo con js and html
 pagina de cambiar contraseña
-router
-poner quien agrego la receta
 profile edition (desde aqui se cambia la contraseña)
 delete account option
+router
+poner quien agrego la receta
 compartir recetas con otros usuarios
 alternative sintax
 http://localhost/Cookt/actions/edit.php no devuelve si se cierra la session
