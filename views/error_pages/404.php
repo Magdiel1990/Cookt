@@ -1,5 +1,6 @@
 <?php
 //Head of the page.
+require_once ("/Cookt/modules/head.php");
 
 ?>
 
@@ -15,4 +16,5 @@
 </main>
 <?php
 //Footer of the page.
+require_once ("/Cookt/modules/footer.php");
 ?>
