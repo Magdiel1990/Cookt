@@ -8,7 +8,7 @@ session_unset();
 
 session_destroy();
 
-header('Location: /Cookt/login.php');
+header('Location: /cookt/login');
 
 die();
 ?>

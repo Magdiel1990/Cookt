@@ -7,10 +7,9 @@ require_once ("models/models.php");
 
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
-?>
 
-<main class="container py-4">
-<?php
+
+/*
 //Messages that are shown in the index page
     if(isset($_SESSION['message'])){
     $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
@@ -19,7 +18,14 @@ require_once ("views/partials/nav.php");
 //Unsetting the messages variables so the message fades after refreshing the page.
     unset($_SESSION['message_alert'], $_SESSION['message']);
     }
+*/
 ?>
+
+<main class="container py-4">
+
+
+
+
     <div class="row mt-2 text-center justify-content-center">
         <h3>RECETAS</h3>
 <!--Form for filtering the database info-->

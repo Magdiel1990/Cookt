@@ -4,9 +4,19 @@ session_name("Login");
 //Inicio una nueva sesión.
 session_start();
 
+$_SESSION['userid'] = 1;
+$_SESSION['firstname'] = "Magdiel";
+$_SESSION['lastname'] = "Castillo";
+$_SESSION['username'] = "Admin";
+$_SESSION['type'] = "Admin";
+$_SESSION['email'] = "magdielmagdiel1@gmail.com";
+$_SESSION['state'] = 1;  
+$_SESSION['title'] = "Sr. ";  
+/*
+
 //Si ningún usuario se ha logueado se redirige hacia el login.
 if (!isset($_SESSION['username'])) {
-    header("Location: /Cookt/login.php");
+    header("Location: /cookt/login");
     exit;
 } else {    
     //Sino, calculamos el tiempo transcurrido desde la última actualización.
@@ -29,20 +39,20 @@ if (!isset($_SESSION['username'])) {
         //Start the session.
         session_start();
 
-        $_SESSION['lastpage'] = $_SERVER['PHP_SELF'];
+        $_SESSION['lastpage'] = substr($_SERVER['QUERY_STRING'], 5);
 
         //Reasign the user that was logged out.
         $_SESSION['username'] = $username;
 
         //Redirect the user to the login page.
-        header("Location: /Cookt/login.php");        
+        header("Location: /cookt/login");        
 
         
     } else {
         //If the user uses the page, the last time is stored.
         $_SESSION["last_access"] = $currentTime;
     }
-}
+}*/
 
 ?>
 <!DOCTYPE html>
