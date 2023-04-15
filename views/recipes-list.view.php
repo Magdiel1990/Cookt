@@ -3,10 +3,10 @@
 require_once ("../config/db_Connection.php");
 
 //Head of the page.
-require_once ("../modules/head.php");
+require_once ("partials/head.php");
 
 //Navigation panel of the page
-require_once ("../modules/nav.php");
+require_once ("partials/nav.php");
 
 //Models.
 require_once ("../models/models.php");
@@ -109,5 +109,5 @@ $result = $conn -> query($sql);
 <?php
 $conn -> close();
 //Footer of the page.
-require_once ("../modules/footer.php");
+require_once ("partials/footer.php");
 ?>
