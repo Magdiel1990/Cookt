@@ -1,6 +1,6 @@
 <?php
 //Head of the page.
-require_once ("/Cookt/modules/head.php");
+require_once ("../partials/head.php");
 
 ?>
 
@@ -16,5 +16,5 @@ require_once ("/Cookt/modules/head.php");
 </main>
 <?php
 //Footer of the page.
-require_once ("/Cookt/modules/footer.php");
+require_once ("../partials/footer.php");
 ?>

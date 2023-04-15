@@ -1,12 +1,12 @@
 <?php
 //Head of the page.
-require_once ("modules/head.php");
+require_once ("views/partials/head.php");
 
 //Models
 require_once ("models/models.php");
 
 //Navigation panel of the page
-require_once ("modules/nav.php");
+require_once ("views/partials/nav.php");
 ?>
 
 <main class="container py-4">
@@ -72,5 +72,5 @@ function getData(){
 </script>
 <?php
 //Footer of the page.
-require_once ("modules/footer.php");
+require_once ("views/partials/footer.php");
 ?>

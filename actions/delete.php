@@ -3,7 +3,7 @@
 require_once ("../config/db_Connection.php");
 
 //Head of the page.
-require_once ("../modules/head.php");
+require_once ("../views/partials/head.php");
 
 //Models.
 require_once ("../models/models.php");
@@ -387,5 +387,5 @@ $sql = "DELETE FROM users WHERE username = '$username';";
 $conn -> close(); 
 
 //We include the footer (jquery, bootstrap and popper scripts).
-include("../modules/footer.php");
+include("../views/partials/footer.php");
 ?>

@@ -148,5 +148,5 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 <?php
 $conn -> close();
 //Footer of the page.
-require_once ("modules/footer.php");
+require_once ("views/partials/footer.php");
 ?>
