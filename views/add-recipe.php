@@ -55,7 +55,7 @@ require_once ("../modules/nav.php");
                         <select class="form-select" name="unit" id="unit">
                             <?php
                             $unitOptions = new Units(null);
-                            $unitOptions = $unitOptions -> unitOptions();   
+                            $unitOptions -> unitOptions();   
                             ?>
                         </select>
                     </div>
