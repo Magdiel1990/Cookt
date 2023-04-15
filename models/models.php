@@ -239,12 +239,19 @@ class IngredientList {
     $result = $conn -> query($sql);
 
     return $result;
-}   
+    }   
     
     //Quantity of user ingredients except the ones already added for the recipe
     public function ingQuantity() {
         $num_rows = $this -> ingResults() -> num_rows;
         return $num_rows;
+    }
+
+    public function ingredientOptions(){
+        $result = $this -> ingResults();
+        while($row = $result -> fetch_assoc()) {
+            echo '<option value="' . $row["ingredient"] . '">' . ucfirst($row["ingredient"]) . '</option>';
+        }
     }
 }
 

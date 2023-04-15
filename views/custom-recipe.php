@@ -41,14 +41,9 @@ require_once ("../modules/nav.php");
                 ?>
                 <select class="form-select" name="customingredient" id="customingredient">
                     <?php 
-                    $result = new IngredientList("ingholder", "ingredients", "ingredient", $_SESSION['username']);
-                    $result = $result -> ingResults();          
-            
-                    while($row = $result -> fetch_assoc()) {          
-                        echo '<option value="' . $row["ingredient"] . '">' . ucfirst($row["ingredient"]) . '</option>';
-                    }      
-                    
-                   ?>
+                    $options = new IngredientList("ingholder", "ingredients", "ingredient", $_SESSION['username']);
+                    $options -> ingredientOptions();                   
+                    ?>
                 </select> 
                 <input class="btn btn-primary" type="submit" value="Agregar"> 
                 <?php 

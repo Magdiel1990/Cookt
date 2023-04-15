@@ -63,12 +63,8 @@ require_once ("../modules/nav.php");
                         <label class="input-group-text" for="ingredient">Ingrediente: </label>
                         <select class="form-select" name="ingredient" id="ingredient">
                             <?php
-                            $result = new IngredientList("reholder", "ingredients", "ingredient", $_SESSION['username']);
-                            $result = $result -> ingResults();
-
-                            while($row = $result -> fetch_assoc()) {
-                                echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
-                            }
+                            $options = new IngredientList("reholder", "ingredients", "ingredient", $_SESSION['username']);
+                            $options -> ingredientOptions();
                             ?>
                         </select> 
                     </div>
