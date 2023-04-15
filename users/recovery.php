@@ -78,5 +78,5 @@ require_once ("../models/models.php");
     </main>
 <?php
 //Footer of the page.
-require_once ("../modules/footer.php");
+require_once ("/Cookt/views/partials/footer.php");
 ?>
