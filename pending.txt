@@ -14,3 +14,23 @@ alternative sintax
 http://localhost/Cookt/actions/edit.php no devuelve si se cierra la session
 http://localhost/Cookt/users/recovery.php phpmail
 
+
+URIS
+categories
+ingredients
+add_recipe
+units
+users
+custom
+profile
+random
+list
+recipes
+login
+logout
+recovery
+pass_reset
+signup
+
+
+
