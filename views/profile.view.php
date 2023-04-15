@@ -6,10 +6,10 @@ require_once ("../config/db_Connection.php");
 require_once ("../models/models.php");
 
 //Head of the page.
-require_once ("../modules/head.php");
+require_once ("partials/head.php");
 
 //Navigation panel of the page
-require_once ("../modules/nav.php");
+require_once ("partials/nav.php");
 
 $sql = "SELECT * FROM users WHERE userid = '". $_SESSION['userid']."';";
 
@@ -130,5 +130,5 @@ $sex = $row["sex"];
 <?php
 $conn -> close();
 //Footer of the page.
-require_once ("../modules/footer.php");
+require_once ("partials/footer.php");
 ?>

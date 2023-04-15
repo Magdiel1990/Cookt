@@ -220,5 +220,5 @@ $userCreation -> newUser();*/
     </main>
 <?php
 //Footer of the page.
-require_once ("../modules/footer.php");
+require_once ("/Cookt/views/partials/footer.php");
 ?>

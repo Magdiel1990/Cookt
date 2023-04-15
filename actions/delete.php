@@ -1,12 +1,12 @@
 <?php
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("/Cookt/views/partials/config/db_Connection.php");
 
 //Head of the page.
-require_once ("../modules/head.php");
+require_once ("/Cookt/views/partials/modules/head.php");
 
 //Models.
-require_once ("../models/models.php");
+require_once ("/Cookt/views/partials/models/models.php");
 
 
 /************************************************************************************************/
@@ -30,9 +30,9 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the index.php.
-        header('Location: ../index.php');
+        header('Location: /Cookt/views/partials/index.php');
     } else {
-        $target_dir = "../imgs/recipes/". $_SESSION['username']  ."/";
+        $target_dir = "/Cookt/views/partials/imgs/recipes/". $_SESSION['username']  ."/";
 
         $files = new Directories($target_dir, $recipeName);
         $imgRecipeDir = $files -> directoryFiles();
@@ -44,7 +44,7 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the index.php.
-        header('Location: ../index.php');
+        header('Location: /Cookt/views/partials/index.php');
     }
 }
 
@@ -73,14 +73,14 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add-units.php
-        header('Location: ../views/add-units.php');
+        header('Location: /Cookt/views/partials/views/add-units.php');
     } else {
 //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Unidad eliminada!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add-units.php.
-        header('Location: ../views/add-units.php');
+        header('Location: /Cookt/views/partials/views/add-units.php');
     }
 } 
 
@@ -96,7 +96,7 @@ if(isset($_GET['categoryname'])){
 //Getting the name.
 $categoryName = $_GET['categoryname'];
 
-$categoryDir = "../imgs/categories/";
+$categoryDir = "/Cookt/views/partials/imgs/categories/";
 
 //Function to get the image directory from the category
 $files = new Directories($categoryDir , $categoryName);
@@ -117,14 +117,14 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "danger";
 
     //The page is redirected to the add_units.php
-        header('Location: ../views/add-categories.php');
+        header('Location: /Cookt/views/partials/views/add-categories.php');
     } else {
     //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Categoría eliminada!';
         $_SESSION['message_alert'] = "success";
 
     //After the receta has been deleted, the page is redirected to the add_units.php.
-        header('Location: ../views/add-categories.php');
+        header('Location: /Cookt/views/partials/views/add-categories.php');
     }
 } 
 
@@ -154,14 +154,14 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add_units.php
-        header('Location: ../views/add-recipe.php');
+        header('Location: /Cookt/views/partials/views/add-recipe.php');
     } else {
 //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add_units.php.
-        header('Location: ../views/add-recipe.php');
+        header('Location: /Cookt/views/partials/views/add-recipe.php');
     }
 }
 
@@ -188,14 +188,14 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "danger";
 
     //The page is redirected to the add_units.php
-        header('Location: ../views/add-ingredients.php');
+        header('Location: /Cookt/views/partials/views/add-ingredients.php');
     } else {
     //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
     //After the receta has been deleted, the page is redirected to the add_units.php.
-        header('Location: ../views/add-ingredients.php');
+        header('Location: /Cookt/views/partials/views/add-ingredients.php');
     }
 } 
 
@@ -224,14 +224,14 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add_units.php
-        header('Location: ../views/custom-recipe.php');
+        header('Location: /Cookt/views/partials/views/custom-recipe.php');
     } else {
 //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add_units.php.
-        header('Location: ../views/custom-recipe.php');
+        header('Location: /Cookt/views/partials/views/custom-recipe.php');
     }
 } 
 
@@ -300,7 +300,7 @@ $userId = $_GET['userid'];
 $sql = "SELECT username FROM users WHERE userid = '$userId';";
 $row = $conn -> query($sql) -> fetch_assoc();
 $username = $row['username'];
-$target_dir = "../imgs/recipes/" . $username;
+$target_dir = "/Cookt/views/partials/imgs/recipes/" . $username;
 
     if(file_exists($target_dir)) {
         unlink($target_dir);
@@ -317,14 +317,14 @@ $target_dir = "../imgs/recipes/" . $username;
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add_units.php
-        header("Location: ../views/add-users.php");
+        header("Location: /Cookt/views/partials/views/add-users.php");
     } else {
 //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Usuario eliminado!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add_units.php.
-        header("Location: ../views/add-users.php");
+        header("Location: /Cookt/views/partials/views/add-users.php");
     }
 }
 
@@ -352,7 +352,7 @@ $email = $row['email'];
 $state = $row['state'];
 $sex = $row['sex'];
 
-$target_dir = "../imgs/recipes/" . $username;
+$target_dir = "/Cookt/views/partials/imgs/recipes/" . $username;
 
     if(file_exists($target_dir)) {
         unlink($target_dir);
@@ -371,7 +371,7 @@ $sql = "DELETE FROM users WHERE username = '$username';";
             $_SESSION['message_alert'] = "success";
 
     //After the receta has been deleted, the page is redirected to the add_units.php.
-            header("Location: ../views/add-users.php");
+            header("Location: /Cookt/views/partials/views/add-users.php");
 
         } else {
         //Creation of the message of error deleting the receta.
@@ -379,7 +379,7 @@ $sql = "DELETE FROM users WHERE username = '$username';";
             $_SESSION['message_alert'] = "danger";
 
     //The page is redirected to the add_units.php
-            header("Location: ../views/add-users.php");
+            header("Location: /Cookt/views/partials/views/add-users.php");
         }
     }
 }
@@ -387,5 +387,5 @@ $sql = "DELETE FROM users WHERE username = '$username';";
 $conn -> close(); 
 
 //We include the footer (jquery, bootstrap and popper scripts).
-include("../modules/footer.php");
+include("/Cookt/views/partials/modules/footer.php");
 ?>

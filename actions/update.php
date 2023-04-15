@@ -1,6 +1,6 @@
 <?php
 //Head of the page.
-require_once ("../modules/head.php");
+require_once ("/Cookt/views/partials/head.php");
 
 //Models
 require_once ("../models/models.php");

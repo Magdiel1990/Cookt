@@ -6,7 +6,7 @@ require_once ("../config/db_Connection.php");
 require_once ("../models/models.php");
 
 //Head of the page.
-require_once ("../modules/head.php");
+require_once ("partials/head.php");
 
 if($_SESSION['type'] != 'Admin') { 
     require_once ("/Cookt/error/error.php");
@@ -14,7 +14,7 @@ if($_SESSION['type'] != 'Admin') {
 }
 
 //Navigation panel of the page
-require_once ("../modules/nav.php");
+require_once ("partials/nav.php");
 ?>
 
 <main class="container p-4">
@@ -186,5 +186,5 @@ require_once ("../modules/nav.php");
 <?php
 $conn -> close();
 //Footer of the page.
-require_once ("../modules/footer.php");
+require_once ("partials/footer.php");
 ?>

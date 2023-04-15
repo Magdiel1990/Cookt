@@ -1,9 +1,9 @@
 <?php
 //Head of the page.
-require_once ("../modules/head.php");
+require_once ("/Cookt/views/partials/head.php");
 
 //Navigation panel of the page
-require_once ("../modules/nav.php");
+require_once ("/Cookt/views/partials/nav.php");
 
 //Models
 require_once ("../models/models.php");
@@ -402,5 +402,5 @@ if(isset($_SESSION['message'])){
 $conn -> close();    
 
 //Footer of the page.
-require_once ("../modules/footer.php");
+require_once ("/Cookt/views/partials/footer.php");
 ?>

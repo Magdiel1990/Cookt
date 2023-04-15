@@ -33,4 +33,9 @@ pass_reset
 signup
 
 
+modules partials 
+error error_pages 404
+llamar la base de datos desde models
+
+
 
