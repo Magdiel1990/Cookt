@@ -1,15 +1,15 @@
 <?php
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("config/db_Connection.php");
 
 //Models.
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 //Head of the page.
-require_once ("partials/head.php");
+require_once ("views/partials/head.php");
 
 //Navigation panel of the page
-require_once ("partials/nav.php");
+require_once ("views/partials/nav.php");
 ?>
 
 <main class="container p-4">
@@ -104,7 +104,7 @@ require_once ("partials/nav.php");
                     $html .= "<ol>";            
                     while($row = $result -> fetch_assoc()){                    
                         $html .= "<li>";
-                        $html .= "<a href='../actions/delete.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
+                        $html .= "<a href='actions/delete.php?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
                         $html .= "</a>";
                         $html .= "</li>";
                                     
@@ -177,5 +177,5 @@ require_once ("partials/nav.php");
 <?php
 $conn -> close();
 //Footer of the page.
-require_once ("partials/footer.php");
+require_once ("views/partials/footer.php");
 ?>

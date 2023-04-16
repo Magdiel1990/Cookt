@@ -1,15 +1,15 @@
 <?php
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("config/db_Connection.php");
 
 //Models.
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 //Head of the page.
-require_once ("partials/head.php");
+require_once ("views/partials/head.php");
 
 //Navigation panel of the page
-require_once ("partials/nav.php");
+require_once ("views/partials/nav.php");
 ?>
 
 <main class="container p-4">
@@ -55,7 +55,7 @@ require_once ("partials/nav.php");
                     $html = "<tr>";
                     $html .= "<td>" . ucfirst($row['ingredient']) . "</td>";
                     $html .= "<td>";
-                    $html .= "<a href='../actions/delete.php?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                    $html .= "<a href='actions/delete.php?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                     $html .= "</td>";
                     $html .= "</tr>";
                     echo $html;
@@ -77,5 +77,5 @@ require_once ("partials/nav.php");
 <?php
 $conn -> close();
 //Footer of the page.
-require_once ("partials/footer.php");
+require_once ("views/partials/footer.php");
 ?>

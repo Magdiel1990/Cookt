@@ -1,9 +1,9 @@
 <?php
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("config/db_Connection.php");
 
 //Models.
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 //Head of the page.
 require_once ("partials/head.php");

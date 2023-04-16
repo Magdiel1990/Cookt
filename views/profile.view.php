@@ -1,15 +1,15 @@
 <?php
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("config/db_Connection.php");
 
 //Models.
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 //Head of the page.
-require_once ("partials/head.php");
+require_once ("views/partials/head.php");
 
 //Navigation panel of the page
-require_once ("partials/nav.php");
+require_once ("views/partials/nav.php");
 
 $sql = "SELECT * FROM users WHERE userid = '". $_SESSION['userid']."';";
 
@@ -41,10 +41,9 @@ $sex = $row["sex"];
         if(file_exists($img_dir)){
 
         }
-
-
-
-
+        
+        
+        
     ?>
     <div class="row">
         <div class="col-auto card card-body">
@@ -119,7 +118,7 @@ $sex = $row["sex"];
                     <div class="m-auto">
                         <div class="text-center">
                             <input  class="btn btn-primary" name="usersubmit" type="submit" value="Editar">
-                            <a class="btn btn-secondary" href="../views/add-users.php">Regresar</a>
+                            <a class="btn btn-secondary" href="views/add-users.php">Regresar</a>
                         </div>
                     </div>       
                 </form>
@@ -130,5 +129,5 @@ $sex = $row["sex"];
 <?php
 $conn -> close();
 //Footer of the page.
-require_once ("partials/footer.php");
+require_once ("views/partials/footer.php");
 ?>

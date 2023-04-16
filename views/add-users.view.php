@@ -1,20 +1,20 @@
 <?php
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("config/db_Connection.php");
 
 //Models.
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 //Head of the page.
-require_once ("partials/head.php");
+require_once ("views/partials/head.php");
 
 if($_SESSION['type'] != 'Admin') { 
-    require_once ("/Cookt/error/error.php");
+    require_once ("views/error_pages/404.php");
     exit;
 }
 
 //Navigation panel of the page
-require_once ("partials/nav.php");
+require_once ("views/partials/nav.php");
 ?>
 
 <main class="container p-4">
@@ -170,9 +170,9 @@ require_once ("partials/nav.php");
                             $html .= "<td style='color:" . $color . ";'>" . $state . "</td>";
                             $html .= "<td style='color:" . $color . ";'>" . $recipeCount . "</td>";
                             $html .= "<td>";
-                            $html .= "<a $display href='../actions/edit.php?userid=" . $userid . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
-                            $html .= "<a $display $display_2 href='../actions/delete.php?userid=" . $userid . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
-                            $html .= "<a $display_2 href='../actions/delete.php?user_id=" . $userid . "&reset=1' class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
+                            $html .= "<a $display href='actions/edit.php?userid=" . $userid . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
+                            $html .= "<a $display $display_2 href='actions/delete.php?userid=" . $userid . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                            $html .= "<a $display_2 href='actions/delete.php?user_id=" . $userid . "&reset=1' class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
                             $html .= "</td>";
                             $html .= "</tr>";
                             echo $html;
@@ -186,5 +186,5 @@ require_once ("partials/nav.php");
 <?php
 $conn -> close();
 //Footer of the page.
-require_once ("partials/footer.php");
+require_once ("views/partials/footer.php");
 ?>

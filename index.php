@@ -1,11 +1,18 @@
 <?php
 $uri = parse_url($_SERVER["REQUEST_URI"])['path'];
 
-
 $routes = [
-"/cookt/" => "controllers/index.controller.php",
+"/cookt" => "controllers/index.controller.php",
 "/cookt/login" => "controllers/login.controller.php",
-"/cookt/logout" => "controllers/logout.controller.php"
+"/cookt/logout" => "controllers/logout.controller.php",
+"/cookt/random" => "controllers/random.controller.php",
+"/cookt/custom" => "controllers/custom.controller.php",
+"/cookt/profile" => "controllers/profile.controller.php",
+"/cookt/units" => "controllers/units.controller.php",
+"/cookt/ingredients" => "controllers/ingredients.controller.php",
+"/cookt/add-recipe" => "controllers/add-recipe.controller.php",
+"/cookt/categories" => "controllers/categories.controller.php",
+"/cookt/user" => "controllers/users.controller.php"
 ];
 
 if(array_key_exists($uri, $routes)) {

@@ -1,18 +1,18 @@
 <?php
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("config/db_Connection.php");
 
 //Models.
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 //Head of the page.
-require_once ("partials/head.php");
+require_once ("views/partials/head.php");
 
 ?>
 
 <?php
 if($_SESSION['type'] != 'Admin') { 
-    require_once ("../error/error.php");
+    require_once ("views/error_pages/404.php");
     exit;
 }
 
@@ -63,7 +63,7 @@ require_once ("partials/nav.php");
                             $html = "<tr>";
                             $html .= "<td>" . ucfirst($row['unit']) . "</td>";
                             $html .= "<td>";
-                            $html .= "<a href='../actions/delete.php?unitname=" . $row['unit'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                            $html .= "<a href='actions/delete.php?unitname=" . $row['unit'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                             $html .= "</td>";
                             $html .= "</tr>";
                             echo $html;
@@ -84,5 +84,5 @@ require_once ("partials/nav.php");
 <?php
 $conn -> close();
 //Footer of the page.
-require_once ("partials/footer.php");
+require_once ("views/partials/footer.php");
 ?>
