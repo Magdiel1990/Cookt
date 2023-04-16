@@ -10,6 +10,7 @@ require_once ("views/partials/head.php");
 
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
+
 ?>
 
 <main class="container p-4">
@@ -109,7 +110,7 @@ require_once ("views/partials/nav.php");
                 $html .= "<div class='suggestion_container'>";
                 $html .= "<ul>";
                 while($row = $result -> fetch_assoc()) {            
-                    $html .= "<li><a href='/cookt/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['PHP_SELF'])) . "&ingredients=" . base64_encode(serialize($ingArray)) ."'>" . $row['recipename'] . "</a></li>";
+                    $html .= "<li><a href='/cookt/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['REQUEST_URI'])) . "&ingredients=" . base64_encode(serialize($ingArray)) ."'>" . $row['recipename'] . "</a></li>";
                 } 
                 $html .= "</ul>";
                 $html .= "</div>";

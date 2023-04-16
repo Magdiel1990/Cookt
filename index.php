@@ -23,7 +23,8 @@ if($param == "") {
     $routes = [
     "/cookt/recipes" => "controllers/recipes.controller.php",
     "/cookt/random" => "controllers/random.controller.php",
-    "/cookt/delete" => "controllers/delete.controller.php"
+    "/cookt/delete" => "controllers/delete.controller.php",
+    "/cookt/custom" => "controllers/custom.controller.php"
     ];
 }
 
