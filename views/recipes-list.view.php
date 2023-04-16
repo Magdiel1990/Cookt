@@ -1,15 +1,15 @@
 <?php
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("config/db_Connection.php");
 
 //Head of the page.
-require_once ("partials/head.php");
+require_once ("views/partials/head.php");
 
 //Navigation panel of the page
-require_once ("partials/nav.php");
+require_once ("views/partials/nav.php");
 
 //Models.
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 if(isset($_GET["username"])){
     $username = $_GET["username"];
@@ -109,5 +109,5 @@ $result = $conn -> query($sql);
 <?php
 $conn -> close();
 //Footer of the page.
-require_once ("partials/footer.php");
+require_once ("views/partials/footer.php");
 ?>
