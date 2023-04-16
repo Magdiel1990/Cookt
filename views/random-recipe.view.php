@@ -19,7 +19,7 @@ if(isset($_POST["category"])) {
 <main class="container p-4">
     <div class="row mt-2 text-center justify-content-center">
         <h3>Sugerencias</h3>
-        <form action= "<?php echo $_SERVER ['PHP_SELF'] ?>" method="POST" class="mt-3 col-auto">
+        <form action= "/cookt/random" method="POST" class="mt-3 col-auto">
             <div class="input-group mb-3">
                 <label for="category" class="input-group-text">Categoría: </label>
                 
@@ -83,10 +83,10 @@ if(isset($_POST["category"])) {
         $cookingtime = $row['cookingtime'];       
     ?>
     <div class="my-4">
-        <a class="text-center d-block recipe_link" href='/Cookt/views/recipes.php?recipe=<?php echo $recipename;?>&username=<?php echo $_SESSION['username'];?>&path=<?php echo base64_encode(serialize($_SERVER['PHP_SELF']));?>'>
+        <a class="text-center d-block recipe_link" href='/cookt/recipes?recipe=<?php echo $recipename;?>&username=<?php echo $_SESSION['username'];?>&path=<?php echo base64_encode(serialize("/cookt/random"));?>'>
             <p class="text-info"> <?php echo $recipename . " (" . $cookingtime . " minutos)"; ?> </p>
             <?php
-            $imageDir = "../imgs/recipes/" .  $_SESSION['username'] . "/";
+            $imageDir = "imgs/recipes/" .  $_SESSION['username'] . "/";
 
             $files = new Directories($imageDir, $recipename);
             $recipeImageDir = $files -> directoryFiles();

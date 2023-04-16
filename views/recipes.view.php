@@ -16,7 +16,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     $username = $_GET["username"];
     
     if($_GET["path"] == "index"){
-        $pathToReturn = "../index.php";        
+        $pathToReturn = "/cookt/";        
     } else if (isset($_GET["ingredients"])) {
         $ingArray = $_GET["ingredients"];
         $pathToReturn = unserialize(base64_decode($_GET["path"])) . "?ingredients=". $ingArray ."&username=" . $username;
@@ -25,34 +25,33 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
         $pathToReturn = unserialize(base64_decode($_GET["path"])) . "?username=" . $username;
     }
 
-    $imageDir = "../imgs/recipes/" . $username . "/";
+    $imageDir = "imgs/recipes/" . $username . "/";
 
     $files = new Directories($imageDir, $recipe);
     $recipeImageDir = $files -> directoryFiles();
+    
+    $sql = "SELECT r.recipeid, 
+    r.recipename,
+    concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient, ri.detail) as indications, 
+    r.cookingtime,
+    r.date, 
+    r.preparation, 
+    c.category, 
+    r.username
+    from recipe r 
+    join recipeinfo ri 
+    on ri.recipeid = r.recipeid
+    join categories c 
+    on r.categoryid = c.categoryid
+    join ingredients i 
+    on i.id = ri.ingredientid
+    WHERE r.recipename = '$recipe' 
+    AND r.username = '$username';";
 
+    $result = $conn -> query($sql);
+    $num_rows = $result -> num_rows;
+    $row = $result->fetch_assoc();
 }
-
-$sql = "SELECT r.recipeid, 
-r.recipename,
-concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient, ri.detail) as indications, 
-r.cookingtime,
-r.date, 
-r.preparation, 
-c.category, 
-r.username
-from recipe r 
-join recipeinfo ri 
-on ri.recipeid = r.recipeid
-join categories c 
-on r.categoryid = c.categoryid
-join ingredients i 
-on i.id = ri.ingredientid
-WHERE r.recipename = '$recipe' 
-AND r.username = '$username';";
-
-$result = $conn -> query($sql);
-$num_rows = $result -> num_rows;
-$row = $result->fetch_assoc();
 ?>
 <main class="container mt-4">
     <?php
@@ -72,7 +71,7 @@ $row = $result->fetch_assoc();
 
     $date = $day . "/" . $spanishMonth . "/" .  $year;
 
-    $categoryDir = "../imgs/categories/";
+    $categoryDir = "imgs/categories/";
 
     //Function to get the image directory from the category
     $files = new Directories($categoryDir , $category);
@@ -131,19 +130,9 @@ $row = $result->fetch_assoc();
     </div>
     <?php
     } else {
-    ?> 
-    <div class="row justify-content-center">
-        <p class="col-auto">¡Esta receta no tiene ingredientes!</p>
-        <div class="col-auto">
-            <a class="btn btn-warning" href="../actions/edit.php?recipename=<?php echo $recipe ?>&username=<?php echo $username;?>">
-                <i class="fa-solid fa-plus" title="Agregar"></i>
-            </a>
-            <a class="btn btn-warning" href="<?php echo $pathToReturn;?>">
-                <i class="fa-solid fa-backward-step" title="Regresar"></i>
-            </a>                
-        </div>
-    </div> 
-    <?php
+        http_response_code(404);
+
+        require "views/error_pages/error.php";
     } 
     ?>
 </main>

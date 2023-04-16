@@ -32,7 +32,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             }
 
             if(!isset($_SESSION['lastpage'])){
-                $_SESSION['lastpage'] = "/cookt/";
+                $_SESSION['lastpage'] = "/cookt";
             }
 
             //Creo la cookie.        
@@ -116,7 +116,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                     <img src="/Cookt/imgs/login/Picture.png" class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 mt-sm-4">
-                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                    <form action="/cookt/login" method="POST">
                         <!-- Email input -->
                         <div class="form-outline mb-3">
                             <input type="text" id="username" class="form-control form-control-lg" name="username" autocomplete="off"/>
