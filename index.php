@@ -17,11 +17,13 @@ if($param == "") {
     "/cookt/add-recipe" => "controllers/add-recipe.controller.php",
     "/cookt/categories" => "controllers/categories.controller.php",
     "/cookt/user" => "controllers/users.controller.php",
+    "/cookt/create" => "controllers/create.controller.php"
     ];
 } else {
     $routes = [
     "/cookt/recipes" => "controllers/recipes.controller.php",
-    "/cookt/random" => "controllers/random.controller.php"
+    "/cookt/random" => "controllers/random.controller.php",
+    "/cookt/delete" => "controllers/delete.controller.php"
     ];
 }
 

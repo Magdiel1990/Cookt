@@ -28,7 +28,7 @@ require_once ("views/partials/nav.php");
     <div  class="row mt-2 text-center justify-content-center">
         <h3>Elegir por Ingrediente</h3>
 <!--Form for filtering the database info-->
-        <form class="m-3 col-auto" method="POST" action="../actions/create.php">
+        <form class="m-3 col-auto" method="POST" action="/cookt/create">
 
            <div class="input-group">
                 <label class="input-group-text" for="customingredient">Ingredientes: </label>
@@ -49,7 +49,7 @@ require_once ("views/partials/nav.php");
                 <?php 
                 } else {
                 ?>
-                <a class="btn btn-primary" href="add-ingredients.php">Agregar</a>
+                <a class="btn btn-primary" href="/cookt/ingredients">Agregar</a>
                 <?php 
                 } 
                 ?> 
@@ -71,7 +71,7 @@ require_once ("views/partials/nav.php");
             $html .= "<ol>";
             while($row = $result -> fetch_assoc()) {
                 $html .= "<li>";
-                $html .= "<a href='../actions/delete.php?custom=" . $row['ingredient'] . "' " . "title='Eliminar' class='ingredients'>";
+                $html .= "<a href='/cookt/delete?custom=" . $row['ingredient'] . "' " . "title='Eliminar' class='ingredients'>";
                 $html .= ucfirst($row["ingredient"]);
                 $html .= "</a>";
                 $html .= "</li>";
@@ -109,14 +109,14 @@ require_once ("views/partials/nav.php");
                 $html .= "<div class='suggestion_container'>";
                 $html .= "<ul>";
                 while($row = $result -> fetch_assoc()) {            
-                    $html .= "<li><a href='/Cookt/views/recipes.php?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['PHP_SELF'])) . "&ingredients=" . base64_encode(serialize($ingArray)) ."'>" . $row['recipename'] . "</a></li>";
+                    $html .= "<li><a href='/cookt/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['PHP_SELF'])) . "&ingredients=" . base64_encode(serialize($ingArray)) ."'>" . $row['recipename'] . "</a></li>";
                 } 
                 $html .= "</ul>";
                 $html .= "</div>";
                 echo $html;
             } else {
                 $html .= "<p class='text-center'>Ninguna receta disponible!";
-                $html .= "<a class='btn btn-secondary' href='custom-recipe.php'>Regresar</a>";
+                $html .= "<a class='btn btn-secondary' href='/cookt/custom'>Regresar</a>";
                 $html .= "</p>";
 
                 echo $html;

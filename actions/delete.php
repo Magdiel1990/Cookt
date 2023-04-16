@@ -1,12 +1,12 @@
 <?php
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("config/db_Connection.php");
 
 //Head of the page.
-require_once ("../views/partials/head.php");
+require_once ("views/partials/head.php");
 
 //Models.
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 
 /************************************************************************************************/
@@ -224,14 +224,14 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the add_units.php
-        header('Location: ../views/custom-recipe.php');
+        header('Location: /cookt/custom');
     } else {
 //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
 //After the receta has been deleted, the page is redirected to the add_units.php.
-        header('Location: ../views/custom-recipe.php');
+        header('Location: /cookt/custom');
     }
 } 
 
@@ -387,5 +387,5 @@ $sql = "DELETE FROM users WHERE username = '$username';";
 $conn -> close(); 
 
 //We include the footer (jquery, bootstrap and popper scripts).
-include("../views/partials/footer.php");
+include("views/partials/footer.php");
 ?>

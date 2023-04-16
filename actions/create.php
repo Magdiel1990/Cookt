@@ -11,10 +11,10 @@ if (!isset($_SESSION['userid'])) {
 } 
 
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("config/db_Connection.php");
 
 //Models
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 /************************************************************************************************/
 /***************************************UNITS ADITION CODE**************************************/
@@ -625,7 +625,7 @@ if(isset($_POST['customingredient'])){
       $_SESSION['message_alert'] = "success";
 
   //The page is redirected to the add_units.php.
-      header('Location: ../views/custom-recipe.php');
+      header('Location: /cookt/custom');
   } else {
     $stmt = $conn -> prepare("INSERT INTO ingholder (ingredientid, username) VALUES (?, ?);");
     $stmt->bind_param ("is", $ingredientId, $_SESSION['username']);
@@ -637,7 +637,7 @@ if(isset($_POST['customingredient'])){
 
         $stmt -> close();            
   //The page is redirected to the add_units.php.
-        header('Location: ../views/custom-recipe.php');
+        header('Location: /cookt/custom');
 
     } else {
 //Failure message.
@@ -645,7 +645,7 @@ if(isset($_POST['customingredient'])){
       $_SESSION['message_alert'] = "danger";
           
 //The page is redirected to the add_units.php.
-      header('Location: ../views/custom-recipe.php');
+      header('Location: /cookt/custom');
     }
   }
 }
