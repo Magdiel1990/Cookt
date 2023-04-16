@@ -20,7 +20,8 @@ if($param == "") {
     ];
 } else {
     $routes = [
-    "/cookt/recipes" => "controllers/recipes.controller.php"
+    "/cookt/recipes" => "controllers/recipes.controller.php",
+    "/cookt/random" => "controllers/random.controller.php"
     ];
 }
 
