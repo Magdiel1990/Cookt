@@ -95,7 +95,7 @@ require_once ("views/partials/nav.php");
                     </div> 
                 </div>     
 
-                <input type="hidden" id="url" name="url" value = "<?php echo $_SERVER["PHP_SELF"];?>"/>
+                <input type="hidden" id="url" name="url" value = "<?php echo $_SERVER["REQUEST_URI"];?>"/>
 
                 <div class="text-center form-switch mt-2">
                     <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes" checked>

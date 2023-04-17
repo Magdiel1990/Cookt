@@ -125,7 +125,7 @@ $userCreation -> newUser();*/
                                 <img src="/Cookt/imgs/login/Picture.png" class="img-fluid" alt="Sample image">
                             </div>
                             <div class="col-md-9 col-lg-6 col-xl-6">
-                                <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST" class="card-body p-md-5 text-black">
+                                <form action="<?php echo $_SERVER['REQUEST_URI'];?>" method="POST" class="card-body p-md-5 text-black">
                                     <h3 class="mb-3 text-center">Regístrate</h3>                        
                                     <div class="row">                                   
                                         <div class="col-md-6 mb-3">
@@ -191,7 +191,7 @@ $userCreation -> newUser();*/
 
                                     <input type="hidden" id="state" name="state" value = ""/>
 
-                                    <input type="hidden" id="url" name="url" value = "<?php echo $_SERVER["PHP_SELF"];?>"/>
+                                    <input type="hidden" id="url" name="url" value = "<?php echo $_SERVER["REQUEST_URI"];?>"/>
 
                                     <div class="d-flex justify-content-center">
                                         <h5 class="mt-2 pt-1">
