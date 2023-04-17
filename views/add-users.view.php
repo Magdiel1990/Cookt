@@ -31,7 +31,7 @@ require_once ("views/partials/nav.php");
     ?>  <div class="col-auto order-last my-4">
             <h3 class="text-center mb-3">Agregar Usuarios</h3>
         <!--Form for filtering the database info-->
-            <form method="POST" action="../actions/create.php">         
+            <form method="POST" action="/cookt/create">         
                 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
@@ -157,7 +157,7 @@ require_once ("views/partials/nav.php");
                             if($username == $_SESSION['username']) {
                                 $recipeList = "";
                             } else {
-                                $recipeList = "href='../views/recipes-list.php?username=" . $username . "'";
+                                $recipeList = "href='/cookt/user/recipes?username=" . $username . "'";
                             }
                             
                             $html = "<tr>";                        
@@ -170,9 +170,9 @@ require_once ("views/partials/nav.php");
                             $html .= "<td style='color:" . $color . ";'>" . $state . "</td>";
                             $html .= "<td style='color:" . $color . ";'>" . $recipeCount . "</td>";
                             $html .= "<td>";
-                            $html .= "<a $display href='actions/edit.php?userid=" . $userid . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
-                            $html .= "<a $display $display_2 href='actions/delete.php?userid=" . $userid . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
-                            $html .= "<a $display_2 href='actions/delete.php?user_id=" . $userid . "&reset=1' class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
+                            $html .= "<a $display href='/cookt/edit?userid=" . $userid . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
+                            $html .= "<a $display $display_2 href='/cookt/delete?userid=" . $userid . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                            $html .= "<a $display_2 href='/cookt/delete?user_id=" . $userid . "&reset=1' class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
                             $html .= "</td>";
                             $html .= "</tr>";
                             echo $html;

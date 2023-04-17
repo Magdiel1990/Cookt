@@ -17,7 +17,10 @@ if($param == "") {
     "/cookt/add-recipe" => "controllers/add-recipe.controller.php",
     "/cookt/categories" => "controllers/categories.controller.php",
     "/cookt/user" => "controllers/users.controller.php",
-    "/cookt/create" => "controllers/create.controller.php"
+    "/cookt/create" => "controllers/create.controller.php",
+    "/cookt/email" => "controllers/email.controller.php",
+    "/cookt/signup" => "controllers/signup.controller.php",
+    "/cookt/recovery" => "controllers/recovery.controller.php"
     ];
 } else {
     $routes = [
@@ -26,7 +29,9 @@ if($param == "") {
     "/cookt/delete" => "controllers/delete.controller.php",
     "/cookt/custom" => "controllers/custom.controller.php",
     "/cookt/edit" => "controllers/edit.controller.php",
-    "/cookt/update" => "controllers/update.controller.php"
+    "/cookt/update" => "controllers/update.controller.php",
+    "/cookt/user/recipes" => "controllers/recipes-list.controller.php",
+    "/cookt/reset-password" => "controllers/reset-password.controller.php"
     ];
 }
 

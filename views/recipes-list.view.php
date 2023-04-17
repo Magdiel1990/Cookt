@@ -82,7 +82,7 @@ $result = $conn -> query($sql);
             <?php
                 while($row = $result -> fetch_assoc()){
                     $html = "<li>"; 
-                    $html .= "<a href='recipes.php?recipe=" . $row['recipename'] . "&username=" . $username . "&path=" . base64_encode(serialize($_SERVER['PHP_SELF'])) . "'>"; 
+                    $html .= "<a href='/cookt/recipes?recipe=" . $row['recipename'] . "&username=" . $username . "&path=" . base64_encode(serialize($_SERVER['PHP_SELF'])) . "'>"; 
                     $html .= $row['recipename'];
                     $html .= "</a>"; 
                     $html .= "</li>"; 
@@ -103,7 +103,7 @@ $result = $conn -> query($sql);
            
     </div>
     <div class="text-center mb-4">
-        <a class="btn btn-secondary" href="../views/add-users.php">Usuarios</a>
+        <a class="btn btn-secondary" href="/cookt/user">Usuarios</a>
     </div> 
 </main>
 <?php

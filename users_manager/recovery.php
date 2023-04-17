@@ -4,7 +4,7 @@ session_name("recovery");
 
 session_start();
 //Models.
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 ?>
 
@@ -38,7 +38,7 @@ require_once ("../models/models.php");
             </div>
             <div class="row p-4 align-items-center justify-content-center">
                 <div class="col-auto">
-                    <form class="text-center recovery-form" action="email.php" method="POST">
+                    <form class="text-center recovery-form" action="/cookt/email" method="POST">
                         <!-- Email input -->
                         <div class="form-outline mb-3">
                             <label class="form-label mb-4" for="email">¿Olvidaste tu contraseña?</label>
@@ -66,9 +66,9 @@ require_once ("../models/models.php");
                         <div class="text-center">
                             <input type="submit" name="Recovery" value="Reestablecer contraseña" class="btn btn-primary">                              
                             <p class="small fw-bold mb-0 mt-4">
-                                <a class="text-decoration-none px-2" href="../login.php">Login</a>
+                                <a class="text-decoration-none px-2" href="/cookt/login">Login</a>
                                 ¿Si no tienes cuenta? 
-                                <a href="/Cookt/users/signup.php" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
+                                <a href="/cookt/signup" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
                             </p>                  
                         </div>                                    
                     </form>
@@ -78,5 +78,5 @@ require_once ("../models/models.php");
     </main>
 <?php
 //Footer of the page.
-require_once ("../views/partials/footer.php");
+require_once ("views/partials/footer.php");
 ?>

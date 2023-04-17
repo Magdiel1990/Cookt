@@ -26,7 +26,7 @@ require_once ("views/partials/nav.php");
     ?>
     <h3>Agregar Ingredientes</h3>
 <!--Form for filtering the database info-->
-        <form method="POST" action="../actions/create.php" autocomplete="on" class="mt-3 col-auto" onsubmit="return validation('add_ingredient', /[a-zA-Z\t\h]+|(^$)/ )">
+        <form method="POST" action="/cookt/create" autocomplete="on" class="mt-3 col-auto" onsubmit="return validation('add_ingredient', /[a-zA-Z\t\h]+|(^$)/ )">
             <div class="input-group mb-4">
                 <label  class="input-group-text is-required" for="add_ingredient">Ingrediente: </label>
                 <input  class="form-control" type="text" id="add_ingredient" name="add_ingredient" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="20" autofocus required>
@@ -55,7 +55,7 @@ require_once ("views/partials/nav.php");
                     $html = "<tr>";
                     $html .= "<td>" . ucfirst($row['ingredient']) . "</td>";
                     $html .= "<td>";
-                    $html .= "<a href='actions/delete.php?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                    $html .= "<a href='/cookt/delete?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                     $html .= "</td>";
                     $html .= "</tr>";
                     echo $html;

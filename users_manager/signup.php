@@ -3,10 +3,10 @@ session_name("signup");
 
 session_start();
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("config/db_Connection.php");
 
 //Models.
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 if(!empty($_POST)) {
     $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
@@ -69,7 +69,7 @@ if(!empty($_POST)) {
 
                 if ($stmt->execute()) {            
                 //The page is redirected to the add-recipe.php
-                header('Location: /Cookt/login.php');
+                header('Location: /cookt/login');
                 } else {
                 //Failure message.
                     $_SESSION['message'] = '¡Error al agregar usuario!';
@@ -195,7 +195,7 @@ $userCreation -> newUser();*/
 
                                     <div class="d-flex justify-content-center">
                                         <h5 class="mt-2 pt-1">
-                                            <a class="text-decoration-none px-2" href="../login.php">Login</a>
+                                            <a class="text-decoration-none px-2" href="/cookt/login">Login</a>
                                         </h5>
                                         <input type="reset" class="btn btn-light btn-lg" value="Limpiar todo">
                                         <input type="submit" class="btn btn-warning btn-lg ms-2" value="Registrarse">
@@ -220,5 +220,5 @@ $userCreation -> newUser();*/
     </main>
 <?php
 //Footer of the page.
-require_once ("../views/partials/footer.php");
+require_once ("views/partials/footer.php");
 ?>

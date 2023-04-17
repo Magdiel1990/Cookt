@@ -37,7 +37,7 @@ $sex = $row["sex"];
      
      
      
-        $img_dir = "/Cookt/imgs/users/" . $_SESSION['username'];
+        $img_dir = "../imgs/users/" . $_SESSION['username'];
         if(file_exists($img_dir)){
 
         }
@@ -58,7 +58,7 @@ $sex = $row["sex"];
         </div>
         <div class="col-auto card card-body">
             <div class="p-4">
-                <form action="update.php?userid=<?php echo $userId; ?>" method="POST">
+                <form action="/cookt/update?userid=<?php echo $userId; ?>" method="POST">
 
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="firstname">Nombre: </label>
@@ -118,7 +118,7 @@ $sex = $row["sex"];
                     <div class="m-auto">
                         <div class="text-center">
                             <input  class="btn btn-primary" name="usersubmit" type="submit" value="Editar">
-                            <a class="btn btn-secondary" href="views/add-users.php">Regresar</a>
+                            <a class="btn btn-secondary" href="/cookt/user">Regresar</a>
                         </div>
                     </div>       
                 </form>

@@ -34,7 +34,7 @@ require_once ("views/partials/nav.php");
     ?>
     <h3>AGREGAR CATEGORÍAS</h3>
 <!--Form for filtering the database info-->
-        <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
+        <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="/cookt/create" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
             
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="add_categories">Categoría: </label>
@@ -68,8 +68,8 @@ require_once ("views/partials/nav.php");
                             $html = "<tr>";
                             $html .= "<td>" . ucfirst($row['category']) . "</td>";
                             $html .= "<td>";
-                            $html .= "<a href='actions/delete.php?categoryname=" . $row['category'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
-                            $html .= "<a href='actions/edit.php?categoryid=" . $row['categoryid'] . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
+                            $html .= "<a href='/cookt/delete?categoryname=" . $row['category'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                            $html .= "<a href='/cookt/edit?categoryid=" . $row['categoryid'] . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
                             $html .= "</td>";
                             $html .= "</tr>";
                             echo $html;
