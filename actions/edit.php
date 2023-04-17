@@ -1,15 +1,15 @@
 <?php
 //Head of the page.
-require_once ("../views/partials/head.php");
+require_once ("views/partials/head.php");
 
 //Navigation panel of the page
-require_once ("../views/partials/nav.php");
+require_once ("views/partials/nav.php");
 
 //Models
-require_once ("../models/models.php");
+require_once ("models/models.php");
 
 //Including the database connection.
-require_once ("../config/db_Connection.php");
+require_once ("config/db_Connection.php");
 ?>
 
 <?php
@@ -42,7 +42,7 @@ $category = $row["category"];
     <div class="row mt-2 text-center justify-content-center">
         <h3>EDITAR CATEGORÍA</h3>     
         <div class="mt-3 col-auto">
-            <form  enctype="multipart/form-data" class="bg-form card card-body" action="update.php?categoryid=<?php echo $categoryId; ?>" method="POST">
+            <form  enctype="multipart/form-data" class="bg-form card card-body" action="update?categoryid=<?php echo $categoryId; ?>" method="POST">
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="categoryName">Nombre: </label>
@@ -55,7 +55,7 @@ $category = $row["category"];
                 </div> 
                 <div class="mt-2">
                     <input class="btn btn-primary" type="submit" value="Editar" name="categoryeditionsubmit">
-                    <a href="../views/add-categories.php" class="btn btn-secondary">Regresar</a>
+                    <a href="/cookt/categories" class="btn btn-secondary">Regresar</a>
                 </div>
                 </form>
             </div>
@@ -112,7 +112,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
         <h3 class="text-center">Editar Receta</h3>     
         <div class="mt-3 col-auto">
             <div class="bg-form card card-body">
-                <form enctype="multipart/form-data" action="update.php?editname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
+                <form enctype="multipart/form-data" action="update?editname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
 
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="newRecipeName">Nombre: </label>
@@ -154,7 +154,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
                                       
                     <div class="mb-3 text-center">
                         <input class='btn btn-primary' type="submit" name="edit" value="Actualizar"> 
-                        <a href='../index.php' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
+                        <a href='/cookt/' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
                     </div>
                 </form>
             </div>
@@ -189,7 +189,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
                 ?>
                 </div>
                 <div class="my-4 text-center">
-                    <form method="POST" action="create.php?rname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" onsubmit="return validationNumber('quantity')">
+                    <form method="POST" action="create?rname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" onsubmit="return validationNumber('quantity')">
                         <div class="input-group mb-3">
                             <label class="input-group-text is-required" for="quantity">Cantidad: </label>                    
                             <input class="form-control" type="number" name="qty" id="quantity" max="1000" min="0" required>
@@ -246,7 +246,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
                         } else {
                         ?>
                         <div>
-                            <a class="btn btn-secondary" href="../views/add-ingredients.php">Ingredientes</a>
+                            <a class="btn btn-secondary" href="/cookt/ingredients">Ingredientes</a>
                         </div>
                         <?php
                         }
@@ -315,7 +315,7 @@ if(isset($_SESSION['message'])){
     <div class="row mt-2 justify-content-center">
         <h3 class="text-center">EDITAR USUARIO</h3>     
         <div class="mt-3 col-auto">
-            <form class="bg-form card card-body" action="update.php?userid=<?php echo $userId; ?>" method="POST">
+            <form class="bg-form card card-body" action="update?userid=<?php echo $userId; ?>" method="POST">
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
@@ -389,7 +389,7 @@ if(isset($_SESSION['message'])){
                     </div>
                     <div class="text-center">
                         <input  class="btn btn-primary" name="usersubmit" type="submit" value="Editar">
-                        <a class="btn btn-secondary" href="../views/add-users.php">Regresar</a>
+                        <a class="btn btn-secondary" href="/cookt/user">Regresar</a>
                     </div>
                 </div>       
             </form>
@@ -402,5 +402,5 @@ if(isset($_SESSION['message'])){
 $conn -> close();    
 
 //Footer of the page.
-require_once ("../views/partials/footer.php");
+require_once ("views/partials/footer.php");
 ?>

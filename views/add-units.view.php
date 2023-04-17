@@ -17,7 +17,7 @@ if($_SESSION['type'] != 'Admin') {
 }
 
 //Navigation panel of the page
-require_once ("partials/nav.php");
+require_once ("views/partials/nav.php");
 ?>
 
 <main class="container p-4">
@@ -34,7 +34,7 @@ require_once ("partials/nav.php");
     ?>
     <h3>Agregar Unidades</h3>
 <!--Form for filtering the database info-->
-        <form class="mt-3 col-auto" method="POST" action="../actions/create.php" autocomplete="on" onsubmit="return validation('add_units', /[a-zA-Z\t\h]+|(^$)/)">
+        <form class="mt-3 col-auto" method="POST" action="/cookt/create" autocomplete="on" onsubmit="return validation('add_units', /[a-zA-Z\t\h]+|(^$)/)">
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="add_units">Unidad: </label>
                 <input class="form-control" type="text" id="add_units" name="add_units"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="50" autofocus required>
@@ -63,7 +63,7 @@ require_once ("partials/nav.php");
                             $html = "<tr>";
                             $html .= "<td>" . ucfirst($row['unit']) . "</td>";
                             $html .= "<td>";
-                            $html .= "<a href='actions/delete.php?unitname=" . $row['unit'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                            $html .= "<a href='/cookt/delete?unitname=" . $row['unit'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                             $html .= "</td>";
                             $html .= "</tr>";
                             echo $html;

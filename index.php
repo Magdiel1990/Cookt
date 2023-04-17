@@ -24,7 +24,9 @@ if($param == "") {
     "/cookt/recipes" => "controllers/recipes.controller.php",
     "/cookt/random" => "controllers/random.controller.php",
     "/cookt/delete" => "controllers/delete.controller.php",
-    "/cookt/custom" => "controllers/custom.controller.php"
+    "/cookt/custom" => "controllers/custom.controller.php",
+    "/cookt/edit" => "controllers/edit.controller.php",
+    "/cookt/update" => "controllers/update.controller.php"
     ];
 }
 
