@@ -51,12 +51,12 @@
     if($num_rows > 0) {
         while($row = $result->fetch_assoc()){
             $output['data'] .= "<tr>";
-            $output['data'] .= "<td><a href='views/recipes.php?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=index'>" . $row['recipename'] . "</a></td>";
+            $output['data'] .= "<td><a href='/cookt/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=index'>" . $row['recipename'] . "</a></td>";
             $output['data'] .= "<td>" . $row['cookingtime'] . " min</td>";
             $output['data'] .= "<td>" .ucfirst($row['category']). "</td>";
             $output['data'] .= "<td>";
-            $output['data'] .= "<a href='actions/edit.php?recipename=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "'" . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
-            $output['data'] .= "<a href='actions/delete.php?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+            $output['data'] .= "<a href='/cookt/edit?recipename=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "'" . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
+            $output['data'] .= "<a href='/cookt/delete?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
             $output['data'] .= "</td>";
             $output['data'] .= "</tr>";
         }

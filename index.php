@@ -2,6 +2,7 @@
 $uri = parse_url($_SERVER["REQUEST_URI"])['path']; 
 $param = isset(parse_url($_SERVER["REQUEST_URI"])['query']) ? parse_url($_SERVER["REQUEST_URI"])['query'] : "";
 
+echo $param;
 
 if($param == "") {
     $routes = [
