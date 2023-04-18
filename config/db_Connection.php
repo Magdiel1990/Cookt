@@ -1,8 +1,8 @@
 <?php
-$hostname = "Localhost:3306";
-$username = "root";
-$password = "123456";
-$database = "foodbase";
+$hostname = "Localhost";
+$username = "u743896838_magdiel";
+$password = ">Af=jh8E";
+$database = "u743896838_foodbase";
 
 //Connection to the database.
     
