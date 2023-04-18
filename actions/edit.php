@@ -188,7 +188,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                 $html = "<ul>";
                 while($row = $result -> fetch_assoc()){
                     $html .= "<li class='my-2'>";
-                    $html .= "<i><a href='delete.php?indication=" . $row['indications'] . "&rpename=" . $recipeName . "&username=" . $userName . "'>";
+                    $html .= "<i><a href='delete?indication=" . $row['indications'] . "&rpename=" . $recipeName . "&username=" . $userName . "'>";
                     $html .= $row['indications'];
                     $html .= "</i></a>";
                     $html .= "</li>";
