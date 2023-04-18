@@ -95,6 +95,8 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
     $preparation = $filter -> sanitization();
 
     $category = $row["category"];
+} else {
+    header('Location: error_pages/404');
 }
 ?>
 <main class="container p-4">
@@ -260,6 +262,8 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
 </main>
 
 <?php
+} else {    
+    header('Location: error_pages/404');
 }
 
 /************************************************************************************************/
