@@ -14,15 +14,18 @@ require_once ("models/models.php");
 if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     $recipe = $_GET["recipe"];
     $username = $_GET["username"];
+    $path = $_GET["path"];
     
-    if($_GET["path"] == "index"){
+    if($path == "index"){
         $pathToReturn = "/cookt/";        
     } else if (isset($_GET["ingredients"])) {
         $ingArray = $_GET["ingredients"];
-        $pathToReturn = unserialize(base64_decode($_GET["path"])) . "?ingredients=". $ingArray ."&username=" . $username;
+        $pathToReturn = unserialize(base64_decode($path)) . "?ingredients=". $ingArray ."&username=" . $username;
 
+    } else if ($path == "custom" || $path == "random" || $path == "user"){
+        $pathToReturn = unserialize(base64_decode($path)) . "?username=" . $username;
     } else {
-        $pathToReturn = unserialize(base64_decode($_GET["path"])) . "?username=" . $username;
+        $pathToReturn = "/cookt/";
     }
 
     $imageDir = "imgs/recipes/" . $username . "/";
