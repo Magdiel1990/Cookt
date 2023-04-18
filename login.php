@@ -32,7 +32,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             }
 
             if(!isset($_SESSION['lastpage'])){
-                $_SESSION['lastpage'] = "/cookt";
+                $_SESSION['lastpage'] = "/cookt/";
             }
 
             //Creo la cookie.        

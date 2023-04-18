@@ -4,16 +4,6 @@ session_name("Login");
 //Inicio una nueva sesión.
 session_start();
 
-$_SESSION['userid'] = 1;
-$_SESSION['firstname'] = "Magdiel";
-$_SESSION['lastname'] = "Castillo";
-$_SESSION['username'] = "Admin";
-$_SESSION['type'] = "Admin";
-$_SESSION['email'] = "magdielmagdiel1@gmail.com";
-$_SESSION['state'] = 1;  
-$_SESSION['title'] = "Sr. ";  
-/*
-
 //Si ningún usuario se ha logueado se redirige hacia el login.
 if (!isset($_SESSION['username'])) {
     header("Location: /cookt/login");
