@@ -42,7 +42,7 @@ if (!isset($_SESSION['username'])) {
         //If the user uses the page, the last time is stored.
         $_SESSION["last_access"] = $currentTime;
     }
-}*/
+}
 
 ?>
 <!DOCTYPE html>
