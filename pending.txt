@@ -1,41 +1,11 @@
-En edit.php si no recibe variable get rennviar al index
-recipe_viewer no se debe entrar sin variables get
-recipe_suggestions.php no se debe entrar sin variables get
 comentar
 Paginacion
 validar todo con js and html
-pagina de cambiar contraseña
 profile edition (desde aqui se cambia la contraseña)
 delete account option
-router
 poner quien agrego la receta
 compartir recetas con otros usuarios
 alternative sintax
 http://localhost/Cookt/actions/edit.php no devuelve si se cierra la session
 http://localhost/Cookt/users/recovery.php phpmail
-
-
-URIS
-categories
-ingredients
-add_recipe
-units
-users
-custom
-profile
-random
-list
-recipes
-login
-logout
-recovery
-pass_reset
-signup
-
-
-modules partials 
-error error_pages 404
-llamar la base de datos desde models
-
-
 
