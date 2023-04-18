@@ -5,7 +5,7 @@
         <div></div>
         <div class="logo">
             <img src="/Cookt/imgs/logo/logo.png" alt="Logo">
-            <a href="/cookt">Recipes23</a>
+            <a href="/cookt">Recipeholder</a>
         </div>
         <div class="d-flex">            
             <a class="px-3 text-dark"  href="/cookt/profile" style="text-decoration: none;" title="Usuario">
