@@ -23,9 +23,15 @@ $categoryId = $_GET['categoryid'];
 
 $sql = "SELECT * FROM categories WHERE categoryid = '$categoryId';";
 
-$row = $conn -> query($sql) -> fetch_assoc();
+$result = $conn -> query($sql);
 
-$category = $row["category"];
+if($result -> num_rows > 0) {
+    $row =  $result -> fetch_assoc();
+    $category = $row["category"];
+} else {
+    require ("views/error_pages/404.php");
+    die();
+}
 
 ?>
 <main class="container p-4">
@@ -263,7 +269,7 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
 
 <?php
 } else {    
-    header('Location: error_pages/404');
+    header('Location: views/error_pages/404.php');
 }
 
 /************************************************************************************************/

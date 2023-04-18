@@ -15,15 +15,16 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     $recipe = $_GET["recipe"];
     $username = $_GET["username"];
     $path = $_GET["path"];
-    
+    $decodedPath = unserialize(base64_decode($path));
+
+
     if($path == "index"){
         $pathToReturn = "/cookt/";        
     } else if (isset($_GET["ingredients"])) {
         $ingArray = $_GET["ingredients"];
-        $pathToReturn = unserialize(base64_decode($path)) . "?ingredients=". $ingArray ."&username=" . $username;
-
-    } else if ($path == "custom" || $path == "random" || $path == "user"){
-        $pathToReturn = unserialize(base64_decode($path)) . "?username=" . $username;
+        $pathToReturn = $decodedPath . "?ingredients=". $ingArray ."&username=" . $username;
+    } else if ($decodedPath == "/cookt/custom" || $decodedPath == "/cookt/random" || $decodedPath == "/cookt/user"){
+        $pathToReturn = $decodedPath . "?username=" . $username;
     } else {
         $pathToReturn = "/cookt/";
     }
@@ -92,7 +93,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
                     </div>
                     <div class="my-4">
                         <div class="text-center">
-                            <img src="<?php echo $recipeImageDir?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
+                            <img src="<?php echo $recipeImageDir;?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
                         </div> 
                         <ul class="lead py-4"> 
                         <?php            
@@ -135,7 +136,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     } else {
         http_response_code(404);
 
-        require "views/error_pages/error.php";
+        require "views/error_pages/404.php";
     } 
     ?>
 </main>
