@@ -76,34 +76,35 @@ if($result -> num_rows > 0) {
 /************************************************************************************************/
 
 
-if(isset($_GET['recipename']) && isset($_GET['username'])) {
-$recipeName = $_GET['recipename'];
-$userName = $_GET['username'];
+if(isset($_GET['recipename']) || isset($_GET['username'])) {
+$recipeName = isset($_GET['recipename']) ? $_GET['recipename'] : "";
+$userName = isset($_GET['username']) ? $_GET['username'] : "";
 
-$sql = "SELECT r.recipeid, 
-r.recipename,
-r.cookingtime, 
-r.preparation,
-c.category, 
-r.username
-from recipe r 
-join categories c 
-on r.categoryid = c.categoryid
-WHERE r.recipename = '$recipeName' 
-AND r.username = '$userName';";
+    if($recipeName != "" && $userName != "") {
+    $sql = "SELECT r.recipeid, 
+    r.recipename,
+    r.cookingtime, 
+    r.preparation,
+    c.category, 
+    r.username
+    from recipe r 
+    join categories c 
+    on r.categoryid = c.categoryid
+    WHERE r.recipename = '$recipeName' 
+    AND r.username = '$userName';";
 
-$row = $conn -> query($sql) -> fetch_assoc();
+    $row = $conn -> query($sql) -> fetch_assoc();
 
-if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["category"])) {
-    $cookingTime = $row["cookingtime"];
+    if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["category"])) {
+        $cookingTime = $row["cookingtime"];
 
-    $filter = new Filter ($row["preparation"], FILTER_SANITIZE_STRING, $conn);  
-    $preparation = $filter -> sanitization();
+        $filter = new Filter ($row["preparation"], FILTER_SANITIZE_STRING, $conn);  
+        $preparation = $filter -> sanitization();
 
-    $category = $row["category"];
-} else {
-    header('Location: error_pages/404');
-}
+        $category = $row["category"];
+    } else {
+        header('Location: /cookt/error404');
+    }
 ?>
 <main class="container p-4">
 <?php
@@ -268,10 +269,11 @@ if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["categ
 </main>
 
 <?php
-} else {    
-    header('Location: views/error_pages/404.php');
+    } else {
+        header('Location: /cookt/error404');
+        die();
+    }
 }
-
 /************************************************************************************************/
 /********************************************USER EDITION CODE***********************************/
 /************************************************************************************************/
@@ -283,33 +285,35 @@ $userId = $_GET['userid'];
 $sql = "SELECT username FROM users WHERE type = 'Admin' AND userid = " . $userId . ";";
 $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
-$row = $result -> fetch_assoc();
 
-if($num_rows == 1 && $_SESSION['username'] == $row['username']){
-    $userNameState = "hidden";
-    $userNameLabelState = "display: none;";    
-} else {
-    $userNameState = $userNameLabelState = "";
-}
+if($num_rows > 0){
+    $row = $result -> fetch_assoc();
 
-$sql = "SELECT * FROM users WHERE userid = '$userId';";
+    if($num_rows == 1 && $_SESSION['username'] == $row['username']){
+        $userNameState = "hidden";
+        $userNameLabelState = "display: none;";    
+    } else {
+        $userNameState = $userNameLabelState = "";
+    }
 
-$row = $conn -> query($sql) -> fetch_assoc();
+    $sql = "SELECT * FROM users WHERE userid = '$userId';";
 
-$userName = $row["username"];
-$firstName=  $row["firstname"];
-$lastName=  $row["lastname"];
-$type = $row["type"];
-$state = $row["state"];
-$email = $row["email"];
-$currentPassword = $row["password"];
-$sex = $row["sex"];
+    $row = $conn -> query($sql) -> fetch_assoc();
 
-if($state == 1) {
-    $check = "checked";
-} else {
-    $check = "";
-}
+    $userName = $row["username"];
+    $firstName=  $row["firstname"];
+    $lastName=  $row["lastname"];
+    $type = $row["type"];
+    $state = $row["state"];
+    $email = $row["email"];
+    $currentPassword = $row["password"];
+    $sex = $row["sex"];
+
+    if($state == 1) {
+        $check = "checked";
+    } else {
+        $check = "";
+    }
 ?>
 <main class="container p-4">
 <?php
@@ -408,6 +412,10 @@ if(isset($_SESSION['message'])){
 </main>
 
 <?php
+    } else {
+        header('Location: /cookt/error404');
+        die();
+    }
 }
 $conn -> close();    
 

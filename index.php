@@ -19,7 +19,8 @@ if($param == "") {
     "/cookt/create" => "controllers/create.controller.php",
     "/cookt/email" => "controllers/email.controller.php",
     "/cookt/signup" => "controllers/signup.controller.php",
-    "/cookt/recovery" => "controllers/recovery.controller.php"
+    "/cookt/recovery" => "controllers/recovery.controller.php",
+    "/cookt/error404" => "controllers/404.controller.php"
     ];
 } else {
     $routes = [

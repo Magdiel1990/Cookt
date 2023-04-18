@@ -1,9 +1,7 @@
 <?php
 //Head of the page.
 require_once ("views/partials/head.php");
-
 ?>
-
 <!--Made by purplexmoss (https://freefrontend.com/html-css-404-page-templates/)-->
 <main class="error">
     <div class="mainbox">

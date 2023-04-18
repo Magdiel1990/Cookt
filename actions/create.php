@@ -689,7 +689,7 @@ if(isset($_POST['firstname']) && isset($_POST['url']) && isset($_POST['lastname'
 
   if($sessionUserType != 'Admin') {
     //The page is redirected to the add-recipe.php
-        header('Location: views/error_pages/404.php');
+        header('Location: /cookt/error404');
   } else {
     if ($firstname == "" || $lastname == "" || $username == "" || $password == ""  || $sex == "") {
     //Message if the variable is null.
