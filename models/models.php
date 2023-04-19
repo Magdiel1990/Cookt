@@ -1,7 +1,7 @@
 <?php
 
 class DatabaseConnection {
-    static $hostname = "localhost";
+    static $hostname = "localhost:3308";
     static $username = "root";
     static $password = "123456";
     static $database = "foodbase";
