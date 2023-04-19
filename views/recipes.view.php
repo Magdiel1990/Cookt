@@ -17,7 +17,6 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     $path = $_GET["path"];
     $decodedPath = unserialize(base64_decode($path));
 
-
     if($path == "index"){
         $pathToReturn = "/cookt/";        
     } else if (isset($_GET["ingredients"])) {
