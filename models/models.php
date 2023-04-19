@@ -2,10 +2,15 @@
 
 class DatabaseConnection {
     static $hostname = "localhost";
+    static $username = "root";
+    static $password = "123456";
+    static $database = "foodbase";
+    /*
+    static $hostname = "localhost";
     static $username = "u743896838_magdiel";
     static $password = ">Af=jh8E";
     static $database = "u743896838_foodbase";
-
+    */ 
     //Connection to the database.
     public static function dbConnection(){
         $conn = new mysqli(self::$hostname, self::$username, self::$password, self::$database);
