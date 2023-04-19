@@ -4,7 +4,7 @@
     <div class="banner text-center py-1">
         <div></div>
         <div class="logo">
-            <img src="/Cookt/imgs/logo/logo.png" alt="Logo">
+            <img src="imgs/logo/logo.png" alt="Logo">
             <a href="/cookt">Recipeholder</a>
         </div>
         <div class="d-flex">            

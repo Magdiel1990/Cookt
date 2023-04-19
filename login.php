@@ -89,11 +89,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     <meta name="description" content="Encuentra la receta de cocina fácil que estás buscando personalizadas de acuerdo a los ingredientes que tengas en tu casa.">
     <title>Recipes23</title> <!-- It depends where I am in the site.-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="shortcut icon" href="/Cookt/imgs/logo/logo.png">
-    <link rel="stylesheet" href="/Cookt/css/styles.css">
+    <link rel="shortcut icon" href="imgs/logo/logo.png">
+    <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
-    <script src="/Cookt/js/scripts.js"></script>    
+    <script src="js/scripts.js"></script>    
 </head>
 <body>
 <main class="row justify-content-center p-5" id="loginBackground">
@@ -113,7 +113,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         <div class="container-fluid h-custom my-4">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-9 col-lg-6 col-xl-5">
-                    <img src="/Cookt/imgs/login/Picture.png" class="img-fluid" alt="Sample image">
+                    <img src="imgs/login/Picture.png" class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 mt-sm-4">
                     <form action="/cookt/login" method="POST">

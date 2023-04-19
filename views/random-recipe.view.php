@@ -91,11 +91,9 @@ if(isset($_POST["category"])) {
             $files = new Directories($imageDir, $recipename);
             $recipeImageDir = $files -> directoryFiles();
 
-            if(file_exists($recipeImageDir)) {
             ?>
             <img src="<?php echo $recipeImageDir?>" alt="Imangen de la receta" style="width:50%;height:850%;">
             <?php
-            }
             ?>      
         </a>
         <?php

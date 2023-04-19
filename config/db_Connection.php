@@ -1,5 +1,5 @@
 <?php
-$hostname = "Localhost";
+$hostname = "localhost";
 $username = "u743896838_magdiel";
 $password = ">Af=jh8E";
 $database = "u743896838_foodbase";
