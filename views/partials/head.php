@@ -5,10 +5,10 @@ session_name("Login");
 session_start();
 
 //Si ningún usuario se ha logueado se redirige hacia el login.
-if (!isset($_SESSION['username'])) {
+/*if (!isset($_SESSION['username'])) {
     header("Location: /cookt/login");
     exit;
-} else {    
+} else {    */
     //Sino, calculamos el tiempo transcurrido desde la última actualización.
     $lastTime = $_SESSION["last_access"];
     $currentTime = date("Y-n-j H:i:s");
@@ -42,7 +42,7 @@ if (!isset($_SESSION['username'])) {
         //If the user uses the page, the last time is stored.
         $_SESSION["last_access"] = $currentTime;
     }
-}
+/*}*/
 
 ?>
 <!DOCTYPE html>

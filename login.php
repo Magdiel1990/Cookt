@@ -5,6 +5,14 @@ session_name("Login");
 //Inicio una nueva sesión.
 session_start();
 
+ $_SESSION['userid'] = 1;
+$_SESSION['firstname'] = "Magdiel";
+$_SESSION['lastname'] = "Castillo";
+$_SESSION['username'] = "Admin";
+$_SESSION['type'] = "Admin";
+$_SESSION['email'] = "magdielmagdiel1@gmail.com";
+$_SESSION['state'] = 1;  
+
 //Models.
 require_once ("models/models.php");
 
@@ -38,13 +46,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             //Creo la cookie.        
             session_set_cookie_params(0, "/", $_SERVER["HTTP_HOST"], 0);
             //Declaro las variables de la sesión.
-            $_SESSION['userid'] = $row['userid'];
+            /* $_SESSION['userid'] = $row['userid'];
             $_SESSION['firstname'] = $row['firstname'];
             $_SESSION['lastname'] = $row['lastname'];
             $_SESSION['username'] = $row['username'];
             $_SESSION['type'] = $row['type'];
             $_SESSION['email'] = $row['email'];
-            $_SESSION['state'] = $row['state'];  
+            $_SESSION['state'] = $row['state'];  */
 
             //Calcula la hora y fecha del momento en el que se crea la sesión.
             $_SESSION["last_access"] = date("Y-n-j H:i:s");               
