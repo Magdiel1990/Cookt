@@ -34,10 +34,10 @@ require_once ("views/partials/nav.php");
         <table class="table table-bordered">
             <thead>
                 <tr class="bg-primary">
-                    <th>Receta</th>
-                    <th>Duración</th>
-                    <th>Categoría</th>
-                    <th>Acciones</th>
+                    <th scope="col">Receta</th>
+                    <th scope="col">Duración</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody id="content">
