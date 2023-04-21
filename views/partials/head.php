@@ -8,7 +8,7 @@ session_start();
 /*if (!isset($_SESSION['username'])) {
     header("Location: /cookt/login");
     exit;
-} else {    */
+} else {    
     //Sino, calculamos el tiempo transcurrido desde la última actualización.
     $lastTime = $_SESSION["last_access"];
     $currentTime = date("Y-n-j H:i:s");

@@ -44,7 +44,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             }
 
             //Creo la cookie.        
-            session_set_cookie_params(0, "/", $_SERVER["HTTP_HOST"], 0);
+           /* session_set_cookie_params(0, "/", $_SERVER["HTTP_HOST"], 0);
             //Declaro las variables de la sesión.
             /* $_SESSION['userid'] = $row['userid'];
             $_SESSION['firstname'] = $row['firstname'];
