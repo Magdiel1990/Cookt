@@ -4,11 +4,11 @@
     
     session_start();
 
-    //Including the database connection.
-    require_once ("../config/db_Connection.php");
-
     //Models.
-    require_once ("../models/models.php");
+    require_once ("models/models.php");
+
+    //Including the database connection.
+    $conn = DatabaseConnection::dbConnection();
     
     //Array of the columns to be querried from the database.
     $columns = ["r.recipename", "c.category", "r.cookingtime"];

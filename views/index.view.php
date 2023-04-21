@@ -1,10 +1,4 @@
 <?php
-//Head of the page.
-require_once ("views/partials/head.php");
-
-//Models
-require_once ("models/models.php");
-
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
 ?>

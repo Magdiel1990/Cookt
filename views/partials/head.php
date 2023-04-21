@@ -1,4 +1,10 @@
 <?php
+//Models.
+require_once ("models/models.php");
+
+//Including the database connection.
+$conn = DatabaseConnection::dbConnection();
+
 /*
 //Reviso el estado de la sesión.
 session_name("Login");

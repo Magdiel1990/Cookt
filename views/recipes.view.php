@@ -1,15 +1,9 @@
 <?php
-//Including the database connection.
-require_once ("config/db_Connection.php");
-
 //Head of the page.
 require_once ("views/partials/head.php");
 
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
-
-//Models.
-require_once ("models/models.php");
 
 if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     $recipe = $_GET["recipe"];

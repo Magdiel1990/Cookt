@@ -1,13 +1,6 @@
 <?php
-//Including the database connection.
-require_once ("config/db_Connection.php");
-
-//Models.
-require_once ("models/models.php");
-
 //Head of the page.
 require_once ("views/partials/head.php");
-
 ?>
 
 <?php

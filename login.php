@@ -9,7 +9,7 @@ session_start();
 require_once ("models/models.php");
 
 //Including the database connection.
-require_once ("config/db_Connection.php");
+$conn = DatabaseConnection::dbConnection();
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];

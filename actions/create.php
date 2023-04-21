@@ -10,11 +10,11 @@ if (!isset($_SESSION['userid'])) {
     exit;
 } 
 
-//Including the database connection.
-require_once ("config/db_Connection.php");
-
-//Models
+//Models.
 require_once ("models/models.php");
+
+//Including the database connection.
+$conn = DatabaseConnection::dbConnection();
 
 /************************************************************************************************/
 /***************************************UNITS ADITION CODE**************************************/
