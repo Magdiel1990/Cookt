@@ -47,7 +47,7 @@ if($param == "") {
     "/cookt/custom" => "controllers/custom.controller.php",
     "/cookt/edit" => "controllers/edit.controller.php",
     "/cookt/update" => "controllers/update.controller.php",
-    "/cookt/user/recipes" => "controllers/recipes-list.controller.php",
+    "/cookt/user-recipes" => "controllers/recipes-list.controller.php",
     "/cookt/reset-password" => "controllers/reset-password.controller.php"
     ];
 }

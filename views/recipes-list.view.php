@@ -11,8 +11,6 @@ require_once ("views/partials/head.php");
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
 
-
-
 if(isset($_GET["username"])){
     $username = $_GET["username"];
 }
@@ -20,6 +18,7 @@ if(isset($_GET["username"])){
 $sql = "SELECT recipename FROM recipe WHERE username = '$username';";
 $result = $conn -> query($sql);
 ?>
+
 <main class="container p-4 mt-4">
     <div class="row justify-content-center table form">
         <div class="col-lg-8 col-xl-8 col-md-8 mb-5">

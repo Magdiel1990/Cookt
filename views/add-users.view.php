@@ -158,7 +158,7 @@ require_once ("views/partials/nav.php");
                                 if($username == $_SESSION['username']) {
                                     $recipeList = "";
                                 } else {
-                                    $recipeList = "href='/cookt/user/recipes?username=" . $username . "'";
+                                    $recipeList = "href='/cookt/user-recipes?username=" . $username . "'";
                                 }
                                 
                                 $html = "<tr>";                        
