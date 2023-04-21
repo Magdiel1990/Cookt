@@ -2,14 +2,16 @@
 //Including the database connection.
 require_once ("config/db_Connection.php");
 
+//Models.
+require_once ("models/models.php");
+
 //Head of the page.
 require_once ("views/partials/head.php");
 
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
 
-//Models.
-require_once ("models/models.php");
+
 
 if(isset($_GET["username"])){
     $username = $_GET["username"];
@@ -24,15 +26,15 @@ $result = $conn -> query($sql);
             <div class="text-center">
                 <h3>Datos del usuario <?php echo $username;?></h3>                
             </div>
-            <div>
+            <div class="table-responsive-md mt-2">
                 <table class="table table-sm">
                     <thead>
                         <tr class="bg-primary">
-                            <th>Nombre completo</th>                
-                            <th>Tiempo de uso</th>
-                            <th>Último acceso</th>
-                            <th>Accesos</th>
-                            <th>Imágenes</th>                 
+                            <th scope="col">Nombre completo</th>                
+                            <th scope="col">Tiempo de uso</th>
+                            <th scope="col">Último acceso</th>
+                            <th scope="col">Accesos</th>
+                            <th scope="col">Imágenes</th>                 
                         </tr>
                     </thead>
                     <tbody>   

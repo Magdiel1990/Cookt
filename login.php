@@ -5,14 +5,6 @@ session_name("Login");
 //Inicio una nueva sesión.
 session_start();
 
-$_SESSION['userid'] = 1;
-$_SESSION['firstname'] = "Magdiel";
-$_SESSION['lastname'] = "Castillo";
-$_SESSION['username'] = "Admin";
-$_SESSION['type'] = "Admin";
-$_SESSION['email'] = "magdielmagdiel1@gmail.com";
-$_SESSION['state'] = 1;  
-
 //Models.
 require_once ("models/models.php");
 
