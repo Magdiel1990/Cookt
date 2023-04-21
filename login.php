@@ -5,7 +5,7 @@ session_name("Login");
 //Inicio una nueva sesión.
 session_start();
 
- $_SESSION['userid'] = 1;
+$_SESSION['userid'] = 1;
 $_SESSION['firstname'] = "Magdiel";
 $_SESSION['lastname'] = "Castillo";
 $_SESSION['username'] = "Admin";
