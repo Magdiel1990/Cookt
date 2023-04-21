@@ -1,11 +1,12 @@
 <?php
+/*
 //Reviso el estado de la sesión.
 session_name("Login");
 //Inicio una nueva sesión.
 session_start();
 
 //Si ningún usuario se ha logueado se redirige hacia el login.
-/*if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: /cookt/login");
     exit;
 } else {    
