@@ -48,14 +48,15 @@ require_once ("views/partials/nav.php");
             <div class="mb-3">
                 <input  class="btn btn-success" name="categorySubmit" type="submit" value="Agregar">
             </div>
+
         </form>
     </div>
-    <div>
+    <div class="table-responsive-sm mt-4">
         <table class="table table-sm">
             <thead>
                 <tr class="bg-primary">
-                    <th>Categorías</th>
-                    <th>Acciones</th>
+                    <th scope="col">Categorías</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>                

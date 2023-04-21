@@ -108,78 +108,80 @@ require_once ("views/partials/nav.php");
 
         <div class="col-lg-9 col-xl-9 col-md-12 col-sm-12 my-4">
             <h3 class="text-center">Lista de Usuarios</h3>
-            <table class="table table-sm mt-3">
-                <thead>
-                    <tr class="bg-primary">
-                        <th>Usuario</th>
-                        <th>Rol</th>
-                        <th>Estado</th> 
-                        <th>Recetas</th>             
-                        <th>Acciones</th>                     
-                    </tr>
-                </thead>
-                <tbody>                
-                    <?php
-                        $sql = "SELECT type, username, state, userid FROM users ORDER BY type;";
+            <div class="table-responsive-md mt-3">
+                <table class="table table-sm">
+                    <thead>
+                        <tr class="bg-primary">
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Estado</th> 
+                            <th scope="col">Recetas</th>             
+                            <th scope="col">Acciones</th>                     
+                        </tr>
+                    </thead>
+                    <tbody>                
+                        <?php
+                            $sql = "SELECT type, username, state, userid FROM users ORDER BY type;";
 
-                        $result = $conn -> query($sql);                    
+                            $result = $conn -> query($sql);                    
 
-                        while($row = $result -> fetch_assoc()){
-                            $type = $row['type'];
-                            $username = $row['username'];
-                            $state = $row['state'];
-                            $userid = $row['userid'];
+                            while($row = $result -> fetch_assoc()){
+                                $type = $row['type'];
+                                $username = $row['username'];
+                                $state = $row['state'];
+                                $userid = $row['userid'];
 
-                            //Recipes of each user
-                            $sql = "SELECT count(recipeid) as `count` FROM recipe WHERE username = '$username';";
-                            $row = $conn -> query($sql) -> fetch_assoc();   
-                            $recipeCount = $row ['count'];
-                            
-                            if($state == 1) {
-                                $state = "activo";
-                                $color = "rgb(22, 182, 4)";
-                            } else {
-                                $state = "inactivo";
-                                $color = "#aaa";
-                            }
+                                //Recipes of each user
+                                $sql = "SELECT count(recipeid) as `count` FROM recipe WHERE username = '$username';";
+                                $row = $conn -> query($sql) -> fetch_assoc();   
+                                $recipeCount = $row ['count'];
+                                
+                                if($state == 1) {
+                                    $state = "activo";
+                                    $color = "rgb(22, 182, 4)";
+                                } else {
+                                    $state = "inactivo";
+                                    $color = "#aaa";
+                                }
 
-                            if($type == "Admin" && $username == $_SESSION['username']) {
-                                $display = "style = 'display: none;'";
-                                $display_2 = "";
-                            } else if ($type == "Admin"){
-                                $display = ""; 
-                                $display_2 = "style = 'display: none;'";
-                            } else {
-                                $display = "";
-                                $display_2 = "";
-                            }
+                                if($type == "Admin" && $username == $_SESSION['username']) {
+                                    $display = "style = 'display: none;'";
+                                    $display_2 = "";
+                                } else if ($type == "Admin"){
+                                    $display = ""; 
+                                    $display_2 = "style = 'display: none;'";
+                                } else {
+                                    $display = "";
+                                    $display_2 = "";
+                                }
 
-                            if($username == $_SESSION['username']) {
-                                $recipeList = "";
-                            } else {
-                                $recipeList = "href='/cookt/user/recipes?username=" . $username . "'";
-                            }
-                            
-                            $html = "<tr>";                        
-                            $html .= "<td>";
-                            $html .="<a style='color:" . $color . ";' $recipeList>";
-                            $html .= $username;
-                            $html .="</a>";
-                            $html .= "</td>";
-                            $html .= "<td style='color:" . $color . ";'>" . $type . "</td>";
-                            $html .= "<td style='color:" . $color . ";'>" . $state . "</td>";
-                            $html .= "<td style='color:" . $color . ";'>" . $recipeCount . "</td>";
-                            $html .= "<td>";
-                            $html .= "<a $display href='/cookt/edit?userid=" . $userid . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
-                            $html .= "<a $display $display_2 href='/cookt/delete?userid=" . $userid . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
-                            $html .= "<a $display_2 href='/cookt/delete?user_id=" . $userid . "&reset=1' class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
-                            $html .= "</td>";
-                            $html .= "</tr>";
-                            echo $html;
-                        }                               
-                    ?>                
-                </tbody>
-            </table>
+                                if($username == $_SESSION['username']) {
+                                    $recipeList = "";
+                                } else {
+                                    $recipeList = "href='/cookt/user/recipes?username=" . $username . "'";
+                                }
+                                
+                                $html = "<tr>";                        
+                                $html .= "<td>";
+                                $html .="<a style='color:" . $color . ";' $recipeList>";
+                                $html .= $username;
+                                $html .="</a>";
+                                $html .= "</td>";
+                                $html .= "<td style='color:" . $color . ";'>" . $type . "</td>";
+                                $html .= "<td style='color:" . $color . ";'>" . $state . "</td>";
+                                $html .= "<td style='color:" . $color . ";'>" . $recipeCount . "</td>";
+                                $html .= "<td>";
+                                $html .= "<a $display href='/cookt/edit?userid=" . $userid . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
+                                $html .= "<a $display $display_2 href='/cookt/delete?userid=" . $userid . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                                $html .= "<a $display_2 href='/cookt/delete?user_id=" . $userid . "&reset=1' class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
+                                $html .= "</td>";
+                                $html .= "</tr>";
+                                echo $html;
+                            }                               
+                        ?>                
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>    
 </main>

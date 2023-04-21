@@ -30,8 +30,8 @@ require_once ("views/partials/nav.php");
             </div>
         </div>
     </div>
-    <div class="mt-2">
-        <table class="table table-bordered">
+    <div class="table-responsive-md mt-2">
+        <table class="table table-bordered table-sm">
             <thead>
                 <tr class="bg-primary">
                     <th scope="col">Receta</th>

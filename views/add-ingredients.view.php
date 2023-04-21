@@ -34,7 +34,7 @@ require_once ("views/partials/nav.php");
             </div>
         </form>
     </div>
-    <div class="row">
+    <div class="table-responsive-sm mt-4">
          <?php
             $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "' ORDER BY ingredient;";
 
@@ -42,11 +42,11 @@ require_once ("views/partials/nav.php");
 
             if($result -> num_rows > 0){
         ?>
-        <table class="table table-sm p-4 col-auto">
+        <table class="table table-sm">
             <thead>
                 <tr class="bg-primary">
-                    <th>Ingredientes</th>
-                    <th>Acciones</th>
+                    <th scope="col">Ingredientes</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>  

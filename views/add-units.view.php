@@ -42,12 +42,12 @@ require_once ("views/partials/nav.php");
             </div>
         </form>
     </div>
-    <div>
-        <table class="table table-sm mt-4">
+    <div class="table-responsive-sm mt-4">
+        <table class="table table-sm">
             <thead>
                 <tr class="bg-primary">
-                    <th>Unidades</th>
-                    <th>Acciones</th>
+                    <th scope="col">Unidades</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>                
