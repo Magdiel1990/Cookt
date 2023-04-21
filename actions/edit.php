@@ -282,7 +282,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 if(isset($_GET['userid'])) {
 $userId = $_GET['userid'];
 
-$sql = "SELECT username FROM users WHERE type = 'Admin' AND userid = " . $userId . ";";
+$sql = "SELECT username FROM users WHERE type = 'Admin' AND userid = " . $_SESSION["userid"] . ";";
 $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
 

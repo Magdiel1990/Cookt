@@ -171,11 +171,13 @@ require_once ("views/partials/nav.php");
                                 $html .= "<td style='color:" . $color . ";'>" . $state . "</td>";
                                 $html .= "<td style='color:" . $color . ";'>" . $recipeCount . "</td>";
                                 $html .= "<td>";
-                                $html .= "<a $display href='/cookt/edit?userid=" . $userid . "' " . "class='btn btn-outline-secondary m-1' title='Editar'><i class='fa-solid fa-pen'></i></a>";
+                                $html .= "<div class='btn-group btn-group-sm' role='group'>";
+                                $html .= "<a $display href='/cookt/edit?userid=" . $userid . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
                                 $html .= "<a $display $display_2 href='/cookt/delete?userid=" . $userid . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                                 $html .= "<a $display_2 href='/cookt/delete?user_id=" . $userid . "&reset=1' class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
                                 $html .= "</td>";
-                                $html .= "</tr>";
+                                $html .= "</div>";
+                                $html .= "</tr>";                                
                                 echo $html;
                             }                               
                         ?>                
