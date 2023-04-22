@@ -49,32 +49,31 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     $num_rows = $result -> num_rows;
     $row = $result->fetch_assoc();
 }
+
+if(isset($row["category"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["date"])) {
+$category = $row["category"];
+$recipeName = $row["recipename"];
+$cookingTime = $row["cookingtime"];
+$preparation = $row["preparation"];
+$day = $date = date ("d", strtotime($row["date"]));     
+$month = date ("M", strtotime($row["date"]));
+
+//Function to convert to spanish months
+$timeConvertor = new TimeConvertor ($month);
+$spanishMonth = $timeConvertor -> spanishMonth();  
+
+$year = $date = date ("Y", strtotime($row["date"]));
+
+$date = $day . "/" . $spanishMonth . "/" .  $year;
+
+$categoryDir = "imgs/categories/";
+
+//Function to get the image directory from the category
+$files = new Directories($categoryDir , $category);
+$categoryImgDir = $files -> directoryFiles();
+
 ?>
 <main class="container mt-4">
-    <?php
-    if(isset($row["category"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["date"])) {
-    $category = $row["category"];
-    $recipeName = $row["recipename"];
-    $cookingTime = $row["cookingtime"];
-    $preparation = $row["preparation"];
-    $day = $date = date ("d", strtotime($row["date"]));     
-    $month = date ("M", strtotime($row["date"]));
-
-    //Function to convert to spanish months
-    $timeConvertor = new TimeConvertor ($month);
-    $spanishMonth = $timeConvertor -> spanishMonth();  
-    
-    $year = $date = date ("Y", strtotime($row["date"]));
-
-    $date = $day . "/" . $spanishMonth . "/" .  $year;
-
-    $categoryDir = "imgs/categories/";
-
-    //Function to get the image directory from the category
-    $files = new Directories($categoryDir , $category);
-    $categoryImgDir = $files -> directoryFiles();
-
-    ?>
     <div class="my-5" style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">
         <div class="row m-auto">
             <div class="d-flex flex-column justify-content-center align-items-center jumbotron">
@@ -125,15 +124,14 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
             </div>
         </div>
     </div>
-    <?php
-    } else {
-        http_response_code(404);
-
-        require "views/error_pages/404.php";
-    } 
-    ?>
 </main>
 <?php
+} else {
+    http_response_code(404);
+
+    require "views/error_pages/404.php";
+} 
+
 $conn -> close();
 //Footer of the page.
 require_once ("views/partials/footer.php");
