@@ -104,7 +104,7 @@ require_once ("views/partials/nav.php");
                 $html .= "<div class='suggestion_container'>";
                 $html .= "<ul>";
                 while($row = $result -> fetch_assoc()) {            
-                    $html .= "<li><a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['REQUEST_URI'])) . "&ingredients=" . base64_encode(serialize($ingArray)) ."'>" . $row['recipename'] . "</a></li>";
+                    $html .= "<li><a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['REQUEST_URI'])) . "&ingredients=" . base64_encode(serialize($ingArray)) ."' title='receta'>" . $row['recipename'] . "</a></li>";
                 } 
                 $html .= "</ul>";
                 $html .= "</div>";

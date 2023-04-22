@@ -79,7 +79,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
                 <div class="bg-form p-2 my-4 col-lg-9 col-xl-9">
                     <div class="text-center">
                         <h1 class="display-4 text-info"> <?php echo $recipeName; ?> </h1>
-                        <h5 class="text-warning" style='font-size: 1.5rem;'> (<?php echo $cookingTime; ?> minutos)</h5>
+                        <h5 class="text-warning" style='font-size: 1.5rem;' title="duración"> (<?php echo $cookingTime; ?> minutos)</h5>
                     </div>
                     <div class="my-4">
                         <div class="text-center">
@@ -90,7 +90,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
                         $result = $conn -> query($sql);
                         
                         while($row = $result->fetch_assoc()){
-                            echo "<li class='text-success' style='font-size: 1.5rem;'>" . $row["indications"]. ".</li>";
+                            echo "<li class='text-success' style='font-size: 1.5rem;' title='ingrediente'>" . $row["indications"]. ".</li>";
                         }        
                         ?>   
                         </ul>
@@ -113,8 +113,8 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
                     </div>
                     <div class="py-4">
                         <div class="collapse bg-form" id="collapse">
-                            <div class="card card-body text-dark" style="font-size: 1.5rem;"> <?php echo ucfirst($preparation); ?> 
-                                <span class="text-info mt-4 text-center"> <?php echo $date; ?> </span>            
+                            <div class="card card-body text-dark" style="font-size: 1.5rem;" title="preparación"> <?php echo ucfirst($preparation); ?> 
+                                <span class="text-info mt-4 text-center" title="fecha"> <?php echo $date; ?> </span>            
                             </div>
                         </div>        
                     </div> 

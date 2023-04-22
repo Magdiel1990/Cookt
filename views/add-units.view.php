@@ -54,7 +54,7 @@ require_once ("views/partials/nav.php");
                     if($unitCount > 0){
                         while($row = $result -> fetch_assoc()){
                             $html = "<tr>";
-                            $html .= "<td>" . ucfirst($row['unit']) . "</td>";
+                            $html .= "<td title='unidad'>" . ucfirst($row['unit']) . "</td>";
                             $html .= "<td>";
                             $html .= "<a href='/delete?unitname=" . $row['unit'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                             $html .= "</td>";

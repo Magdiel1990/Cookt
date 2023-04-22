@@ -47,7 +47,7 @@ require_once ("views/partials/nav.php");
             <?php              
                 while($row = $result -> fetch_assoc()){
                     $html = "<tr>";
-                    $html .= "<td>" . ucfirst($row['ingredient']) . "</td>";
+                    $html .= "<td title='ingrediente'>" . ucfirst($row['ingredient']) . "</td>";
                     $html .= "<td>";
                     $html .= "<a href='/delete?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                     $html .= "</td>";
