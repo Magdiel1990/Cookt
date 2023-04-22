@@ -69,7 +69,7 @@ if(!empty($_POST)) {
 
                 if ($stmt->execute()) {            
                 //The page is redirected to the add-recipe.php
-                header('Location: /cookt/login');
+                header('Location: /login');
                 } else {
                 //Failure message.
                     $_SESSION['message'] = '¡Error al agregar usuario!';
@@ -108,11 +108,11 @@ $userCreation -> newUser();*/
     <meta name="description" content="Encuentra la receta de cocina fácil que estás buscando personalizadas de acuerdo a los ingredientes que tengas en tu casa.">
     <title>Recipes23</title> <!-- It depends where I am in the site.-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="shortcut icon" href="/Cookt/imgs/logo/logo.png">
-    <link rel="stylesheet" href="/Cookt/css/styles.css">
+    <link rel="shortcut icon" href="imgs/logo/logo.png">
+    <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
-    <script src="/Cookt/js/scripts.js"></script>    
+    <script src="js/scripts.js"></script>    
 </head>
 <body>
     <main class="bg-dark">        
@@ -122,7 +122,7 @@ $userCreation -> newUser();*/
                     <div class="card card-registration my-4">
                         <div class="row align-items-center justify-content-center">
                             <div class="col-md-8 col-lg-6 col-xl-5">
-                                <img src="/Cookt/imgs/login/Picture.png" class="img-fluid" alt="Sample image">
+                                <img src="/imgs/login/Picture.png" class="img-fluid" alt="Sample image">
                             </div>
                             <div class="col-md-9 col-lg-6 col-xl-6">
                                 <form action="<?php echo $_SERVER['REQUEST_URI'];?>" method="POST" class="card-body p-md-5 text-black">
@@ -195,7 +195,7 @@ $userCreation -> newUser();*/
 
                                     <div class="d-flex justify-content-center">
                                         <h5 class="mt-2 pt-1">
-                                            <a class="text-decoration-none px-2" href="/cookt/login">Login</a>
+                                            <a class="text-decoration-none px-2" href="/login">Login</a>
                                         </h5>
                                         <input type="reset" class="btn btn-light btn-lg" value="Limpiar todo">
                                         <input type="submit" class="btn btn-warning btn-lg ms-2" value="Registrarse">

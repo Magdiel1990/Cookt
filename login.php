@@ -32,7 +32,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             }
 
             if(!isset($_SESSION['lastpage'])){
-                $_SESSION['lastpage'] = "/cookt/";
+                $_SESSION['lastpage'] = "/";
             }
 
             //Creo la cookie.        
@@ -118,7 +118,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                     <img src="imgs/login/Picture.png" class="img-fluid img-thumbnail" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 mt-4">
-                    <form action="/cookt/login" method="POST">
+                    <form action="/login" method="POST">
                         <!-- Email input -->
                         <div class="form-outline mb-3">
                             <input type="text" id="username" class="form-control form-control-lg" name="username" autocomplete="off"/>
@@ -132,13 +132,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="/cookt/recovery" class="text-body" style = "text-decoration: none;">¿Olvidaste la contraseña?</a>
+                            <a href="/recovery" class="text-body" style = "text-decoration: none;">¿Olvidaste la contraseña?</a>
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
                             <input type="submit" name="Login" value="Login" class="btn btn-primary btn-lg"
                             style="padding-left: 2.5rem; padding-right: 2.5rem;">
-                            <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes cuenta? <a href="/cookt/signup"
+                            <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes cuenta? <a href="/signup"
                                 style = "text-decoration: none;" class="link-danger">Regístrate</a></p>
                         </div>
                     </form>

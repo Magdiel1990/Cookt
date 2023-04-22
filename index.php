@@ -1,45 +1,36 @@
 <?php
-//Reviso el estado de la sesión.
-//session_name("Login");
-
-//Inicio una nueva sesión.
-//session_start();
-
 $uri = parse_url($_SERVER["REQUEST_URI"])['path']; 
 $param = isset(parse_url($_SERVER["REQUEST_URI"])['query']) ? parse_url($_SERVER["REQUEST_URI"])['query'] : "";
 
 if($param == "") {
     $routes = [
-    "/cookt" => "controllers/index.controller.php",
-    "/Cookt" => "controllers/index.controller.php",
-    "/Cookt/" => "controllers/index.controller.php",
-    "/cookt/" => "controllers/index.controller.php",
-    "/cookt/login" => "controllers/login.controller.php",
-    "/cookt/logout" => "controllers/logout.controller.php",
-    "/cookt/random" => "controllers/random.controller.php",
-    "/cookt/custom" => "controllers/custom.controller.php",
-    "/cookt/profile" => "controllers/profile.controller.php",
-    "/cookt/units" => "controllers/units.controller.php",
-    "/cookt/ingredients" => "controllers/ingredients.controller.php",
-    "/cookt/add-recipe" => "controllers/add-recipe.controller.php",
-    "/cookt/categories" => "controllers/categories.controller.php",
-    "/cookt/user" => "controllers/users.controller.php",
-    "/cookt/create" => "controllers/create.controller.php",
-    "/cookt/email" => "controllers/email.controller.php",
-    "/cookt/signup" => "controllers/signup.controller.php",
-    "/cookt/recovery" => "controllers/recovery.controller.php",
-    "/cookt/error404" => "controllers/404.controller.php"
+    "/" => "controllers/index.controller.php",    
+    "/login" => "controllers/login.controller.php",
+    "/logout" => "controllers/logout.controller.php",
+    "/random" => "controllers/random.controller.php",
+    "/custom" => "controllers/custom.controller.php",
+    "/profile" => "controllers/profile.controller.php",
+    "/units" => "controllers/units.controller.php",
+    "/ingredients" => "controllers/ingredients.controller.php",
+    "/add-recipe" => "controllers/add-recipe.controller.php",
+    "/categories" => "controllers/categories.controller.php",
+    "/user" => "controllers/users.controller.php",
+    "/create" => "controllers/create.controller.php",
+    "/email" => "controllers/email.controller.php",
+    "/signup" => "controllers/signup.controller.php",
+    "/recovery" => "controllers/recovery.controller.php",
+    "/error404" => "controllers/404.controller.php"
     ];
 } else {
     $routes = [
-    "/cookt/recipes" => "controllers/recipes.controller.php",
-    "/cookt/random" => "controllers/random.controller.php",
-    "/cookt/delete" => "controllers/delete.controller.php",
-    "/cookt/custom" => "controllers/custom.controller.php",
-    "/cookt/edit" => "controllers/edit.controller.php",
-    "/cookt/update" => "controllers/update.controller.php",
-    "/cookt/user-recipes" => "controllers/recipes-list.controller.php",
-    "/cookt/reset-password" => "controllers/reset-password.controller.php"
+    "/recipes" => "controllers/recipes.controller.php",
+    "/random" => "controllers/random.controller.php",
+    "/delete" => "controllers/delete.controller.php",
+    "/custom" => "controllers/custom.controller.php",
+    "/edit" => "controllers/edit.controller.php",
+    "/update" => "controllers/update.controller.php",
+    "/user-recipes" => "controllers/recipes-list.controller.php",
+    "/reset-password" => "controllers/reset-password.controller.php"
     ];
 }
 

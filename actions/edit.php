@@ -56,7 +56,7 @@ if($result -> num_rows > 0) {
                 </div> 
                 <div class="mt-2">
                     <input class="btn btn-primary" type="submit" value="Editar" name="categoryeditionsubmit">
-                    <a href="/cookt/categories" class="btn btn-secondary">Regresar</a>
+                    <a href="/categories" class="btn btn-secondary">Regresar</a>
                 </div>
                 </form>
             </div>
@@ -98,7 +98,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 
         $category = $row["category"];
     } else {
-        header('Location: /cookt/error404');
+        header('Location: /error404');
     }
 ?>
 <main class="container p-4">
@@ -158,7 +158,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                                       
                     <div class="mb-3 text-center">
                         <input class='btn btn-primary' type="submit" name="edit" value="Actualizar"> 
-                        <a href='/cookt/' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
+                        <a href='/' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
                     </div>
                 </form>
             </div>
@@ -250,7 +250,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                         } else {
                         ?>
                         <div>
-                            <a class="btn btn-secondary" href="/cookt/ingredients">Ingredientes</a>
+                            <a class="btn btn-secondary" href="/ingredients">Ingredientes</a>
                         </div>
                         <?php
                         }
@@ -265,7 +265,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 
 <?php
     } else {
-        header('Location: /cookt/error404');
+        header('Location: /error404');
         die();
     }
 }
@@ -409,11 +409,11 @@ $num_rows  = $result -> num_rows;
 
 <?php
         } else {
-            header('Location: /cookt/error404');
+            header('Location: /error404');
             die();
         }
     } else {
-            header('Location: /cookt/error404');
+            header('Location: /error404');
             die();
     }
 }

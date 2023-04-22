@@ -22,11 +22,11 @@ require_once ("models/models.php");
     <meta name="description" content="Encuentra la receta de cocina fácil que estás buscando personalizadas de acuerdo a los ingredientes que tengas en tu casa.">
     <title>Recipes23</title> <!-- It depends where I am in the site.-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="shortcut icon" href="/Cookt/imgs/logo/logo.png">
-    <link rel="stylesheet" href="/Cookt/css/styles.css">
+    <link rel="shortcut icon" href="imgs/logo/logo.png">
+    <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
-    <script src="/Cookt/js/scripts.js"></script>    
+    <script src="js/scripts.js"></script>    
 </head>
 <body class="bg-primary">
     <main>
@@ -38,7 +38,7 @@ require_once ("models/models.php");
             </div>
             <div class="row p-4 align-items-center justify-content-center">
                 <div class="col-auto">
-                    <form class="text-center recovery-form" action="/cookt/email" method="POST">
+                    <form class="text-center recovery-form" action="/email" method="POST">
                         <!-- Email input -->
                         <div class="form-outline mb-3">
                             <label class="form-label mb-4" for="email">¿Olvidaste tu contraseña?</label>
@@ -66,9 +66,9 @@ require_once ("models/models.php");
                         <div class="text-center">
                             <input type="submit" name="Recovery" value="Reestablecer contraseña" class="btn btn-primary">                              
                             <p class="small fw-bold mb-0 mt-4">
-                                <a class="text-decoration-none px-2" href="/cookt/login">Login</a>
+                                <a class="text-decoration-none px-2" href="/login">Login</a>
                                 ¿Si no tienes cuenta? 
-                                <a href="/cookt/signup" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
+                                <a href="/signup" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
                             </p>                  
                         </div>                                    
                     </form>

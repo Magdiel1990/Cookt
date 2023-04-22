@@ -22,7 +22,7 @@ require_once ("views/partials/nav.php");
             <div class="bg-form p-4 mb-4">       
                 <h3 class="text-center">Agregar Receta</h3>
             <!--Form for filtering the database info-->
-                <form class="m-2 text-center" method="POST" action="/cookt/create">
+                <form class="m-2 text-center" method="POST" action="/create">
                     <?php
                     $num_rows = new IngredientList("reholder", "ingredients", "ingredient", $_SESSION['username']);                    
                     $num_rows = $num_rows -> ingQuantity();
@@ -73,7 +73,7 @@ require_once ("views/partials/nav.php");
                     } else {
                     ?>
                     <div>
-                        <a class="btn btn-primary" href="/cookt/ingredients">Ingredientes</a>
+                        <a class="btn btn-primary" href="/ingredients">Ingredientes</a>
                     </div>
                     <?php
                     }
@@ -100,7 +100,7 @@ require_once ("views/partials/nav.php");
                     $html .= "<ol>";            
                     while($row = $result -> fetch_assoc()){                    
                         $html .= "<li>";
-                        $html .= "<a href='/cookt/delete?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
+                        $html .= "<a href='/delete?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
                         $html .= "</a>";
                         $html .= "</li>";
                                     
@@ -120,7 +120,7 @@ require_once ("views/partials/nav.php");
             </div>            
         </div>
         <div class="col-auto col-xl-4" <?php  echo $display;?>>
-            <form class="text-center form" enctype="multipart/form-data" method="POST" action="/cookt/create" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
+            <form class="text-center form" enctype="multipart/form-data" method="POST" action="/create" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
             
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="recipename">Nombre: </label>

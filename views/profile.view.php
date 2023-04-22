@@ -5,7 +5,7 @@ require_once ("views/partials/head.php");
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
 
-$_SESSION["location"] = "/cookt/profile";
+$_SESSION["location"] = "/profile";
 
 $sql = "SELECT * FROM users WHERE userid = '". $_SESSION['userid']."';";
 
@@ -54,8 +54,8 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
                 <h4> Email: <?php echo $email;?></h4>
                 <h4> Suscripción: <?php echo $date;?></h4>
                 <div class="text-center">
-                    <a class="btn btn-danger" href="/cookt/delete?userid=<?php echo $_SESSION['userid'];?>">Eliminar cuenta</a>
-                    <a class="btn btn-primary" href="/cookt/edit?userid=<?php echo $_SESSION['userid'];?>">Editar</a>
+                    <a class="btn btn-danger" href="/delete?userid=<?php echo $_SESSION['userid'];?>">Eliminar cuenta</a>
+                    <a class="btn btn-primary" href="/edit?userid=<?php echo $_SESSION['userid'];?>">Editar</a>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ if(isset($_POST['email'])){
         if ($num_rows != 0) {
             $uniqcode = md5(uniqid(mt_rand()));
             //Modificar este enlace por el del servidor
-            $resetPassLink = "/cookt/reset-password?r_code=". $uniqcode;
+            $resetPassLink = "/reset-password?r_code=". $uniqcode;
 
             $row = $result -> fetch_assoc();
             $sex = $row ["sex"];
@@ -61,7 +61,7 @@ if(isset($_POST['email'])){
             $_SESSION['alert'] = "success";
 
             //The page is redirected to the add-recipe.php
-            header('Location: /cookt/recovery');
+            header('Location: /recovery');
             }    
 
         } else {
@@ -70,7 +70,7 @@ if(isset($_POST['email'])){
         $_SESSION['alert'] = "danger";
 
         //The page is redirected to the add-recipe.php
-        header('Location: /cookt/recovery');
+        header('Location: /recovery');
         }
     } else {
         //Message if the variable is null.
@@ -78,7 +78,7 @@ if(isset($_POST['email'])){
         $_SESSION['alert'] = "danger";
 
         //The page is redirected to the add-recipe.php
-        header('Location: /cookt/recovery');
+        header('Location: /recovery');
     }
 }
 

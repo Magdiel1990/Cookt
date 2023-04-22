@@ -12,14 +12,14 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     $decodedPath = unserialize(base64_decode($path));
 
     if($decodedPath == "index"){
-        $pathToReturn = "/cookt/";        
+        $pathToReturn = "/";        
     } else if (isset($_GET["ingredients"])) {
         $ingArray = $_GET["ingredients"];
         $pathToReturn = $decodedPath . "?ingredients=". $ingArray ."&username=" . $username;
-    } else if ($decodedPath == "/cookt/custom" || $decodedPath == "/cookt/random" || $decodedPath == "/cookt/user"){
+    } else if ($decodedPath == "/custom" || $decodedPath == "/random" || $decodedPath == "/user"){
         $pathToReturn = $decodedPath . "?username=" . $username;
     } else {
-        $pathToReturn = "/cookt/";
+        $pathToReturn = "/";
     }
 
     $imageDir = "imgs/recipes/" . $username . "/";
