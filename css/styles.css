@@ -52,6 +52,9 @@ h3 {
     max-width: 50%;
     height: auto;
 }
+.logout {
+    font-size: 1.4rem;
+}
 h4 span {
     font-weight: bold;
     color: rgb(4, 4, 99);

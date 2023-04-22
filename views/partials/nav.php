@@ -30,9 +30,22 @@
         </div>
         <div class="d-flex flex-row">            
             <a class="px-3 text-white"  href="/profile" style="text-decoration: none;" title="Usuario">
-            <?php echo $_SESSION['title'] . $_SESSION['firstname'] . " " .  $_SESSION['lastname'];?> <i class="fa-regular fa-user"></i>
+            <?php echo $_SESSION['title'] . $_SESSION['firstname'] . " " .  $_SESSION['lastname'];?> 
+            <?php
+            $target_dir = "imgs/users/";
+
+            $files = new Directories($target_dir, $_SESSION["username"]);
+            $imgprofileDir = $files -> directoryFiles();
+
+            if($imgprofileDir != false){
+                echo '<img src="' . $imgprofileDir . '" alt="perfil" class="profile mx-2">';
+            } else {
+                echo "<i class='fa-regular fa-user'></i>";
+            }
+            
+            ?>
             </a>        
-            <a class="nav-link text-white" href="/logout" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     
-        </div>           
+            <a class="nav-link text-white logout" href="/logout" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     
+        </div>          
     </nav>
 </header>
