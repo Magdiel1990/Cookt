@@ -1,10 +1,15 @@
 <?php
 
 class DatabaseConnection {
-    static $hostname = "localhost";
+   /* static $hostname = "localhost";
     static $username = "u743896838_magdiel";
     static $password = ">Af=jh8E";
-    static $database = "u743896838_foodbase";
+    static $database = "u743896838_foodbase";*/
+
+    static $hostname = "localhost:3306";
+    static $username = "root";
+    static $password = "123456";
+    static $database = "foodbase";
 
     //Connection to the database.
     public static function dbConnection(){
