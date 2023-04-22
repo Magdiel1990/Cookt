@@ -310,7 +310,7 @@ $oldCategoryName = $row['category'];
 
 
 //receive the data
-if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['new_password']) && isset($_POST['repite_password']) && isset($_POST['current_password'])){
+if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['new_password']) && isset($_POST['repite_password']) && isset($_POST['current_password'])  || isset($_FILES["profile"])){
   
     date_default_timezone_set("America/Santo_Domingo");
   
@@ -326,11 +326,51 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
     $againNewPassword = $_POST['repite_password'];  
     $sex = $_POST['sex'];
     $updateTime =  date("Y-m-d H:i:s");
+    $profileImg = isset($_FILES["profile"]) ? $_FILES["profile"] : "";
  
     if($state == "yes") {
         $state = 1;        
     } else {
         $state = 0;
+    }
+
+    if($profileImg["name"] != ""){
+
+        $target_dir = "imgs/users/";
+        $fileExtension = strtolower(pathinfo($profileImg["name"], PATHINFO_EXTENSION));
+        $target_file = $target_dir . $_SESSION["username"] . "." . $fileExtension;
+        $uploadOk = "";
+
+        if(is_file($target_file)){
+            unlink($target_file);
+        }
+
+        // Check if image file is a actual image or fake image
+        if(isset($_POST["usersubmit"])) {
+            $check = getimagesize($profileImg["tmp_name"]);
+            if($check == false) {
+                $uploadOk = "¡Este archivo no es una imagen!";
+            } 
+        }
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            $uploadOk = "¡Esta imagen ya existe!";
+        }
+
+        // Check file size
+        if ($profileImg["size"] > 300000) {
+            $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
+        }
+
+        // Allow certain file formats
+        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "jpeg"
+        && $fileExtension != "gif" ) {
+            $uploadOk = "¡Formato no admitido!";
+        } 
+
+        if ($uploadOk == "") {
+            move_uploaded_file($profileImg["tmp_name"], $target_file);
+        }
     }
 
     if ($firstname == "" || $lastname == "" || $userName == "" || $sex == "") {
@@ -385,7 +425,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                 //The page is redirected to the add-recipe.php
                 header("Location: /edit?userid=". $userId);
             }
-        } else {
+        } else {            
             $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
             
             if ($conn->query($sql)) {

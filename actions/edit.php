@@ -323,9 +323,9 @@ $num_rows  = $result -> num_rows;
         }
     ?>
     <div class="row mt-2 justify-content-center">
-        <h3 class="text-center">EDITAR USUARIO</h3>     
+        <h3 class="text-center">Editar Usuario</h3>     
         <div class="mt-3 col-auto">
-            <form class="bg-form card card-body" action="update?userid=<?php echo $userId; ?>" method="POST">
+            <form class="bg-form card card-body" enctype="multipart/form-data" action="update?userid=<?php echo $userId; ?>" method="POST">
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
@@ -374,9 +374,15 @@ $num_rows  = $result -> num_rows;
                 </div>
 
                 <div class="input-group mb-3">
+                    <label class="input-group-text" for="profile">Foto de perfil: </label>
+                    <input class="form-control" type="file" id="profile" name="profile">
+                </div>   
+
+                <div class="input-group mb-3">
                     <label class="input-group-text" for="useremail">Email: </label>
                     <input class="form-control" value="<?php echo $email; ?>"  type="email" id="useremail" name="useremail" minlength="15" maxlength="70">
                 </div>
+                
                 <div class="col text-center mb-3">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="sex" id="M" value="M" <?php if($sex == "M"){ echo "checked";}?> required>
