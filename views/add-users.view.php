@@ -9,6 +9,8 @@ if($_SESSION['type'] != 'Admin') {
 
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
+
+$_SESSION["location"] = "/cookt/user";
 ?>
 
 <main class="container p-4">

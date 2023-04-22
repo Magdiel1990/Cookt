@@ -277,50 +277,51 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 if(isset($_GET['userid'])) {
 $userId = $_GET['userid'];
 
-$sql = "SELECT username FROM users WHERE type = 'Admin' AND userid = " . $_SESSION["userid"] . ";";
+$sql = "SELECT userid FROM users WHERE type = 'Admin' AND userid = " . $_SESSION["userid"] . ";";
 $result = $conn -> query($sql);
-$num_rows = $result -> num_rows;
+$num_rows  = $result -> num_rows;
 
-if($num_rows > 0){
-    $row = $result -> fetch_assoc();
-
-    if($num_rows == 1 && $_SESSION['username'] == $row['username']){
-        $userNameState = "hidden";
-        $userNameLabelState = "display: none;";    
-    } else {
-        $userNameState = $userNameLabelState = "";
-    }
-
+    if($num_rows > 0) {
     $sql = "SELECT * FROM users WHERE userid = '$userId';";
+    $result = $conn -> query($sql);
+    $num_rows = $result -> num_rows;
 
-    $row = $conn -> query($sql) -> fetch_assoc();
+        if($num_rows > 0){
+            $row = $result -> fetch_assoc();
 
-    $userName = $row["username"];
-    $firstName=  $row["firstname"];
-    $lastName=  $row["lastname"];
-    $type = $row["type"];
-    $state = $row["state"];
-    $email = $row["email"];
-    $currentPassword = $row["password"];
-    $sex = $row["sex"];
+            $userName = $row["username"];
+            $firstName=  $row["firstname"];
+            $lastName=  $row["lastname"];
+            $type = $row["type"];
+            $state = $row["state"];
+            $email = $row["email"];
+            $currentPassword = $row["password"];
+            $sex = $row["sex"];
 
-    if($state == 1) {
-        $check = "checked";
-    } else {
-        $check = "";
-    }
+            if($num_rows == 1 && $_SESSION['username'] == $userName){
+                $userNameState = "hidden";
+                $userNameLabelState = "display: none;";    
+            } else {
+                $userNameState = $userNameLabelState = "";
+            }            
+
+            if($state == 1) {
+                $check = "checked";
+            } else {
+                $check = "";
+            }
 ?>
 <main class="container p-4">
-<?php
-//Messages that are shown in the index page
-if(isset($_SESSION['message'])){
-    $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
-    echo $message -> buttonMessage();        
+    <?php
+        //Messages that are shown in the index page
+        if(isset($_SESSION['message'])){
+            $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+            echo $message -> buttonMessage();        
 
-    //Unsetting the messages variables so the message fades after refreshing the page.
-    unset($_SESSION['message_alert'], $_SESSION['message']);
-}
-?>
+            //Unsetting the messages variables so the message fades after refreshing the page.
+            unset($_SESSION['message_alert'], $_SESSION['message']);
+        }
+    ?>
     <div class="row mt-2 justify-content-center">
         <h3 class="text-center">EDITAR USUARIO</h3>     
         <div class="mt-3 col-auto">
@@ -398,7 +399,7 @@ if(isset($_SESSION['message'])){
                     </div>
                     <div class="text-center">
                         <input  class="btn btn-primary" name="usersubmit" type="submit" value="Editar">
-                        <a class="btn btn-secondary" href="/cookt/user">Regresar</a>
+                        <a class="btn btn-secondary" href="<?php echo $_SESSION["location"];?>">Regresar</a>
                     </div>
                 </div>       
             </form>
@@ -407,9 +408,13 @@ if(isset($_SESSION['message'])){
 </main>
 
 <?php
+        } else {
+            header('Location: /cookt/error404');
+            die();
+        }
     } else {
-        header('Location: /cookt/error404');
-        die();
+            header('Location: /cookt/error404');
+            die();
     }
 }
 $conn -> close();    

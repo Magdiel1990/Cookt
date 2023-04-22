@@ -4,6 +4,7 @@ require_once ("views/partials/head.php");
 
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
+
 ?>
 
 <main class="container py-4">

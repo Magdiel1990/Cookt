@@ -310,7 +310,7 @@ $oldCategoryName = $row['category'];
 
 
 //receive the data
-if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['new_password']) && isset($_POST['repite_password']) && isset($_POST['current_password'])){
+if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['new_password']) && isset($_POST['repite_password']) && isset($_POST['current_password'])){
   
     date_default_timezone_set("America/Santo_Domingo");
   
@@ -353,9 +353,14 @@ if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex'
                     //Message if the variable is null.
                     $_SESSION['message'] = '¡Usuario editado correctamente!';
                     $_SESSION['message_alert'] = "success";
-                        
-                    //The page is redirected to the add-recipe.php
-                    header("Location: /cookt/user");
+                    
+                        if($_SESSION["userid"] == $userId){
+                            //The page is redirected to the add-recipe.php
+                            header("Location: /cookt/profile");
+                        } else {
+                            //The page is redirected to the add-recipe.php
+                            header("Location: /cookt/user");
+                        }
                     } else {
                     //Message if the variable is null.
                     $_SESSION['message'] = '¡Error al editar usuario!';
@@ -388,8 +393,13 @@ if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex'
             $_SESSION['message'] = '¡Usuario editado correctamente!';
             $_SESSION['message_alert'] = "success";
                 
-            //The page is redirected to the add-recipe.php
-            header("Location: /cookt/user");
+                if($_SESSION["userid"] == $userId){
+                    //The page is redirected to the add-recipe.php
+                    header("Location: /cookt/profile");
+                } else {
+                    //The page is redirected to the add-recipe.php
+                    header("Location: /cookt/user");
+                }
             } else {
             //Message if the variable is null.
             $_SESSION['message'] = '¡Error al editar usuario!';

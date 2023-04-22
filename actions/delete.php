@@ -26,7 +26,7 @@ $result = $conn -> query($sql);
 //The page is redirected to the index.php.
         header('Location: /cookt/');
     } else {
-        $target_dir = "../imgs/recipes/". $_SESSION['username']  ."/";
+        $target_dir = "imgs/recipes/". $_SESSION['username']  ."/";
 
         $files = new Directories($target_dir, $recipeName);
         $imgRecipeDir = $files -> directoryFiles();
@@ -90,7 +90,7 @@ if(isset($_GET['categoryname'])){
 //Getting the name.
 $categoryName = $_GET['categoryname'];
 
-$categoryDir = "../imgs/categories/";
+$categoryDir = "imgs/categories/";
 
 //Function to get the image directory from the category
 $files = new Directories($categoryDir , $categoryName);
@@ -294,12 +294,11 @@ $userId = $_GET['userid'];
 $sql = "SELECT username FROM users WHERE userid = '$userId';";
 $row = $conn -> query($sql) -> fetch_assoc();
 $username = $row['username'];
-$target_dir = "../imgs/recipes/" . $username;
+$target_dir = "imgs/recipes/" . $username;
 
     if(file_exists($target_dir)) {
         unlink($target_dir);
     }
-    
     //Deleting the register with the name received.
     $sql = "DELETE FROM users WHERE userid = '$userId';";
 
@@ -310,15 +309,26 @@ $target_dir = "../imgs/recipes/" . $username;
         $_SESSION['message'] = '¡Error al eliminar usuario!';
         $_SESSION['message_alert'] = "danger";
 
+        if($_SESSION["location"] == "/cookt/profile") {
+//The page is redirected to the add_units.php
+        header("Location: /cookt/profile");     
+
+        } else {
 //The page is redirected to the add_units.php
         header("Location: /cookt/user");
+        }
     } else {
 //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Usuario eliminado!';
         $_SESSION['message_alert'] = "success";
-
+        
+        if($_SESSION["location"] == "/cookt/profile") {
+//The page is redirected to the add_units.php
+            header("Location: /cookt/logout");    
+        } else {
 //After the receta has been deleted, the page is redirected to the add_units.php.
-        header("Location: /cookt/user");
+            header("Location: /cookt/user");
+        }
     }
 }
 
@@ -346,7 +356,7 @@ $email = $row['email'];
 $state = $row['state'];
 $sex = $row['sex'];
 
-$target_dir = "../imgs/recipes/" . $username;
+$target_dir = "imgs/recipes/" . $username;
 
     if(file_exists($target_dir)) {
         unlink($target_dir);
