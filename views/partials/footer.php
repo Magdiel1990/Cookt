@@ -1,4 +1,4 @@
-<footer class="text-center bg-secondary p-3">
+<footer class="text-center p-3">
   <!-- Copyright -->
     <div class="text-white">
         © <?php echo date('Y'); ?> Copyright:

@@ -8,6 +8,7 @@ $conn = DatabaseConnection::dbConnection();
 
 //Reviso el estado de la sesión.
 session_name("Login");
+
 //Inicio una nueva sesión.
 session_start();
 
@@ -25,9 +26,9 @@ if (!isset($_SESSION['username'])) {
     //Compare how much time has passed.
     if ($timeDiff >= 10*60) {
         //Save the user that is going to log out.
-        $username = $_SESSION['username'];
+        $username = $_SESSION['username'];        
 
-        //If time runs out, the session is destroyed.
+       //If time runs out, the session is destroyed.
         session_destroy();  
 
         //Check the state of the session.

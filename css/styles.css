@@ -2,34 +2,36 @@
     font-family:'Times New Roman', Times, serif;
 }
 
-header .banner {
-    position: relative;
-    background: #ffffff;
-    height: 14vh;    
-    font-size: 1.4rem;
-    font-weight: bold;
-    font-style: italic;   
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-    margin-top: 0.6rem;
-}
-
-.banner a {
-    text-decoration: none;
-    color: rgb(94, 91, 254);
-    font-size: 1rem;
-}
-
 .recipe_link {
     text-decoration: none;
 }
+header, footer {
+    background: rgb(4, 4, 99);    
+}
+.navbar button, .navbar button span {
+    color: white;
+}
+.navbar img {
+    position: relative;
+    height: 2.1rem;
+}
+.logo {
+    position: relative;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+#navbarNavDropdown {
+    position: inherit;
+    right: 1rem;
+}
 main {
     min-height: calc(100vh - 7.1rem);
 }
 footer {
-    height: 7rem;
+    height: 6rem;
 }
 h3 {
     font-size: 1.5rem;
@@ -40,7 +42,6 @@ h3 {
 .nav-item {
     font-size: 1rem;
 }
-
 
 .dropdown-menu a {
     font-size: 1rem;
@@ -120,28 +121,6 @@ option {
 }
 label, select, input, option {
     font-size: 1.2rem;
-}
-
-.banner {
-    background: #ffffff;
-    height: 10vh;    
-    font-size: 1.2rem;
-    font-weight: bold;
-    font-style: italic;   
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-    padding: 2rem;
-}
-
-.banner a {
-    text-decoration: none;
-    color: rgb(94, 91, 254);
-    font-size: 1rem;
-}
-
-.recipe_link {
-    text-decoration: none;
 }
 
 .bg-form  {
