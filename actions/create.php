@@ -523,8 +523,17 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
       if($recipeImage ['name'] == null) {
 
       $sql = "DELETE FROM reholder WHERE username = '" . $_SESSION['username'] . "';";
+      
+      //Verify if the recipe has records in both recipeinfo and recipe tables.
+      $sql2 = "SELECT max(recipeid) as `lastid` FROM recipe;";
+      $row = $conn -> query($sql2) -> fetch_assoc();
+      $id = $row["lastid"];
 
-         if($conn->query($sql)){
+      $sql3 = "SELECT recipeid FROM recipeinfo WHERE recipeid = '$id';";
+      $result = $conn->query($sql3);
+      $num_rows = $result -> num_rows;
+
+         if($conn->query($sql) && $num_rows > 0){
             //Success message.
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
             $_SESSION['message_alert'] = "success";
@@ -532,6 +541,10 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
           //The page is redirected to the ingredients.php.
             header('Location: /cookt/add-recipe');
             } else {
+            //If there is an error, all related registers are deleted
+            $sql = "DELETE FROM recipe WHERE recipeid = '$id';";            
+            $conn->query($sql);            
+
             //Failure message.
             $_SESSION['message'] = '¡Error al agregar receta!';
             $_SESSION['message_alert'] = "danger";

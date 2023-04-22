@@ -11,7 +11,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     $path = $_GET["path"];
     $decodedPath = unserialize(base64_decode($path));
 
-    if($path == "index"){
+    if($decodedPath == "index"){
         $pathToReturn = "/cookt/";        
     } else if (isset($_GET["ingredients"])) {
         $ingArray = $_GET["ingredients"];
@@ -42,35 +42,35 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     on r.categoryid = c.categoryid
     join ingredients i 
     on i.id = ri.ingredientid
-    WHERE r.recipename = '$recipe' 
-    AND r.username = '$username';";
+    WHERE r.recipename = '". $recipe . "' 
+    AND r.username = '" . $username . "';";
 
     $result = $conn -> query($sql);
-    $num_rows = $result -> num_rows;
+    $num_rows = $result -> num_rows;   
+
+    if($num_rows > 0){
     $row = $result->fetch_assoc();
-}
 
-if(isset($row["category"]) && isset($row["recipename"]) && isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["date"])) {
-$category = $row["category"];
-$recipeName = $row["recipename"];
-$cookingTime = $row["cookingtime"];
-$preparation = $row["preparation"];
-$day = $date = date ("d", strtotime($row["date"]));     
-$month = date ("M", strtotime($row["date"]));
+    $category = $row["category"];
+    $recipeName = $row["recipename"];
+    $cookingTime = $row["cookingtime"];
+    $preparation = $row["preparation"];
+    $day = $date = date ("d", strtotime($row["date"]));     
+    $month = date ("M", strtotime($row["date"]));
 
-//Function to convert to spanish months
-$timeConvertor = new TimeConvertor ($month);
-$spanishMonth = $timeConvertor -> spanishMonth();  
+    //Function to convert to spanish months
+    $timeConvertor = new TimeConvertor ($month);
+    $spanishMonth = $timeConvertor -> spanishMonth();  
 
-$year = $date = date ("Y", strtotime($row["date"]));
+    $year = $date = date ("Y", strtotime($row["date"]));
 
-$date = $day . "/" . $spanishMonth . "/" .  $year;
+    $date = $day . "/" . $spanishMonth . "/" .  $year;
 
-$categoryDir = "imgs/categories/";
+    $categoryDir = "imgs/categories/";
 
-//Function to get the image directory from the category
-$files = new Directories($categoryDir , $category);
-$categoryImgDir = $files -> directoryFiles();
+    //Function to get the image directory from the category
+    $files = new Directories($categoryDir , $category);
+    $categoryImgDir = $files -> directoryFiles();
 
 ?>
 <main class="container mt-4">
@@ -126,11 +126,12 @@ $categoryImgDir = $files -> directoryFiles();
     </div>
 </main>
 <?php
-} else {
-    http_response_code(404);
+    } else {
+        http_response_code(404);
 
-    require "views/error_pages/404.php";
-} 
+        require "views/error_pages/404.php";
+    } 
+}
 
 $conn -> close();
 //Footer of the page.
