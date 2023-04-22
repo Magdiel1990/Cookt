@@ -1,13 +1,13 @@
 <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
 
 <header>
-    <div class="banner text-center py-1">
+    <div class="container banner text-center p-4">
         <div></div>
         <div class="logo">
             <img src="imgs/logo/logo.png" alt="Logo">
             <a href="/cookt">Recipeholder</a>
         </div>
-        <div class="d-flex">            
+        <div class="d-flex flex-row">            
             <a class="px-3 text-dark"  href="/cookt/profile" style="text-decoration: none;" title="Usuario">
             <?php echo $_SESSION['title'] . $_SESSION['firstname'] . " " .  $_SESSION['lastname'];?> <i class="fa-regular fa-user"></i>
             </a>        

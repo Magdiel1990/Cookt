@@ -107,23 +107,13 @@ label, select, input, option {
     display: flex;
     justify-content:space-between;
     align-items: center;
+    padding: 2rem;
 }
-.banner .d-flex {
-    padding-right: 2rem;
-}
-.banner .logo {
-    font-size: 1 rem;
-}
-
-.logo img {
-    height: 1.7rem;
-    width: 1.7rem;
-}
-
 
 .banner a {
     text-decoration: none;
     color: rgb(94, 91, 254);
+    font-size: 1rem;
 }
 
 .recipe_link {
