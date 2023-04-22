@@ -109,7 +109,7 @@ $categoryId = $row['categoryid'];
                 } else {
                 $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
                 
-                $target_dir = "../imgs/recipes/". $userName  ."/";
+                $target_dir = "imgs/recipes/". $userName  ."/";
                 
                 $files = new Directories($target_dir, $oldName);
                 $imgOldRecipeDir = $files -> directoryFiles();
@@ -208,7 +208,7 @@ $oldCategoryName = $row['category'];
     } 
     if($categoryImage['name'] == null) {            
         $arrCategoryFiles = array();
-        $iterator = new FilesystemIterator("../imgs/categories");
+        $iterator = new FilesystemIterator("imgs/categories");
 
         foreach($iterator as $fileName) {
             $arrCategoryFiles[] = pathinfo($fileName->getFilename(), PATHINFO_FILENAME);
@@ -219,8 +219,8 @@ $oldCategoryName = $row['category'];
             $fileIndex = array_search($oldCategoryName, $arrCategoryFiles);
             $fileExt = $arrCategoryExt[$fileIndex];
 
-            $categoryDir = "../imgs/categories/" . $oldCategoryName . "." . $fileExt;
-            $newCategoryDir = "../imgs/categories/" . $newCategoryName . "." . $fileExt;
+            $categoryDir = "imgs/categories/" . $oldCategoryName . "." . $fileExt;
+            $newCategoryDir = "imgs/categories/" . $newCategoryName . "." . $fileExt;
             
             if(is_file($categoryDir)){
 
@@ -245,7 +245,7 @@ $oldCategoryName = $row['category'];
             }
         }
     } else {
-        $target_dir = "../imgs/categories/";
+        $target_dir = "imgs/categories/";
         $fileExtension = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
         $target_file = $target_dir . $newCategoryName . "." . $fileExtension;
         $uploadOk = "";
