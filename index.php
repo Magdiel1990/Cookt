@@ -22,6 +22,8 @@ $param = isset(parse_url($_SERVER["REQUEST_URI"])['query']) ? parse_url($_SERVER
 if($param == "") {
     $routes = [
     "/cookt" => "controllers/index.controller.php",
+    "/Cookt" => "controllers/index.controller.php",
+    "/Cookt/" => "controllers/index.controller.php",
     "/cookt/" => "controllers/index.controller.php",
     "/cookt/login" => "controllers/login.controller.php",
     "/cookt/logout" => "controllers/logout.controller.php",
