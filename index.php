@@ -1,20 +1,9 @@
 <?php
 //Reviso el estado de la sesión.
-session_name("Login");
+//session_name("Login");
 
 //Inicio una nueva sesión.
-session_start();
-
-$_SESSION['userid'] = 1;
-$_SESSION['firstname'] = "Magdiel";
-$_SESSION['lastname'] = "Castillo";
-$_SESSION['username'] = "Admin";
-$_SESSION['type'] = "Admin";
-$_SESSION['email'] = "magdielmagdiel1@gmail.com";
-$_SESSION['state'] = 1;  
-$_SESSION['title'] = "Sr. ";  
-
-
+//session_start();
 
 $uri = parse_url($_SERVER["REQUEST_URI"])['path']; 
 $param = isset(parse_url($_SERVER["REQUEST_URI"])['query']) ? parse_url($_SERVER["REQUEST_URI"])['query'] : "";

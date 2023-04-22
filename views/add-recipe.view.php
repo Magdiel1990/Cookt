@@ -95,6 +95,8 @@ require_once ("views/partials/nav.php");
                 $html = "";
 
                 if ($num_rows != 0) {
+                    $display = "";
+
                     $html .= "<ol>";            
                     while($row = $result -> fetch_assoc()){                    
                         $html .= "<li>";
@@ -106,7 +108,9 @@ require_once ("views/partials/nav.php");
                     $html .= "</ol>"; 
 
                     echo $html;
-                }  else {                          
+                }  else {   
+                    $display = "style = 'display: none;'";      
+
                     $html .= "<p>";
                     $html .= "Agrega los ingredientes...";
                     $html .= "</p>";
@@ -115,7 +119,7 @@ require_once ("views/partials/nav.php");
                 ?>            
             </div>            
         </div>
-        <div class="col-auto col-xl-4">
+        <div class="col-auto col-xl-4" <?php  echo $display;?>>
             <form class="text-center form" enctype="multipart/form-data" method="POST" action="/cookt/create" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
             
                 <div class="input-group mb-3">

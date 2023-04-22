@@ -5,7 +5,7 @@ require_once ("models/models.php");
 //Including the database connection.
 $conn = DatabaseConnection::dbConnection();
 
-/*
+
 //Reviso el estado de la sesión.
 session_name("Login");
 //Inicio una nueva sesión.
@@ -42,14 +42,12 @@ if (!isset($_SESSION['username'])) {
         $_SESSION['username'] = $username;
 
         //Redirect the user to the login page.
-        header("Location: /cookt/login");        
-
-        
+        header("Location: /cookt/login");           
     } else {
         //If the user uses the page, the last time is stored.
         $_SESSION["last_access"] = $currentTime;
     }
-/*}*/
+}
 
 ?>
 <!DOCTYPE html>
