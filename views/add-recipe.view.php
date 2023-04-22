@@ -9,13 +9,13 @@ require_once ("views/partials/nav.php");
 <main class="container p-4">
     <?php
         //Messages that are shown in the add_units page
-            if(isset($_SESSION['message'])){
-            $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
-            echo $message -> buttonMessage();           
+        if(isset($_SESSION['message'])){
+        $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+        echo $message -> buttonMessage();           
 
         //Unsetting the messages variables so the message fades after refreshing the page.
-            unset($_SESSION['message_alert'], $_SESSION['message']);
-            }
+        unset($_SESSION['message_alert'], $_SESSION['message']);
+        }
     ?>
     <div class="m-2 justify-content-center row">
         <div class="col-auto col-xl-4">
