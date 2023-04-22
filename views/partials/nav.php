@@ -5,7 +5,7 @@
         <div></div>
         <div class="logo">
             <img src="imgs/logo/logo.png" alt="Logo">
-            <a href="/cookt">Recipeholder</a>
+           <!-- <a href="/cookt">Recipeholder</a> -->
         </div>
         <div class="d-flex flex-row">            
             <a class="px-3 text-dark"  href="/cookt/profile" style="text-decoration: none;" title="Usuario">

@@ -18,7 +18,7 @@ require_once ("views/partials/nav.php");
     }
 ?>
     <div class="row mt-2 text-center justify-content-center">
-        <h3>RECETAS</h3>
+        <h3>Recetas</h3>
 <!--Form for filtering the database info-->
         <div class="col-auto">
             <div class="input-group mb-3">

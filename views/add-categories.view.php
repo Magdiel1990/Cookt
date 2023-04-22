@@ -25,7 +25,7 @@ require_once ("views/partials/nav.php");
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>
-    <h3>AGREGAR CATEGORÍAS</h3>
+    <h3>Agregar Categorías</h3>
 <!--Form for filtering the database info-->
         <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="/cookt/create" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
             
