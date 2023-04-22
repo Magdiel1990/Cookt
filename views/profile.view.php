@@ -45,14 +45,18 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
 ?>  
     <h3 class="text-center">Perfil</h3>
     <div class="row my-3 justify-content-center align-items-center">        
-        <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
+        <div class="col-xl-5 col-lg-6 col-md-7 col-sm-9">
             <div class="p-4 card card-body bg-form">
-                <img <?php echo $path;?> alt="Foto de perfil">
-                <h4> Usuario: <?php echo $userName;?></h4>
-                <h4> Privilegio: <?php echo $type;?></h4>
-                <h4> Nombre: <?php echo $firstName . " " . $lastName;?></h4>
-                <h4> Email: <?php echo $email;?></h4>
-                <h4> Suscripción: <?php echo $date;?></h4>
+                <div class="row my-4 justify-content-center align-items-center">
+                    <img <?php echo $path;?> alt="Foto de perfil" class="profile">
+                </div>
+                <div class="my-2">
+                    <h4><span>Usuario: </span><?php echo $userName;?></h4>
+                    <h4><span>Privilegio: </span><?php echo $type;?></h4>
+                    <h4><span>Nombre: </span><?php echo $firstName . " " . $lastName;?></h4>
+                    <h4><span>Email: </span><?php echo $email;?></h4>
+                    <h4><span>Suscripción: </span><?php echo $date;?></h4>
+                </div>
                 <div class="text-center">
                     <a class="btn btn-danger" href="/delete?userid=<?php echo $_SESSION['userid'];?>">Eliminar cuenta</a>
                     <a class="btn btn-primary" href="/edit?userid=<?php echo $_SESSION['userid'];?>">Editar</a>

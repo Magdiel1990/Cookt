@@ -47,6 +47,15 @@ h3 {
     font-size: 1rem;
 }
 
+.profile {    
+    border-radius: 50%;
+    max-width: 50%;
+    height: auto;
+}
+h4 span {
+    font-weight: bold;
+    color: rgb(4, 4, 99);
+}
 table {
     box-shadow: 1px 1px 8px 1px #888;
 }
