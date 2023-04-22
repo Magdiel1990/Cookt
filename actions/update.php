@@ -107,7 +107,7 @@ $categoryId = $row['categoryid'];
                     header("Location: /cookt/edit?recipename=". $oldName. '&username=' . $userName);
                     }  
                 } else {
-                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', observation = '$observation', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
+                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
                 
                 $target_dir = "../imgs/recipes/". $userName  ."/";
                 

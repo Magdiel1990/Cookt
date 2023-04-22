@@ -520,9 +520,9 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
 
       $stmt -> close();
 
-      if($recipeImage ['name'] == null) {
-
       $sql = "DELETE FROM reholder WHERE username = '" . $_SESSION['username'] . "';";
+
+      if($recipeImage ['name'] == null) {     
       
       //Verify if the recipe has records in both recipeinfo and recipe tables.
       $sql2 = "SELECT max(recipeid) as `lastid` FROM recipe;";
@@ -553,9 +553,7 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
             header('Location: /cookt/add-recipe');
         }         
       }  else {
-      $sql = "DELETE FROM reholder WHERE username = '" . $_SESSION['username'] . "';";       
-
-      $recipeImagesDir = "../imgs/recipes/". $_SESSION['username'];
+        $recipeImagesDir = "imgs/recipes/". $_SESSION['username'];
         if (!file_exists($recipeImagesDir)) {
             mkdir($recipeImagesDir, 0777, true);
         }
@@ -587,7 +585,17 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
         }      
 
         if ($uploadOk == "") {
-            if(move_uploaded_file($recipeImage["tmp_name"], $target_file) && $conn->query($sql)){
+                
+            //Verify if the recipe has records in both recipeinfo and recipe tables.
+            $sql2 = "SELECT max(recipeid) as `lastid` FROM recipe;";
+            $row = $conn -> query($sql2) -> fetch_assoc();
+            $id = $row["lastid"];
+
+            $sql3 = "SELECT recipeid FROM recipeinfo WHERE recipeid = '$id';";
+            $result = $conn->query($sql3);
+            $num_rows = $result -> num_rows;
+
+            if(move_uploaded_file($recipeImage["tmp_name"], $target_file) && $conn->query($sql) && $num_rows > 0){
             //Success message.
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
             $_SESSION['message_alert'] = "success";
@@ -595,13 +603,17 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
           //The page is redirected to the ingredients.php.
             header('Location: /cookt/add-recipe');
             } else {
+            //If there is an error, all related registers are deleted
+            $sql = "DELETE FROM recipe WHERE recipeid = '$id';";            
+            $conn->query($sql); 
+
             //Failure message.
             $_SESSION['message'] = '¡Error al agregar receta!';
             $_SESSION['message_alert'] = "danger";
                 
             //The page is redirected to the ingredients.php.
             header('Location: /cookt/add-recipe');
-        }
+          }
         } else {
             //Failure message.
             $_SESSION['message'] = $uploadOk;
