@@ -1,6 +1,33 @@
 * {
     font-family:'Times New Roman', Times, serif;
 }
+header {
+    z-index: 1000;
+}
+header .banner {
+    position: relative;
+    background: #ffffff;
+    height: 14vh;    
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-style: italic;   
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 2rem;
+    margin-top: 0.5rem;
+}
+
+.banner a {
+    text-decoration: none;
+    color: rgb(94, 91, 254);
+    font-size: 1rem;
+}
+
+.recipe_link {
+    text-decoration: none;
+}
+
 main {
     min-height: calc(100vh - 7.1rem);
 }
