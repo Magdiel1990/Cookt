@@ -65,8 +65,8 @@ if(!empty($_POST)) {
 
                 if($num_rows == 0) {
                 
-                $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, reportsto, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
-                $stmt->bind_param ("ssssssiis", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sessionUserId, $sex);
+                $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+                $stmt->bind_param ("ssssssis", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sex);
 
                 if ($stmt->execute()) {            
                 //The page is redirected to the add-recipe.php
@@ -126,7 +126,7 @@ $userCreation -> newUser();*/
                                 <img src="/imgs/login/Picture.png" class="img-fluid" alt="Sample image">
                             </div>
                             <div class="col-md-9 col-lg-6 col-xl-6">
-                                <form action="<?php echo $_SERVER['REQUEST_URI'];?>" method="POST" class="card-body p-md-5 text-black">
+                                <form action="/signup" method="POST" class="card-body p-md-5 text-black">
                                     <h3 class="mb-3 text-center">Regístrate</h3>                        
                                     <div class="row">                                   
                                         <div class="col-md-6 mb-3">
