@@ -2,8 +2,12 @@
 session_name("recovery");
 
 session_start();
+
+//Models.
+require_once ("models/models.php");
+
 //Including the database connection.
-require_once ("config/db_Connection.php");
+$conn = DatabaseConnection::dbConnection();
 
 if(isset($_POST['email'])){
     $email = $_POST['email'];
