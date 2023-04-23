@@ -291,44 +291,59 @@ if(isset($_GET['userid'])) {
 //Getting the name.
 $userId = $_GET['userid'];
 
-$sql = "SELECT username FROM users WHERE userid = '$userId';";
-$row = $conn -> query($sql) -> fetch_assoc();
-$username = $row['username'];
-$target_dir = "imgs/recipes/" . $username;
+$sql = "SELECT userid FROM users WHERE type = 'Admin';";
+$result = $conn -> query($sql);
+$num_rows = $result -> num_rows;
 
-    if(file_exists($target_dir)) {
-        unlink($target_dir);
-    }
-    //Deleting the register with the name received.
-    $sql = "DELETE FROM users WHERE userid = '$userId';";
-
-    $result = $conn -> query($sql);
-
-    if(!$result){
-//Creation of the message of error deleting the receta.
-        $_SESSION['message'] = '¡Error al eliminar usuario!';
-        $_SESSION['message_alert'] = "danger";
-
-        if($_SESSION["location"] == "/profile") {
-//The page is redirected to the add_units.php
-        header("Location: /profile");     
-
+    if($num_rows > 1) {
+    
+    $sql = "SELECT username FROM users WHERE userid = '$userId';";
+    $row = $conn -> query($sql) -> fetch_assoc();
+    $username = $row['username'];
+    $target_dir = "imgs/recipes/" . $username;
+    
+        if(file_exists($target_dir)) {
+            unlink($target_dir);
+        }
+        //Deleting the register with the name received.
+        $sql = "DELETE FROM users WHERE userid = '$userId';";
+    
+        $result = $conn -> query($sql);
+    
+        if(!$result){
+    //Creation of the message of error deleting the receta.
+            $_SESSION['message'] = '¡Error al eliminar usuario!';
+            $_SESSION['message_alert'] = "danger";
+    
+            if($_SESSION["location"] == "/profile") {
+    //The page is redirected to the add_units.php
+            header("Location: /profile");     
+    
+            } else {
+    //The page is redirected to the add_units.php
+            header("Location: /user");
+            }
         } else {
-//The page is redirected to the add_units.php
-        header("Location: /user");
+    //Creation of the message of success deleting the receta.
+            $_SESSION['message'] = '¡Usuario eliminado!';
+            $_SESSION['message_alert'] = "success";
+            
+            if($_SESSION["location"] == "/profile") {
+    //The page is redirected to the add_units.php
+                header("Location: /logout");    
+            } else {
+    //After the receta has been deleted, the page is redirected to the add_units.php.
+                header("Location: /user");
+            }
         }
     } else {
-//Creation of the message of success deleting the receta.
-        $_SESSION['message'] = '¡Usuario eliminado!';
-        $_SESSION['message_alert'] = "success";
         
-        if($_SESSION["location"] == "/profile") {
-//The page is redirected to the add_units.php
-            header("Location: /logout");    
-        } else {
-//After the receta has been deleted, the page is redirected to the add_units.php.
-            header("Location: /user");
-        }
+    //Creation of the message of success deleting the receta.
+        $_SESSION['message'] = '¡Este usuario no se puede eliminar!';
+        $_SESSION['message_alert'] = "danger";
+
+    //The page is redirected to the add_units.php
+        header("Location: /profile");    
     }
 }
 

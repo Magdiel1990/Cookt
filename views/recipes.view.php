@@ -70,6 +70,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
 
     //Function to get the image directory from the category
     $files = new Directories($categoryDir , $category);
+    $categoryImgDir = $files -> directoryFiles();
 ?>
 <main class="container mt-4">
     <div class="my-5" style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">
