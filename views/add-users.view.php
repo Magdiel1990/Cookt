@@ -169,7 +169,7 @@ $_SESSION["location"] = "/user";
                                 $html .= "<td>";
                                 $html .= "<div class='btn-group btn-group-sm' role='group'>";
                                 $html .= "<a $display href='/edit?userid=" . $userid . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
-                                $html .= "<a $display $display_2 href='/delete?userid=" . $userid . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                                $html .= "<a $display $display_2 href='/delete?userid=" . $userid . "&type=" . base64_encode(serialize($type)) . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                                 $html .= "<a $display_2 href='/delete?user_id=" . $userid . "&reset=1' class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
                                 $html .= "</td>";
                                 $html .= "</div>";

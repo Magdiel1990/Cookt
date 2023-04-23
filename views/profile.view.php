@@ -58,7 +58,7 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
                     <h4><span>Suscripción: </span><?php echo $date;?></h4>
                 </div>
                 <div class="text-center">
-                    <a class="btn btn-danger" href="/delete?userid=<?php echo $_SESSION['userid'];?>">Eliminar cuenta</a>
+                    <a class="btn btn-danger" href="/delete?userid=<?php echo $_SESSION['userid'];?>&type=<?php echo base64_encode(serialize($_SESSION['type']))?>">Eliminar cuenta</a>
                     <a class="btn btn-primary" href="/edit?userid=<?php echo $_SESSION['userid'];?>">Editar</a>
                 </div>
             </div>

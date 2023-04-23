@@ -286,16 +286,17 @@ $result = $conn -> query($sql);
 
 
 //Verifying that the id value comes with data.
-if(isset($_GET['userid'])) {
+if(isset($_GET['userid']) && isset($_GET['type'])) {
     
 //Getting the name.
 $userId = $_GET['userid'];
+$type = unserialize(base64_decode($_GET['type']));
 
 $sql = "SELECT userid FROM users WHERE type = 'Admin';";
 $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
 
-    if($num_rows > 1) {
+    if($num_rows > 1 || $type != "Admin") {
     
     $sql = "SELECT username FROM users WHERE userid = '$userId';";
     $row = $conn -> query($sql) -> fetch_assoc();
@@ -343,7 +344,7 @@ $num_rows = $result -> num_rows;
         $_SESSION['message_alert'] = "danger";
 
     //The page is redirected to the add_units.php
-        header("Location: /profile");    
+        header("Location: " . $_SESSION["location"]);    
     }
 }
 
