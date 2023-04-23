@@ -91,7 +91,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
                         $result = $conn -> query($sql);
                         
                         while($row = $result->fetch_assoc()){
-                            echo "<li class='text-success' style='font-size: 1.5rem;' title='ingrediente'>" . $row["indications"]. ".</li>";
+                            echo "<li class='text-success' style='font-size: 1.5rem;' title='ingrediente'>" . $row["indications"]. "</li>";
                         }        
                         ?>   
                         </ul>
