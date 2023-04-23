@@ -149,14 +149,33 @@ $userCreation -> newUser();*/
                                             </div>
                                         </div>                                      
 
-                                        <div class="form-outline col-md-6 mb-3">
+                                        <div class="input-group col-md-4 mb-3">
                                             <input type="password" id="password" class="form-control form-control-md" name="password"/>
-                                            <label class="form-label is-required" for="password">Contraseña</label>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="button" onclick="showpass('password')"><i id="watchpass" class="fa-solid fa-eye"></i></button>        
+                                            </div>                                                
                                         </div>
-                                          <div class="form-outline col-md-6 mb-3">
+                                        <label class="form-label is-required" for="password">Contraseña</label>
+
+                                        <div class="input-group col-md-6 mb-3">
                                             <input type="password" id="passrepeat" class="form-control form-control-md" name="passrepeat"/>
-                                            <label class="form-label is-required" for="passrepeat">Repita contraseña</label>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="button" onclick="showpass('passrepeat')"><i id="watchpass" class="fa-solid fa-eye"></i></button>        
+                                            </div>                                             
                                         </div>
+                                        <label class="form-label is-required" for="passrepeat">Repita contraseña</label>
+
+                                        <script>
+                                            function showpass(id){
+                                            var tipo = document.getElementById(id);
+                                            
+                                                if(tipo.type == "password"){
+                                                    tipo.type = "text";                                                   
+                                                } else {
+                                                    tipo.type = "password";                                                                                   
+                                                }
+                                            }
+                                        </script>
                                         <div class="form-outline col-md-6 mb-3">
                                             <input type="email" id="email" class="form-control form-control-md" name="email"/>
                                             <label class="form-label" for="email">Correo electrónico</label>

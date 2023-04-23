@@ -126,10 +126,25 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         </div>
 
                         <!-- Password input -->
-                        <div class="form-outline mb-3">
-                            <input type="password" id="password" class="form-control form-control-lg" name="password"  autocomplete="off"/>
-                            <label class="form-label" for="password">Contraseña</label>
+                        <div class="input-group mb-3">
+                            <input type="password" id="password" class="form-control form-control-lg" name="password"  autocomplete="off"/>        
+                            <div class="input-group-append">
+                            <button class="btn btn-outline-secondary btn-lg" type="button" onclick="showpass()"><i id="watchpass" class="fa-solid fa-eye"></i></button>        
+                            </div>                                                      
                         </div>
+                        <label class="form-label" for="password">Contraseña</label>  
+
+                        <script>
+                            function showpass(){
+                                var tipo = document.getElementById("password");
+                               
+                                if(tipo.type == "password"){
+                                    tipo.type = "text";
+                                } else {
+                                    tipo.type = "password";                                    
+                                }
+                            }
+                        </script>
 
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="/recovery" class="text-body" style = "text-decoration: none;">¿Olvidaste la contraseña?</a>

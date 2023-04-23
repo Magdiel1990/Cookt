@@ -44,6 +44,7 @@ function validationNumber(number){
     return true;
 }
 
+
 /*function deleteMessage (){
     alert("¿Está seguro de eliminar?");
     return true;
