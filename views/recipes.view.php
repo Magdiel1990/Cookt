@@ -82,11 +82,11 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
                         <h1 class="display-4 text-info"> <?php echo $recipeName; ?> </h1>
                         <h5 class="text-warning" style='font-size: 1.5rem;' title="duración"> (<?php echo $cookingTime; ?> minutos)</h5>
                     </div>
-                    <div class="my-4">
+                    <div class="mt-4">
                         <div class="text-center">
                             <img src="<?php echo $recipeImageDir;?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
                         </div> 
-                        <ul class="lead py-4"> 
+                        <ul class="lead pt-4"> 
                         <?php            
                         $result = $conn -> query($sql);
                         
@@ -102,7 +102,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
                             }
                         ?>
                     </div>
-                    <hr class="my-4">
+                    <hr class="my-3">
                 </div>
 
                 <div class="p-2 col-lg-9 col-xl-9">
