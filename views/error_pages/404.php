@@ -1,5 +1,5 @@
 <?php
-//Head of the page.
+//Head
 require_once ("views/partials/head.php");
 ?>
 <!--Made by purplexmoss (https://freefrontend.com/html-css-404-page-templates/)-->
@@ -18,6 +18,6 @@ require_once ("views/partials/head.php");
     </div>
 </main>
 <?php
-//Footer of the page.
+//Footer
 require_once ("views/partials/footer.php");
 ?>
