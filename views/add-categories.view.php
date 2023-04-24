@@ -59,8 +59,8 @@ require_once ("views/partials/nav.php");
             <tbody>                
                 <?php
                     $sql = "SELECT * FROM categories ORDER BY category;";
-
                     $result = $conn -> query($sql);
+                    
                     if($result -> num_rows > 0){
                         while($row = $result -> fetch_assoc()){
                             $html = "<tr>";

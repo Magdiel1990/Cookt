@@ -1,25 +1,25 @@
 <?php
-//Head of the page.
+//Head
 require_once ("views/partials/head.php");
 
-//Navigation panel of the page
+//Nav
 require_once ("views/partials/nav.php");
 ?>
 
 <main class="container p-4">
     <div class="row text-center justify-content-center">
     <?php
-//Messages that are shown in the add_units page
+//Messages
         if(isset($_SESSION['message'])){
         $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
         echo $message -> buttonMessage();           
 
-//Unsetting the messages variables so the message fades after refreshing the page.
+//Unsetting the messages 
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>
+<!--Form for adding the ingredients-->   
     <h3>Agregar Ingredientes</h3>
-<!--Form for filtering the database info-->
         <form method="POST" action="/create" autocomplete="on" class="mt-3 col-auto" onsubmit="return validation('add_ingredient', /[a-zA-Z\t\h]+|(^$)/ )">
             <div class="input-group mb-4">
                 <label  class="input-group-text is-required" for="add_ingredient">Ingrediente: </label>
@@ -28,12 +28,12 @@ require_once ("views/partials/nav.php");
             </div>
         </form>
     </div>
+<!--Ingredients list-->      
     <div class="table-responsive-sm mt-4">
          <?php
             $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "' ORDER BY ingredient;";
-
             $result = $conn -> query($sql);
-
+            
             if($result -> num_rows > 0){
         ?>
         <table class="table table-sm">
@@ -49,6 +49,7 @@ require_once ("views/partials/nav.php");
                     $html = "<tr>";
                     $html .= "<td title='ingrediente'>" . ucfirst($row['ingredient']) . "</td>";
                     $html .= "<td>";
+//Delete button                    
                     $html .= "<a href='/delete?ingredientname=" . $row['ingredient'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                     $html .= "</td>";
                     $html .= "</tr>";
@@ -58,6 +59,7 @@ require_once ("views/partials/nav.php");
             </tbody>
         </table>
             <?php
+//Text when there is no ingredients
             } else {
                 $html = "<p>";
                 $html .= "Agregue los ingredientes...";
