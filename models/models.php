@@ -234,6 +234,40 @@ class TitleConvertor {
     }
 }
 
+class PageHeaders {
+    private $uri;
+
+    function __construct($uri){
+        $this -> uri = $uri;    
+    }
+
+    public function pageHeader(){
+    $headerList = [
+        "/" => "Home",    
+        "/login" => "Login",        
+        "/random" => "Aleatorio",
+        "/custom" => "Personalizado",
+        "/profile" => "Perfil",
+        "/units" => "Unidades",
+        "/ingredients" => "Ingredientes",
+        "/add-recipe" => "Agregar Recetas",
+        "/categories" => "Categorías",
+        "/user" => "Usuarios",
+        "/signup" => "Registrarse",
+        "/recovery" => "Recuperación",  
+        "/recipes" => "Recetas",
+        "/edit" => "Editar",
+        "/user-recipes" => "Recetas",
+        ];
+
+        if(array_key_exists($this -> uri, $headerList)) {
+            return $headerList [$this -> uri];
+        } else {
+            return "Error";
+        }
+    }
+}
+
 class IngredientList {
     public $table1;
     public $table2;

@@ -50,6 +50,9 @@ if (!isset($_SESSION['username'])) {
     }
 }
 
+$header = new PageHeaders($_SERVER["REQUEST_URI"]);
+$header = $header -> pageHeader();
+
 ?>
 <!DOCTYPE html>
 <html lang="es" data-lt-installed="true">
@@ -63,7 +66,7 @@ if (!isset($_SESSION['username'])) {
     <meta property="og:type" content="website">
     <meta name="ltm:domain" content="recipeholder.net">
     <meta name="description" content="Encuentra la receta de cocina fácil que estás buscando personalizadas de acuerdo a los ingredientes que tengas en tu casa.">
-    <title>Recipeholder</title> <!-- It depends where I am in the site.-->
+    <title><?php echo $header;?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="shortcut icon" href="imgs/logo/logo2.png">
     <link rel="stylesheet" href="css/styles.css">
