@@ -1,11 +1,11 @@
 <footer class="text-center p-3">
-  <!-- Copyright -->
+<!-- Copyright -->
     <div class="text-white">
         © <?php echo date('Y'); ?> Copyright:
         <h6 class="text-white d-inline">Magdiel Castillo Mills. Todos los derechos reservados.</h6>
     </div>
     <div>
-        <!-- Facebook -->
+<!-- Facebook -->
         <a
         class="btn btn-link btn-floating btn-lg m-1 text-white"
         href="https://www.facebook.com/magdiel.castillo.94"
@@ -15,7 +15,7 @@
         ><i class="fab fa-facebook-f"></i
         ></a>
 
-        <!-- Instagram -->
+<!-- Instagram -->
         <a
         class="btn btn-link btn-floating btn-lg m-1 text-white"
         href="https://www.instagram.com/magdielcastillomills/?igshid=ZDdkNTZiNTM%3D"
@@ -25,7 +25,7 @@
         ><i class="fab fa-instagram"></i
         ></a>
 
-        <!-- Linkedin -->
+<!-- Linkedin -->
         <a
         class="btn btn-link btn-floating btn-lg text-white m-1"
         href="https://www.linkedin.com/in/magdiel-de-jes%C3%BAs-castillo-mills-5a239b204"
@@ -35,7 +35,7 @@
         ><i class="fab fa-linkedin"></i
         ></a>
 
-        <!-- Github -->
+<!-- Github -->
         <a
         class="btn btn-link btn-floating btn-lg text-white m-1"
         href="https://github.com/Magdiel1990"
