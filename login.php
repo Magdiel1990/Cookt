@@ -71,6 +71,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     }
 } 
 
+//Title of the page
 $header = new PageHeaders($_SERVER["REQUEST_URI"]);
 $header = $header -> pageHeader();
 

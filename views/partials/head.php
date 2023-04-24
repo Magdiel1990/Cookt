@@ -5,51 +5,51 @@ require_once ("models/models.php");
 //Including the database connection.
 $conn = DatabaseConnection::dbConnection();
 
-
-//Reviso el estado de la sesión.
+//Set the session name
 session_name("Login");
 
-//Inicio una nueva sesión.
+//Initializing session
 session_start();
 
-//Si ningún usuario se ha logueado se redirige hacia el login.
+//If no user has logged in
 if (!isset($_SESSION['username'])) {
     header("Location: /login");
     exit;
 } else {    
-    //Sino, calculamos el tiempo transcurrido desde la última actualización.
+//Else, last login calculation.
     $lastTime = $_SESSION["last_access"];
     $currentTime = date("Y-n-j H:i:s");
-    //Se resta el tiempo de la página del login y el tiempo de esta página. 
+
     $timeDiff = (strtotime($currentTime) - strtotime($lastTime));
 
-    //Compare how much time has passed.
+//After 12 min session closes
     if ($timeDiff >= 12*60) {
-        //Save the user that is going to log out.
+
+//Save the user that is going to log out.
         $username = $_SESSION['username'];        
 
-       //If time runs out, the session is destroyed.
+//If time runs out, the session is destroyed.
         session_destroy();  
 
-        //Check the state of the session.
+//Set the session name
         session_name("Login");
 
-        //Start the session.
+//Start the session.
         session_start();
+//Last page visited
+        $_SESSION['lastpage'] = $_SERVER['REQUEST_URI'];
 
-        $_SESSION['lastpage'] = substr($_SERVER['QUERY_STRING'], 5);
-
-        //Reasign the user that was logged out.
+//Reasign the user that was logged out.
         $_SESSION['username'] = $username;
 
-        //Redirect the user to the login page.
         header("Location: /login");           
     } else {
-        //If the user uses the page, the last time is stored.
+//If the user uses the page, the last time is stored.
         $_SESSION["last_access"] = $currentTime;
     }
 }
 
+//Title of the pages
 $header = new PageHeaders($_SERVER["REQUEST_URI"]);
 $header = $header -> pageHeader();
 
