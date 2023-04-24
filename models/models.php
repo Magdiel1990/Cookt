@@ -213,6 +213,27 @@ class TimeConvertor {
     }
 }
 
+class TitleConvertor {
+    public $sex;
+
+    function __construct($sex){
+        $this -> sex = $sex;    
+    }
+    
+//Function to convert to spanish units
+    public function title(){
+        switch ($this -> sex){
+            case "M": return "Sr. ";
+            break;
+
+            case "F": return "Sra. ";
+            break;
+
+            default: return "";
+        }
+    }
+}
+
 class IngredientList {
     public $table1;
     public $table2;

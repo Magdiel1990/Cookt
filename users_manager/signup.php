@@ -104,7 +104,7 @@ $userCreation -> newUser();*/
     <meta name="Keywords" content="receta, recipe, cocina, kitchen, sugerencias, recommendations">
     <meta name="ltm:project" content="recetas personalizadas">
     <meta property="og:type" content="website">
-    <!--<meta name="ltm:domain" content="recipes23.com">-->
+    <meta name="ltm:domain" content="recipeholder.net">
     <meta name="description" content="Encuentra la receta de cocina fácil que estás buscando personalizadas de acuerdo a los ingredientes que tengas en tu casa.">
     <title>Recipeholder</title> <!-- It depends where I am in the site.-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
