@@ -129,7 +129,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         <div class="input-group mb-3">
                             <input type="password" id="password" class="form-control form-control-lg" name="password"  autocomplete="off"/>        
                             <div class="input-group-append">
-                            <button class="btn btn-outline-secondary btn-lg" type="button" onclick="showpass()"><i id="watchpass" class="fa-solid fa-eye"></i></button>        
+                                <button class="btn btn-outline-secondary btn-lg" type="button" onclick="showpass()">
+                                    <i class="fa-solid fa-eye"></i>                                    
+                                </button>        
                             </div>                                                      
                         </div>
                         <label class="form-label" for="password">Contraseña</label>  
