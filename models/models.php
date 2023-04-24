@@ -177,39 +177,32 @@ public function sanitization() {
 }
 
 class TimeConvertor {
-    public $unit;
+    public $abbr;
 
-    function __construct($unit){
-        $this -> unit = $unit;    
+    function __construct($abbr){
+        $this -> abbr = $abbr;    
     }
     
     //Function to convert to spanish units
     public function spanishmonth(){
-        switch($this -> unit){
-            case "Jan": return "Enero";
-            break;
-            case "Feb": return "Febrero";
-            break;
-            case "Mar": return "Marzo";
-            break;
-            case "Apr": return "Abril";
-            break;
-            case "May": return "Mayo";
-            break;
-            case "Jun": return "Junio";
-            break;
-            case "Jul": return "Julio";
-            break;
-            case "Aug": return "Agosto";
-            break;
-            case "Sep": return "Septiembre";
-            break;
-            case "Oct": return "Octubre";
-            break;
-            case "Nov": return "Noviembre";
-            break;
-            default: return "Diciembre";
-        }
+        $monthList = [
+        "Jan" => "Enero",           
+        "Feb" => "Febrero",
+        "Mar" => "Marzo",
+        "Apr" => "Abril",
+        "May" => "Mayo",
+        "Jun" => "Junio",
+        "Jul" => "Julio",
+        "Aug" => "Agosto",
+        "Sep" => "Septiembre",
+        "Oct" => "Octubre",
+        "Nov" => "Noviembre",
+        "Dic" => "Diciembre"
+        ];
+
+        if(array_key_exists($this -> abbr, $monthList)) {
+            return $monthList [$this -> abbr];
+        } 
     }
 }
 
@@ -257,7 +250,7 @@ class PageHeaders {
         "/recovery" => "Recuperación",  
         "/recipes" => "Recetas",
         "/edit" => "Editar",
-        "/user-recipes" => "Recetas",
+        "/user-recipes" => "Recetas"
         ];
 
         if(array_key_exists($this -> uri, $headerList)) {
