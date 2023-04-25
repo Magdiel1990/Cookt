@@ -1,10 +1,8 @@
 <?php
 //Head
 require_once ("views/partials/head.php");
-?>
 
-<?php
-//Not Admin users can't access
+//Only Admin users can access
 if($_SESSION['type'] != 'Admin') { 
     require_once ("views/error_pages/404.php");
     exit;
@@ -60,7 +58,7 @@ require_once ("views/partials/nav.php");
                 <?php
                     $sql = "SELECT * FROM categories ORDER BY category;";
                     $result = $conn -> query($sql);
-                    
+
                     if($result -> num_rows > 0){
                         while($row = $result -> fetch_assoc()){
                             $html = "<tr>";

@@ -33,7 +33,7 @@ require_once ("views/partials/nav.php");
          <?php
             $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "' ORDER BY ingredient;";
             $result = $conn -> query($sql);
-            
+
             if($result -> num_rows > 0){
         ?>
         <table class="table table-sm">
@@ -71,7 +71,9 @@ require_once ("views/partials/nav.php");
  
 </main>
 <?php
+//exiting connection
 $conn -> close();
+
 //Footer of the page.
 require_once ("views/partials/footer.php");
 ?>

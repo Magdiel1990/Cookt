@@ -1,29 +1,30 @@
 <?php
-//Head of the page.
+//Head
 require_once ("views/partials/head.php");
 
-//Navigation panel of the page
+//Nav
 require_once ("views/partials/nav.php");
 ?>
 
 <main class="container p-4">
     <?php
-        //Messages that are shown in the add_units page
+//Messages
         if(isset($_SESSION['message'])){
         $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
         echo $message -> buttonMessage();           
 
-        //Unsetting the messages variables so the message fades after refreshing the page.
+//Unsetting the messages
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>
     <div class="m-2 justify-content-center row">
         <div class="col-auto col-xl-4">
-            <div class="bg-form p-4 mb-4">       
-                <h3 class="text-center">Agregar Receta</h3>
-            <!--Form for filtering the database info-->
+            <div class="bg-form p-4 mb-4">  
+<!--Form for adding the recipe-->     
+                <h3 class="text-center">Agregar Receta</h3>            
                 <form class="m-2 text-center" method="POST" action="/create">
                     <?php
+//Object to determine if there are ingredients that have not been added to form the recipe
                     $num_rows = new IngredientList("reholder", "ingredients", "ingredient", $_SESSION['username']);                    
                     $num_rows = $num_rows -> ingQuantity();
                     
@@ -36,7 +37,8 @@ require_once ("views/partials/nav.php");
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="fraction">Fraction: </label>       
                         <select class="form-select" name="fraction" id="fraction">
-                            <?php   
+                            <?php  
+//Fraction of measurements to use 
                                 $fraction = ["", "1/8", "1/4", "1/3", "1/2", "2/3", "3/4"];
                                 for($i=0; $i < count($fraction); $i++){
                                     echo '<option value="' . $fraction[$i] . '">' . $fraction[$i] . '</option>';                          
@@ -48,6 +50,7 @@ require_once ("views/partials/nav.php");
                         <label class="input-group-text" for="unit">Unidad: </label>                
                         <select class="form-select" name="unit" id="unit">
                             <?php
+//Units
                             $unitOptions = new Units(null);
                             $unitOptions -> unitOptions();   
                             ?>
@@ -57,6 +60,7 @@ require_once ("views/partials/nav.php");
                         <label class="input-group-text" for="ingredient">Ingrediente: </label>
                         <select class="form-select" name="ingredient" id="ingredient">
                             <?php
+//Ingredients that haven't been added
                             $options = new IngredientList("reholder", "ingredients", "ingredient", $_SESSION['username']);
                             $options -> ingredientOptions();
                             ?>
@@ -70,6 +74,7 @@ require_once ("views/partials/nav.php");
                         <input class="btn btn-primary" type="submit" value="Agregar">
                     </div>                     
                     <?php
+//Link to go and add ingredients if there is no or all have been already picked
                     } else {
                     ?>
                     <div>
@@ -82,12 +87,11 @@ require_once ("views/partials/nav.php");
             </div> 
         </div>
         <div class="col-auto col-xl-4">       
-            <!-- List with ingredients that will conform the recipe-->
+<!-- Ingredients that will conform the recipe-->
             <div class="p-2">
                 <h3 class="text-center">Ingredientes</h3>
                 <?php
                 $sql = "SELECT re_id, concat_ws(' ', rh.quantity, rh.unit, 'de' , i.ingredient, rh.detail) as fullingredient FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" . $_SESSION['username'] . "';";
-
                 $result = $conn -> query($sql);
 
                 $num_rows = $result -> num_rows;
@@ -95,11 +99,13 @@ require_once ("views/partials/nav.php");
                 $html = "";
 
                 if ($num_rows != 0) {
+//If there are ingredients picked to form the recipe, the box for naming the recipe is shown 
                     $display = "";
 
                     $html .= "<ol>";            
                     while($row = $result -> fetch_assoc()){                    
                         $html .= "<li>";
+//The ingredient is deleted if clicked on
                         $html .= "<a href='/delete?id=" . $row["re_id"] . "'>" . $row["fullingredient"];
                         $html .= "</a>";
                         $html .= "</li>";
@@ -109,6 +115,7 @@ require_once ("views/partials/nav.php");
 
                     echo $html;
                 }  else {   
+//If there are no ingredients picked to form the recipe, the box for naming the recipe is hidden 
                     $display = "style = 'display: none;'";      
 
                     $html .= "<p>";
@@ -119,6 +126,7 @@ require_once ("views/partials/nav.php");
                 ?>            
             </div>            
         </div>
+    <!-- Only displayed when there is at least one ingredient added to form the recipe-->
         <div class="col-auto col-xl-4" <?php  echo $display;?>>
             <form class="text-center form" enctype="multipart/form-data" method="POST" action="/create" onsubmit="return validationNumberText('cookingtime', 'recipename', /[a-zA-Z\t\h]+|(^$)/)">
             
@@ -136,12 +144,14 @@ require_once ("views/partials/nav.php");
                     <label class="input-group-text" for="category">Categoría: </label>                
                     <select class="form-select" name="category" id="category">
                         <?php
+//We retrieve the last chosen category
                         if(isset($_SESSION['category'])){
                             $sql = "SELECT category FROM categories WHERE NOT category = '" . $_SESSION['category'] . "' ORDER BY rand();";
 
                             $result = $conn -> query($sql);
-
-                            echo '<option value="' .  $_SESSION['category'] . '">' . ucfirst( $_SESSION['category']) . '</option>';
+//The first option will be the last chosen category
+                           echo '<option value="' .  $_SESSION['category'] . '">' . ucfirst( $_SESSION['category']) . '</option>';
+//If no category had been picked, random categories are shown                        
                         } else {
                             $sql = "SELECT category FROM categories ORDER BY rand();";
 
@@ -173,7 +183,9 @@ require_once ("views/partials/nav.php");
     </div>
 </main>
 <?php
+//Exiting connection
 $conn -> close();
-//Footer of the page.
+
+//Footer
 require_once ("views/partials/footer.php");
 ?>

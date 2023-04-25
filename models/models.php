@@ -114,9 +114,7 @@ class Directories {
             $sizeBytes = 0;
         }
 
-        if($sizeBytes < 1024){
-            $size = round ($sizeBytes, 2) . " Bytes";
-        } else if($sizeBytes/1024 < 1024){
+        if($sizeBytes/1024 < 1024){
             $size = round ($sizeBytes/1024, 2) . " KB";
         } else if ($sizeBytes/1024/1024 < 1024) {
             $size = round ($sizeBytes/1024/1024, 2) . " MB";

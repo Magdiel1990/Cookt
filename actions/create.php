@@ -478,7 +478,7 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
       header('Location: /add-recipe');
   } 
 
-      $_SESSION['category'] = $_POST['category'];
+      $_SESSION['category'] = $category;
 
       $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename' AND username = '" .  $_SESSION['username'] . "';";
       
