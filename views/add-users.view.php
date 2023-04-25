@@ -1,32 +1,34 @@
 <?php
-//Head of the page.
+//Head
 require_once ("views/partials/head.php");
 
+//Nav
+require_once ("views/partials/nav.php");
+
+//Only Admin users can access
 if($_SESSION['type'] != 'Admin') { 
     require_once ("views/error_pages/404.php");
     exit;
 }
 
-//Navigation panel of the page
-require_once ("views/partials/nav.php");
-
+//Current location in order to come back 
 $_SESSION["location"] = "/user";
 ?>
 
 <main class="container p-4">
     <div class="row justify-content-center">
     <?php
-//Messages that are shown in the add_units page
+//Messages
         if(isset($_SESSION['message'])){
         $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
         echo $message -> buttonMessage();         
 
-//Unsetting the messages variables so the message fades after refreshing the page.
+//Unsetting the messages
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>  <div class="col-auto order-last my-4">
+<!--Form for adding the users-->
             <h3 class="text-center mb-3">Agregar Usuarios</h3>
-        <!--Form for filtering the database info-->
             <form method="POST" action="/create">         
                 
                 <div class="input-group mb-3">
@@ -58,6 +60,7 @@ $_SESSION["location"] = "/user";
                     <label class="input-group-text is-required" for="userrol">Rol: </label>
                     <select class="form-select" name="userrol" id="userrol">
                     <?php
+//Types of users
                         $sql = "SELECT type FROM type ORDER BY rand();";
                         $result = $conn -> query($sql);
 
@@ -72,7 +75,7 @@ $_SESSION["location"] = "/user";
                     <label class="input-group-text" for="useremail">Email: </label>
                     <input class="form-control" type="email" id="useremail" name="useremail" minlength="15" maxlength="70">
                 </div>
-
+<!-- Current user is sent-->
                 <input type="hidden" name="session_user" value = "<?php echo $_SESSION['username']?>">
                 <div class="text-center">
                     <div class="form-check form-check-inline">
@@ -91,8 +94,6 @@ $_SESSION["location"] = "/user";
                     </div> 
                 </div>     
 
-                <input type="hidden" id="url" name="url" value = "<?php echo $_SERVER["REQUEST_URI"];?>"/>
-
                 <div class="text-center form-switch mt-2">
                     <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes" checked>
                     <label class="form-check-label" for="activeuser">Activo</label>
@@ -101,7 +102,7 @@ $_SESSION["location"] = "/user";
 
             </form>
         </div>
-
+<!-- List of users -->
         <div class="col-lg-9 col-xl-9 col-md-12 col-sm-12 my-4">
             <h3 class="text-center">Lista de Usuarios</h3>
             <div class="table-responsive-md mt-3">
@@ -128,9 +129,10 @@ $_SESSION["location"] = "/user";
                                 $userid = $row['userid'];
 
                                 //Recipes of each user
-                                $sql = "SELECT count(recipeid) as `count` FROM recipe WHERE username = '$username';";
-                                $row = $conn -> query($sql) -> fetch_assoc();   
-                                $recipeCount = $row ['count'];
+                                $sql = "SELECT recipeid FROM recipe WHERE username = '$username';";
+                                $result = $conn -> query($sql);
+                                $recipeCount = $result  -> num_rows;
+                                $row = $result -> fetch_assoc();                                   
                                 
                                 if($state == 1) {
                                     $state = "activo";
@@ -184,7 +186,9 @@ $_SESSION["location"] = "/user";
     </div>    
 </main>
 <?php
+//Exiting connection
 $conn -> close();
+
 //Footer of the page.
 require_once ("views/partials/footer.php");
 ?>
