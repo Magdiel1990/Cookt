@@ -29,19 +29,15 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     
     $sql = "SELECT r.recipeid, 
     r.recipename,
-    concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient, ri.detail) as indications, 
+    r.ingredients, 
     r.cookingtime,
-    r.date, 
+    r.created_at, 
     r.preparation, 
     c.category, 
     r.username
-    from recipe r 
-    join recipeinfo ri 
-    on ri.recipeid = r.recipeid
+    from recipe r     
     join categories c 
-    on r.categoryid = c.categoryid
-    join ingredients i 
-    on i.id = ri.ingredientid
+    on r.categoryid = c.categoryid    
     WHERE r.recipename = '". $recipe . "' 
     AND r.username = '" . $username . "';";
 
@@ -52,17 +48,18 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     $row = $result->fetch_assoc();
 
     $category = $row["category"];
+    $ingredients = $row["ingredients"];
     $recipeName = $row["recipename"];
     $cookingTime = $row["cookingtime"];
     $preparation = $row["preparation"];
-    $day = $date = date ("d", strtotime($row["date"]));     
-    $month = date ("M", strtotime($row["date"]));
+    $day = $date = date ("d", strtotime($row["created_at"]));     
+    $month = date ("M", strtotime($row["created_at"]));
 
     //Function to convert to spanish months
     $timeConvertor = new TimeConvertor ($month);
     $spanishMonth = $timeConvertor -> spanishMonth();  
 
-    $year = $date = date ("Y", strtotime($row["date"]));
+    $year = $date = date ("Y", strtotime($row["created_at"]));
 
     $date = $day . "/" . $spanishMonth . "/" .  $year;
 
@@ -86,15 +83,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
                         <div class="text-center">
                             <img src="<?php echo $recipeImageDir;?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
                         </div> 
-                        <ul class="lead pt-4"> 
-                        <?php            
-                        $result = $conn -> query($sql);
-                        
-                        while($row = $result->fetch_assoc()){
-                            echo "<li class='text-success' style='font-size: 1.5rem;' title='ingrediente'>" . $row["indications"]. "</li>";
-                        }        
-                        ?>   
-                        </ul>
+                        <div class="pt-4"><?php echo $ingredients; ?> </div>
                         <?php
                             if(file_exists($recipeImageDir)) {
                         ?>                         
