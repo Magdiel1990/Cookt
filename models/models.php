@@ -198,9 +198,7 @@ class TimeConvertor {
         "Dic" => "Diciembre"
         ];
 
-        if(array_key_exists($this -> abbr, $monthList)) {
-            return $monthList [$this -> abbr];
-        } 
+        return $monthList [$this -> abbr];
     }
 }
 
