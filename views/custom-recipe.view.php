@@ -1,8 +1,8 @@
 <?php
-//Head of the page.
+//Head
 require_once ("views/partials/head.php");
 
-//Navigation panel of the page
+//Nav
 require_once ("views/partials/nav.php");
 
 ?>
@@ -10,24 +10,24 @@ require_once ("views/partials/nav.php");
 <main class="container p-4">
 
     <?php
-    //Messages that are shown in the add_units page
+//Messages
         if(isset($_SESSION['message'])){
         $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
         echo $message -> buttonMessage();          
 
-    //Unsetting the messages variables so the message fades after refreshing the page.
+//Unsetting the messages
         unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>
 
     <div  class="row mt-2 text-center justify-content-center">
+<!--Form for choosing the ingredients-->
         <h3>Elegir por Ingrediente</h3>
-<!--Form for filtering the database info-->
         <form class="m-3 col-auto" method="POST" action="/create">
 
            <div class="input-group">
                 <label class="input-group-text" for="customingredient">Ingredientes: </label>
-                
+<!--  -->                
                 <?php
                 $num_rows = new IngredientList("ingholder", "ingredients", "ingredient", $_SESSION['username']);
                 $num_rows = $num_rows -> ingQuantity();
