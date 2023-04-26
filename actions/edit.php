@@ -79,9 +79,9 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
     $sql = "SELECT r.recipeid, 
     r.recipename,
     r.cookingtime, 
+    r.ingredients, 
     r.preparation,
-    c.category, 
-    r.username
+    c.category
     from recipe r 
     join categories c 
     on r.categoryid = c.categoryid
@@ -90,11 +90,15 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 
     $row = $conn -> query($sql) -> fetch_assoc();
 
-    if(isset($row["cookingtime"]) && isset($row["preparation"]) && isset($row["category"])) {
+    if(isset($row["cookingtime"]) && isset($row["ingredients"]) && isset($row["preparation"]) && isset($row["category"])) {
         $cookingTime = $row["cookingtime"];
+        $ingredients = $row["ingredients"];
 
         $filter = new Filter ($row["preparation"], FILTER_SANITIZE_STRING, $conn);  
         $preparation = $filter -> sanitization();
+        
+        $filter = new Filter ($row["ingredients"], FILTER_SANITIZE_STRING, $conn);  
+        $ingredients = $filter -> sanitization();
 
         $category = $row["category"];
     } else {
@@ -148,10 +152,16 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                             <input type="number" name="cookingTime" value="<?php echo $cookingTime;?>" class="form-control" id="cookingTime" min="5" max="180">
                         </div>
                     </div>
+                    <div class="mb-3 text-center">
+                        <label for="ingredients" class="form-label is-required">Ingredientes: </label>
+                        <textarea class="form-control" name="ingredients" id="ingredients" cols="10" rows="10" required>
+                            <?php echo $ingredients;?>
+                        </textarea>
+                    </div>     
                             
                     <div class="mb-3 text-center">
                         <label  class="form-label is-required" for="preparation">Preparación: </label>
-                        <textarea name="preparation"  cols="4" rows="4" class="form-control" id="preparation" required>
+                        <textarea name="preparation"  cols="10" rows="10" class="form-control" id="preparation" required>
                             <?php echo $preparation;?>
                         </textarea>
                     </div>
@@ -162,104 +172,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                     </div>
                 </form>
             </div>
-        </div>
-         
-        <div class="mt-3 col-md-9 col-sm-11 col-lg-6 col-xl-5">
-            <div class="card card-body bg-form">
-                <h3 class="text-center">Editar Ingredientes</h3>
-                <div class="mt-2">
-                <?php
-                $sql = "SELECT concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient, ri.detail) as indications 
-                        from recipe r 
-                        join recipeinfo ri 
-                        on ri.recipeid = r.recipeid
-                        join ingredients i 
-                        on i.id = ri.ingredientid
-                        WHERE r.recipename = '$recipeName' 
-                        AND r.username = '$userName';";
-
-                $result = $conn -> query($sql);
-                
-                $html = "<ul>";
-                while($row = $result -> fetch_assoc()){
-                    $html .= "<li class='my-2'>";
-                    $html .= "<i><a href='delete?indication=" . $row['indications'] . "&rpename=" . $recipeName . "&username=" . $userName . "'>";
-                    $html .= $row['indications'];
-                    $html .= "</i></a>";
-                    $html .= "</li>";
-                }
-                $html .= "</ul>";
-                echo $html;
-                ?>
-                </div>
-                <div class="my-4 text-center">
-                    <form method="POST" action="create?rname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" onsubmit="return validationNumber('quantity')">
-                        <div class="input-group mb-3">
-                            <label class="input-group-text is-required" for="quantity">Cantidad: </label>                    
-                            <input class="form-control" type="number" name="qty" id="quantity" max="1000" min="0" required>
-                        </div>
-                        <div class="input-group mb-3">
-                        <label class="input-group-text" for="fraction">Fraction: </label>       
-                            <select class="form-select" name="fraction" id="fraction">
-                                <?php   
-                                    $fraction = ["", "1/8", "1/4", "1/3", "1/2", "2/3", "3/4"];
-                                    for($i=0; $i < count($fraction); $i++){
-                                        echo '<option value="' . $fraction[$i] . '">' . $fraction[$i] . '</option>';                          
-                                    }    
-                                ?>
-                            </select>                       
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="unit">Unidad: </label>                
-                            <select class="form-select" name="units" id="unit">
-                                <?php
-                                $unitOptions = new Units(null);
-                                $unitOptions = $unitOptions -> unitOptions();                                
-                                ?>
-                            </select>
-                        </div>
-
-                        <div class="input-group mb-3 justify-content-center">
-                        <?php
-                            $ingredientObj = new IngredientListChild("recipeinfo", "ingredients", "recipe", "ingredient", $recipeName, $_SESSION['username']);
-                            $result = $ingredientObj -> ingResults();
-                            $num_rows = $ingredientObj -> ingQuantity();
-
-                            if($num_rows > 0) {                            
-                        ?>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="ingredient">Ingrediente: </label>                
-                            <select class="form-select" name="ing" id="ingredient">
-
-                                <?php
-                                while($row = $result -> fetch_assoc()) {
-                                    echo '<option value="' . $row["ingredient"] . '">' . $row["ingredient"] . '</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="detail">Detalle:</label>
-                            <input class="form-control" type="text" name="detail" id="detail" maxlength="100">
-                        </div>
-                        <div>
-                            <input class="btn btn-primary" type="submit" title="Agregar ingredientes" value="Agregar">
-                        </div>
-                        <?php
-                        } else {
-                        ?>
-                        <div>
-                            <a class="btn btn-secondary" href="/ingredients">Ingredientes</a>
-                        </div>
-                        <?php
-                        }
-                        ?>
-                        </div>                       
-                    </form>
-                </div>
-            </div>
-       </div>                  
+        </div>                 
     </div>     
 </main>
 

@@ -63,7 +63,7 @@ require_once ("views/partials/nav.php");
                     <input class="form-control" type="number" id="cookingtime" name="cookingtime" max="180" min="5"  placeholder="en minutos">             
                 </div>    
                 
-                 <div class="mb-3">
+                <div class="mb-3">
                     <label for="ingredients" class="form-label is-required">Ingredientes: </label>
                     <textarea class="form-control" name="ingredients" id="ingredients" cols="10" rows="10" required></textarea>
                 </div>            

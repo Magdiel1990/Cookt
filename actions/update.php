@@ -4,59 +4,12 @@ require_once ("views/partials/head.php");
 
 
 /************************************************************************************************/
-/******************************************REHOLDER UPDATE CODE***********************************/
-/************************************************************************************************/
-
-
-if(isset($_GET["editid"])){
-
-$id = $_GET["editid"];
-$quantity = $_POST["quantity"];
-$unit = $_POST["unit"];
-$ingredient = $_POST["ingredient"];
-
-    if($quantity == "" || $quantity <= 0){
-    //Message if the variable is null.
-        $_SESSION['message'] = '¡Elija la cantidad por favor!';
-        $_SESSION['message_alert'] = "danger";
-            
-    //The page is redirected to the add-recipe.php
-        header('Location: /edit');
-
-    } else {
-        $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "';";
-        $row = $conn -> query($sql) -> fetch_assoc();
-        $ingredientId = $row['id'];
-
-        $sql = "UPDATE reholder SET ingredientid = '$ingredientId', quantity = '$quantity', unit = '$unit' WHERE re_id = $id AND username = '" . $_SESSION['username'] . "';";
-                
-        if ($conn->query($sql)) {
-         //Message if the variable is null.
-        $_SESSION['message'] = '¡El ingrediente ha sido editado!';
-        $_SESSION['message_alert'] = "success";
-            
-        //The page is redirected to the add-recipe.php
-        header('Location: /add-recipe');
-        } else {
-         //Message if the variable is null.
-        $_SESSION['message'] = '¡Error al editar ingrediente!';
-        $_SESSION['message_alert'] = "danger";
-            
-        //The page is redirected to the add-recipe.php
-        header('Location: /edit?id='.$id);
-        }               
-    }
-}
-
-
-
-/************************************************************************************************/
 /******************************************RECIPE UPDATE CODE************************************/
 /************************************************************************************************/
 
 
 if(isset($_GET["editname"]) && isset($_GET["username"]) && isset($_FILES["recipeImage"]) && isset($_POST["newRecipeName"]) && isset($_POST["category"])
-&& isset($_POST["cookingTime"]) && isset($_POST["preparation"])){
+&& isset($_POST["cookingTime"]) && isset($_POST["ingredients"]) && isset($_POST["preparation"])){
 
 $oldName = $_GET["editname"];
 
@@ -69,6 +22,9 @@ $cookingTime = $filter -> sanitization();
 $filter = new Filter ($_POST["preparation"], FILTER_SANITIZE_STRING, $conn);  
 $preparation = $filter -> sanitization();
 
+$filter = new Filter ($_POST["ingredients"], FILTER_SANITIZE_STRING, $conn);  
+$ingredients = $filter -> sanitization();
+
 $category = $_POST["category"];
 $recipeImage = $_FILES["recipeImage"];
 $userName = $_GET["username"];
@@ -79,7 +35,7 @@ $row = $conn -> query($sql) -> fetch_assoc();
 
 $categoryId = $row['categoryid'];
 
-    if($newRecipeName == "" || $cookingTime == "" || $preparation == ""){
+    if($newRecipeName == "" || $cookingTime == "" || $preparation == "" || $ingredients == ""){
     //Message if the variable is null.
         $_SESSION['message'] = '¡Complete todos los campos!';
         $_SESSION['message_alert'] = "danger";
@@ -90,7 +46,7 @@ $categoryId = $row['categoryid'];
         if($cookingTime >= 5 && $cookingTime <= 180){
 
             if($recipeImage['name'] == null) {            
-                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
+                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
                 if ($conn->query($sql)) {
                     //Message if the variable is null.
                     $_SESSION['message'] = '¡Receta editada con éxito!';
@@ -107,7 +63,7 @@ $categoryId = $row['categoryid'];
                     header("Location: /edit?recipename=". $oldName. '&username=' . $userName);
                     }  
                 } else {
-                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
+                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
                 
                 $target_dir = "imgs/recipes/". $userName  ."/";
                 
