@@ -10,7 +10,6 @@ if($param == "") {
     "/random" => "controllers/random.controller.php",
     "/custom" => "controllers/custom.controller.php",
     "/profile" => "controllers/profile.controller.php",
-    "/units" => "controllers/units.controller.php",
     "/ingredients" => "controllers/ingredients.controller.php",
     "/add-recipe" => "controllers/add-recipe.controller.php",
     "/categories" => "controllers/categories.controller.php",

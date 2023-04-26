@@ -44,42 +44,6 @@ $result = $conn -> query($sql);
 
 
 /************************************************************************************************/
-/***************************************UNIT DELETION CODE***************************************/
-/************************************************************************************************/
-
-
-//Verifying that the id value comes with data.
-if(isset($_GET['unitname'])){
-    
-//Getting the name.
-$unitname = $_GET['unitname'];
-
-//Deleting the register with the name received.
-$sql = "DELETE FROM units WHERE unit = '$unitname';";
-
-$result = $conn -> query($sql);
-
-//If there's no record with that name, a message is sent.
-
-    if($result !== true){
-//Creation of the message of error deleting the receta.
-        $_SESSION['message'] = '¡Error al eliminar la unidad!';
-        $_SESSION['message_alert'] = "danger";
-
-//The page is redirected to the add-units.php
-        header('Location: /units');
-    } else {
-//Creation of the message of success deleting the receta.
-        $_SESSION['message'] = '¡Unidad eliminada!';
-        $_SESSION['message_alert'] = "success";
-
-//After the receta has been deleted, the page is redirected to the add-units.php.
-        header('Location: /units');
-    }
-} 
-
-
-/************************************************************************************************/
 /***************************************CATEGORY DELETION CODE***************************************/
 /************************************************************************************************/
 

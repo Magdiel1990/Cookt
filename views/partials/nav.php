@@ -21,8 +21,7 @@
                 <i class="fa-solid fa-gears text-white"></i>
                 </a>
 <!-- Not Admin users can't access some of the links-->
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="/units">Unidades</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">                    
                     <a class="dropdown-item" href="/ingredients">Ingredientes</a>
                     <a class="dropdown-item" href="/add-recipe">Recetas</a>
                     <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="/categories">Categorías</a>
