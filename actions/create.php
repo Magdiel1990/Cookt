@@ -6,7 +6,7 @@ session_start();
 
 //Si ningún usuario se ha logueado se redirige hacia el login.
 if (!isset($_SESSION['userid'])) {
-    header("Location: /login.php");
+    header("Location: /login");
     exit;
 } 
 
@@ -199,7 +199,7 @@ if(isset($_POST['add_ingredient'])){
           $_SESSION['message_alert'] = "danger";
               
     //The page is redirected to the add_units.php.
-          header('Location: ../views/add-ingredients.php');
+          header('Location: /ingredients');
         }
       }
     }
@@ -287,78 +287,6 @@ if(isset($_POST['quantity']) && isset($_POST['fraction']) && isset($_POST['unit'
   }
 }
 
-/************************************************************************************************/
-/**************************ADD INGREDIENT (TO AN EXISTING RECIPE) CODE***************************/
-/************************************************************************************************/
-
-
-//receive the data
-if(isset($_POST['qty']) && isset($_POST['fraction']) && isset($_POST['units']) && isset($_POST['ing']) && isset($_GET['rname']) && isset($_GET['username']) && isset($_POST['detail'])){
-
-  $ingredient = $_POST['ing'];
-  $quantity = $_POST['qty'];
-  $unit = $_POST['units'];
-  $recipeName = $_GET['rname'];
-  $userName = $_GET['username'];
-  $fraction = $_POST['fraction'];
-
-  $filter = new Filter ($_POST['detail'], FILTER_SANITIZE_STRING, $conn);
-  $detail = $filter -> sanitization();
-
-  if ($quantity == "" || $quantity < 0) {
-    //Message if the variable is null.
-    $_SESSION['message'] = '¡Elija la cantidad por favor!';
-    $_SESSION['message_alert'] = "danger";
-        
-    header('Location: edit?recipename='. $recipeName . '&username=' . $userName);
-  } else if ($quantity == "" && $fraction == "") {
-    //Message if the variable is null.
-    $_SESSION['message'] = '¡Elija la cantidad por favor!';
-    $_SESSION['message_alert'] = "danger";
-        
-    header('Location: edit?recipename='. $recipeName . '&username=' . $userName);
-  } else {
-
-    if($quantity == 0){
-      $strQuantity = "";
-    } else {
-      $strQuantity = strval($quantity) . " " ;
-    }
-
-    $completeQuantity = $strQuantity . $fraction;
-
-    $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipeName' AND username = '$userName';";
-    $row = $conn -> query($sql) -> fetch_assoc();
-    $recipeId = $row['recipeid'];
-
-    $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '$userName';";
-    $row = $conn -> query($sql) -> fetch_assoc();
-    $ingredientId = $row['id'];
-
-    $stmt = $conn -> prepare("INSERT INTO recipeinfo (recipeid, ingredientid, quantity, unit, detail) VALUES (?, ?, ?, ?, ?);");
-    $stmt->bind_param("iisss", $recipeId, $ingredientId, $completeQuantity, $unit, $detail);
-
-    if ($stmt->execute()) {
-  //Success message.
-        $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
-        $_SESSION['message_alert'] = "success";
-
-        $stmt->close();
-
-  //The page is redirected to the ingredients.php.
-        header('Location: edit?recipename='. $recipeName . '&username=' . $userName);
-
-      } else {
-  //Failure message.
-        $_SESSION['message'] = '¡Error al agregar ingrediente!';
-        $_SESSION['message_alert'] = "danger";
-            
-  //The page is redirected to the ingredients.php.
-        header('Location: edit?recipename='. $recipeName . '&username=' . $userName);
-    }
-  }
-}
-
 
 /************************************************************************************************/
 /***************************************RECIPE ADITION CODE*************************************/
@@ -366,7 +294,7 @@ if(isset($_POST['qty']) && isset($_POST['fraction']) && isset($_POST['units']) &
 
 
 //receive the data
-if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES["recipeImage"]) && isset($_POST['category']) && isset($_POST['cookingtime'] )){
+if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST['category']) && isset($_POST['cookingtime']) && isset($_POST['ingredients']) && isset($_POST['preparation'])){
 
   $filter = new Filter ($_POST['recipename'], FILTER_SANITIZE_STRING, $conn);
   $recipename = $filter -> sanitization();
@@ -377,12 +305,15 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
   $filter = new Filter ($_POST['cookingtime'], FILTER_SANITIZE_NUMBER_INT, $conn);
   $cookingtime = $filter -> sanitization();
 
+  $filter = new Filter ($_POST['ingredients'], FILTER_SANITIZE_STRING, $conn);
+  $ingredients = $filter -> sanitization();
+
   $category = $_POST['category']; 
   $recipeImage = $_FILES["recipeImage"];  
 
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
 
-  if ($recipename == "" || $preparation == "") {
+  if ($recipename == "" || $preparation == "" || $ingredients == "") {
   //Message if the variable is null.
       $_SESSION['message'] = '¡Falta nombre de la receta o la preparación!';
       $_SESSION['message_alert'] = "danger";
@@ -427,43 +358,12 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
       
       $categoryid = $row["categoryid"];
 
-      $stmt = $conn -> prepare("INSERT INTO recipe (recipename, categoryid, preparation, cookingtime, username) VALUES (?, ?, ?, ?, ?);");
-      $stmt->bind_param ("sisis", $recipename, $categoryid, $preparation, $cookingtime, $_SESSION['username']);
-
-      $stmt -> execute();
-      $stmt -> close();
-
-      $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipename' AND username = '" . $_SESSION['username'] . "';";
-      $row = $conn -> query($sql) -> fetch_assoc();
-      $recipeId = $row['recipeid'];
-
-      $sql = "SELECT rh.unit, rh.quantity, i.id, rh.detail FROM reholder rh JOIN ingredients i ON i.id = rh.ingredientid WHERE rh.username = '" .  $_SESSION['username'] . "';";   
+      $stmt = $conn -> prepare("INSERT INTO recipe (recipeid, ingredients, preparation, cookingtime, recipename, categoryid, username) VALUES (?, ?, ?, ?, ?, ?, ?);");
+      $stmt->bind_param ("issisis", $recipeId, $ingredients, $preparation, $cookingtime, $recipename, $categoryid, $_SESSION['username']);
       
-      $result = $conn -> query($sql);    
+      if($recipeImage ['name'] == null) {           
 
-      while($row = $result -> fetch_assoc()){
-        $stmt = $conn -> prepare("INSERT INTO recipeinfo (recipeid, quantity, unit, ingredientid, detail) VALUES (?, ?, ?, ?, ?);");
-        $stmt->bind_param ("sssis", $recipeId, $row["quantity"], $row["unit"], $row["id"], $row['detail']);
-
-        $stmt -> execute();
-      }
-
-      $stmt -> close();
-
-      $sql = "DELETE FROM reholder WHERE username = '" . $_SESSION['username'] . "';";
-
-      if($recipeImage ['name'] == null) {     
-      
-      //Verify if the recipe has records in both recipeinfo and recipe tables.
-      $sql2 = "SELECT max(recipeid) as `lastid` FROM recipe;";
-      $row = $conn -> query($sql2) -> fetch_assoc();
-      $id = $row["lastid"];
-
-      $sql3 = "SELECT recipeid FROM recipeinfo WHERE recipeid = '$id';";
-      $result = $conn->query($sql3);
-      $num_rows = $result -> num_rows;
-
-         if($conn->query($sql) && $num_rows > 0){
+         if($stmt -> execute()){
             //Success message.
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
             $_SESSION['message_alert'] = "success";
@@ -471,19 +371,17 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
           //The page is redirected to the ingredients.php.
             header('Location: /add-recipe');
             } else {
-            //If there is an error, all related registers are deleted
-            $sql = "DELETE FROM recipe WHERE recipeid = '$id';";            
-            $conn->query($sql);            
-
-            //Failure message.
+          //Failure message.
             $_SESSION['message'] = '¡Error al agregar receta!';
             $_SESSION['message_alert'] = "danger";
                 
             //The page is redirected to the ingredients.php.
             header('Location: /add-recipe');
-        }         
+        } 
+        $stmt -> close();        
       }  else {
         $recipeImagesDir = "imgs/recipes/". $_SESSION['username'];
+
         if (!file_exists($recipeImagesDir)) {
             mkdir($recipeImagesDir, 0777, true);
         }
@@ -515,17 +413,8 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
         }      
 
         if ($uploadOk == "") {
-                
-            //Verify if the recipe has records in both recipeinfo and recipe tables.
-            $sql2 = "SELECT max(recipeid) as `lastid` FROM recipe;";
-            $row = $conn -> query($sql2) -> fetch_assoc();
-            $id = $row["lastid"];
 
-            $sql3 = "SELECT recipeid FROM recipeinfo WHERE recipeid = '$id';";
-            $result = $conn->query($sql3);
-            $num_rows = $result -> num_rows;
-
-            if(move_uploaded_file($recipeImage["tmp_name"], $target_file) && $conn->query($sql) && $num_rows > 0){
+            if(move_uploaded_file($recipeImage["tmp_name"], $target_file)){
             //Success message.
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
             $_SESSION['message_alert'] = "success";
@@ -533,10 +422,6 @@ if(isset($_POST['recipename']) && isset($_POST['preparation']) && isset($_FILES[
           //The page is redirected to the ingredients.php.
             header('Location: /add-recipe');
             } else {
-            //If there is an error, all related registers are deleted
-            $sql = "DELETE FROM recipe WHERE recipeid = '$id';";            
-            $conn->query($sql); 
-
             //Failure message.
             $_SESSION['message'] = '¡Error al agregar receta!';
             $_SESSION['message_alert'] = "danger";
