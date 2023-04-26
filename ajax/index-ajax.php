@@ -14,7 +14,7 @@
     $columns = ["r.recipename", "c.category", "r.cookingtime"];
     
     //Table to be querried from the database.
-    $table = "recipe r JOIN categories c ON r.categoryid = c.categoryid LEFT JOIN recipeinfo ri ON r.recipeid = ri.recipeid";
+    $table = "recipe r JOIN categories c ON r.categoryid = c.categoryid";
 
     //If the variable search is set it's received, else it's null. 
     $filter = new Filter ($_POST["search"], FILTER_SANITIZE_STRING, $conn);
