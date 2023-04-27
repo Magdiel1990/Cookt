@@ -49,7 +49,6 @@ if(isset($_POST["category"])) {
     $row = $conn -> query($sql) -> fetch_assoc();
     $categoryId = $row['categoryid'];
 
-
     $sql = "SELECT recipename FROM recipe WHERE categoryid = '$categoryId'
     AND username = '" . $_SESSION['username'] . "' ORDER BY rand() LIMIT 1;";
     
@@ -62,16 +61,9 @@ if(isset($_POST["category"])) {
         $row = $result -> fetch_assoc();
         $recipename= $row['recipename'];
 
-        $sql = "SELECT DISTINCT
-                r.cookingtime,
-                concat_ws(' ', ri.quantity, ri.unit, 'de' , i.ingredient) as indications,
-                r.preparation 
-                from recipe r 
-                join recipeinfo ri 
-                on ri.recipeid = r.recipeid
-                join ingredients i 
-                on i.id = ri.ingredientid
-                WHERE r.recipename = '$recipename' AND r.username = '" . $_SESSION['username'] . "'";
+        $sql = "SELECT DISTINCT cookingtime
+                FROM recipe  
+                WHERE recipename = '$recipename' AND username = '" . $_SESSION['username'] . "'";
         
         $row = $conn -> query($sql) -> fetch_assoc();
         $cookingtime = $row['cookingtime'];       
