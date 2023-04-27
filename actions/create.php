@@ -361,30 +361,21 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
       $stmt = $conn -> prepare("INSERT INTO recipe (recipeid, ingredients, preparation, cookingtime, recipename, categoryid, username) VALUES (?, ?, ?, ?, ?, ?, ?);");
       $stmt->bind_param ("issisis", $recipeId, $ingredients, $preparation, $cookingtime, $recipename, $categoryid, $_SESSION['username']);
       
-      if($recipeImage ['name'] == null) {           
+      $stmt -> execute();
+      $stmt -> close(); 
 
-         if($stmt -> execute()){
-            //Success message.
-            $_SESSION['message'] = '¡Receta agregada exitosamente!';
-            $_SESSION['message_alert'] = "success";
+        if($recipeImage ['name'] == null) {           
+       //Success message.
+        $_SESSION['message'] = '¡Receta agregada exitosamente!';
+        $_SESSION['message_alert'] = "success";
 
-          //The page is redirected to the ingredients.php.
-            header('Location: /add-recipe');
-            } else {
-          //Failure message.
-            $_SESSION['message'] = '¡Error al agregar receta!';
-            $_SESSION['message_alert'] = "danger";
-                
-            //The page is redirected to the ingredients.php.
-            header('Location: /add-recipe');
-        } 
-        $stmt -> close();        
-      }  else {
+        header('Location: /add-recipe');
+        } else {
         $recipeImagesDir = "imgs/recipes/". $_SESSION['username'];
 
-        if (!file_exists($recipeImagesDir)) {
-            mkdir($recipeImagesDir, 0777, true);
-        }
+          if (!file_exists($recipeImagesDir)) {
+              mkdir($recipeImagesDir, 0777, true);
+          }
 
         $fileExtension = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
         $target_file = $recipeImagesDir ."/".  $recipename . "." . $fileExtension;
