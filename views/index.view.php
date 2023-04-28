@@ -1,26 +1,26 @@
 <?php
-//Head of the page.
+//Head
 require_once ("views/partials/head.php");
 
-//Navigation panel of the page
+//Nav
 require_once ("views/partials/nav.php");
-
 ?>
 
 <main class="container py-4">
 <?php
-//Messages that are shown in the index page
+//Messages
     if(isset($_SESSION['message'])){
     $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
     echo $message -> buttonMessage();         
 
-//Unsetting the messages variables so the message fades after refreshing the page.
+//Unsetting the messages
     unset($_SESSION['message_alert'], $_SESSION['message']);
     }
 ?>
+
+<!--Form for filtering the recipes-->
     <div class="row mt-2 text-center justify-content-center">
         <h3>Recetas</h3>
-<!--Form for filtering the database info-->
         <div class="col-auto">
             <div class="input-group mb-3">
                 <label for="search" class="input-group-text">Buscar: </label>
@@ -28,6 +28,7 @@ require_once ("views/partials/nav.php");
             </div>
         </div>
     </div>
+<!-- Table to show the recipes-->
     <div class="table-responsive-md mt-2">
         <table class="table table-bordered table-sm">
             <thead>
@@ -43,6 +44,7 @@ require_once ("views/partials/nav.php");
         </table>
     </div>
 </main>
+<!-- Ajax script-->
 <script>
 getData();
 
@@ -51,6 +53,7 @@ document.getElementById("search").addEventListener("keyup", function() {
         getData()
 }, false)
 
+//Function for getting the data
 function getData(){
     let content = document.getElementById("content")
     let input = document.getElementById("search").value
@@ -69,6 +72,6 @@ function getData(){
 }
 </script>
 <?php
-//Footer of the page.
+//Footer.
 require_once ("views/partials/footer.php");
 ?>
