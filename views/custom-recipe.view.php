@@ -105,7 +105,7 @@ require_once ("views/partials/nav.php");
                     }                    
                 }
                  
-                if(isset($recipes)) {
+                if(isset($recipes) && count($recipes) != 0) {
                     $countRecipe = count($recipes);
                     $html = "";
                     $html .= "<div class='suggestion_container'>";
