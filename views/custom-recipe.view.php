@@ -57,7 +57,7 @@ require_once ("views/partials/nav.php");
         $sql = "SELECT i.ingredient, ih.ingredientid FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "';";
 
         $result = $conn -> query($sql);
-        
+
         if($result -> num_rows == 0){
             echo "<p class='text-center'>Agregue los ingredientes para conseguir recetas...</p>";
 
@@ -70,7 +70,7 @@ require_once ("views/partials/nav.php");
                 $html .= ucfirst($row["ingredient"]);
                 $html .= "</a>";
                 $html .= "</li>";
-                $ingArray[] = $row["ingredientid"];
+                $ingArray[] = $row["ingredient"];
             }
             $html .= "</ol>";
             $html .= "</div>";                   
@@ -83,39 +83,42 @@ require_once ("views/partials/nav.php");
         <div class="col-auto">
         <?php
         if(isset($ingArray)){
-        $where = "WHERE ";
+        
+        $arrayCount = count($ingArray);
 
-        $count = count($ingArray);
-        for($i=0; $i<$count; $i++){
-            $where .= "ingredientid = '". $ingArray[$i] . "' OR ";
-        }
-
-        //The final where delection.
-        $where = substr_replace($where, "", -4);
-
-        $where .= " AND username = '" . $_SESSION['username'] . "'";
-    
-        $sql = "SELECT DISTINCT r.recipename FROM recipeinfo ri JOIN  recipe r ON r.recipeid = ri.recipeid " . $where  . " ORDER BY RAND();";
+        $sql = "SELECT recipename, ingredients FROM recipe WHERE username = '" . $_SESSION['username'] . "'";
         $result = $conn -> query($sql);
 
-        $html = "";
+        $recipes = [];
+            if($result -> num_rows != 0){
+                while ($row = $result -> fetch_assoc()) {
+                    $ingredients = $row["ingredients"]; 
+                                                         
+                    for($i = 0; $i < $arrayCount; $i++){                    
+                        if(stripos($ingredients, $ingArray[$i])){                            
 
-            if($result -> num_rows > 0){
-                $html .= "<div class='suggestion_container'>";
-                $html .= "<ul>";
-                while($row = $result -> fetch_assoc()) {            
-                    $html .= "<li><a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['REQUEST_URI'])) . "&ingredients=" . base64_encode(serialize($ingArray)) ."' title='receta'>" . $row['recipename'] . "</a></li>";
-                } 
-                $html .= "</ul>";
-                $html .= "</div>";
-                echo $html;
-            } else {
-                $html .= "<p class='text-center'>Ninguna receta disponible!";
-                $html .= "<a class='btn btn-secondary' href='/custom'>Regresar</a>";
-                $html .= "</p>";
-
-                echo $html;
-            }
+                            if(!in_array($row["recipename"], $recipes)){
+                                $recipes[] = $row["recipename"];
+                            }    
+                        }             
+                    }                    
+                }
+                 
+                if(isset($recipes)) {
+                    $countRecipe = count($recipes);
+                    $html = "";
+                    $html .= "<div class='suggestion_container'>";
+                    $html .= "<ul>";
+                    for($i = 0; $i < $countRecipe; $i++){                    
+                        $html .= "<li><a href='/recipes?recipe=" . $recipes[$i] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['REQUEST_URI'])). "' title='receta'>" . $recipes[$i] . "</a></li>";         
+                    }
+                    $html .= "</ul>";
+                    $html .= "</div>";
+                    echo $html;
+                } else {
+                    echo "<h4 class='mt-5 text-center'>Ninguna receta disponible...</h4>";
+                }             
+            } 
         }
         ?>
         </div>

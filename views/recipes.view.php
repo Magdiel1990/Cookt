@@ -5,6 +5,17 @@ require_once ("views/partials/head.php");
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
 
+
+
+
+
+//Editar parametros
+
+
+
+
+
+
 if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
     $recipe = $_GET["recipe"];
     $username = $_GET["username"];
