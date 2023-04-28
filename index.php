@@ -34,7 +34,23 @@ if($param == "") {
 }
 
 if(array_key_exists($uri, $routes)) {
-    require $routes[$uri];
+    if($routes[$uri] == "controllers/recipes.controller.php") {    
+    $paramArray = explode("&", $param);
+
+        if(count($paramArray)!=2){
+            http_response_code(404);
+            require "views/error_pages/404.php";
+        } else {
+            if(strpos($param, "&username=") !== false && strpos($param, "recipe=") !== false){
+                require $routes[$uri];
+            } else {
+                http_response_code(404);
+                require "views/error_pages/404.php";
+            }
+        }
+    } else {
+        require $routes[$uri];
+    }
 } else {
     http_response_code(404);
     require "views/error_pages/404.php";

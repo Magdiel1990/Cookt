@@ -5,6 +5,8 @@ require_once ("views/partials/head.php");
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
 
+$_SESSION["location"] = $_SERVER["REQUEST_URI"];
+
 if(isset($_GET["username"])){
     $username = $_GET["username"];
 }
@@ -77,7 +79,7 @@ $result = $conn -> query($sql);
             <?php
                 while($row = $result -> fetch_assoc()){
                     $html = "<li>"; 
-                    $html .= "<a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $username . "&path=" . base64_encode(serialize($_SERVER['REQUEST_URI'])) . "'>"; 
+                    $html .= "<a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $username . "'>"; 
                     $html .= $row['recipename'];
                     $html .= "</a>"; 
                     $html .= "</li>"; 

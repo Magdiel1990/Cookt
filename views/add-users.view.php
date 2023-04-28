@@ -12,7 +12,7 @@ if($_SESSION['type'] != 'Admin') {
 }
 
 //Current location in order to come back 
-$_SESSION["location"] = "/user";
+$_SESSION["location"] = $_SERVER["REQUEST_URI"];
 ?>
 
 <main class="container p-4">

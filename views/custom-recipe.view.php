@@ -98,7 +98,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                     $ingredients = $row["ingredients"]; 
                                                          
                     for($i = 0; $i < $arrayCount; $i++){                    
-                        if(stripos($ingredients, $ingArray[$i])){                            
+                        if(stripos($ingredients, $ingArray[$i]) !== false){                            
 
                             if(!in_array($row["recipename"], $recipes)){
                                 $recipes[] = $row["recipename"];

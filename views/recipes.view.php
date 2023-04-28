@@ -16,9 +16,13 @@ require_once ("views/partials/nav.php");
 
 
 
-if(isset($_GET["recipe"]) && isset($_GET["username"])){
+if(isset($_GET["recipe"]) && isset($_GET["username"])){  
     $recipe = $_GET["recipe"];
-    $username = $_GET["username"];   
+    $username = $_GET["username"];  
+    
+    if($_SESSION["location"] == "/user-recipes") {
+        $_SESSION["location"] = "/user-recipes?username=" . $username;
+    }
 
     $imageDir = "imgs/recipes/" . $username . "/";
 
