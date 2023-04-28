@@ -26,10 +26,9 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
 <!--Form for choosing the ingredients-->
         <h3>Elegir por Ingrediente</h3>
         <form class="m-3 col-auto" method="POST" action="/create">
-
+<!-- List of ingredients -->
            <div class="input-group">
                 <label class="input-group-text" for="customingredient">Ingredientes: </label>
-<!--  -->                
                 <?php
                 $num_rows = new IngredientList("ingholder", "ingredients", "ingredient", $_SESSION['username']);
                 $num_rows = $num_rows -> ingQuantity();
@@ -43,7 +42,8 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                     ?>
                 </select> 
                 <input class="btn btn-primary" type="submit" value="Agregar"> 
-                <?php 
+                <?php
+//If there is no ingredient added                
                 } else {
                 ?>
                 <a class="btn btn-primary" href="/ingredients">Agregar</a>
@@ -56,6 +56,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
     <div class="row mt-4">
         <div class="col-auto">
         <?php
+//List of chosen ingredients 
         $sql = "SELECT i.ingredient, ih.ingredientid FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "';";
 
         $result = $conn -> query($sql);
@@ -72,6 +73,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                 $html .= ucfirst($row["ingredient"]);
                 $html .= "</a>";
                 $html .= "</li>";
+//Ingredients are added into an array                
                 $ingArray[] = $row["ingredient"];
             }
             $html .= "</ol>";
@@ -84,29 +86,33 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
             
         <div class="col-auto">
         <?php
+//Array containing the chosen recipes        
         if(isset($ingArray)){
         
         $arrayCount = count($ingArray);
-
+//Recipes of the user
         $sql = "SELECT recipename, ingredients FROM recipe WHERE username = '" . $_SESSION['username'] . "'";
         $result = $conn -> query($sql);
         
             if($result -> num_rows != 0){
+//Array to save the recipes that have the ingredients
                 $recipes = [];
 
                 while ($row = $result -> fetch_assoc()) {
+//Users recipes
                     $ingredients = $row["ingredients"]; 
                                                          
-                    for($i = 0; $i < $arrayCount; $i++){                    
-                        if(stripos($ingredients, $ingArray[$i]) !== false){                            
-
+                    for($i = 0; $i < $arrayCount; $i++){      
+//Checking if the ingredient is in the recipe              
+                        if(stripos($ingredients, $ingArray[$i]) !== false){
+//Checking if the recipe has already been added in the array                                                   
                             if(!in_array($row["recipename"], $recipes)){
                                 $recipes[] = $row["recipename"];
                             }    
                         }             
                     }                    
                 }
-                 
+//Recipes containing the ingredients                 
                 if(isset($recipes) && count($recipes) != 0) {
                     $countRecipe = count($recipes);
                     $html = "";
@@ -118,6 +124,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                     $html .= "</ul>";
                     $html .= "</div>";
                     echo $html;
+//If there is no match                  
                 } else {
                     echo "<h4 class='mt-5 text-center'>Ninguna receta disponible...</h4>";
                 }             
@@ -129,7 +136,9 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
 </main>
 
 <?php
+//Exiting connection
 $conn -> close();
-//Footer of the page.
+
+//Footer
 require_once ("views/partials/footer.php");
 ?>
