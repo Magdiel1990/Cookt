@@ -88,9 +88,10 @@ require_once ("views/partials/nav.php");
 
         $sql = "SELECT recipename, ingredients FROM recipe WHERE username = '" . $_SESSION['username'] . "'";
         $result = $conn -> query($sql);
-
-        $recipes = [];
+        
             if($result -> num_rows != 0){
+                $recipes = [];
+
                 while ($row = $result -> fetch_assoc()) {
                     $ingredients = $row["ingredients"]; 
                                                          
