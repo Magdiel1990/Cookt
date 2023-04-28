@@ -1,17 +1,19 @@
 <?php
-//Head of the page.
+//Head
 require_once ("views/partials/head.php");
 
-//Navigation panel of the page
+//Nav
 require_once ("views/partials/nav.php");
 
+//Page location to come back
 $_SESSION["location"] = $_SERVER["REQUEST_URI"];
 
+//Last chosen category stored to be the first of the list
 if(isset($_POST["category"])) {
     $_SESSION['categoryName'] = $_POST["category"];
 }
 ?>
-
+<!-- Form to choose the category for the recipe suggestion-->
 <main class="container p-4">
     <div class="row mt-2 text-center justify-content-center">
         <h3>Sugerencias</h3>
@@ -44,21 +46,25 @@ if(isset($_POST["category"])) {
     </div>
 
     <?php
+//If a category is chosen
     if(isset($_POST["category"])) {
     $category = $_POST["category"];
 
+//category id
     $sql = "SELECT categoryid FROM categories WHERE category='$category';"; 
     $row = $conn -> query($sql) -> fetch_assoc();
     $categoryId = $row['categoryid'];
 
+//Random recipe for that category
     $sql = "SELECT recipename FROM recipe WHERE categoryid = '$categoryId'
     AND username = '" . $_SESSION['username'] . "' ORDER BY rand() LIMIT 1;";
     
     $result = $conn -> query($sql);
     $num_rows = $result -> num_rows;
-
+//If there is no recipe
         if($num_rows == 0){
             echo "<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>";
+//If there is       
         } else {
         $row = $result -> fetch_assoc();
         $recipename= $row['recipename'];
@@ -74,6 +80,7 @@ if(isset($_POST["category"])) {
         <a class="text-center d-block recipe_link" href='/recipes?recipe=<?php echo $recipename;?>&username=<?php echo $_SESSION['username'];?>'>
             <p class="text-info"> <?php echo $recipename . " (" . $cookingtime . " minutos)"; ?> </p>
             <?php
+//Recipe image            
             $imageDir = "imgs/recipes/" .  $_SESSION['username'] . "/";
 
             $files = new Directories($imageDir, $recipename);
@@ -93,7 +100,9 @@ if(isset($_POST["category"])) {
 ?>
 </main>
 <?php
+//Exiting connection
 $conn -> close();
-//Footer of the page.
+
+//Footer
 require_once ("views/partials/footer.php");
 ?>
