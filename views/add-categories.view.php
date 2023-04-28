@@ -90,6 +90,7 @@ require_once ("views/partials/nav.php");
 <?php
 //Close db connection
 $conn -> close();
+
 //Footer
 require_once ("views/partials/footer.php");
 ?>

@@ -128,11 +128,11 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                             $state = $row['state'];
                             $userid = $row['userid'];
 
-                            //Recipes of each user
+//Recipes of each user
                             $sql = "SELECT count(recipeid) as `count` FROM recipe WHERE username = '$username';";
                             $row = $conn -> query($sql) -> fetch_assoc();   
                             $recipeCount = $row ['count'];
-                            
+//Active users are colored green and inactive, gray                            
                             if($state == 1) {
                                 $state = "activo";
                                 $color = "rgb(22, 182, 4)";
@@ -140,18 +140,20 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                                 $state = "inactivo";
                                 $color = "#aaa";
                             }
-
+//If the user is Admin and is logged in, delete and edit options are unavailable
                             if($type == "Admin" && $username == $_SESSION['username']) {
                                 $display = "style = 'display: none;'";
                                 $display_2 = "";
+//If the user is Admin, only edit option is available for other Admin users                               
                             } else if ($type == "Admin"){
                                 $display = ""; 
                                 $display_2 = "style = 'display: none;'";
+//If the user is not Admin, all options are available   
                             } else {
                                 $display = "";
                                 $display_2 = "";
                             }
-
+//The logged-in user can't clicked to see his recipe from the user section
                             if($username == $_SESSION['username']) {
                                 $recipeList = "";
                             } else {
@@ -186,6 +188,6 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
 //Exiting connection
 $conn -> close();
 
-//Footer of the page.
+//Footer.
 require_once ("views/partials/footer.php");
 ?>
