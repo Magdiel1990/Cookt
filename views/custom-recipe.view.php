@@ -5,6 +5,8 @@ require_once ("views/partials/head.php");
 //Nav
 require_once ("views/partials/nav.php");
 
+$_SESSION["location"] = $_SERVER["REQUEST_URI"];
+
 ?>
 
 <main class="container p-4">
@@ -111,7 +113,7 @@ require_once ("views/partials/nav.php");
                     $html .= "<div class='suggestion_container'>";
                     $html .= "<ul>";
                     for($i = 0; $i < $countRecipe; $i++){                    
-                        $html .= "<li><a href='/recipes?recipe=" . $recipes[$i] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize($_SERVER['REQUEST_URI'])). "' title='receta'>" . $recipes[$i] . "</a></li>";         
+                        $html .= "<li><a href='/recipes?recipe=" . $recipes[$i] . "&username=" . $_SESSION['username'] . "' title='receta'>" . $recipes[$i] . "</a></li>";         
                     }
                     $html .= "</ul>";
                     $html .= "</div>";

@@ -16,22 +16,9 @@ require_once ("views/partials/nav.php");
 
 
 
-if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
+if(isset($_GET["recipe"]) && isset($_GET["username"])){
     $recipe = $_GET["recipe"];
-    $username = $_GET["username"];
-    $path = $_GET["path"];
-    $decodedPath = unserialize(base64_decode($path));
-
-    if($decodedPath == "index"){
-        $pathToReturn = "/";        
-    } else if (isset($_GET["ingredients"])) {
-        $ingArray = $_GET["ingredients"];
-        $pathToReturn = $decodedPath . "?ingredients=". $ingArray ."&username=" . $username;
-    } else if ($decodedPath == "/custom" || $decodedPath == "/random" || $decodedPath == "/user"){
-        $pathToReturn = $decodedPath . "?username=" . $username;
-    } else {
-        $pathToReturn = "/";
-    }
+    $username = $_GET["username"];   
 
     $imageDir = "imgs/recipes/" . $username . "/";
 
@@ -60,9 +47,15 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
 
     $category = $row["category"];
     $ingredients = $row["ingredients"];
+
+    $arrayIngredients = explode(";", $ingredients);
+
     $recipeName = $row["recipename"];
     $cookingTime = $row["cookingtime"];
     $preparation = $row["preparation"];
+
+    $preparation = str_replace('rn', '', $preparation);
+
     $day = $date = date ("d", strtotime($row["created_at"]));     
     $month = date ("M", strtotime($row["created_at"]));
 
@@ -94,7 +87,16 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
                         <div class="text-center">
                             <img src="<?php echo $recipeImageDir;?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
                         </div> 
-                        <div class="pt-4"><?php echo $ingredients; ?> </div>
+                        <div class="pt-4">                           
+                        <?php 
+                            $html = "<ul>";
+                            for($i = 0; $i<count($arrayIngredients); $i++){
+                                $html .= "<li>" . $arrayIngredients[$i] . "</li>";
+                            }
+                            $html .= "</ul>";
+                            echo $html;                         
+                        ?> 
+                        </div>
                         <?php
                             if(file_exists($recipeImageDir)) {
                         ?>                         
@@ -110,7 +112,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_GET["path"])){
                         <a class="btn btn-primary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Preparación
                         </a>
-                        <a class="btn btn-secondary" href="<?php echo $pathToReturn;?>">Regresar</a>
+                        <a class="btn btn-secondary" href="<?php echo  $_SESSION["location"];?>">Regresar</a>
                     </div>
                     <div class="py-4">
                         <div class="collapse bg-form" id="collapse">

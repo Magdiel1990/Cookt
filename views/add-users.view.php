@@ -155,7 +155,7 @@ $_SESSION["location"] = "/user";
                             if($username == $_SESSION['username']) {
                                 $recipeList = "";
                             } else {
-                                $recipeList = "href='/cookt/user/recipes?username=" . $username . "'";
+                                $recipeList = "href='recipes?username=" . $username . "'";
                             }
                             
                             $html = "<tr>";                        

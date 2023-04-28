@@ -4,6 +4,8 @@
     
     session_start();
 
+    $_SESSION["location"] = "/";
+
     //Models.
     require_once ("../models/models.php");
 
@@ -51,7 +53,7 @@
     if($num_rows > 0) {
         while($row = $result->fetch_assoc()){
             $output['data'] .= "<tr>";            
-            $output['data'] .= "<td><a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "&path=" . base64_encode(serialize("index")) . "' title='receta'>" . $row['recipename'] . "</a></td>";
+            $output['data'] .= "<td><a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta'>" . $row['recipename'] . "</a></td>";
             $output['data'] .= "<td>" . $row['cookingtime'] . " min</td>";
             $output['data'] .= "<td>" .ucfirst($row['category']). "</td>";            
             $output['data'] .= "<td>";

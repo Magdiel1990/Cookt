@@ -5,6 +5,8 @@ require_once ("views/partials/head.php");
 //Navigation panel of the page
 require_once ("views/partials/nav.php");
 
+$_SESSION["location"] = $_SERVER["REQUEST_URI"];
+
 if(isset($_POST["category"])) {
     $_SESSION['categoryName'] = $_POST["category"];
 }
@@ -69,7 +71,7 @@ if(isset($_POST["category"])) {
         $cookingtime = $row['cookingtime'];       
     ?>
     <div class="my-4">
-        <a class="text-center d-block recipe_link" href='/recipes?recipe=<?php echo $recipename;?>&username=<?php echo $_SESSION['username'];?>&path=<?php echo base64_encode(serialize("/random"));?>'>
+        <a class="text-center d-block recipe_link" href='/recipes?recipe=<?php echo $recipename;?>&username=<?php echo $_SESSION['username'];?>'>
             <p class="text-info"> <?php echo $recipename . " (" . $cookingtime . " minutos)"; ?> </p>
             <?php
             $imageDir = "imgs/recipes/" .  $_SESSION['username'] . "/";
