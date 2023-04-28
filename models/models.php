@@ -80,7 +80,7 @@ class Directories {
                         $ext = pathinfo($path, PATHINFO_EXTENSION); 
                     } 
                 } else {
-                    $ext = "jpg";
+                    $ext = "unk";
                 }
             }
             closedir($dir_handle);

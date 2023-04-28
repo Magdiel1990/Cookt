@@ -1,14 +1,15 @@
 <?php
-//Head of the page.
+//Head
 require_once ("views/partials/head.php");
 
-//Navigation panel of the page
+//Nav
 require_once ("views/partials/nav.php");
 
+//Page location to come back
 $_SESSION["location"] = "/profile";
 
+//Users data
 $sql = "SELECT * FROM users WHERE userid = '". $_SESSION['userid']."';";
-
 $row = $conn -> query($sql) -> fetch_assoc();
 
 $userName = $row["username"];
@@ -23,26 +24,29 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
 
 <main class="container p-4">
 <?php
-    //Messages that are shown in the add_units page
+//Messages
     if(isset($_SESSION['message'])){
         $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
         echo $message -> buttonMessage();           
 
-        //Unsetting the messages variables so the message fades after refreshing the page.
+//Unsetting the messages
         unset($_SESSION['message_alert'], $_SESSION['message']);
     } 
-        
+//Users images directory        
     $img_dir = "imgs/users/";
-    
+
+//Object of the users images
     $files = new Directories($img_dir, $_SESSION['username']);
     $imgProfileDir = $files -> directoryProfiles();
 
-    if(pathinfo($imgProfileDir, PATHINFO_EXTENSION) == ""){
+//If the file doesn't exist the default photo is shown
+    if(pathinfo($imgProfileDir, PATHINFO_EXTENSION) == "unk"){
         $path = "src = 'imgs/unknown/unknown_user.png'";
     } else {
          $path = "src = '" . $imgProfileDir . "'";
     }
-?>  
+?>
+<!-- Profile info-->  
     <h3 class="text-center">Perfil</h3>
     <div class="row my-3 justify-content-center align-items-center">        
         <div class="col-xl-5 col-lg-6 col-md-7 col-sm-9">
@@ -57,6 +61,7 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
                     <h4><span>Email: </span><?php echo $email;?></h4>
                     <h4><span>Suscripción: </span><?php echo $date;?></h4>
                 </div>
+<!-- Delete and edit buttons--> 
                 <div class="text-center">
                     <a class="btn btn-danger" href="/delete?userid=<?php echo $_SESSION['userid'];?>&type=<?php echo base64_encode(serialize($_SESSION['type']))?>">Eliminar cuenta</a>
                     <a class="btn btn-primary" href="/edit?userid=<?php echo $_SESSION['userid'];?>">Editar</a>
@@ -66,7 +71,9 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
     </div>
  </main>
 <?php
+//Exiting connection
 $conn -> close();
-//Footer of the page.
+
+//Footer
 require_once ("views/partials/footer.php");
 ?>
