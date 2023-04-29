@@ -1,7 +1,11 @@
 <?php
+//Path requested
 $uri = parse_url($_SERVER["REQUEST_URI"])['path']; 
+
+//Parameters coming with that path
 $param = isset(parse_url($_SERVER["REQUEST_URI"])['query']) ? parse_url($_SERVER["REQUEST_URI"])['query'] : "";
 
+//No parameters
 if($param == "") {
     $routes = [
     "/" => "controllers/index.controller.php",    
@@ -20,6 +24,7 @@ if($param == "") {
     "/recovery" => "controllers/recovery.controller.php",
     "/error404" => "controllers/404.controller.php"
     ];
+//It comes with parameters
 } else {
     $routes = [
     "/recipes" => "controllers/recipes.controller.php",
@@ -33,13 +38,17 @@ if($param == "") {
     ];
 }
 
+//If the uri exists the controllers is called
 if(array_key_exists($uri, $routes)) {
-    if($routes[$uri] == "controllers/recipes.controller.php") {    
+//If the recipes page is called, the parameters are stored in an array
+    if($routes[$uri] == "controllers/recipes.controller.php") {      
     $paramArray = explode("&", $param);
 
+//If there are not two parameters an error is sent
         if(count($paramArray)!=2){
             http_response_code(404);
             require "views/error_pages/404.php";
+//If there are two parameters and are not username nor recipe an error is sent        
         } else {
             if(strpos($param, "&username=") !== false && strpos($param, "recipe=") !== false){
                 require $routes[$uri];
@@ -48,9 +57,11 @@ if(array_key_exists($uri, $routes)) {
                 require "views/error_pages/404.php";
             }
         }
+//Any other page is called directly
     } else {
         require $routes[$uri];
     }
+//If the path does not exist an error is sent
 } else {
     http_response_code(404);
     require "views/error_pages/404.php";
