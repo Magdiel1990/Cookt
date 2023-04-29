@@ -50,7 +50,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 //Title of the pages
-$header = new PageHeaders($_SERVER["REQUEST_URI"]);
+$header = new PageHeaders($_SERVER["REDIRECT_URL"]);
 $header = $header -> pageHeader();
 
 ?>

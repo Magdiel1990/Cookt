@@ -246,7 +246,7 @@ class PageHeaders {
         "/recovery" => "Recuperación",  
         "/recipes" => "Recetas",
         "/edit" => "Editar",
-        "/user-recipes" => "Recetas"
+        "/user-recipes" => "Datos Generales"
         ];
 
         if(array_key_exists($this -> uri, $headerList)) {
@@ -394,6 +394,12 @@ class Units {
         $num_rows = $result -> num_rows;
         return $num_rows;
     }   
+}
+
+function Server(){
+    echo "<pre>";
+    var_dump($_SERVER);
+    echo "</pre>";
 }
 /*class User {
 public $firstname;
