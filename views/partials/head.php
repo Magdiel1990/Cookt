@@ -37,7 +37,7 @@ if (!isset($_SESSION['username'])) {
 //Start the session.
         session_start();
 //Last page visited
-        $_SESSION['lastpage'] = $_SERVER['REQUEST_URI'];
+        $_SESSION['location'] = $_SERVER['REQUEST_URI'];
 
 //Reasign the user that was logged out.
         $_SESSION['username'] = $username;
@@ -52,6 +52,7 @@ if (!isset($_SESSION['username'])) {
 //Title of the pages
 $header = new PageHeaders($_SERVER["REQUEST_URI"]);
 $header = $header -> pageHeader();
+
 ?>
 <!DOCTYPE html>
 <html lang="es" data-lt-installed="true">

@@ -28,11 +28,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             
 //When a new user logs in, the index page is always the first page to load.
             if($_SESSION['username'] != $row['username']) {
-                unset($_SESSION['lastpage']);
+                unset($_SESSION['location']);
             }
 
-            if(!isset($_SESSION['lastpage'])){
-                $_SESSION['lastpage'] = "/";
+            if(!isset($_SESSION['location'])){
+                $_SESSION['location'] = "/";
             }
 
 //Cookie creation      
@@ -67,7 +67,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                        
             $conn -> query($sql);
             
-            header("Location: ". $_SESSION['lastpage']);
+            header("Location: ". $_SESSION['location']);
 
            
         } else {

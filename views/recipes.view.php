@@ -1,17 +1,24 @@
 <?php
+//Head
+    require_once ("views/partials/head.php");
+    
+//Nav
+    require_once ("views/partials/nav.php");
 
-
-
+//Recipe and username    
 if(isset($_GET["recipe"]) && isset($_GET["username"])){  
     $recipe = $_GET["recipe"];
     $username = $_GET["username"];  
-    
+
+//If the page requesting the recipes is user-recipes, return the parameter username too    
     if($_SESSION["location"] == "/user-recipes") {
         $_SESSION["location"] = "/user-recipes?username=" . $username;
     }
 
+//Recipe image directory
     $imageDir = "imgs/recipes/" . $username . "/";
 
+//Recipe image file    
     $files = new Directories($imageDir, $recipe);
     $recipeImageDir = $files -> directoryFiles();
     
@@ -38,36 +45,34 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     $category = $row["category"];
     $ingredients = $row["ingredients"];
 
+//Split the ingredients separated by semicolon
     $arrayIngredients = explode(";", $ingredients);
 
     $recipeName = $row["recipename"];
     $cookingTime = $row["cookingtime"];
     $preparation = $row["preparation"];
 
+//Replace the rn (salto de línea) by ""
     $preparation = str_replace('rn', '', $preparation);
 
+//Day, month and year of the day the recipe was added
     $day = $date = date ("d", strtotime($row["created_at"]));     
     $month = date ("M", strtotime($row["created_at"]));
-
-    //Function to convert to spanish months
-    $timeConvertor = new TimeConvertor ($month);
-    $spanishMonth = $timeConvertor -> spanishMonth();  
-
     $year = $date = date ("Y", strtotime($row["created_at"]));
 
+//Object to convert to spanish months
+    $timeConvertor = new TimeConvertor ($month);
+    $spanishMonth = $timeConvertor -> spanishMonth();     
+
+//Date format
     $date = $day . "/" . $spanishMonth . "/" .  $year;
 
+//Category images location
     $categoryDir = "imgs/categories/";
 
-    //Function to get the image directory from the category
+//Object to get the image directory from the category
     $files = new Directories($categoryDir , $category);
     $categoryImgDir = $files -> directoryFiles();
-
-//Head
-    require_once ("views/partials/head.php");
-
-//Nav
-    require_once ("views/partials/nav.php");
 ?>
 <main class="container mt-4">
     <div class="my-5" style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">
@@ -85,6 +90,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
                         </div> 
                         <div class="pt-4">                           
                         <?php 
+//Ingredients list                        
                             $html = "<ul>";
                             for($i = 0; $i<count($arrayIngredients); $i++){
                                 $html .= "<li>" . $arrayIngredients[$i] . "</li>";
@@ -93,12 +99,6 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
                             echo $html;                         
                         ?> 
                         </div>
-                        <?php
-                            if(file_exists($recipeImageDir)) {
-                        ?>                         
-                        <?php
-                            }
-                        ?>
                     </div>
                     <hr class="my-3">
                 </div>
@@ -108,7 +108,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
                         <a class="btn btn-primary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Preparación
                         </a>
-                        <a class="btn btn-secondary" href="<?php echo  $_SESSION["location"];?>">Regresar</a>
+                        <a class="btn btn-secondary" href="<?php echo $_SESSION["location"];?>">Regresar</a>
                     </div>
                     <div class="py-4">
                         <div class="collapse bg-form" id="collapse">

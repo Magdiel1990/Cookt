@@ -4,6 +4,8 @@ require_once ("views/partials/head.php");
 
 //Nav
 require_once ("views/partials/nav.php");
+
+$_SESSION["location"] = "/";
 ?>
 
 <main class="container py-4">
