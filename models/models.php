@@ -231,28 +231,39 @@ class PageHeaders {
     }
 
     public function pageHeader(){
-    $headerList = [
-        "/" => "Home",    
-        "/login" => "Login",        
-        "/random" => "Aleatorio",
-        "/custom" => "Personalizado",
-        "/profile" => "Perfil",
-        "/units" => "Unidades",
-        "/ingredients" => "Ingredientes",
-        "/add-recipe" => "Agregar Recetas",
-        "/categories" => "Categorías",
-        "/user" => "Usuarios",
-        "/signup" => "Registrarse",
-        "/recovery" => "Recuperación",  
-        "/recipes" => "Recetas",
-        "/edit" => "Editar",
-        "/user-recipes" => "Datos Generales"
+        $headerList = [
+            "/" => "Home",    
+            "/login" => "Login",        
+            "/random" => "Aleatorio",
+            "/custom" => "Personalizado",
+            "/profile" => "Perfil",
+            "/units" => "Unidades",
+            "/ingredients" => "Ingredientes",
+            "/add-recipe" => "Agregar Recetas",
+            "/categories" => "Categorías",
+            "/user" => "Usuarios",
+            "/signup" => "Registrarse",
+            "/recovery" => "Recuperación",  
+            "/recipes" => "Recetas",
+            "/edit" => "Editar",
+            "/user-recipes" => "Datos Generales"
         ];
 
-        if(array_key_exists($this -> uri, $headerList)) {
-            return $headerList [$this -> uri];
-        } else {
-            return "Error";
+        switch ($this -> uri) {
+            case array_key_exists($this -> uri, $headerList) === true: 
+                return $headerList [$this -> uri];
+                break;
+            case stripos($this -> uri, "/recipes") !== false:
+                return "Recetas";
+                break;
+            case stripos($this -> uri, "/edit") !== false:
+                return "Editar";
+                break;
+            case stripos($this -> uri, "/user-recipes") !== false:
+                return "Datos Generales";
+                break;
+            default: 
+                return "Error";
         }
     }
 }
