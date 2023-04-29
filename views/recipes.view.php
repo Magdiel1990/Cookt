@@ -1,18 +1,4 @@
 <?php
-//Head of the page.
-require_once ("views/partials/head.php");
-
-//Navigation panel of the page
-require_once ("views/partials/nav.php");
-
-
-
-
-
-//Editar parametros
-
-
-
 
 
 
@@ -76,6 +62,12 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     //Function to get the image directory from the category
     $files = new Directories($categoryDir , $category);
     $categoryImgDir = $files -> directoryFiles();
+
+//Head
+    require_once ("views/partials/head.php");
+
+//Nav
+    require_once ("views/partials/nav.php");
 ?>
 <main class="container mt-4">
     <div class="my-5" style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">
@@ -131,14 +123,16 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     </div>
 </main>
 <?php
+//Exiting connection
+    $conn -> close();
+
+//Footer
+    require_once ("views/partials/footer.php");
+
     } else {
         http_response_code(404);
 
         require "views/error_pages/404.php";
     } 
 }
-
-$conn -> close();
-//Footer of the page.
-require_once ("views/partials/footer.php");
 ?>

@@ -23,7 +23,7 @@ if (!isset($_SESSION['username'])) {
     $timeDiff = (strtotime($currentTime) - strtotime($lastTime));
 
 //After 12 min session closes
-    if ($timeDiff >= 12*60) {
+    if ($timeDiff >= 15*60) {
 
 //Save the user that is going to log out.
         $username = $_SESSION['username'];        
@@ -50,9 +50,8 @@ if (!isset($_SESSION['username'])) {
 }
 
 //Title of the pages
-$header = new PageHeaders($_SERVER["REDIRECT_URL"]);
+$header = new PageHeaders($_SERVER["REQUEST_URI"]);
 $header = $header -> pageHeader();
-
 ?>
 <!DOCTYPE html>
 <html lang="es" data-lt-installed="true">

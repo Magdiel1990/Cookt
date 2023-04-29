@@ -19,9 +19,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 //Check the data and if the user is active
     $sql = "SELECT * FROM users WHERE username = '$username' AND `state` = 1;";
     $result = $conn -> query($sql);
-    $num_rows =  $result -> num_rows;    
   
-    if ($num_rows > 0) {
+    if ($result -> num_rows > 0) {
 
         $row = $result -> fetch_assoc();
 //Verify the password       
@@ -49,7 +48,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             $_SESSION['state'] = $row['state'];
 
 //Last login calculation.
-            $_SESSION["last_access"] = date("Y-n-j H:i:s");               
+            $_SESSION["last_access"] = date("Y-m-j H:i:s");        
             
 //Object to determine the title of the user            
             $title = new TitleConvertor($row['sex']);
@@ -63,7 +62,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             if($result -> num_rows == 0) {
                 $sql = "INSERT INTO access (userid) VALUES (" . $_SESSION['userid'] . ");"; 
             } else {
-                $sql = "UPDATE access SET lastlogin = ". $_SESSION["last_access"] ." WHERE userid = " . $_SESSION['userid'] . ";";           
+                $sql = "UPDATE access SET lastlogin = DATE_FORMAT(now(), '%Y-%m-%d %h:%i:%s') WHERE userid = " . $_SESSION['userid'] . ";";           
             }            
                        
             $conn -> query($sql);
