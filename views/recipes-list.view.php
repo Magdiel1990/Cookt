@@ -1,18 +1,21 @@
 <?php
-//Head of the page.
+if(isset($_GET["username"])){
+
+//Head
 require_once ("views/partials/head.php");
 
-//Navigation panel of the page
+//Nav
 require_once ("views/partials/nav.php");
 
+//Page location to come back
 $_SESSION["location"] = $_SERVER["REQUEST_URI"];
 
-if(isset($_GET["username"])){
-    $username = $_GET["username"];
-}
+$username = $_GET["username"];
 
 $sql = "SELECT recipename FROM recipe WHERE username = '$username';";
 $result = $conn -> query($sql);
+
+    if($result -> num_rows > 0) {
 ?>
 
 <main class="container p-4 mt-4">
@@ -104,7 +107,19 @@ $result = $conn -> query($sql);
     </div> 
 </main>
 <?php
-$conn -> close();
-//Footer of the page.
-require_once ("views/partials/footer.php");
+
+    $conn -> close();
+
+    //Footer
+    require_once ("views/partials/footer.php");
+    } else {
+        http_response_code(404);
+
+        require "views/error_pages/404.php";
+    }
+} else {
+    http_response_code(404);
+
+    require "views/error_pages/404.php";
+}
 ?>
