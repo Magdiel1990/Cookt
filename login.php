@@ -53,14 +53,24 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             
 //Object to determine the title of the user            
             $title = new TitleConvertor($row['sex']);
-            $_SESSION['title'] = $title -> title();     
+            $_SESSION['title'] = $title -> title(); 
 
-//Save the last access of the user           
-            $sql = "INSERT INTO access (userid) VALUES (" . $_SESSION['userid'] . ");";            
+//Check if the user has ever logged in
+            $sql = "SELECT id FROM access WHERE userid=" . $_SESSION['userid'] . ";";  
+            $result = $conn -> query($sql);
+
+//Save the last access of the user      
+            if($result -> num_rows == 0) {
+                $sql = "INSERT INTO access (userid) VALUES (" . $_SESSION['userid'] . ");"; 
+            } else {
+                $sql = "UPDATE access SET lastlogin = ". $_SESSION["last_access"] ." WHERE userid = " . $_SESSION['userid'] . ";";           
+            }            
+                       
             $conn -> query($sql);
-
-
+            
             header("Location: ". $_SESSION['lastpage']);
+
+           
         } else {
             $_SESSION['message'] = "¡Usuario o contraseña incorrectos!";
             $_SESSION['message_alert'] = "danger";

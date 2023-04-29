@@ -32,8 +32,7 @@ $result = $conn -> query($sql);
                         <tr class="bg-primary">
                             <th scope="col">Nombre completo</th>                
                             <th scope="col">Tiempo de uso</th>
-                            <th scope="col">Último acceso</th>
-                            <th scope="col">Accesos</th>
+                            <th scope="col">Último acceso</th>                            
                             <th scope="col">Imágenes</th>                 
                         </tr>
                     </thead>
@@ -49,24 +48,22 @@ $result = $conn -> query($sql);
                         date_default_timezone_set("America/Santo_Domingo");        
 
 //Recipes of each user
-                        $sql = "SELECT u.created_at  as `time`, max(a.lastlogin) as `lastlogin`, concat_ws(' ', u.firstname, u.lastname) as `fullname`, count(a.userid) as `quantity` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
+                        $sql = "SELECT u.created_at  as `time`, max(a.lastlogin) as `lastlogin`, concat_ws(' ', u.firstname, u.lastname) as `fullname` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
                         $row = $conn -> query($sql) -> fetch_assoc();   
 //Days using the app                        
                         $time_days = round((strtotime(date("Y-m-d H:i:s")) - strtotime($row ['time'])) / 86400);
                         $fullname = $row ['fullname'];
 //Last time the user accessed                        
                         $lastlogin = date("d-m-Y g:i A", strtotime($row ['lastlogin']));
-                        $accesses = $row ['quantity'];
 //Never logged in
                         if($lastlogin == "") {
-                            $lastlogin = "Ninguno";
+                            $lastlogin = "Nunca";
                         }
 //Data displayed
                         $html = "<tr>";     
                         $html .= "<td>" . $fullname . "</td>";                   
                         $html .= "<td>" . $time_days . " días</td>";
-                        $html .= "<td>" . $lastlogin . "</td>";
-                        $html .= "<td>" . $accesses . "</td>";
+                        $html .= "<td>" . $lastlogin . "</td>";                       
                         $html .= "<td>" . $size . "</td>";
                         $html .= "</tr>";
                         echo $html;
