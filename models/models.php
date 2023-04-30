@@ -75,11 +75,12 @@ class Directories {
             $dir_handle = opendir($this -> directory);
             
             while(($file = readdir($dir_handle)) !== false) {
-            $path = ($this -> directory . '/' . $file);
+            $path = $this -> directory . '/' . $file;
            
                 if(is_file($path)) {
                 $name = pathinfo($path, PATHINFO_FILENAME);                 
                     if($name == $this -> fileName) {
+//File extension
                         $ext = pathinfo($path, PATHINFO_EXTENSION); 
                        
                     } else {
@@ -105,7 +106,7 @@ class Directories {
             $dir_handle = opendir($this -> directory);
 
             $sizeBytes = 0;
-
+//Getting the total directory size in bytes
             while(($file = readdir($dir_handle)) !== false) {
             $path = $this -> directory . '/' . $file;
                 if(is_file($path)) {
@@ -117,7 +118,7 @@ class Directories {
         } else {
             $sizeBytes = 0;
         }
-
+//Size converted into MB, GB y TB
         if ($sizeBytes/1024/1024 < 1024) {
             $size = round ($sizeBytes/1024/1024, 2) . " MB";
         } else if ($sizeBytes/1024/1024/1024 < 1024) {
@@ -128,9 +129,9 @@ class Directories {
 
         return $size;
     }
-
+//Method for getting the profile images
     public function directoryProfiles(){
-    
+//If the directory doesn't exist, it is created    
         if(!file_exists($this -> directory)) {
             mkdir($this -> directory, 0777, true);
         }        
@@ -139,7 +140,7 @@ class Directories {
     }
 }
 
-
+//Input sanitization
 class Filter {
 public $input;
 public $type; 
@@ -160,7 +161,7 @@ public function sanitization() {
     return $this -> input;
 }
 }
-
+//Convert English abbreviation to Spanish month
 class TimeConvertor {
     public $abbr;
 
@@ -189,6 +190,7 @@ class TimeConvertor {
     }
 }
 
+//Title convertion depending the sex of the user
 class TitleConvertor {
     public $sex;
 
@@ -196,7 +198,6 @@ class TitleConvertor {
         $this -> sex = $sex;    
     }
     
-//Function to convert to spanish units
     public function title(){
         switch ($this -> sex){
             case "M": return "Sr. ";
@@ -209,7 +210,7 @@ class TitleConvertor {
         }
     }
 }
-
+//Header of the pages
 class PageHeaders {
     private $uri;
 
@@ -254,7 +255,7 @@ class PageHeaders {
         }
     }
 }
-
+//List of ingredients
 class IngredientList {
     public $table1;
     public $table2;
@@ -305,7 +306,7 @@ class IngredientList {
         return $where;
     }  
 
-//result of user ingredients except the ones already added for the recipe
+//Result of user ingredients except the ones already added for the recipe
     public function ingResults() {
 
     $conn = DatabaseConnection::dbConnection();
@@ -330,180 +331,4 @@ class IngredientList {
         }
     }
 }
-
-class IngredientListChild extends IngredientList {
-    public $table3;
-    public $recipename;
-
-    function __construct($table1, $table2, $table3, $column, $recipename, $username){
-        parent::__construct($table1, $table2, $column, $username);      
-        $this -> table3 = $table3;
-        $this -> recipename = $recipename;        
-    }
-
-//Results of ingredients for adding recipes
-    public function ingForRecipe(){
-
-    $conn = DatabaseConnection::dbConnection();
-
-    $sql = "SELECT " . $this -> table2 . "." . $this -> column . " FROM " . $this -> table1 . " JOIN " . $this -> table3 . " ON " . $this -> table1 . ".recipeid = " . $this -> table3 . ".recipeid JOIN " . $this -> table2 . " ON " . $this -> table2 . ".id = " . $this -> table1 . ".ingredientid WHERE " . $this -> table3 . ".recipename = '" . $this -> recipename . "' AND " . $this -> table3 . ".username = '" . $this -> username . "';";
-    $result = $conn -> query($sql);    
-    return $result;
-    }    
-}
-
-class Units {
-    public $unit;
-
-    function __construct($unit){
-        $this -> unit = $unit;
-    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-    
-    public function unitQuery(){
-        $conn = DatabaseConnection::dbConnection();        
-        $sql = "SELECT unit FROM units ORDER BY unit;";
-        $result = $conn -> query($sql);
-        return $result;
-    }
-    
-    public function unitOptions(){
-        $result = $this -> unitQuery();
-        
-        while($row = $result -> fetch_assoc()) {
-            echo '<option value="' . $row["unit"] . '">' . $row["unit"] . '</option>';
-        }
-    }
-
-    private function unitQuery2(){
-        $conn = DatabaseConnection::dbConnection();   
-        $sql = "SELECT unit FROM units WHERE unit = '" . $this -> unit . "';";
-        $result = $conn -> query($sql);
-        return $result;
-    }
-
-    public function unitCount(){
-        $result = $this -> unitQuery();        
-        $num_rows = $result -> num_rows;
-        return $num_rows;
-    } 
-
-    public function unitCount2(){
-        $result = $this -> unitQuery2();        
-        $num_rows = $result -> num_rows;
-        return $num_rows;
-    }   
-}
-
-function Server(){
-    echo "<pre>";
-    var_dump($_SERVER);
-    echo "</pre>";
-}
-/*class User {
-public $firstname;
-public $lastname;
-public $username;
-public $password;
-public $passrepeat;
-public $sex;
-public $email;
-public $terms;
-public $rol;
-public $state;
-public $sessionUser;
-public $url;
-public $conn;
-
-function __construct ($firstname, $lastname, $username, $password, $passrepeat, $sex, $email, $terms, $rol, $state, $sessionUser, $url, $conn) {
-    $this -> firstname = $firstname;
-    $this -> lastname = $lastname;
-    $this -> username = $username;
-    $this -> password = $password;
-    $this -> passrepeat = $passrepeat;
-    $this -> sex = $sex;
-    $this -> email = $email;
-    $this -> terms = $terms;
-    $this -> rol = $rol;
-    $this -> state = $state;
-    $this -> sessionUser =  $sessionUser;
-    $this -> url = $url;
-    $this -> conn = $conn;
-}
-
-public function sessionAdminVerif() {
-    $sql = "SELECT userid, `type` FROM users WHERE username ='".$this -> sessionUser."';";
-    $row = $this -> conn -> query($sql) -> fetch_assoc();
-    $sessionUserType = $row['type'];
-
-    if($sessionUserType != 'Admin') {
-    //The page is redirected to the add-recipe.php
-        header('Location: /Cookt/error/error.php');
-    } 
-}
-public function newUser() {
-    if ($this -> firstname == "" || $this -> lastname == "" || $this -> username == "" || $this -> password == ""  || $this -> passrepeat == "" || $this -> sex == "") {
-
-        //Message if the variable is null.
-        $_SESSION['message'] = '¡Complete o seleccione todos los campos por favor!';
-        $_SESSION['message_alert'] = "danger";
-            
-    //The page is redirected to the add-recipe.php
-        header('Location: ' . $this -> url);
-    } else {   
-        if($this -> password != $this -> passrepeat) {
-        //Message if the variable is null.
-        $_SESSION['message'] = '¡Contraseñas no coinciden!';
-        $_SESSION['message_alert'] = "danger";  
-        
-        //The page is redirected to the add-recipe.php
-        header('Location: ' . $this -> url);
-        } else {
-
-            $hashed_password = password_hash($this -> password, PASSWORD_DEFAULT);
-
-            if($this -> state == "yes") {
-            $this -> state = 1;
-            } else { 
-            $this -> state = 0;
-            }
-
-            $sql = "SELECT userid FROM users WHERE firstname = '" . $this -> firstname . "' AND lastname = '" . $this -> lastname . "' AND username = '" . $this -> username . "' AND `password` = '$hashed_password';";
-
-            $num_rows = $this -> conn -> query($sql) -> num_rows;
-
-            if($num_rows == 0) {
-            
-            $stmt = $this -> conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, reportsto, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
-            $stmt->bind_param ("ssssssiis", $this -> firstname, $this -> lastname, $this -> username, $hashed_password, $this -> rol, $this -> email, $this -> state, $this -> sessionUserId, $this -> sex);
-
-            if ($stmt->execute()) {
-            //Success message.
-                $_SESSION['message'] = '¡Usuario agregado con éxito!';
-                $_SESSION['message_alert'] = "success";
-
-                $stmt->close();
-                    
-            //The page is redirected to the ingredients.php.
-                header('Location: ' . $this -> url);
-
-                } else {
-            //Failure message.
-                $_SESSION['message'] = '¡Error al agregar usuario!';
-                $_SESSION['message_alert'] = "danger";
-                    
-            //The page is redirected to the ingredients.php.
-                header('Location: ' . $this -> url);
-            }
-            } else {
-            //Success message.
-                $_SESSION['message'] = '¡Este usuario ya existe!';
-                $_SESSION['message_alert'] = "success";
-                    
-            //The page is redirected to the ingredients.php.
-                header('Location: ' . $this -> url);
-            }
-        }
-    }
-}
-}*/
 ?>
