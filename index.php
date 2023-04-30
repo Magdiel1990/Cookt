@@ -62,6 +62,7 @@ if(array_key_exists($uri, $routes)) {
         require $routes[$uri];
     }
 //If the path does not exist an error is sent
+
 } else {
     http_response_code(404);
     require "views/error_pages/404.php";
