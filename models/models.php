@@ -118,9 +118,7 @@ class Directories {
             $sizeBytes = 0;
         }
 
-        if($sizeBytes/1024 < 1024){
-            $size = round ($sizeBytes/1024, 2) . " KB";
-        } else if ($sizeBytes/1024/1024 < 1024) {
+        if ($sizeBytes/1024/1024 < 1024) {
             $size = round ($sizeBytes/1024/1024, 2) . " MB";
         } else if ($sizeBytes/1024/1024/1024 < 1024) {
             $size = round ($sizeBytes/1024/1024/1024, 2) . " GB";
@@ -136,29 +134,11 @@ class Directories {
         if(!file_exists($this -> directory)) {
             mkdir($this -> directory, 0777, true);
         }        
-        $dir_handle = opendir($this -> directory);
         
-        while(($file = readdir($dir_handle)) !== false) {
-        $path = ($this -> directory . '/' . $file);
-        
-            if(is_file($path)) {
-            $name = pathinfo($path, PATHINFO_FILENAME);                 
-                if($name == $this -> fileName) {
-                    $ext = pathinfo($path, PATHINFO_EXTENSION); 
-                    
-                } else {
-                    $ext = "unk";
-                }
-            } 
-        }                 
-          
-        closedir($dir_handle);      
-
-        $imgDir = $this -> directory . "/" . $this -> fileName . "." . $ext;
-
-        return $imgDir;
-    } 
+        return self::directoryFiles();
+    }
 }
+
 
 class Filter {
 public $input;
