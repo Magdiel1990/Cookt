@@ -1,21 +1,23 @@
 <?php
 
 class DatabaseConnection {
+//Database information
    /* static $hostname = "localhost";
     static $username = "u743896838_magdiel";
     static $password = ">Af=jh8E";
     static $database = "u743896838_foodbase";
 */
+
     static $hostname = "localhost:3306";
     static $username = "root";
     static $password = "123456";
     static $database = "foodbase";
 
-    //Connection to the database.
+//Connection to the database.
     public static function dbConnection(){
         $conn = new mysqli(self::$hostname, self::$username, self::$password, self::$database);
         
-        // Check connection
+// Check connection
         if ($conn->connect_error) {
             die("Error en conexión: " . $conn->connect_error);
         }
@@ -32,7 +34,7 @@ class Messages {
         $this -> message_alert = $message_alert;
     }    
 
-    //Method for the button message.
+//Method for the button message.
     public function buttonMessage() {
         if(isset($this -> message_alert)){
             $html = "<div class='row justify-content-center'>";
@@ -46,7 +48,7 @@ class Messages {
         }
     }
 
-    //Method for the text message.
+//Method for the text message.
     public function textMessage() {
         if(isset($this -> message_alert)){
             $html = "<p class='pb-2 mb-0 pb-0 text-" . $this -> message_alert . " small'>";
@@ -67,6 +69,7 @@ class Directories {
         $this -> fileName = $fileName;
     }
     
+//Method to get the file in the directory    
     public function directoryFiles(){
     
         if(file_exists($this -> directory)) {
@@ -94,7 +97,7 @@ class Directories {
     }
 
 
-    //Directory size
+//Directory size
     public function directorySize(){
         
         if(is_dir($this -> directory)) {
@@ -181,7 +184,7 @@ class TimeConvertor {
         $this -> abbr = $abbr;    
     }
     
-    //Function to convert to spanish units
+//Function to convert to spanish units
     public function spanishmonth(){
         $monthList = [
         "Jan" => "Enero",           
@@ -281,7 +284,7 @@ class IngredientList {
         $this -> username = $username;
     }
   
-    //Results of ingredients for adding recipes
+//Results of ingredients for adding recipes
     protected function ingForRecipe(){
 
     $conn = DatabaseConnection::dbConnection();
@@ -297,7 +300,7 @@ class IngredientList {
         return $result;
     }
 
-    //Condition for selecting ingredients different from the one already added for adding recipes
+//Condition for selecting ingredients different from the one already added for adding recipes
     public function ingConditions() {
         
         $result = $this -> ingForRecipeResult();
@@ -318,7 +321,7 @@ class IngredientList {
         return $where;
     }  
 
-    //result of user ingredients except the ones already added for the recipe
+//result of user ingredients except the ones already added for the recipe
     public function ingResults() {
 
     $conn = DatabaseConnection::dbConnection();
@@ -330,7 +333,7 @@ class IngredientList {
     return $result;
     }   
     
-    //Quantity of user ingredients except the ones already added for the recipe
+//Quantity of user ingredients except the ones already added for the recipe
     public function ingQuantity() {
         $num_rows = $this -> ingResults() -> num_rows;
         return $num_rows;
@@ -354,7 +357,7 @@ class IngredientListChild extends IngredientList {
         $this -> recipename = $recipename;        
     }
 
-    //Results of ingredients for adding recipes
+//Results of ingredients for adding recipes
     public function ingForRecipe(){
 
     $conn = DatabaseConnection::dbConnection();

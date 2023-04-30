@@ -22,7 +22,7 @@
     $filter = new Filter ($_POST["search"], FILTER_SANITIZE_STRING, $conn);
     $field = $filter -> sanitization(); 
 
-    /*Filter where*/
+    //Filter where
     $where = " WHERE username = '" . $_SESSION['username'] . "'";
 
     //If the variable search isn't null, the query is done with the where.
