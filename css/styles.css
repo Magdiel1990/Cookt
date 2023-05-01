@@ -186,3 +186,10 @@ label, select, input, option {
 .errorlink:hover {
     text-decoration: underline;
 }
+
+#message {
+    color: rgb(255, 0, 0);
+    font-size: 1rem;
+    text-align: center;
+    font-weight: bold;
+}

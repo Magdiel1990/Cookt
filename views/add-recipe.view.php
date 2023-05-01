@@ -18,10 +18,10 @@ require_once ("views/partials/nav.php");
         }
     ?>
     
-    <div class="m-2 justify-content-center row"> 
+    <div class="m-2 justify-content-center row">         
         <h3 class="text-center mb-3">Agregar Receta</h3>
         <div class="col-lg-6 col-md-8 col-sm-9 col-xl-5">
-            <form class="text-center form" id="add_recipe_form" enctype="multipart/form-data" onsubmit="return add_recipe_validation(event);" method="POST" action="/create">
+            <form class="text-center form" id="add_recipe_form" enctype="multipart/form-data" method="POST" action="/create">
             
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="recipename">Nombre: </label>
@@ -60,7 +60,7 @@ require_once ("views/partials/nav.php");
 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="cookingtime">Tiempo de cocción: </label>
-                    <input class="form-control" type="number" id="cookingtime" name="cookingtime"  placeholder="en minutos">             
+                    <input class="form-control" type="number" id="cookingtime" name="cookingtime" placeholder="en minutos" max="180" min="5">             
                 </div>    
                 
                 <div class="mb-3">
@@ -75,38 +75,18 @@ require_once ("views/partials/nav.php");
             
                 <div>
                     <input class="btn btn-primary" type="submit" value="Agregar receta" name="addrecipe">
-                </div>
+                </div> 
+                <div class="mt-3" id="message"></div>               
             </form>
+            
             <script>
-//Validation code                
-                function add_recipe_validation(event) {
-//Prevent form to submit if the return is false      
-                    event.preventDefault();
-
-                    var regExp = /[a-zA-Z\t\h]+|(^$)/;
-                    var recipename = document.getElementById("recipename").value;
-                    var cookingtime = document.getElementById("cookingtime").value;
-                    var ingredients = document.getElementById("ingredients").value;
-                    var preparation = document.getElementById("preparation").value;
-//Conditions
-                    if(recipename == "" || preparation == "" || ingredients == ""){
-                        alert("Completar los campos requeridos");                        
-                        return false;
-                    }
-                    if(!recipename.match(regExp)){
-                        alert("¡Nombre de receta incorrecto!");                       
-                        return false;
-                    }
-                    if(cookingtime > 180 || cookingtime < 5){
-                        alert("¡Tiempo de cocción debe estar entre 5 - 180 minutos!");                        
-                        return false;
-                    }      
-
-                    return true;                           
-                }   
+//Validation code
+                add_recipe_validation();
             </script>
+            
         </div>
     </div>
+    
 </main>
 <?php
 //Exiting connection
