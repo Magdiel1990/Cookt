@@ -2,13 +2,11 @@
 //Head of the page.
 require_once ("views/partials/head.php");
 
-
 /************************************************************************************************/
 /***************************************RECIPE DELETION CODE*************************************/
 /************************************************************************************************/
 
-
-//Verifying that the id value comes with data.
+//Verifying the data.
 if(isset($_GET['recipename'])){
     
 //Getting the name.
@@ -17,23 +15,20 @@ $recipeName = $_GET['recipename'];
 $sql = "DELETE FROM recipe WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
 $result = $conn -> query($sql);
 
-//If there's no record with that name, a message is sent.
     if(!$result){
-//Creation of the message of error deleting the receta.
         $_SESSION['message'] = '¡Error al eliminar la receta!';
         $_SESSION['message_alert'] = "danger";
 
-//The page is redirected to the index.php.
         header('Location: /');
     } else {
+//Deleting recipe img       
         $target_dir = "imgs/recipes/". $_SESSION['username']  ."/";
 
         $files = new Directories($target_dir, $recipeName);
         $imgRecipeDir = $files -> directoryFiles();
 
-        unlink($imgRecipeDir);
-        
-//Creation of the message of success deleting the receta.
+        unlink($imgRecipeDir);        
+
         $_SESSION['message'] = '¡Receta eliminada!';
         $_SESSION['message_alert'] = "success";
 
@@ -42,21 +37,18 @@ $result = $conn -> query($sql);
     }
 }
 
-
 /************************************************************************************************/
 /***************************************CATEGORY DELETION CODE***************************************/
 /************************************************************************************************/
 
-
-//Verifying that the id value comes with data.
-if(isset($_GET['categoryname'])){
-    
-//Getting the name.
+if(isset($_GET['categoryname'])){    
+//Category.
 $categoryName = $_GET['categoryname'];
 
+//Category directory
 $categoryDir = "imgs/categories/";
 
-//Function to get the image directory from the category
+//Delete category image directory
 $files = new Directories($categoryDir , $categoryName);
 $categoryImgDir = $files -> directoryFiles();
 
@@ -64,34 +56,24 @@ unlink($categoryImgDir);
 
 //Deleting the register with the name received.
 $sql = "DELETE FROM categories WHERE category = '$categoryName';";
-
 $result = $conn -> query($sql);
 
-//If there's no record with that name, a message is sent.
-
     if($result !== true){
-    //Creation of the message of error deleting the receta.
         $_SESSION['message'] = '¡Error al eliminar la categoría!';
         $_SESSION['message_alert'] = "danger";
 
-    //The page is redirected to the add_units.php
         header('Location: /categories');
     } else {
-    //Creation of the message of success deleting the receta.
         $_SESSION['message'] = '¡Categoría eliminada!';
         $_SESSION['message_alert'] = "success";
 
-    //After the receta has been deleted, the page is redirected to the add_units.php.
         header('Location: /categories');
     }
 } 
 
-
-
 /************************************************************************************************/
 /********************INGREDIENT DELETION WHEN ADDING THE RECIPE CODE*****************************/
 /************************************************************************************************/
-
 
 //Verifying that the id value comes with data.
 if(isset($_GET['id'])){
@@ -367,9 +349,9 @@ $sql = "DELETE FROM users WHERE username = '$username';";
         }
     }
 }
-//Exiting the connection to the database.
+//Exiting db connection.
 $conn -> close(); 
 
-//We include the footer (jquery, bootstrap and popper scripts).
+//Footer 
 include("views/partials/footer.php");
 ?>
