@@ -1,14 +1,20 @@
-if (window.history.replaceState) { // verificamos disponibilidad
+//Function to avoid resubmitting forms
+if (window.history.replaceState) { 
     window.history.replaceState(null, null, window.location.href);
 }
 
-
+//Validation of inputs
 function validation(type, regExpText){
 
-    let input = document.getElementById(type).value;
+    var input = document.getElementById(type).value;
 
     if (!regExpText.test(input)) {
         alert("¡Texto incorrecto!");
+        return false; 
+    }
+
+    if(input.length == 0){
+        alert("¡No has escrito nada!");
         return false; 
     }
 
@@ -45,7 +51,4 @@ function validationNumber(number){
 }
 
 
-/*function deleteMessage (){
-    alert("¿Está seguro de eliminar?");
-    return true;
-}*/
+   
