@@ -206,12 +206,14 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
       $_SESSION['message_alert'] = "danger";
 
       header('Location: /add-recipe');
+      exit;
   } else {
   if (!preg_match($pattern, $recipename)){
       $_SESSION['message'] = '¡Nombre de receta incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
       header('Location: /add-recipe');
+      exit;
   } 
 //If cookingtime is not between 5 and 180  
   if ($cookingtime > 180 || $cookingtime < 5) {
@@ -219,6 +221,7 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
       $_SESSION['message_alert'] = "danger";
           
       header('Location: /add-recipe');
+      exit;
   } 
       $_SESSION['category'] = $category;
 
@@ -247,6 +250,7 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
         $_SESSION['message_alert'] = "success";
 
         header('Location: /add-recipe');
+        exit;
 //If an image has been added     
         } else {
         $recipeImagesDir = "imgs/recipes/". $_SESSION['username'];
@@ -288,17 +292,20 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
             $_SESSION['message_alert'] = "success";
 
             header('Location: /add-recipe');
+            exit;
             } else {
             $_SESSION['message'] = '¡Error al agregar receta!';
             $_SESSION['message_alert'] = "danger";
                 
             header('Location: /add-recipe');
+            exit;
           }
         } else {
             $_SESSION['message'] = $uploadOk;
             $_SESSION['message_alert'] = "danger";
 
             header('Location: /add-recipe');
+            exit;
         }
       }
     }

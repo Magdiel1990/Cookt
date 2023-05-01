@@ -30,7 +30,7 @@ function validationNumberText(number, text, regExpText){
         alert("¡Texto incorrecto!");
         return false; 
     }
-    else if (numberValue < 5 || numberValue > 180 || numberValue == "") {
+    if (numberValue < 5 || numberValue > 180 || numberValue == "") {
         alert("¡El tiempo de cocción debe estar entre 5-180 minutos!");
         return false; 
     }

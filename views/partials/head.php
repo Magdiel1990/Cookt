@@ -23,7 +23,7 @@ if (!isset($_SESSION['username'])) {
     $timeDiff = (strtotime($currentTime) - strtotime($lastTime));
 
 //After 12 min session closes
-    if ($timeDiff >= 15*60) {
+    if ($timeDiff >= 20*60) {
 
 //Save the user that is going to log out.
         $username = $_SESSION['username'];        

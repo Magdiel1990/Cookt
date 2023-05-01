@@ -46,14 +46,14 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     $ingredients = $row["ingredients"];
 
 //Split the ingredients separated by semicolon
-    $arrayIngredients = explode(";", $ingredients);
+    $arrayIngredients = explode(".rn", $ingredients);
 
     $recipeName = $row["recipename"];
     $cookingTime = $row["cookingtime"];
     $preparation = $row["preparation"];
 
 //Replace the rn (salto de línea) by ""
-    $preparation = str_replace('rn', '', $preparation);
+    $preparation = str_replace('rn', ' ', $preparation);
 
 //Day, month and year of the day the recipe was added
     $day = $date = date ("d", strtotime($row["created_at"]));     
