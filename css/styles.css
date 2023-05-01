@@ -2,6 +2,14 @@
     font-family:'Times New Roman', Times, serif;
 }
 
+h2 {
+    color: #fff;
+}
+h3 {
+    font-size: 1.5rem;
+    color: #444;
+    font-weight: bold;
+}
 .recipe_link {
     text-decoration: none;
 }
@@ -22,7 +30,6 @@ header, footer {
     align-items: center;
     justify-content: center;
 }
-
 #navbarNavDropdown {
     position: inherit;
     right: 1rem;
@@ -33,20 +40,12 @@ main {
 footer {
     height: 7.4rem;
 }
-h3 {
-    font-size: 1.5rem;
-    color: #444;
-    font-weight: bold;
-}
-
 .nav-item {
     font-size: 1rem;
 }
-
 .dropdown-menu a {
     font-size: 1rem;
 }
-
 .profile {    
     border-radius: 50%;
     max-width: 50%;
@@ -87,17 +86,14 @@ table td, p, ul li, ol li, li a {
     color: rgb(22, 182, 4);  
     text-decoration: none;
 }
-
 .suggestion_container {
     border: solid 2px #999;
     padding: 1rem;
 }
-
 .suggestion_container ul li a, .suggestion_container ul li {
     color: rgb(22, 93, 244); 
     margin: 1rem 0;
 }
-
 ol li a, b {
     margin: 0.3rem;
 }
@@ -111,11 +107,9 @@ select:hover {
 option {
     color: rgb(240, 144, 41);
 }
-
 .close {
     background-color: transparent;
 }
-
 .close span {
     font-family: "Comic Sans MS", "Comic Sans", "cursive";
     color: rgb(58, 117, 123);
@@ -133,12 +127,10 @@ option {
 label, select, input, option {
     font-size: 1.2rem;
 }
-
 .bg-form  {
     background-color: rgb(255, 250, 234);
     box-shadow: 1px 1px 2px #888;   
 }
-
 .fa-user{
     font-size: 1.3rem;
 }
@@ -149,19 +141,16 @@ label, select, input, option {
     list-style: none;
     font-size: 1.2rem;
 }
-
 .is-required:after {
     content: '*';
     margin-left: 3px;
     color: red;
     font-weight: bold;
 }
-
 /*Error page made by purplexmoss (https://freefrontend.com/html-css-404-page-templates/)*/
 .error {
     background-color: #95c2de;
 }
-
 .mainbox {
     background-color: #95c2de;
     margin: auto;
@@ -169,7 +158,6 @@ label, select, input, option {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
 }
 .err {
     color: #ffffff;
@@ -182,28 +170,19 @@ label, select, input, option {
     font-size: 8.5rem;
     color: #ffffff;
 }
-
 .err2 {
     color: #ffffff;
     font-size: 11rem;
 }
-
 .msg {
     text-align: center;
     font-size: 1.8rem;
     margin: 0 1.7rem;
 }
-
 .errorlink {
     text-decoration: none;
     color: white;
 }
-
 .errorlink:hover {
     text-decoration: underline;
 }
-
-h2{
-    color: #fff;
-}
-

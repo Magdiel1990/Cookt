@@ -1,14 +1,9 @@
 <?php
-//Reviso el estado de la sesión.
+//Name the session
 session_name("Login");
+
 //Iniciating session. 
 session_start();
-
-//Si ningún usuario se ha logueado se redirige hacia el login.
-if (!isset($_SESSION['userid'])) {
-    header("Location: /login");
-    exit;
-} 
 
 //Models.
 require_once ("models/models.php");
@@ -16,11 +11,9 @@ require_once ("models/models.php");
 //Including the database connection.
 $conn = DatabaseConnection::dbConnection();
 
-
 /************************************************************************************************/
 /***************************************CATEGORIES ADITION CODE**************************************/
 /************************************************************************************************/
-
 
 //receive the data
 if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){  
@@ -29,41 +22,37 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
 
   $categoryImage = $_FILES["categoryImage"];
 
-  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
-  
+//Regex that the category should have
+  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/";   
 
   if ($category == "" || $categoryImage ['name'] == null){
-  //Message if the variable is null.
+
       $_SESSION['message'] = '¡Escriba la categoría o cargue la imagen!';
-      $_SESSION['message_alert'] = "danger";
-          
-  //The page is redirected to the add_units.php
+      $_SESSION['message_alert'] = "danger";          
+
       header('Location: /categories');
+      exit;
   } else {
     if (!preg_match($pattern, $category)){
-        //Message if the variable is null.
         $_SESSION['message'] = '¡Categoría incorrecta!';
         $_SESSION['message_alert'] = "danger";
             
-    //The page is redirected to the add_units.php
         header('Location: /categories');
+        exit;
     } else {
 
-    //lowercase the variable
+//lowercase the variable
       $category = strtolower($category);
-
+//Check if the category had been added
       $sql = "SELECT category FROM categories WHERE category = '$category';";
-
-      $num_rows = $conn -> query($sql) -> num_rows;
-      
+      $num_rows = $conn -> query($sql) -> num_rows;      
 
       if($num_rows != 0){
-    //It already exists.
           $_SESSION['message'] = '¡Ya ha sido agregado!';
           $_SESSION['message_alert'] = "success";
 
-    //The page is redirected to the add_units.php.
           header('Location: /categories');
+          exit;
       }  
 
       $stmt = $conn -> prepare("INSERT INTO categories (category) VALUES (?);");
@@ -79,24 +68,24 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
       $target_file = $target_dir . $category . "." . $fileExtension;
       $uploadOk = "";
       
-      // Check if image file is a actual image or fake image
+// Check if image file is a actual image or fake image
       if(isset($_POST["categorySubmit"])) {
         $check = getimagesize($categoryImage["tmp_name"]);
         if($check == false) {
             $uploadOk = "¡Este archivo no es una imagen!";
         } 
       }
-      // Check if file already exists
+// Check if file already exists
       if (file_exists($target_file)) {
         $uploadOk = "¡Esta imagen ya existe!";
       }
 
-      // Check file size
+// Check file size
       if ($categoryImage["size"] > 300000) {
           $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
       }
 
-      // Allow certain file formats
+// Allow certain file formats
       if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "jpeg"
       && $fileExtension != "gif" ) {
         $uploadOk = "¡Formato no admitido!";
@@ -104,40 +93,34 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
 
       if ($uploadOk == "") {
         if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $stmt -> execute()){
-          //Success message.
           $_SESSION['message'] = '¡Categoría agregada con éxito!';
           $_SESSION['message_alert'] = "success";
 
           $stmt -> close();
 
-          //The page is redirected to the add_units.php.
-          header('Location: /categories');    
+          header('Location: /categories');  
+          exit;  
         } else {
-        //Failure message.
         $_SESSION['message'] = '¡Error al agregar categoría!';
         $_SESSION['message_alert'] = "danger";
 
-        //The page is redirected to the add_units.php.
         header('Location: /categories'); 
+        exit;
         }
       } else {
-        //Failure message.
         $_SESSION['message'] = $uploadOk;
         $_SESSION['message_alert'] = "danger";
 
-        //The page is redirected to the add_units.php.
         header('Location: /categories'); 
+        exit;
       }
     }
   }
 }
 
-
-
 /************************************************************************************************/
 /***************************************INGREDIENT ADITION CODE**********************************/
 /************************************************************************************************/
-
 
 //receive the data
 if(isset($_POST['add_ingredient'])){
@@ -146,156 +129,61 @@ if(isset($_POST['add_ingredient'])){
   
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
  
-
+//Variable is null.
   if ($ingredient == ""){
-  //Message if the variable is null.
       $_SESSION['message'] = '¡Escriba el ingrediente por favor!';
       $_SESSION['message_alert'] = "danger";
-          
-  //The page is redirected to the add_units.php
+
       header('Location: /ingredients');
   } else {
   if(!preg_match($pattern, $ingredient)){
-      //Message if the variable is null.
       $_SESSION['message'] = '¡Ingrediente incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
-  //The page is redirected to the add_units.php
       header('Location: /ingredients');
   }
-
-  //lowercase the variable
+//lowercase the variable
     $ingredient = strtolower($ingredient);
 
     $sql = "SELECT ingredient FROM ingredients WHERE ingredient = '$ingredient' AND username = '" .  $_SESSION['username'] . "';";
 
     $num_rows = $conn -> query($sql) -> num_rows;
 
-      if($num_rows != 0){
-      //It already exists.
-          $_SESSION['message'] = '¡Ya ha sido agregado!';
-          $_SESSION['message_alert'] = "success";
+//Check if it already exists
+    if($num_rows != 0){
+        $_SESSION['message'] = '¡Ya ha sido agregado!';
+        $_SESSION['message_alert'] = "success";
 
-      //The page is redirected to the add_units.php.
-          header('Location: /ingredients');
+        header('Location: /ingredients');
+    } else {
+    $stmt = $conn -> prepare("INSERT INTO ingredients (ingredient, username) VALUES (?, ?);");
+    $stmt->bind_param("ss", $ingredient, $_SESSION['username']);
+
+    if ($stmt -> execute()) {
+        $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
+        $_SESSION['message_alert'] = "success";
+
+        $stmt -> close();
+        header('Location: /ingredients');
+
       } else {
-
-      $stmt = $conn -> prepare("INSERT INTO ingredients (ingredient, username) VALUES (?, ?);");
-      $stmt->bind_param("ss", $ingredient, $_SESSION['username']);
-
-      if ($stmt -> execute()) {
-    //Success message.
-          $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
-          $_SESSION['message_alert'] = "success";
-
-          $stmt -> close();
-              
-    //The page is redirected to the add_units.php.
-          header('Location: /ingredients');
-
-        } else {
-    //Failure message.
-          $_SESSION['message'] = '¡Error al agregar ingrediente!';
-          $_SESSION['message_alert'] = "danger";
-              
-    //The page is redirected to the add_units.php.
-          header('Location: /ingredients');
-        }
+        $_SESSION['message'] = '¡Error al agregar ingrediente!';
+        $_SESSION['message_alert'] = "danger";
+            
+        header('Location: /ingredients');
       }
-    }
-}
-
-
-/************************************************************************************************/
-/********************************INGREDIENTS FOR ADDING RECIPE CODE******************************/
-/************************************************************************************************/
-
-
-//receive the data
-if(isset($_POST['quantity']) && isset($_POST['fraction']) && isset($_POST['unit']) && isset($_POST['ingredient']) && isset($_POST['detail'])){
-
-  $ingredient = $_POST['ingredient'];
-  $quantity = $_POST['quantity'];
-  $unit = $_POST['unit'];
-  $fraction = $_POST['fraction'];
-
-  $filter = new Filter ($_POST['detail'], FILTER_SANITIZE_STRING, $conn);
-  $detail = $filter -> sanitization();
-
-
-  if ($quantity == "" || $quantity < 0) {
-  //Message if the variable is null.
-      $_SESSION['message'] = '¡Elija la cantidad por favor!';
-      $_SESSION['message_alert'] = "danger";
-          
-  //The page is redirected to the add-recipe.php
-      header('Location: /add-recipe');
-  } else if ($quantity == "" && $fraction == "") {
-    //Message if the variable is null.
-    $_SESSION['message'] = '¡Elija la cantidad por favor!';
-    $_SESSION['message_alert'] = "danger";
-        
-    header('Location: /add-recipe');
-  } else {
-    
-    if($quantity == 0){
-      $strQuantity = "";
-    } else {
-      $strQuantity = strval($quantity) . " ";
-    }
-
-    $completeQuantity = $strQuantity . $fraction;
-
-    $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "';";
-    $row = $conn -> query($sql) -> fetch_assoc();
-    $ingredientId = $row['id'];
-
-    $sql = "SELECT re_id FROM reholder WHERE ingredientid = '$ingredientId' AND quantity = '$completeQuantity' AND unit = '$unit' AND username = '" .  $_SESSION['username'] . "';";
-
-    $num_rows = $conn -> query($sql) -> num_rows;
-
-    if($num_rows == 0) {
-
-    $stmt = $conn -> prepare("INSERT INTO reholder (ingredientid, quantity, unit, username, detail) VALUES (?, ?, ?, ?, ?);");
-    $stmt->bind_param("issss", $ingredientId, $completeQuantity, $unit, $_SESSION['username'], $detail);
-
-      if ($stmt->execute()) {
-    //Success message.
-          $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
-          $_SESSION['message_alert'] = "success";
-          $stmt -> close();
-              
-    //The page is redirected to the ingredients.php.
-          header('Location: /add-recipe');
-
-        } else {
-    //Failure message.
-          $_SESSION['message'] = '¡Error al agregar ingrediente!';
-          $_SESSION['message_alert'] = "danger";
-              
-    //The page is redirected to the ingredients.php.
-          header('Location: /add-recipe');
-      }
-    } else {
-      //Success message.
-          $_SESSION['message'] = '¡Ingrediente ya fue agregado!';
-          $_SESSION['message_alert'] = "success";
-              
-      //The page is redirected to the ingredients.php.
-          header('Location: /add-recipe');
     }
   }
 }
-
 
 /************************************************************************************************/
 /***************************************RECIPE ADITION CODE*************************************/
 /************************************************************************************************/
 
-
 //receive the data
 if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST['category']) && isset($_POST['cookingtime']) && isset($_POST['ingredients']) && isset($_POST['preparation'])){
 
+//Data sanitization
   $filter = new Filter ($_POST['recipename'], FILTER_SANITIZE_STRING, $conn);
   $recipename = $filter -> sanitization();
 
@@ -312,48 +200,38 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
   $recipeImage = $_FILES["recipeImage"];  
 
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
-
+//If this variables are null
   if ($recipename == "" || $preparation == "" || $ingredients == "") {
-  //Message if the variable is null.
       $_SESSION['message'] = '¡Falta nombre de la receta o la preparación!';
       $_SESSION['message_alert'] = "danger";
-          
-  //The page is redirected to the add-recipe.php
+
       header('Location: /add-recipe');
   } else {
   if (!preg_match($pattern, $recipename)){
-      //Message if the variable is null.
       $_SESSION['message'] = '¡Nombre de receta incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
-  //The page is redirected to the add_units.php
       header('Location: /add-recipe');
-
   } 
+//If cookingtime is not between 5 and 180  
   if ($cookingtime > 180 || $cookingtime < 5) {
-      //Message if the variable is null.
       $_SESSION['message'] = '¡Tiempo de cocción debe estar entre 5 - 180 minutos!';
       $_SESSION['message_alert'] = "danger";
           
-      //The page is redirected to the add_units.php
       header('Location: /add-recipe');
   } 
-
       $_SESSION['category'] = $category;
 
       $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename' AND username = '" .  $_SESSION['username'] . "';";
-      
       $result = $conn -> query($sql);
-      $num_rows = $result -> num_rows;
-      
-      if($num_rows == 0){
+//Check if the recipe exists            
+      if($result -> num_rows == 0){
         
         if($cookingtime == "") { 
           $cookingtime = 0;
         }
-        
-      $sql = "SELECT categoryid FROM categories WHERE category = '$category';";
-      
+//Get the category id        
+      $sql = "SELECT categoryid FROM categories WHERE category = '$category';";      
       $row= $conn -> query($sql) -> fetch_assoc();
       
       $categoryid = $row["categoryid"];
@@ -363,13 +241,13 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
       
       $stmt -> execute();
       $stmt -> close(); 
-
+//If no image has been added
         if($recipeImage ['name'] == null) {           
-       //Success message.
         $_SESSION['message'] = '¡Receta agregada exitosamente!';
         $_SESSION['message_alert'] = "success";
 
         header('Location: /add-recipe');
+//If an image has been added     
         } else {
         $recipeImagesDir = "imgs/recipes/". $_SESSION['username'];
 
@@ -381,24 +259,24 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
         $target_file = $recipeImagesDir ."/".  $recipename . "." . $fileExtension;
         $uploadOk = "";
         
-        // Check if image file is a actual image or fake image
+// Check if image file is a actual image or fake image
         if(isset($_POST["addrecipe"])) {
           $check = getimagesize($recipeImage["tmp_name"]);
           if($check == false) {
               $uploadOk = "¡Este archivo no es una imagen!";
           } 
         }
-        // Check if file already exists
+// Check if file already exists
         if (file_exists($target_file)) {
             $uploadOk = "¡Esta imagen ya existe!";
         }
 
-        // Check file size
+// Check file size
         if ($recipeImage["size"] > 300000) {
             $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
         }
 
-        // Allow certain file formats
+// Allow certain file formats
         if($fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "png" && $fileExtension != "gif") {
             $uploadOk = "¡Formato no admitido!";
         }      
@@ -406,26 +284,20 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
         if ($uploadOk == "") {
 
             if(move_uploaded_file($recipeImage["tmp_name"], $target_file)){
-            //Success message.
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
             $_SESSION['message_alert'] = "success";
 
-          //The page is redirected to the ingredients.php.
             header('Location: /add-recipe');
             } else {
-            //Failure message.
             $_SESSION['message'] = '¡Error al agregar receta!';
             $_SESSION['message_alert'] = "danger";
                 
-            //The page is redirected to the ingredients.php.
             header('Location: /add-recipe');
           }
         } else {
-            //Failure message.
             $_SESSION['message'] = $uploadOk;
             $_SESSION['message_alert'] = "danger";
 
-            //The page is redirected to the ingredients.php.
             header('Location: /add-recipe');
         }
       }
@@ -437,7 +309,6 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
 /***************************************INGREDIENTS REPOSITORY CODE******************************/
 /************************************************************************************************/
 
-
 //receive the data
 if(isset($_POST['customingredient'])){
   $ingredient = $_POST['customingredient'];
@@ -448,34 +319,29 @@ if(isset($_POST['customingredient'])){
   
   $sql = "SELECT ingredientid FROM ingholder WHERE ingredientid = $ingredientId AND username = '" . $_SESSION['username'] . "';";
   $result = $conn -> query($sql);
-  $num_rows = $result -> num_rows;
 
-  if($num_rows > 0){
-  //It already exists.
+  //Check if the recipe has been added
+  if($result -> num_rows > 0){
       $_SESSION['message'] = '¡Ya ha sido agregado!';
       $_SESSION['message_alert'] = "success";
 
-  //The page is redirected to the add_units.php.
       header('Location: /custom');
   } else {
     $stmt = $conn -> prepare("INSERT INTO ingholder (ingredientid, username) VALUES (?, ?);");
     $stmt->bind_param ("is", $ingredientId, $_SESSION['username']);
 
     if ($stmt -> execute()) {
-  //Success message.
         $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
         $_SESSION['message_alert'] = "success";
 
         $stmt -> close();            
-  //The page is redirected to the add_units.php.
+
         header('Location: /custom');
 
     } else {
-//Failure message.
       $_SESSION['message'] = '¡Error al agregar ingrediente!';
       $_SESSION['message_alert'] = "danger";
           
-//The page is redirected to the add_units.php.
       header('Location: /custom');
     }
   }
@@ -485,7 +351,6 @@ if(isset($_POST['customingredient'])){
 /************************************************************************************************/
 /******************************************USER ADITION CODE*************************************/
 /************************************************************************************************/
-
 
 //receive the data
 if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userpassword']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['session_user'])){
@@ -509,37 +374,36 @@ if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex'
   $passrepeat = $filter -> sanitization();
   
   $sex = $_POST['sex']; 
+//Terms of the webpage
   $terms = "yes";
   $rol = $_POST['userrol'];
   $state = $_POST['activeuser'];
   $sessionUser = $_POST['session_user'];
 
+//Check if the user is Admin
   $sql = "SELECT userid, `type` FROM users WHERE username ='$sessionUser';";
   $row = $conn -> query($sql) -> fetch_assoc();
   $sessionUserType = $row['type'];
-
-  if($sessionUserType != 'Admin') {
-    //The page is redirected to the add-recipe.php
+//If not, a error is launched
+  if($sessionUserType !== 'Admin') {
         header('Location: /error404');
+        exit;
+//If null        
   } else {
     if ($firstname == "" || $lastname == "" || $username == "" || $password == ""  || $sex == "") {
-    //Message if the variable is null.
         $_SESSION['message'] = '¡Complete todos los campos por favor!';
         $_SESSION['message_alert'] = "danger";
-            
-    //The page is redirected to the add-recipe.php
+
         header('Location: /user');
+//If passwords don't match        
     } else {   
-      if($password != $passrepeat) {
-        //Message if the variable is null.
+      if($password !== $passrepeat) {
         $_SESSION['message'] = '¡Contraseñas no coinciden!';
         $_SESSION['message_alert'] = "danger";  
         
-        //The page is redirected to the add-recipe.php
         header('Location: /user');
-            
+//Hash password            
       } else {
-
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         if($state == "yes") {
@@ -547,49 +411,38 @@ if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex'
         } else { 
           $state = 0;
         }
-
+//Check if it already exists
         $sql = "SELECT userid FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
-
         $num_rows = $conn -> query($sql) -> num_rows;
 
-        if($num_rows == 0) {
-          
+        if($num_rows == 0) {          
         $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
         $stmt->bind_param ("ssssssis", $firstname, $lastname, $username, $hashed_password, $rol, $userEmail, $state, $sex);
 
           if ($stmt->execute()) {
-        //Success message.
               $_SESSION['message'] = '¡Usuario agregado con éxito!';
               $_SESSION['message_alert'] = "success";
 
-              $stmt->close();
-                  
-        //The page is redirected to the ingredients.php.
+              $stmt->close();                  
               header('Location: /user');
-
             } else {
-        //Failure message.
               $_SESSION['message'] = '¡Error al agregar usuario!';
               $_SESSION['message_alert'] = "danger";
                   
-        //The page is redirected to the ingredients.php.
               header('Location: /user');;
           }
         } else {
-          //Success message.
               $_SESSION['message'] = '¡Este usuario ya existe!';
               $_SESSION['message_alert'] = "success";
-                  
-          //The page is redirected to the ingredients.php.
+
               header('Location: /user');
         }
       }
     }
   }
 }
-
 ?>
 <?php
-//Exiting the connection to the database.
+//Exiting db connection.
 $conn -> close(); 
 ?>
