@@ -157,20 +157,24 @@ $result = $conn -> query($sql);
 /***************************************USER DELETION CODE***************************************/
 /************************************************************************************************/
 
-if(isset($_GET['userid'])) {
+if(isset($_GET['userid']) && isset($_GET['type'])) {
     
-//Getting the id
+//Getting the id and type
 $userId = $_GET['userid'];
+$type = urldecode($_GET['type']);
 
+//Verify how many Admin users there are
 $sql = "SELECT userid FROM users WHERE type = 'Admin';";
 $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
 
+//If there are more than 1 Admin users or the user to be deleted is not an Admins
     if($num_rows > 1 || $type != "Admin") {
-    
+//Username     
     $sql = "SELECT username FROM users WHERE userid = '$userId';";
     $row = $conn -> query($sql) -> fetch_assoc();
     $username = $row['username'];
+//Delete user images directory
     $target_dir = "imgs/recipes/" . $username;
     
         if(file_exists($target_dir)) {
