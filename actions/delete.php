@@ -6,7 +6,6 @@ require_once ("views/partials/head.php");
 /***************************************RECIPE DELETION CODE*************************************/
 /************************************************************************************************/
 
-//Verifying the data.
 if(isset($_GET['recipename'])){
     
 //Getting the name.
@@ -180,7 +179,7 @@ $num_rows = $result -> num_rows;
         if(file_exists($target_dir)) {
             unlink($target_dir);
         }
-//Deleting the register with the name received.
+//Deleting the register with the id received.
         $sql = "DELETE FROM users WHERE userid = '$userId';";    
         $result = $conn -> query($sql);
     
