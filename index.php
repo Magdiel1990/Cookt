@@ -26,11 +26,12 @@ if($param == "") {
     ];
 //It comes with parameters
 } else {
-    $routes = [
+    $routes = [    
     "/recipes" => "controllers/recipes.controller.php",
     "/random" => "controllers/random.controller.php",
     "/delete" => "controllers/delete.controller.php",
     "/custom" => "controllers/custom.controller.php",
+    "/reset" => "controllers/reset.controller.php",
     "/edit" => "controllers/edit.controller.php",
     "/update" => "controllers/update.controller.php",
     "/user-recipes" => "controllers/recipes-list.controller.php",

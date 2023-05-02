@@ -172,7 +172,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                             $html .= "<td class='btn-group d-block' role='group'>";
                             $html .= "<a $display href='/edit?userid=" . $userid . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
                             $html .= "<a $display $display_2 href='/delete?userid=" . $userid . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
-                            $html .= "<a $display_2 href='/delete?user_id=" . $userid . "&reset=1' class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
+                            $html .= "<a $display_2 href='/reset?user_id=" . $userid . "&reset=1' class='btn btn-outline-warning' title='Resetear'><i class='fa-solid fa-eraser'></i></a>";
                             $html .= "</td>";
                             $html .= "</tr>";
                             echo $html;
