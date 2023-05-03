@@ -50,8 +50,8 @@ require_once ("views/partials/nav.php");
         <table class="table table-sm shadow">
             <thead>
                 <tr class="table_header">
-                    <th scope="col">Categorías</th>
-                    <th scope="col">Acciones</th>
+                    <th class='px-2' scope="col">Categorías</th>
+                    <th class='px-2' scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>                
@@ -62,8 +62,8 @@ require_once ("views/partials/nav.php");
                     if($result -> num_rows > 0){
                         while($row = $result -> fetch_assoc()){
                             $html = "<tr>";
-                            $html .= "<td>" . ucfirst($row['category']) . "</td>";
-                            $html .= "<td>";
+                            $html .= "<td class='px-2'>" . ucfirst($row['category']) . "</td>";
+                            $html .= "<td class='px-2'>";
                             $html .= "<div class='btn-group' role='group'>";
 //Delete and edit buttons
                             $html .= "<a href='/delete?categoryname=" . $row['category'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";

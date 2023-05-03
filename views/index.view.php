@@ -35,10 +35,10 @@ $_SESSION["location"] = "/";
         <table class="table table-bordered table-sm shadow">
             <thead>
                 <tr class="table_header">
-                    <th scope="col">Receta</th>
-                    <th scope="col">Duración</th>
-                    <th scope="col">Categoría</th>
-                    <th scope="col">Acciones</th>
+                    <th class='px-2' scope="col">Receta</th>
+                    <th class='px-2' scope="col">Duración</th>
+                    <th class='px-2' scope="col">Categoría</th>
+                    <th class='px-2' scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody id="content">

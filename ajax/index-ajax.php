@@ -53,10 +53,10 @@
     if($num_rows > 0) {
         while($row = $result->fetch_assoc()){
             $output['data'] .= "<tr>";            
-            $output['data'] .= "<td><a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta' class='tlink'>" . $row['recipename'] . "</a></td>";
-            $output['data'] .= "<td>" . $row['cookingtime'] . " min</td>";
-            $output['data'] .= "<td>" .ucfirst($row['category']). "</td>";            
-            $output['data'] .= "<td>";
+            $output['data'] .= "<td class='px-2'><a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta' class='tlink'>" . $row['recipename'] . "</a></td>";
+            $output['data'] .= "<td class='px-2'>" . $row['cookingtime'] . " min</td>";
+            $output['data'] .= "<td class='px-2'>" .ucfirst($row['category']). "</td>";            
+            $output['data'] .= "<td class='px-2'>";
             $output['data'] .= "<div class='btn-group' role='group'>";
             $output['data'] .= "<a href='/edit?recipename=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "'" . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
             $output['data'] .= "<a href='/delete?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";

@@ -41,16 +41,16 @@ require_once ("views/partials/nav.php");
         <table class="table table-sm shadow">
             <thead>
                 <tr class="table_header">
-                    <th scope="col">Ingredientes</th>
-                    <th scope="col">Acciones</th>
+                    <th class='px-2' scope="col">Ingredientes</th>
+                    <th class='px-2'scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>  
             <?php              
                 while($row = $result -> fetch_assoc()){
                     $html = "<tr>";
-                    $html .= "<td title='ingrediente'>" . ucfirst($row['ingredient']) . "</td>";
-                    $html .= "<td>";
+                    $html .= "<td class='px-2' title='ingrediente'>" . ucfirst($row['ingredient']) . "</td>";
+                    $html .= "<td class='px-2'>";
 //Delete button                    
                     $html .= "<a href='/delete?ingredientname=" . $row['ingredient'] . "' class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                     $html .= "</td>";
