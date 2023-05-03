@@ -91,7 +91,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
         
         $arrayCount = count($ingArray);
 //Recipes of the user
-        $sql = "SELECT recipename, ingredients FROM recipe WHERE username = '" . $_SESSION['username'] . "'";
+        $sql = "SELECT r.recipename, r.ingredients, c.category FROM recipe r JOIN categories c ON r.categoryid = c.categoryid WHERE username = '" . $_SESSION['username'] . "'";
         $result = $conn -> query($sql);
         
             if($result -> num_rows != 0){
@@ -108,6 +108,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 //Checking if the recipe has already been added in the array                                                   
                             if(!in_array($row["recipename"], $recipes)){
                                 $recipes[] = $row["recipename"];
+                                $category[] = $row["category"];
                             }    
                         }             
                     }                    
@@ -119,7 +120,12 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                     $html .= "<div class='suggestion_container'>";
                     $html .= "<ul>";
                     for($i = 0; $i < $countRecipe; $i++){                    
-                        $html .= "<li><a href='/recipes?recipe=" . $recipes[$i] . "&username=" . $_SESSION['username'] . "' title='receta'>" . $recipes[$i] . "</a></li>";         
+                        $html .= "<li>";
+                        $html .= "<a href='/recipes?recipe=" . $recipes[$i] . "&username=" . $_SESSION['username'] . "' title='receta'>";
+                        $html .= $recipes[$i];
+                        $html .= "</a>";
+                        $html .= " <span class='text-secondary small'>(" . $category[$i] . ")</span>";
+                        $html .= "</li>";         
                     }
                     $html .= "</ul>";
                     $html .= "</div>";
