@@ -154,16 +154,12 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                     </div>
                     <div class="mb-3 text-center">
                         <label for="ingredients" class="form-label is-required">Ingredientes: </label>
-                        <textarea class="form-control" name="ingredients" id="ingredients" cols="10" rows="10" required>
-                            <?php echo $ingredients;?>
-                        </textarea>
+                        <textarea class="form-control" name="ingredients" id="ingredients" cols="10" rows="10" required><?php echo $ingredients;?></textarea>
                     </div>     
                             
                     <div class="mb-3 text-center">
                         <label  class="form-label is-required" for="preparation">Preparación: </label>
-                        <textarea name="preparation"  cols="10" rows="10" class="form-control" id="preparation" required>
-                            <?php echo $preparation;?>
-                        </textarea>
+                        <textarea name="preparation"  cols="10" rows="10" class="form-control" id="preparation" required><?php echo $preparation;?></textarea>
                     </div>
                                       
                     <div class="mb-3 text-center">
