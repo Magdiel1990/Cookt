@@ -87,6 +87,25 @@ require_once ("views/partials/nav.php");
         </table>
     </div>
 </main>
+<script>
+deleteMessage("btn-outline-danger", "categoría");   
+
+//Delete message
+function deleteMessage(button, pageName){
+var deleteButtons = document.getElementsByClassName(button);
+
+    for(var i = 0; i<deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener("click", function(event){    
+            if(confirm("¿Desea eliminar esta " + pageName + "?")) {
+                return true;
+            } else {
+                event.preventDefault();
+                return false;
+            }
+        })
+    }
+}
+</script>
 <?php
 //Close db connection
 $conn -> close();

@@ -4,6 +4,7 @@ require_once ("views/partials/head.php");
 
 //Nav
 require_once ("views/partials/nav.php");
+
 ?>
 
 <main class="container p-4">
@@ -68,9 +69,27 @@ require_once ("views/partials/nav.php");
                 echo $html;
             }    
             ?>
-    </div>
- 
+    </div> 
 </main>
+<script>
+deleteMessage("btn-outline-danger", "ingrediente");   
+
+//Delete message
+function deleteMessage(button, pageName){
+var deleteButtons = document.getElementsByClassName(button);
+
+    for(var i = 0; i<deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener("click", function(event){    
+            if(confirm("¿Desea eliminar este " + pageName + "?")) {
+                return true;
+            } else {
+                event.preventDefault();
+                return false;
+            }
+        })
+    }
+}
+</script>
 <?php
 //exiting connection
 $conn -> close();

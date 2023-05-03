@@ -184,6 +184,25 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
         </div>
     </div>    
 </main>
+<script>
+deleteMessage("btn-outline-danger", "usuario");   
+
+//Delete message
+function deleteMessage(button, pageName){
+var deleteButtons = document.getElementsByClassName(button);
+
+    for(var i = 0; i<deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener("click", function(event){    
+            if(confirm("¿Desea eliminar este " + pageName + "?")) {
+                return true;
+            } else {
+                event.preventDefault();
+                return false;
+            }
+        })
+    }
+}
+</script>
 <?php
 //Exiting connection
 $conn -> close();
