@@ -43,7 +43,7 @@ if($result -> num_rows > 0) {
     <div class="row mt-2 text-center justify-content-center">
         <h3>EDITAR CATEGORÍA</h3>     
         <div class="mt-3 col-auto">
-            <form  enctype="multipart/form-data" class="bg-form card card-body" action="update?categoryid=<?php echo $categoryId; ?>" method="POST">
+            <form  enctype="multipart/form-data" class="form card card-body" action="update?categoryid=<?php echo $categoryId; ?>" method="POST">
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="categoryName">Nombre: </label>
@@ -119,7 +119,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
     <div class="row mt-2 justify-content-center">
         <h3 class="text-center">Editar Receta</h3>     
         <div class="mt-3 col-auto">
-            <div class="bg-form card card-body">
+            <div class="form card card-body">
                 <form enctype="multipart/form-data" action="update?editname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
 
                     <div class="input-group mb-3">
@@ -238,7 +238,7 @@ $num_rows  = $result -> num_rows;
     <div class="row mt-2 justify-content-center">
         <h3 class="text-center">Editar Usuario</h3>     
         <div class="mt-3 col-auto">
-            <form class="bg-form card card-body" enctype="multipart/form-data" action="update?userid=<?php echo $userId; ?>" method="POST">
+            <form class="form card card-body" enctype="multipart/form-data" action="update?userid=<?php echo $userId; ?>" method="POST">
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>

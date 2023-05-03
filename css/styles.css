@@ -115,57 +115,48 @@ table td, p, ul li, ol li, li a {
     border: solid 2px #999;
     padding: 1rem;
 }
+
 .suggestion_container ul li a, .suggestion_container ul li {
     color: rgb(22, 93, 244); 
     margin: 1rem 0;
 }
-ol li a, b {
-    margin: 0.3rem;
+
+/*Form format*/
+label, select, input, option {
+    font-size: 1.2rem;
 }
-b {
-    font-size: 1.1rem;
-    color: #555555;
-}
+
 select:hover {
     box-shadow: 1px 1px 5px rgb(240, 144, 41);
 }
+
 option {
     color: rgb(240, 144, 41);
 }
-.close {
-    background-color: transparent;
-}
-.close span {
-    font-family: "Comic Sans MS", "Comic Sans", "cursive";
-    color: rgb(58, 117, 123);
-}
+
 .form, .recovery-form {
     background-color:rgb(255, 249, 241);
     box-shadow: 1px 1px 8px 1px #888;
     padding: 1.5rem;
 }
-.recovery-form {
-    background-color:#fff;
-    box-shadow: 1px 1px 8px 1px #888;
-    padding: 3rem;    
-}
-label, select, input, option {
-    font-size: 1.2rem;
-}
-.bg-form  {
-    background-color: rgb(255, 250, 234);
-    box-shadow: 1px 1px 2px #888;   
-}
-.fa-user{
-    font-size: 1.3rem;
-}
-.jumbotron li{
-    font-size: 1.6rem;
-}
-.bg-form ul li {
+
+
+.form ul li {
     list-style: none;
     font-size: 1.2rem;
 }
+
+/*Default user image*/
+.fa-user {
+    font-size: 1.3rem;
+}
+
+/*Jumbotron*/
+.jumbotron li{
+    font-size: 1.6rem;
+}
+
+/*Mandatory input sign (*) */
 .is-required:after {
     content: '*';
     margin-left: 3px;

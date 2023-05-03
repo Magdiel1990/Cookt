@@ -79,7 +79,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
         <div class="row m-auto">
             <div class="d-flex flex-column justify-content-center align-items-center jumbotron">
 
-                <div class="bg-form p-2 my-4 col-lg-9 col-xl-9">
+                <div class="form p-2 my-4 col-lg-9 col-xl-9">
                     <div class="text-center">
                         <h1 class="display-4 text-info"> <?php echo $recipeName; ?> </h1>
                         <h5 class="text-warning" style='font-size: 1.5rem;' title="duración"> (<?php echo $cookingTime; ?> minutos)</h5>
