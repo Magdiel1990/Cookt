@@ -53,3 +53,22 @@
         </div>          
     </nav>
 </header>
+ <script>
+deleteMessage("logout");   
+
+//Delete message
+function deleteMessage(button){
+var deleteButtons = document.getElementsByClassName(button);
+
+    for(var i = 0; i<deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener("click", function(event){    
+            if(confirm("¿Desea salir?")) {
+                return true;
+            } else {
+                event.preventDefault();
+                return false;
+            }
+        })
+    }
+}
+</script>
