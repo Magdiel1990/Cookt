@@ -41,7 +41,7 @@
             $imgprofileDir = $files -> directoryFiles();
             
             if($imgprofileDir != false){
-                echo '<img src="' . $imgprofileDir . '" class="profile mx-2">';
+                echo '<img src="' . $imgprofileDir . '" class="mx-2">';
             } else {
                 echo "<i class='fa-regular fa-user'></i>";
             }

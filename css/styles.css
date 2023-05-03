@@ -36,6 +36,7 @@ footer {
 .navbar img {
     position: relative;
     height: 2.1rem;
+    border-radius: 50%;
 }
 
 .logo {
