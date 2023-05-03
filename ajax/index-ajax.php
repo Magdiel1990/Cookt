@@ -53,7 +53,7 @@
     if($num_rows > 0) {
         while($row = $result->fetch_assoc()){
             $output['data'] .= "<tr>";            
-            $output['data'] .= "<td><a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta'>" . $row['recipename'] . "</a></td>";
+            $output['data'] .= "<td><a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta' class='tlink'>" . $row['recipename'] . "</a></td>";
             $output['data'] .= "<td>" . $row['cookingtime'] . " min</td>";
             $output['data'] .= "<td>" .ucfirst($row['category']). "</td>";            
             $output['data'] .= "<td>";

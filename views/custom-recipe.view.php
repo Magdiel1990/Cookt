@@ -69,7 +69,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
             $html .= "<ol>";
             while($row = $result -> fetch_assoc()) {
                 $html .= "<li>";
-                $html .= "<a href='/delete?custom=" . $row['ingredient'] . "' " . "title='Eliminar' class='ingredients'>";
+                $html .= "<a href='/delete?custom=" . $row['ingredient'] . "' " . "title='Eliminar'>";
                 $html .= ucfirst($row["ingredient"]);
                 $html .= "</a>";
                 $html .= "</li>";

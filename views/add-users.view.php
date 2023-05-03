@@ -162,7 +162,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                             
                             $html = "<tr>";                        
                             $html .= "<td>";
-                            $html .="<a style='color:" . $color . ";' $recipeList>";
+                            $html .="<a class='tlink' style='color:" . $color . ";' $recipeList>";
                             $html .= $username;
                             $html .="</a>";
                             $html .= "</td>";

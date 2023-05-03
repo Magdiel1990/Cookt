@@ -52,7 +52,7 @@ require_once ("views/partials/nav.php");
                     $html .= "<td title='ingrediente'>" . ucfirst($row['ingredient']) . "</td>";
                     $html .= "<td>";
 //Delete button                    
-                    $html .= "<a href='/delete?ingredientname=" . $row['ingredient'] . "' id ='ingredientdel' class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                    $html .= "<a href='/delete?ingredientname=" . $row['ingredient'] . "' class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
                     $html .= "</td>";
                     $html .= "</tr>";
                     echo $html;
