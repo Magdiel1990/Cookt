@@ -54,7 +54,7 @@
         while($row = $result->fetch_assoc()){
             $output['data'] .= "<tr>";            
             $output['data'] .= "<td class='px-2'><a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta' class='tlink'>" . $row['recipename'] . "</a></td>";
-            $output['data'] .= "<td class='px-2'>" . $row['cookingtime'] . " min</td>";
+            $output['data'] .= "<td class='text-center px-2'>" . $row['cookingtime'] . "</td>";
             $output['data'] .= "<td class='px-2'>" .ucfirst($row['category']). "</td>";            
             $output['data'] .= "<td class='px-2'>";
             $output['data'] .= "<div class='btn-group' role='group'>";

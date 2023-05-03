@@ -36,7 +36,7 @@ $_SESSION["location"] = "/";
             <thead>
                 <tr class="table_header">
                     <th class='px-2' scope="col">Receta</th>
-                    <th class='px-2' scope="col">Duración</th>
+                    <th class='px-2 text-center' scope="col">Tiempo (min)</th>
                     <th class='px-2' scope="col">Categoría</th>
                     <th class='px-2' scope="col">Acciones</th>
                 </tr>
