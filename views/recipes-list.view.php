@@ -29,7 +29,7 @@ $result = $conn -> query($sql);
             <div class="table-responsive-md mt-2">
                 <table class="table table-sm shadow">
                     <thead>
-                        <tr class="bg-primary">
+                        <tr class="table_header">
                             <th scope="col">Nombre completo</th>                
                             <th scope="col">Tiempo de uso</th>
                             <th scope="col">Último acceso</th>                            

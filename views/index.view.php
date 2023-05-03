@@ -34,7 +34,7 @@ $_SESSION["location"] = "/";
     <div class="table-responsive-md mt-2">
         <table class="table table-bordered table-sm shadow">
             <thead>
-                <tr class="bg-primary">
+                <tr class="table_header">
                     <th scope="col">Receta</th>
                     <th scope="col">Duración</th>
                     <th scope="col">Categoría</th>

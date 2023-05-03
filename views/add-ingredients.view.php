@@ -40,7 +40,7 @@ require_once ("views/partials/nav.php");
         ?>
         <table class="table table-sm shadow">
             <thead>
-                <tr class="bg-primary">
+                <tr class="table_header">
                     <th scope="col">Ingredientes</th>
                     <th scope="col">Acciones</th>
                 </tr>
