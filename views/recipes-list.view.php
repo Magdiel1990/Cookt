@@ -21,13 +21,13 @@ $result = $conn -> query($sql);
 ?>
 
 <main class="container p-4 mt-4">
-    <div class="row justify-content-center table form">
+    <div class="row justify-content-center form">
         <div class="col-lg-8 col-xl-8 col-md-8 mb-5">
             <div class="text-center">
                 <h3>Datos del usuario <?php echo $username;?></h3>                
             </div>
             <div class="table-responsive-md mt-2">
-                <table class="table table-sm">
+                <table class="table table-sm shadow">
                     <thead>
                         <tr class="bg-primary">
                             <th scope="col">Nombre completo</th>                

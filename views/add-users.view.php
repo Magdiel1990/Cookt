@@ -106,7 +106,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
         <div class="col-lg-9 col-xl-9 col-md-12 col-sm-12 my-4">
             <h3 class="text-center">Lista de Usuarios</h3>
             <div class="table-responsive-md mt-3">
-                <table class="table table-bordered table-md">
+                <table class="table table-bordered table-md shadow">
                     <thead>
                         <tr class="bg-primary">
                             <th scope="col">Usuario</th>

@@ -38,7 +38,7 @@ require_once ("views/partials/nav.php");
 
             if($result -> num_rows > 0){
         ?>
-        <table class="table table-sm">
+        <table class="table table-sm shadow">
             <thead>
                 <tr class="bg-primary">
                     <th scope="col">Ingredientes</th>

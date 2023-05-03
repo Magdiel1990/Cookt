@@ -32,7 +32,7 @@ $_SESSION["location"] = "/";
     </div>
 <!-- Table to show the recipes-->
     <div class="table-responsive-md mt-2">
-        <table class="table table-bordered table-sm">
+        <table class="table table-bordered table-sm shadow">
             <thead>
                 <tr class="bg-primary">
                     <th scope="col">Receta</th>

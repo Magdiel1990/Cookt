@@ -29,7 +29,7 @@ footer {
 
 /*Nav format*/
 
-.navbar button, .navbar button span {
+.navbar-toggler{
     color: white;
 }
 
@@ -61,6 +61,10 @@ footer {
     font-size: 1rem;
 }
 
+.logout {
+    font-size: 1.1rem;
+}
+
 /*Random recipe image link format*/
 .recipe_link {
     text-decoration: none;
@@ -68,21 +72,19 @@ footer {
     display: block;
 }
 
-.profile {    
+/*Profile format*/
+#profile {    
     border-radius: 50%;
     max-width: 50%;
     height: auto;
 }
-.logout {
-    font-size: 1.1rem;
-}
-h4 span {
+
+.profile_description {
     font-weight: bold;
     color: rgb(4, 4, 99);
 }
-table {
-    box-shadow: 1px 1px 8px 1px #888;
-}
+
+/*Tables*/
 thead {
     background-color:#444444;
 }
@@ -169,6 +171,15 @@ label, select, input, option {
     color: red;
     font-weight: bold;
 }
+
+/*Error message*/
+#message {
+    color: rgb(255, 0, 0);
+    font-size: 1rem;
+    text-align: center;
+    font-weight: bold;
+}
+
 /*Error page made by purplexmoss (https://freefrontend.com/html-css-404-page-templates/)*/
 .error {
     background-color: #95c2de;
@@ -209,9 +220,3 @@ label, select, input, option {
     text-decoration: underline;
 }
 
-#message {
-    color: rgb(255, 0, 0);
-    font-size: 1rem;
-    text-align: center;
-    font-weight: bold;
-}

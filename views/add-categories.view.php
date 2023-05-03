@@ -47,7 +47,7 @@ require_once ("views/partials/nav.php");
     </div>
 <!-- Category list -->
     <div class="table-responsive-sm mt-4">
-        <table class="table table-sm">
+        <table class="table table-sm shadow">
             <thead>
                 <tr class="bg-primary">
                     <th scope="col">Categorías</th>
