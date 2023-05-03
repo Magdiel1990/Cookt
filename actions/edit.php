@@ -93,16 +93,12 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
     if(isset($row["cookingtime"]) && isset($row["ingredients"]) && isset($row["preparation"]) && isset($row["category"])) {
         $cookingTime = $row["cookingtime"];
         $ingredients = $row["ingredients"];
-
-        $filter = new Filter ($row["preparation"], FILTER_SANITIZE_STRING, $conn);  
-        $preparation = $filter -> sanitization();
-        
-        $filter = new Filter ($row["ingredients"], FILTER_SANITIZE_STRING, $conn);  
-        $ingredients = $filter -> sanitization();
-
+        $preparation = $row["preparation"];        
+        $ingredients = $row["ingredients"];
         $category = $row["category"];
     } else {
         header('Location: /error404');
+        exit;
     }
 ?>
 <main class="container p-4">
