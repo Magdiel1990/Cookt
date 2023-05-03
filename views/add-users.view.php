@@ -29,7 +29,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
     ?>  <div class="col-auto order-last my-4">
 <!--Form for adding the users-->
             <h3 class="text-center mb-3">Agregar Usuarios</h3>
-            <form method="POST" action="/create">         
+            <form method="POST" action="/create" id="user_form">         
                 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
@@ -219,6 +219,22 @@ var deleteButtons = document.getElementsByClassName(button);
         })
     }
 }
+//Form validation
+function userValidation(){
+    var firstname = document.getElementById("firstname");
+    var lastname = document.getElementById("lastname");
+    var username = document.getElementById("username");
+    var userpassword = document.getElementById("userpassword");
+    var passrepeat = document.getElementById("passrepeat");
+    var useremail = document.getElementsByName("sex");
+    var form = document.getElementById("user_form");
+
+
+
+    //PENDING
+
+}
+
 </script>
 <?php
 //Exiting connection
