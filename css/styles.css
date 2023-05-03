@@ -1,28 +1,43 @@
+/*General format*/
 * {
     font-family:'Times New Roman', Times, serif;
 }
 
+/*Titles formats*/
 h2 {
     color: #fff;
 }
+
 h3 {
     font-size: 1.5rem;
     color: #444;
     font-weight: bold;
 }
-.recipe_link {
-    text-decoration: none;
-}
+
+/*Header, footer and main format*/
 header, footer {
     background: rgb(4, 4, 99);    
 }
+
+main {
+    min-height: calc(100vh - 10.9rem);
+}
+
+footer {
+    height: 7.4rem;
+}
+
+/*Nav format*/
+
 .navbar button, .navbar button span {
     color: white;
 }
+
 .navbar img {
     position: relative;
     height: 2.1rem;
 }
+
 .logo {
     position: relative;
     right: 1rem;
@@ -30,22 +45,29 @@ header, footer {
     align-items: center;
     justify-content: center;
 }
+
 #navbarNavDropdown {
     position: inherit;
     right: 1rem;
 }
-main {
-    min-height: calc(100vh - 10.9rem);
-}
-footer {
-    height: 7.4rem;
-}
+
 .nav-item {
     font-size: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
-.dropdown-menu a {
+
+.dropdown-item {
     font-size: 1rem;
 }
+
+/*Random recipe image link format*/
+.recipe_link {
+    text-decoration: none;
+    text-align: center;
+    display: block;
+}
+
 .profile {    
     border-radius: 50%;
     max-width: 50%;

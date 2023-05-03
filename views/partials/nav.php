@@ -10,13 +10,13 @@
 <!-- Nav links -->        
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-            <li class="nav-item px-1">
+            <li class="nav-item">
                 <a class="nav-link text-white" href="/random">Sugerencias</a>
             </li>
-            <li class="nav-item px-1">
+            <li class="nav-item">
                 <a class="nav-link text-white" href="/custom">Elegir por ingredientes</a>
             </li>
-            <li class="nav-item dropdown px-1"  <?php if($_SESSION['type'] == 'Viewer') { echo "style = 'display : none;'";}?>>
+            <li class="nav-item dropdown"  <?php if($_SESSION['type'] == 'Viewer') { echo "style = 'display : none;'";}?>>
                 <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa-solid fa-gears text-white"></i>
                 </a>

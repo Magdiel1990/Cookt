@@ -77,7 +77,7 @@ if(isset($_POST["category"])) {
         $cookingtime = $row['cookingtime'];       
     ?>
     <div class="my-4">
-        <a class="text-center d-block recipe_link" href='/recipes?recipe=<?php echo $recipename;?>&username=<?php echo $_SESSION['username'];?>'>
+        <a class="recipe_link" href='/recipes?recipe=<?php echo $recipename;?>&username=<?php echo $_SESSION['username'];?>'>
             <p class="text-info"> <?php echo $recipename . " (" . $cookingtime . " minutos)"; ?> </p>
             <?php
 //Recipe image            
