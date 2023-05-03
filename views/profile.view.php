@@ -16,7 +16,7 @@ $userName = $row["username"];
 $firstName =  $row["firstname"];
 $lastName =  $row["lastname"];
 $type = $row["type"];
-$email = $row["email"];
+$email = $row["email"] ? $row["email"] : "No tiene correo";
 $currentPassword = $row["password"];
 $sex = $row["sex"];
 $date = date("d-m-Y", strtotime($row["created_at"]));
@@ -70,6 +70,25 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
         </div>
     </div>
  </main>
+ <script>
+deleteMessage("btn-danger", "cuenta");   
+
+//Delete message
+function deleteMessage(button, pageName){
+var deleteButtons = document.getElementsByClassName(button);
+
+    for(var i = 0; i<deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener("click", function(event){    
+            if(confirm("¿Desea eliminar su " + pageName + "?")) {
+                return true;
+            } else {
+                event.preventDefault();
+                return false;
+            }
+        })
+    }
+}
+</script>
 <?php
 //Exiting connection
 $conn -> close();
