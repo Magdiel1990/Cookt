@@ -165,6 +165,15 @@ option {
 }
 
 /*Error message*/
+.close {
+    background-color: transparent;
+}
+
+.close span {
+    font-family: "Comic Sans MS", "Comic Sans", "cursive";
+    color: rgb(58, 117, 123);
+}
+
 #message {
     color: rgb(255, 0, 0);
     font-size: 1rem;

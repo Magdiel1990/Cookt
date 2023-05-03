@@ -69,7 +69,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
             $html .= "<ol>";
             while($row = $result -> fetch_assoc()) {
                 $html .= "<li>";
-                $html .= "<a href='/delete?custom=" . $row['ingredient'] . "' " . "title='Eliminar'>";
+                $html .= "<a href='/delete?custom=" . $row['ingredient'] . "' " . "title='Eliminar' class='click-del'>";
                 $html .= ucfirst($row["ingredient"]);
                 $html .= "</a>";
                 $html .= "</li>";
@@ -134,6 +134,25 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
         </div>
     </div>
 </main>
+<script>
+deleteMessage("click-del", "ingrediente");   
+
+//Delete message
+function deleteMessage(button, pageName){
+var deleteButtons = document.getElementsByClassName(button);
+
+    for(var i = 0; i<deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener("click", function(event){    
+            if(confirm("¿Desea eliminar este " + pageName + "?")) {
+                return true;
+            } else {
+                event.preventDefault();
+                return false;
+            }
+        })
+    }
+}
+</script>
 
 <?php
 //Exiting connection
