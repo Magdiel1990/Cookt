@@ -80,8 +80,94 @@ require_once ("views/partials/nav.php");
             </form>
             
             <script>
-//Validation code
                 add_recipe_validation();
+
+                textarea_indication();
+
+//Recipe addition validation method              
+                function add_recipe_validation() {
+//Form   
+                    var form = document.getElementById("add_recipe_form");
+                    form.addEventListener("submit", function(event){
+
+                    var regExp = /[a-zA-Z\t\h]+|(^$)/;
+                    var recipename = document.getElementById("recipename").value;
+                    var cookingtime = document.getElementById("cookingtime").value;
+                    var ingredients = document.getElementById("ingredients").value;
+                    var preparation = document.getElementById("preparation").value;
+                    var recipeImage = document.getElementById("recipeImage");
+                    var message = document.getElementById("message");
+                    var file = recipeImage.files[0];
+                    var weight = file.size;
+                    var fileType = file.type;
+                    var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg"];
+
+
+//Conditions
+                    if(recipename == "" || preparation == "" || ingredients == ""){
+                        event.preventDefault();
+                        message.innerHTML = "Completar los campos requeridos";             
+                        return false;
+                    }
+//Regular Expression    
+                    if(!recipename.match(regExp)){
+                        event.preventDefault();
+                        message.innerHTML = "¡Nombre de receta incorrecto!";                 
+                        return false;
+                    }
+//Cooking time parameters    
+                    if(cookingtime > 180 || cookingtime < 5){
+                        event.preventDefault();
+                        message.innerHTML = "¡Tiempo de cocción debe estar entre 5 - 180 minutos!";  
+                        return false;
+                    }      
+                    if (recipeImage.value != "") {
+//Size in Bytes     
+                        if(weight > 300000) {
+                            event.preventDefault();
+                            message.innerHTML = "¡El tamaño de la imagen debe ser menor que 300 KB!";  
+                            return false;
+                        }       
+//Image format validation
+                        if(!allowedImageTypes.includes(fileType)){
+                            event.preventDefault();
+                            message.innerHTML = "¡Formatos de imagen admitidos: jpg, png y gif!";
+                            return false;
+                        }
+                    }
+                        return true;                           
+                    })
+                }
+
+//Textarea indications                
+                
+
+                function textarea_indication() {
+                    var preparation = document.getElementById("preparation");
+                    var ingredient = document.getElementById("ingredients");
+                    var recipename = document.getElementById("recipename");
+
+                    ingredient.addEventListener("focus", function(event){
+                        ingredient.setAttribute("placeholder", "¡Finalice cada ingrediente con un punto y aparte!");
+                        ingredient.spellcheck = true;     
+                    })
+                    ingredient.addEventListener("blur", function(event){
+                        ingredient.setAttribute("placeholder", "");
+                        ingredient.spellcheck = false;     
+                    })
+                    ingredient.addEventListener("focus", function(event){
+                        preparation.spellcheck = true;     
+                    })
+                    ingredient.addEventListener("blur", function(event){
+                        preparation.spellcheck = false;     
+                    })
+                      ingredient.addEventListener("focus", function(event){
+                        recipename.spellcheck = true;     
+                    })
+                    ingredient.addEventListener("blur", function(event){
+                        recipename.spellcheck = false;     
+                    })
+                }
             </script>
             
         </div>

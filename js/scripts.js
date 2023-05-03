@@ -53,7 +53,7 @@ function validationNumber(number){
 //Recipe addition validation method              
 function add_recipe_validation() {
 //Form   
-    form = document.getElementById("add_recipe_form");
+    var form = document.getElementById("add_recipe_form");
     form.addEventListener("submit", function(event){
 
     var regExp = /[a-zA-Z\t\h]+|(^$)/;
@@ -104,3 +104,5 @@ function add_recipe_validation() {
         return true;                           
     })
 }
+
+
