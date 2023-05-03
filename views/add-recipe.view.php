@@ -150,9 +150,9 @@ require_once ("views/partials/nav.php");
                     ingredient.addEventListener("focus", function(event){
                         ingredient.setAttribute("placeholder", "¡Finalice cada ingrediente con un punto y aparte!");
                         ingredient.spellcheck = true;     
-                    })
+                    })<
                     ingredient.addEventListener("blur", function(event){
-                        ingredient.setAttribute("placeholder", "");
+                        ingredient.removeAttribute("placeholder");
                         ingredient.spellcheck = false;     
                     })
                     ingredient.addEventListener("focus", function(event){
