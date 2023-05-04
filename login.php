@@ -139,30 +139,27 @@ $header = $header -> pageHeader();
                         <div class="input-group mb-3">
                             <input type="password" id="password" class="form-control form-control-lg" name="password"  autocomplete="off"/>        
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary btn-lg" type="button" onclick="showpass()">
+                                <button class="btn btn-outline-secondary btn-lg" type="button">
                                     <i class="fa-solid fa-eye"></i>                                    
                                 </button>        
                             </div>                                                      
                         </div>
                         <label class="form-label" for="password">Contraseña</label>  
 <!-- Script to show and hide the password when clicking the button -->
-                        <script>
-                            function showpass(){
-                                var tipo = document.getElementById("password");
-                                var button = document.getElementsByClassName("btn-outline-secondary");
-                                var i = document.getElementsByClassName("fa-eye");
-                                var element = document.createElement('i');
-                                element.className = "fa-regular fa-eye-slash";                          
+                        <script>     
+                            showpass();
 
-                                if(tipo.type == "password"){
-                                    tipo.type = "text"; 
-                                    i[0].parentNode.removeChild(i[0]);                                                                     
-                                    button[0].appendChild(element);
-                                } else {
-                                    tipo.type = "password";
-                                    button[0].removeChild(element);  
-                                    button[0].appendChild(i[0]);                                                              
-                                }
+                            function showpass(){
+                                var button = document.getElementsByClassName("btn-outline-secondary")[0];
+                                
+                                button.addEventListener("click", function(){
+                                    var tipo = document.getElementById("password");
+                                    if(tipo.type == "password"){
+                                        tipo.type = "text"; 
+                                    } else {
+                                        tipo.type = "password";                                                     
+                                    }
+                                })                               
                             }
                         </script>
 <!-- Password recovery link -->
