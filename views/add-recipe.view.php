@@ -139,9 +139,7 @@ require_once ("views/partials/nav.php");
                     })
                 }
 
-//Textarea indications                
-                
-
+//Textarea indications   
                 function textarea_indication() {
                     var preparation = document.getElementById("preparation");
                     var ingredient = document.getElementById("ingredients");
