@@ -149,11 +149,19 @@ $header = $header -> pageHeader();
                         <script>
                             function showpass(){
                                 var tipo = document.getElementById("password");
-                               
+                                var button = document.getElementsByClassName("btn-outline-secondary");
+                                var i = document.getElementsByClassName("fa-eye");
+                                var element = document.createElement('i');
+                                element.className = "fa-regular fa-eye-slash";                          
+
                                 if(tipo.type == "password"){
-                                    tipo.type = "text";
+                                    tipo.type = "text"; 
+                                    i[0].parentNode.removeChild(i[0]);                                                                     
+                                    button[0].appendChild(element);
                                 } else {
-                                    tipo.type = "password";                                    
+                                    tipo.type = "password";
+                                    button[0].removeChild(element);  
+                                    button[0].appendChild(i[0]);                                                              
                                 }
                             }
                         </script>
