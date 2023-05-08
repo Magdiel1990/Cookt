@@ -33,27 +33,27 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
-                    <input class="form-control" type="text" id="firstname" name="firstname" >
+                    <input class="form-control" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30">
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="lastname">Apellido: </label>
-                    <input class="form-control" type="text" id="lastname" name="lastname">
+                    <input class="form-control" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="40">
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="username">Usuario: </label>
-                    <input class="form-control" type="text" id="username" name="username">
+                    <input class="form-control" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30">
                 </div>
 
                 <div class="input-group mb-3">
-                    <label class="input-group-text is-required" for="password">Contraseña: </label>
-                    <input class="form-control" type="password" id="password" name="password">
+                    <label class="input-group-text is-required" for="userpassword">Contraseña: </label>
+                    <input class="form-control" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="passrepeat">Repetir contraseña: </label>
-                    <input class="form-control" type="password" id="passrepeat" name="passrepeat">
+                    <input class="form-control" type="password" id="passrepeat" name="passrepeat" minlength="8" maxlength="50">
                 </div>
 
                 <div class="input-group mb-3">
@@ -72,14 +72,14 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                 </div>
 
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="email">Email: </label>
-                    <input class="form-control" type="email" id="email" name="email">
+                    <label class="input-group-text" for="useremail">Email: </label>
+                    <input class="form-control" type="email" id="useremail" name="useremail" minlength="15" maxlength="70">
                 </div>
 <!-- Current user is sent-->
                 <input type="hidden" name="session_user" value = "<?php echo $_SESSION['username']?>">
                 <div class="text-center">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="sex" id="M" value="M">
+                        <input class="form-check-input" type="radio" name="sex" id="M" value="M" required>
                         <label class="form-check-label" for="M">M</label>
                     </div>
 
@@ -94,7 +94,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                     </div> 
                 </div>    
 
-                <div id="message"></div> 
+                <div id="alert_message"></div> 
 
                 <div class="text-center form-switch mt-2">
                     <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes" checked>
