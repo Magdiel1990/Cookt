@@ -1,4 +1,6 @@
 <?php
+//Directory root
+define("root", "");
 
 class DatabaseConnection {
 //Database information
