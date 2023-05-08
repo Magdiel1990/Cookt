@@ -81,7 +81,6 @@ require_once ("views/partials/nav.php");
             
             <script>
                 add_recipe_validation();
-
                 textarea_indication();
 
 //Recipe addition validation method              

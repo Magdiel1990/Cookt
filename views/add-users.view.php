@@ -33,27 +33,27 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
-                    <input class="form-control" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30">
+                    <input class="form-control" type="text" id="firstname" name="firstname" >
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="lastname">Apellido: </label>
-                    <input class="form-control" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="40">
+                    <input class="form-control" type="text" id="lastname" name="lastname">
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="username">Usuario: </label>
-                    <input class="form-control" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30">
+                    <input class="form-control" type="text" id="username" name="username">
                 </div>
 
                 <div class="input-group mb-3">
-                    <label class="input-group-text is-required" for="userpassword">Contraseña: </label>
-                    <input class="form-control" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">
+                    <label class="input-group-text is-required" for="password">Contraseña: </label>
+                    <input class="form-control" type="password" id="password" name="password">
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="passrepeat">Repetir contraseña: </label>
-                    <input class="form-control" type="password" id="passrepeat" name="passrepeat" minlength="8" maxlength="50">
+                    <input class="form-control" type="password" id="passrepeat" name="passrepeat">
                 </div>
 
                 <div class="input-group mb-3">
@@ -72,14 +72,14 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                 </div>
 
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="useremail">Email: </label>
-                    <input class="form-control" type="email" id="useremail" name="useremail" minlength="15" maxlength="70">
+                    <label class="input-group-text" for="email">Email: </label>
+                    <input class="form-control" type="email" id="email" name="email">
                 </div>
 <!-- Current user is sent-->
                 <input type="hidden" name="session_user" value = "<?php echo $_SESSION['username']?>">
                 <div class="text-center">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="sex" id="M" value="M" required>
+                        <input class="form-check-input" type="radio" name="sex" id="M" value="M">
                         <label class="form-check-label" for="M">M</label>
                     </div>
 
@@ -92,7 +92,9 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                         <input class="form-check-input" type="radio" name="sex" id="O" value="O">
                         <label class="form-check-label" for="O">O</label>
                     </div> 
-                </div>     
+                </div>    
+
+                <div id="message"></div> 
 
                 <div class="text-center form-switch mt-2">
                     <input class="form-check-input" type="checkbox" id="activeuser" name="activeuser" value="yes" checked>
@@ -101,6 +103,83 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                 </div>       
 
             </form>
+            <script>
+                userValidation(); 
+
+//Form validation
+                function userValidation(){
+                var form = document.getElementById("user_form");    
+
+                form.addEventListener("submit", function(event){ 
+                    var regExp = /[a-zA-Z\t\h]+|(^$)/;
+                    var firstname = document.getElementById("firstname").value;
+                    var lastname = document.getElementById("lastname").value;
+                    var username = document.getElementById("username").value;
+                    var password = document.getElementById("password").value;
+                    var passrepeat = document.getElementById("passrepeat").value;
+                    var sex = document.getElementsByName("sex");    
+                    var email = document.getElementById("email").value; 
+                    var message = document.getElementById("message");    
+                    
+
+                    for (var s of sex) {
+                        if (!s.checked) {
+                            sex = "";
+                        }
+                    }
+
+                    if(firstname == "" || lastname == "" || username == "" || password == ""  || sex =="") {
+                        event.preventDefault();
+                        message.innerHTML = "¡Completar los campos requeridos!";             
+                        return false;
+                    }
+
+                    if(password != passrepeat) {
+                        event.preventDefault();
+                        message.innerHTML = "¡Contraseñas no coinciden!";        
+                        return false;
+                    }
+
+//Regular Expression    
+                    if(!firstname.match(regExp) || !lastname.match(regExp) || !username.match(regExp)){
+                        event.preventDefault();
+                        message.innerHTML = "¡Nombre, apellido o usuario incorrecto!";                 
+                        return false;
+                    }
+
+                    if(firstname.length < 2 || firstname.length > 30){
+                        event.preventDefault();
+                        message.innerHTML = "¡El nombre debe tener de 2 a 30 caracteres!";                 
+                        return false;
+                    } 
+
+                    if(lastname.length < 2 || lastname.length > 40){
+                        event.preventDefault();
+                        message.innerHTML = "¡El apellido debe tener de 2 a 40 caracteres!";                 
+                        return false;
+                    }
+
+                    if(username.length < 2 || username.length > 30){
+                        event.preventDefault();
+                        message.innerHTML = "¡El usuario debe tener de 2 a 30 caracteres!";                 
+                        return false;
+                    }
+
+                    if(password.length < 8 || password.length > 50){
+                        event.preventDefault();
+                        message.innerHTML = "¡La contraseña debe tener de 8 a 50 caracteres!";                 
+                        return false;
+                    }
+                    
+                    if(email.length < 15 || email.length > 70){
+                        event.preventDefault();                        
+                        message.innerHTML = "¡El email debe tener de 15 a 70 caracteres!";                 
+                        return false;
+                    }                
+                    return true;
+                })
+                }
+            </script>
         </div>
 <!-- List of users -->
         <div class="col-lg-9 col-xl-9 col-md-12 col-sm-12 my-4">
@@ -186,7 +265,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
 </main>
 <script>
 deleteMessage("btn-outline-danger", "usuario");   
-resetMessage("btn-outline-warning", "usuario"); 
+resetMessage("btn-outline-warning", "usuario");
 
 //Delete message
 function deleteMessage(button, pageName){
@@ -219,22 +298,6 @@ var deleteButtons = document.getElementsByClassName(button);
         })
     }
 }
-//Form validation
-function userValidation(){
-    var firstname = document.getElementById("firstname");
-    var lastname = document.getElementById("lastname");
-    var username = document.getElementById("username");
-    var userpassword = document.getElementById("userpassword");
-    var passrepeat = document.getElementById("passrepeat");
-    var useremail = document.getElementsByName("sex");
-    var form = document.getElementById("user_form");
-
-
-
-    //PENDING
-
-}
-
 </script>
 <?php
 //Exiting connection

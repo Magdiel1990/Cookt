@@ -360,7 +360,7 @@ if(isset($_POST['customingredient'])){
 /************************************************************************************************/
 
 //receive the data
-if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userpassword']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['session_user'])){
+if(isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex']) || isset($_POST['username']) || isset($_POST['userpassword']) || isset($_POST['userrol']) || isset($_POST['useremail']) || isset($_POST['session_user'])){
 
   $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
   $firstname = $filter -> sanitization();
@@ -397,7 +397,7 @@ if(isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['sex'
         exit;
 //If null        
   } else {
-    if ($firstname == "" || $lastname == "" || $username == "" || $password == ""  || $sex == "") {
+    if ($firstname == "" || $lastname == "" || $username == "" || $password == "" || $sex == "") {
         $_SESSION['message'] = '¡Complete todos los campos por favor!';
         $_SESSION['message_alert'] = "danger";
 
