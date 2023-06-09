@@ -74,46 +74,57 @@ require_once ("views/partials/nav.php");
 </main>
 <script>
 add_ingredient_validation();
-
-var form = document.getElementById("ingform");
-var message = document.getElementById("message");
+deleteMessage("btn-outline-danger", "ingrediente");   
 
 //Delete message
 function add_ingredient_validation() {
+    var form = document.getElementById("ingform");    
+
     form.addEventListener("submit", function (event){
     var regExp = /[a-zA-Z\t\h]+|(^$)/;
-    var ingredient = document.getElementById("add_ingredient");
+    var message = document.getElementById("message");    
+    var ingredient = document.getElementById("add_ingredient").value;
 
+//Empty validation
         if(ingredient == ""){
             event.preventDefault();
-            message.innerHTML = "Escribir el ingrediente";             
+            message.innerHTML = "¡Escribir el ingrediente por favor!";             
             return false;
         }
 
-    //Regular Expression    
+//Regular Expression    
         if(!ingredient.match(regExp)){
             event.preventDefault();
             message.innerHTML = "¡Nombre de ingrediente incorrecto!";                 
             return false;
         }
+
+//length validation
+        if(ingredient.length < 2 || ingredient.length > 20){
+            event.preventDefault();
+            message.innerHTML = "¡El ingrediente debe tener entre 2 y 20 caracteres!";             
+            return false;
+        }
+
         return true;                
     })
 }
 
-/*
+//Delete message
+function deleteMessage(button, pageName){
 var deleteButtons = document.getElementsByClassName(button);
 
-for(var i = 0; i<deleteButtons.length; i++) {
-    deleteButtons[i].addEventListener("click", function(event){    
-        if(confirm("¿Desea eliminar este " + pageName + "?")) {
-            return true;
-        } else {
-            event.preventDefault();
-            return false;
-        }
-    })
+    for(var i = 0; i<deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener("click", function(event){    
+            if(confirm("¿Desea eliminar este " + pageName + "?")) {
+                return true;
+            } else {
+                event.preventDefault();
+                return false;
+            }
+        })
+    }
 }
-*/
 </script>
 <?php
 //exiting connection
