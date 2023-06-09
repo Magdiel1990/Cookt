@@ -27,7 +27,7 @@ require_once ("views/partials/nav.php");
 <!--Category form-->
     <h3>Agregar Categorías</h3>
 
-        <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="/create" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
+        <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="<?php echo root;?>/create" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
             
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="add_categories">Categoría: </label>
@@ -66,8 +66,8 @@ require_once ("views/partials/nav.php");
                             $html .= "<td class='px-2'>";
                             $html .= "<div class='btn-group' role='group'>";
 //Delete and edit buttons
-                            $html .= "<a href='/delete?categoryname=" . $row['category'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
-                            $html .= "<a href='/edit?categoryid=" . $row['categoryid'] . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
+                            $html .= "<a href='" . root . "delete?categoryname=" . $row['category'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                            $html .= "<a href='" . root . "edit?categoryid=" . $row['categoryid'] . "' " . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
                             $html .= "</div>";
                             $html .= "</td>";
                             $html .= "</tr>";

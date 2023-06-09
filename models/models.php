@@ -1,6 +1,6 @@
 <?php
 //Directory root
-define("root", "");
+define("root", "/");
 
 class DatabaseConnection {
 //Database information

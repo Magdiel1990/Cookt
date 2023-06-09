@@ -13,7 +13,7 @@ session_start();
 
 //If no user has logged in
 if (!isset($_SESSION['username'])) {
-    header("Location: " . root . "/login");
+    header("Location: " . root . "login");
     exit;
 } else {    
 //Else, last login calculation.
@@ -42,7 +42,7 @@ if (!isset($_SESSION['username'])) {
 //Reasign the user that was logged out.
         $_SESSION['username'] = $username;
 
-        header("Location: " . root ."/login");           
+        header("Location: " . root ."login");           
     } else {
 //If the user uses the page, the last time is stored.
         $_SESSION["last_access"] = $currentTime;
