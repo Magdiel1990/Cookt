@@ -18,7 +18,7 @@ $result = $conn -> query($sql);
         $_SESSION['message'] = '¡Error al eliminar la receta!';
         $_SESSION['message_alert'] = "danger";
 
-        header('Location: /');
+        header('Location: ' . root);
     } else {
 //Deleting recipe img       
         $target_dir = "imgs/recipes/". $_SESSION['username']  ."/";
@@ -32,7 +32,7 @@ $result = $conn -> query($sql);
         $_SESSION['message_alert'] = "success";
 
 //After the recipe has been deleted, the page is redirected to the index.php.
-        header('Location: /');
+        header('Location: ' . root);
     }
 }
 
@@ -61,12 +61,12 @@ $result = $conn -> query($sql);
         $_SESSION['message'] = '¡Error al eliminar la categoría!';
         $_SESSION['message_alert'] = "danger";
 
-        header('Location: /categories');
+        header('Location: ' . root . 'categories');
     } else {
         $_SESSION['message'] = '¡Categoría eliminada!';
         $_SESSION['message_alert'] = "success";
 
-        header('Location: /categories');
+        header('Location: ' . root . 'categories');
     }
 } 
 
@@ -88,12 +88,12 @@ $result = $conn -> query($sql);
         $_SESSION['message'] = '¡Error al eliminar ingrediente!';
         $_SESSION['message_alert'] = "danger";
 
-        header('Location: /add-recipe');
+        header('Location: ' . root . 'add-recipe');
     } else {
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
-        header('Location: /add-recipe');
+        header('Location: ' . root . 'add-recipe');
     }
 }
 
@@ -113,12 +113,12 @@ $result = $conn -> query($sql);
         $_SESSION['message'] = '¡Error al eliminar ingrediente!';
         $_SESSION['message_alert'] = "danger";
 
-        header('Location: /ingredients');
+        header('Location: ' . root . 'ingredients');
     } else {
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
-        header('Location: /ingredients');
+        header('Location: ' . root . 'ingredients');
     }
 } 
 
@@ -143,12 +143,12 @@ $result = $conn -> query($sql);
         $_SESSION['message'] = '¡Error al eliminar el ingrediente!';
         $_SESSION['message_alert'] = "danger";
 
-        header('Location: /custom');
+        header('Location: ' . root . 'custom');
     } else {
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
-        header('Location: /custom');
+        header('Location: ' . root . 'custom');
     }
 } 
 
@@ -187,20 +187,20 @@ $num_rows = $result -> num_rows;
             $_SESSION['message'] = '¡Error al eliminar usuario!';
             $_SESSION['message_alert'] = "danger";
     
-            if($_SESSION["location"] == "/profile") {
-            header("Location: /profile");     
+            if($_SESSION["location"] == root . "profile") {
+            header('Location: ' . root . 'profile');     
     
             } else {
-            header("Location: /user");
+            header('Location: ' . root . 'user');
             }
         } else {
             $_SESSION['message'] = '¡Usuario eliminado!';
             $_SESSION['message_alert'] = "success";
             
-            if($_SESSION["location"] == "/profile") {
-                header("Location: /logout");    
+            if($_SESSION["location"] == root . "profile") {
+                header('Location: ' . root . 'logout');    
             } else {
-                header("Location: /user");
+                header('Location: ' . root . 'user');
             }
         }
     } else {        

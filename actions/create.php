@@ -30,14 +30,14 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
       $_SESSION['message'] = '¡Escriba la categoría o cargue la imagen!';
       $_SESSION['message_alert'] = "danger";          
 
-      header('Location: /categories');
+      header('Location: ' . root . 'categories');
       exit;
   } else {
     if (!preg_match($pattern, $category)){
         $_SESSION['message'] = '¡Categoría incorrecta!';
         $_SESSION['message_alert'] = "danger";
             
-        header('Location: /categories');
+        header('Location: ' . root . 'categories');
         exit;
     } else {
 
@@ -51,7 +51,7 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
           $_SESSION['message'] = '¡Ya ha sido agregado!';
           $_SESSION['message_alert'] = "success";
 
-          header('Location: /categories');
+          header('Location: ' . root . 'categories');
           exit;
       }  
 
@@ -98,20 +98,20 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
 
           $stmt -> close();
 
-          header('Location: /categories');  
+          header('Location: ' . root . 'categories');  
           exit;  
         } else {
         $_SESSION['message'] = '¡Error al agregar categoría!';
         $_SESSION['message_alert'] = "danger";
 
-        header('Location: /categories'); 
+        header('Location: ' . root . 'categories');
         exit;
         }
       } else {
         $_SESSION['message'] = $uploadOk;
         $_SESSION['message_alert'] = "danger";
 
-        header('Location: /categories'); 
+        header('Location: ' . root . 'categories');
         exit;
       }
     }
@@ -134,13 +134,13 @@ if(isset($_POST['add_ingredient'])){
       $_SESSION['message'] = '¡Escriba el ingrediente por favor!';
       $_SESSION['message_alert'] = "danger";
 
-      header('Location: /ingredients');
+      header('Location: ' . root . 'ingredients');
   } else {
   if(!preg_match($pattern, $ingredient)){
       $_SESSION['message'] = '¡Ingrediente incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
-      header('Location: /ingredients');
+      header('Location: ' . root . 'ingredients');
   }
 //lowercase the variable
     $ingredient = strtolower($ingredient);
@@ -154,7 +154,7 @@ if(isset($_POST['add_ingredient'])){
         $_SESSION['message'] = '¡Ya ha sido agregado!';
         $_SESSION['message_alert'] = "success";
 
-        header('Location: /ingredients');
+        header('Location: ' . root . 'ingredients');
     } else {
     $stmt = $conn -> prepare("INSERT INTO ingredients (ingredient, username) VALUES (?, ?);");
     $stmt->bind_param("ss", $ingredient, $_SESSION['username']);
@@ -164,13 +164,13 @@ if(isset($_POST['add_ingredient'])){
         $_SESSION['message_alert'] = "success";
 
         $stmt -> close();
-        header('Location: /ingredients');
+        header('Location: ' . root . 'ingredients');
 
       } else {
         $_SESSION['message'] = '¡Error al agregar ingrediente!';
         $_SESSION['message_alert'] = "danger";
             
-        header('Location: /ingredients');
+        header('Location: ' . root . 'ingredients');
       }
     }
   }
@@ -205,14 +205,14 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
       $_SESSION['message'] = '¡Falta nombre de la receta o la preparación!';
       $_SESSION['message_alert'] = "danger";
 
-      header('Location: /add-recipe');
+      header('Location: ' . root . 'add-recipe');
       exit;
   } else {
   if (!preg_match($pattern, $recipename)){
       $_SESSION['message'] = '¡Nombre de receta incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
-      header('Location: /add-recipe');
+      header('Location: ' . root . 'add-recipe');
       exit;
   } 
 //If cookingtime is not between 5 and 180  
@@ -220,7 +220,7 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
       $_SESSION['message'] = '¡Tiempo de cocción debe estar entre 5 - 180 minutos!';
       $_SESSION['message_alert'] = "danger";
           
-      header('Location: /add-recipe');
+      header('Location: ' . root . 'add-recipe');
       exit;
   } 
       $_SESSION['category'] = $category;
@@ -249,7 +249,7 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
         $_SESSION['message'] = '¡Receta agregada exitosamente!';
         $_SESSION['message_alert'] = "success";
 
-        header('Location: /add-recipe');
+        header('Location: ' . root . 'add-recipe');
         exit;
 //If an image has been added     
         } else {
@@ -291,20 +291,20 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
             $_SESSION['message_alert'] = "success";
 
-            header('Location: /add-recipe');
+            header('Location: ' . root . 'add-recipe');
             exit;
             } else {
             $_SESSION['message'] = '¡Error al agregar receta!';
             $_SESSION['message_alert'] = "danger";
                 
-            header('Location: /add-recipe');
+            header('Location: ' . root . 'add-recipe');
             exit;
           }
         } else {
             $_SESSION['message'] = $uploadOk;
             $_SESSION['message_alert'] = "danger";
 
-            header('Location: /add-recipe');
+            header('Location: ' . root . 'add-recipe');
             exit;
         }
       }
@@ -332,7 +332,7 @@ if(isset($_POST['customingredient'])){
       $_SESSION['message'] = '¡Ya ha sido agregado!';
       $_SESSION['message_alert'] = "success";
 
-      header('Location: /custom');
+      header('Location: ' . root . 'custom');
   } else {
     $stmt = $conn -> prepare("INSERT INTO ingholder (ingredientid, username) VALUES (?, ?);");
     $stmt->bind_param ("is", $ingredientId, $_SESSION['username']);
@@ -343,13 +343,13 @@ if(isset($_POST['customingredient'])){
 
         $stmt -> close();            
 
-        header('Location: /custom');
+        header('Location: ' . root . 'custom');
 
     } else {
       $_SESSION['message'] = '¡Error al agregar ingrediente!';
       $_SESSION['message_alert'] = "danger";
           
-      header('Location: /custom');
+      header('Location: ' . root . 'custom');
     }
   }
 }
@@ -393,7 +393,7 @@ if(isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex'
   $sessionUserType = $row['type'];
 //If not, a error is launched
   if($sessionUserType !== 'Admin') {
-        header('Location: /error404');
+        header('Location: ' . root . 'error404');
         exit;
 //If null        
   } else {
@@ -401,14 +401,14 @@ if(isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex'
         $_SESSION['message'] = '¡Complete todos los campos por favor!';
         $_SESSION['message_alert'] = "danger";
 
-        header('Location: /user');
+        header('Location: ' . root . 'user');
 //If passwords don't match        
     } else {   
       if($password !== $passrepeat) {
         $_SESSION['message'] = '¡Contraseñas no coinciden!';
         $_SESSION['message_alert'] = "danger";  
         
-        header('Location: /user');
+        header('Location: ' . root . 'user');
 //Hash password            
       } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -431,18 +431,18 @@ if(isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex'
               $_SESSION['message_alert'] = "success";
 
               $stmt->close();                  
-              header('Location: /user');
+              header('Location: ' . root . 'user');
             } else {
               $_SESSION['message'] = '¡Error al agregar usuario!';
               $_SESSION['message_alert'] = "danger";
                   
-              header('Location: /user');;
+              header('Location: ' . root . 'user');
           }
         } else {
               $_SESSION['message'] = '¡Este usuario ya existe!';
               $_SESSION['message_alert'] = "success";
 
-              header('Location: /user');
+              header('Location: ' . root . 'user');
         }
       }
     }

@@ -41,13 +41,13 @@ $sql = "DELETE FROM users WHERE username = '$username';";
             $_SESSION['message'] = '¡Usuario reseteado!';
             $_SESSION['message_alert'] = "success";
 
-            header("Location: /user");
+            header('Location: ' . root . 'user');
 
         } else {
             $_SESSION['message'] = '¡Error al resetear usuario!';
             $_SESSION['message_alert'] = "danger";
 
-            header("Location: /user");
+            header('Location: ' . root . 'user');
         }
     }
 }
