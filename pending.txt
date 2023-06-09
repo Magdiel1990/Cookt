@@ -1,0 +1,4 @@
+Poner root global a todas la paginas
+https://stackoverflow.com/questions/50427513/html-paste-clipboard-image-to-file-input
+https://codepen.io/kbocz/pen/vbBEBN
+poner seccion para elegir las recetas que no tengan los ingredientes
