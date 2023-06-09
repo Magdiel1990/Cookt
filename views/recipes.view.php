@@ -112,7 +112,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
                     </div>
                     <div class="py-4">
                         <div class="collapse bg-form" id="collapse">
-                            <div class="card card-body text-dark" style="font-size: 1.5rem;" title="preparación"> <?php echo ucfirst($preparation); ?> 
+                            <div class="card card-body text-dark" style="font-size: 1.5rem; text-align: justify;" title="preparación"> <?php echo ucfirst($preparation); ?> 
                                 <span class="text-info mt-4 text-center" title="fecha"> <?php echo $date; ?> </span>            
                             </div>
                         </div>        
