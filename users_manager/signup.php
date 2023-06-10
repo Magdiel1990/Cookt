@@ -70,7 +70,7 @@ if(!empty($_POST)) {
 
                 if ($stmt->execute()) {            
                 //The page is redirected to the add-recipe.php
-                header('Location: /login');
+                header('Location: ' . root . 'login');
                 } else {
                 //Failure message.
                     $_SESSION['message'] = '¡Error al agregar usuario!';
@@ -126,10 +126,10 @@ $userCreation -> newUser();*/
                     <div class="card card-registration my-4">
                         <div class="row align-items-center justify-content-center">
                             <div class="col-md-8 col-lg-6 col-xl-5">
-                                <img src="/imgs/login/Picture.png" class="img-fluid" alt="Sample image">
+                                <img src="<?php echo root;?>imgs/login/Picture.png" class="img-fluid" alt="Sample image">
                             </div>
                             <div class="col-md-9 col-lg-6 col-xl-6">
-                                <form action="/signup" method="POST" class="card-body p-md-5 text-black">
+                                <form action="<?php echo root;?>signup" method="POST" class="card-body p-md-5 text-black">
                                     <h3 class="mb-3 text-center">Regístrate</h3>                        
                                     <div class="row">                                   
                                         <div class="col-md-6 mb-3">
@@ -218,7 +218,7 @@ $userCreation -> newUser();*/
 
                                     <div class="d-flex justify-content-center">
                                         <h5 class="mt-2 pt-1">
-                                            <a class="text-decoration-none px-2" href="/login">Login</a>
+                                            <a class="text-decoration-none px-2" href="<?php echo root;?>login">Login</a>
                                         </h5>
                                         <input type="reset" class="btn btn-light btn-lg" value="Limpiar todo">
                                         <input type="submit" class="btn btn-warning btn-lg ms-2" value="Registrarse">

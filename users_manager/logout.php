@@ -1,4 +1,7 @@
 <?php
+//Models.
+require_once ("models/models.php");
+
 //Name the session.
 session_name("Login");
 
@@ -11,7 +14,7 @@ session_unset();
 session_destroy();
 
 //Redirect to the login page
-header('Location: /login');
+header('Location: ' . root . 'login');
 
 die();
 ?>

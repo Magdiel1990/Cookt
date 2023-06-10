@@ -44,7 +44,7 @@ $header = $header -> pageHeader();
             </div>
             <div class="row p-4 align-items-center justify-content-center">
                 <div class="col-auto">
-                    <form class="text-center recovery-form" action="/email" method="POST">
+                    <form class="text-center recovery-form" action="<?php echo root;?>email" method="POST">
                         <!-- Email input -->
                         <div class="form-outline mb-3">
                             <label class="form-label mb-4" for="email">¿Olvidaste tu contraseña?</label>
@@ -74,7 +74,7 @@ $header = $header -> pageHeader();
                             <p class="small fw-bold mb-0 mt-4">
                                 <a class="text-decoration-none px-2" href="/login">Login</a>
                                 ¿Si no tienes cuenta? 
-                                <a href="/signup" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
+                                <a href="<?php echo root;?>signup" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
                             </p>                  
                         </div>                                    
                     </form>
