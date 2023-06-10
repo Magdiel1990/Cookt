@@ -77,7 +77,7 @@ class Directories {
             $dir_handle = opendir($this -> directory);
             
             while(($file = readdir($dir_handle)) !== false) {
-            $path = $this -> directory . '/' . $file;
+            $path = $this -> directory . root . $file;
            
                 if(is_file($path)) {
                 $name = pathinfo($path, PATHINFO_FILENAME);                 
@@ -92,7 +92,7 @@ class Directories {
             }
             closedir($dir_handle);      
 
-            $imgDir = $this -> directory . "/" . $this -> fileName . "." . $ext;
+            $imgDir = $this -> directory . root . $this -> fileName . "." . $ext;
 
             return $imgDir;
         } else {
@@ -110,7 +110,7 @@ class Directories {
             $sizeBytes = 0;
 //Getting the total directory size in bytes
             while(($file = readdir($dir_handle)) !== false) {
-            $path = $this -> directory . '/' . $file;
+            $path = $this -> directory . root . $file;
                 if(is_file($path)) {
                     $sizeBytes += filesize($path);
                 } 
@@ -222,34 +222,34 @@ class PageHeaders {
 
     public function pageHeader(){
         $headerList = [
-            "/" => "Home",    
-            "/login" => "Login",        
-            "/random" => "Aleatorio",
-            "/custom" => "Personalizado",
-            "/profile" => "Perfil",
-            "/units" => "Unidades",
-            "/ingredients" => "Ingredientes",
-            "/add-recipe" => "Agregar Recetas",
-            "/categories" => "Categorías",
-            "/user" => "Usuarios",
-            "/signup" => "Registrarse",
-            "/recovery" => "Recuperación",  
-            "/recipes" => "Recetas",
-            "/edit" => "Editar",
-            "/user-recipes" => "Datos Generales"
+            root => "Home",    
+            root . "login" => "Login",        
+            root . "random" => "Aleatorio",
+            root . "custom" => "Personalizado",
+            root . "profile" => "Perfil",
+            root . "units" => "Unidades",
+            root . "ingredients" => "Ingredientes",
+            root . "add-recipe" => "Agregar Recetas",
+            root . "categories" => "Categorías",
+            root . "user" => "Usuarios",
+            root . "signup" => "Registrarse",
+            root . "recovery" => "Recuperación",  
+            root . "recipes" => "Recetas",
+            root . "edit" => "Editar",
+            root . "user-recipes" => "Datos Generales"
         ];
 
         switch ($this -> uri) {
             case array_key_exists($this -> uri, $headerList) === true: 
                 return $headerList [$this -> uri];
                 break;
-            case stripos($this -> uri, "/recipes") !== false:
+            case stripos($this -> uri, root. "recipes") !== false:
                 return "Recetas";
                 break;
-            case stripos($this -> uri, "/edit") !== false:
+            case stripos($this -> uri, root. "edit") !== false:
                 return "Editar";
                 break;
-            case stripos($this -> uri, "/user-recipes") !== false:
+            case stripos($this -> uri, root. "user-recipes") !== false:
                 return "Datos Generales";
                 break;
             default: 
