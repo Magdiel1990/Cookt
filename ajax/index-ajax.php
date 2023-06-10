@@ -2,12 +2,13 @@
 //Reviso el estado de la sesión.
     session_name("Login");
     
-    session_start();
-
-    $_SESSION["location"] = root;
+    session_start(); 
 
 //Models.
     require_once ("../models/models.php");
+
+//Current location
+    $_SESSION["location"] = root;
 
 //Including the database connection.
     $conn = DatabaseConnection::dbConnection();

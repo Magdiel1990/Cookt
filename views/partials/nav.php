@@ -35,7 +35,7 @@
             <a class="px-3 text-white"  href="<?php echo root;?>profile" style="text-decoration: none;" title="Perfil">
             <?php echo $_SESSION['title'] . $_SESSION['firstname'] . " " .  $_SESSION['lastname'];?> 
             <?php
-            $target_dir = root . "imgs/users/";
+            $target_dir ="imgs/users/";
 //User photo
             $files = new Directories($target_dir, $_SESSION["username"]);
             $imgprofileDir = $files -> directoryFiles();
