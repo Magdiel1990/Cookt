@@ -1,6 +1,6 @@
 <?php
-//Head
-require_once ("views/partials/head.php");
+//Models.
+require_once ("models/models.php");
 
 //Path requested
 $uri = parse_url($_SERVER["REQUEST_URI"])['path']; 
