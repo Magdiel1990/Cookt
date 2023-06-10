@@ -6,7 +6,7 @@ require_once ("views/partials/head.php");
 require_once ("views/partials/nav.php");
 
 //Page location to come back
-$_SESSION["location"] = "/profile";
+$_SESSION["location"] = root . "profile";
 
 //Users data
 $sql = "SELECT * FROM users WHERE userid = '". $_SESSION['userid']."';";
@@ -63,8 +63,8 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
                 </div>
 <!-- Delete and edit buttons--> 
                 <div class="text-center">
-                    <a class="btn btn-danger" href="/delete?userid=<?php echo $_SESSION['userid'];?>&type=<?php echo base64_encode(serialize($_SESSION['type']))?>">Eliminar cuenta</a>
-                    <a class="btn btn-primary" href="/edit?userid=<?php echo $_SESSION['userid'];?>">Editar</a>
+                    <a class="btn btn-danger" href="<?php echo root;?>delete?userid=<?php echo $_SESSION['userid'];?>&type=<?php echo base64_encode(serialize($_SESSION['type']))?>">Eliminar cuenta</a>
+                    <a class="btn btn-primary" href="<?php echo root;?>edit?userid=<?php echo $_SESSION['userid'];?>">Editar</a>
                 </div>
             </div>
         </div>

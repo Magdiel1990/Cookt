@@ -17,7 +17,7 @@ if(isset($_POST["category"])) {
 <main class="container p-4">
     <div class="row mt-2 text-center justify-content-center">
         <h3>Sugerencias</h3>
-        <form action= "/random" method="POST" class="mt-3 col-auto">
+        <form action= "<?php echo root;?>random" method="POST" class="mt-3 col-auto">
             <div class="input-group mb-3">
                 <label for="category" class="input-group-text">Categoría: </label>
                 
@@ -77,7 +77,7 @@ if(isset($_POST["category"])) {
         $cookingtime = $row['cookingtime'];       
     ?>
     <div class="my-4">
-        <a class="recipe_link" href='/recipes?recipe=<?php echo $recipename;?>&username=<?php echo $_SESSION['username'];?>'>
+        <a class="recipe_link" href='<?php echo root;?>recipes?recipe=<?php echo $recipename;?>&username=<?php echo $_SESSION['username'];?>'>
             <p class="text-info"> <?php echo $recipename . " (" . $cookingtime . " minutos)"; ?> </p>
             <?php
 //Recipe image            

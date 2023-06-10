@@ -27,7 +27,7 @@ require_once ("views/partials/nav.php");
 <!--Category form-->
     <h3>Agregar Categorías</h3>
 
-        <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="<?php echo root;?>/create" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
+        <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="<?php echo root;?>create" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
             
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="add_categories">Categoría: </label>

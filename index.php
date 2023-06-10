@@ -1,4 +1,7 @@
 <?php
+//Head
+require_once ("views/partials/head.php");
+
 //Path requested
 $uri = parse_url($_SERVER["REQUEST_URI"])['path']; 
 
@@ -8,34 +11,34 @@ $param = isset(parse_url($_SERVER["REQUEST_URI"])['query']) ? parse_url($_SERVER
 //No parameters
 if($param == "") {
     $routes = [
-    "/" => "controllers/index.controller.php",    
-    "/login" => "controllers/login.controller.php",
-    "/logout" => "controllers/logout.controller.php",
-    "/random" => "controllers/random.controller.php",
-    "/custom" => "controllers/custom.controller.php",
-    "/profile" => "controllers/profile.controller.php",
-    "/ingredients" => "controllers/ingredients.controller.php",
-    "/add-recipe" => "controllers/add-recipe.controller.php",
-    "/categories" => "controllers/categories.controller.php",
-    "/user" => "controllers/users.controller.php",
-    "/create" => "controllers/create.controller.php",
-    "/email" => "controllers/email.controller.php",
-    "/signup" => "controllers/signup.controller.php",
-    "/recovery" => "controllers/recovery.controller.php",
-    "/error404" => "controllers/404.controller.php"
+    root => "controllers/index.controller.php",    
+    root. "login" => "controllers/login.controller.php",
+    root. "logout" => "controllers/logout.controller.php",
+    root. "random" => "controllers/random.controller.php",
+    root. "custom" => "controllers/custom.controller.php",
+    root. "profile" => "controllers/profile.controller.php",
+    root. "ingredients" => "controllers/ingredients.controller.php",
+    root. "add-recipe" => "controllers/add-recipe.controller.php",
+    root. "categories" => "controllers/categories.controller.php",
+    root. "user" => "controllers/users.controller.php",
+    root. "create" => "controllers/create.controller.php",
+    root. "email" => "controllers/email.controller.php",
+    root. "signup" => "controllers/signup.controller.php",
+    root. "recovery" => "controllers/recovery.controller.php",
+    root. "error404" => "controllers/404.controller.php"
     ];
 //It comes with parameters
 } else {
     $routes = [    
-    "/recipes" => "controllers/recipes.controller.php",
-    "/random" => "controllers/random.controller.php",
-    "/delete" => "controllers/delete.controller.php",
-    "/custom" => "controllers/custom.controller.php",
-    "/reset" => "controllers/reset.controller.php",
-    "/edit" => "controllers/edit.controller.php",
-    "/update" => "controllers/update.controller.php",
-    "/user-recipes" => "controllers/recipes-list.controller.php",
-    "/reset-password" => "controllers/reset-password.controller.php"
+    root. "recipes" => "controllers/recipes.controller.php",
+    root. "random" => "controllers/random.controller.php",
+    root. "delete" => "controllers/delete.controller.php",
+    root. "custom" => "controllers/custom.controller.php",
+    root. "reset" => "controllers/reset.controller.php",
+    root. "edit" => "controllers/edit.controller.php",
+    root. "update" => "controllers/update.controller.php",
+    root. "user-recipes" => "controllers/recipes-list.controller.php",
+    root. "reset-password" => "controllers/reset-password.controller.php"
     ];
 }
 

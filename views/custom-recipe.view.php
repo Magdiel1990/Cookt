@@ -25,7 +25,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
     <div  class="row mt-2 text-center justify-content-center">
 <!--Form for choosing the ingredients-->
         <h3>Elegir por Ingrediente</h3>
-        <form class="m-3 col-auto" method="POST" action="/create">
+        <form class="m-3 col-auto" method="POST" action="<?php echo root;?>create">
 <!-- List of ingredients -->
            <div class="input-group">
                 <label class="input-group-text" for="customingredient">Ingredientes: </label>
@@ -46,7 +46,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 //If there is no ingredient added                
                 } else {
                 ?>
-                <a class="btn btn-primary" href="/ingredients">Agregar</a>
+                <a class="btn btn-primary" href="<?php echo root;?>ingredients">Agregar</a>
                 <?php 
                 } 
                 ?> 
@@ -69,7 +69,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
             $html .= "<ol>";
             while($row = $result -> fetch_assoc()) {
                 $html .= "<li>";
-                $html .= "<a href='/delete?custom=" . $row['ingredient'] . "' " . "title='Eliminar' class='click-del'>";
+                $html .= "<a href='" . root . "delete?custom=" . $row['ingredient'] . "' " . "title='Eliminar' class='click-del'>";
                 $html .= ucfirst($row["ingredient"]);
                 $html .= "</a>";
                 $html .= "</li>";
@@ -121,7 +121,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                     $html .= "<ul>";
                     for($i = 0; $i < $countRecipe; $i++){                    
                         $html .= "<li>";
-                        $html .= "<a href='/recipes?recipe=" . $recipes[$i] . "&username=" . $_SESSION['username'] . "' title='receta'>";
+                        $html .= "<a href='" . root . "recipes?recipe=" . $recipes[$i] . "&username=" . $_SESSION['username'] . "' title='receta'>";
                         $html .= $recipes[$i];
                         $html .= "</a>";
                         $html .= " <span class='text-secondary small'>(" . $category[$i] . ")</span>";

@@ -88,7 +88,7 @@ $result = $conn -> query($sql);
 //Recipes            
                 while($row = $result -> fetch_assoc()){
                     $html = "<li>"; 
-                    $html .= "<a href='/recipes?recipe=" . $row['recipename'] . "&username=" . $username . "'>"; 
+                    $html .= "<a href='" . root . "recipes?recipe=" . $row['recipename'] . "&username=" . $username . "'>"; 
                     $html .= $row['recipename'];
                     $html .= "</a>"; 
                     $html .= "</li>"; 
@@ -111,7 +111,7 @@ $result = $conn -> query($sql);
     </div>
 <!-- Button to come back tu users-->    
     <div class="text-center mb-4">
-        <a class="btn btn-secondary" href="/user">Usuarios</a>
+        <a class="btn btn-secondary" href="<?php echo root;?>user">Usuarios</a>
     </div> 
 </main>
 <?php

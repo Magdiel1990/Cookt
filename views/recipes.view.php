@@ -11,8 +11,8 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     $username = $_GET["username"];  
 
 //If the page requesting the recipes is user-recipes, return the parameter username too    
-    if($_SESSION["location"] == "/user-recipes") {
-        $_SESSION["location"] = "/user-recipes?username=" . $username;
+    if($_SESSION["location"] == root . "user-recipes") {
+        $_SESSION["location"] = root . "user-recipes?username=" . $username;
     }
 
 //Recipe image directory

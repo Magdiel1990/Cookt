@@ -32,11 +32,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             }
 
             if(!isset($_SESSION['location'])){
-                $_SESSION['location'] = "/";
+                $_SESSION['location'] = root;
             }
 
 //Cookie creation      
-            session_set_cookie_params(0, "/", $_SERVER["HTTP_HOST"], 0);
+            session_set_cookie_params(0, root, $_SERVER["HTTP_HOST"], 0);
             
 //Session variables assignations
             $_SESSION['userid'] = $row['userid'];
@@ -129,7 +129,7 @@ $header = $header -> pageHeader();
                 </div>
 <!-- Login form -->        
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 mt-4">
-                    <form action="/login" method="POST">
+                    <form action="<?php echo root;?>login" method="POST">
 <!-- Email input -->
                         <div class="form-outline mb-3">
                             <input type="text" id="username" class="form-control form-control-lg" name="username" autocomplete="off"/>
@@ -164,13 +164,13 @@ $header = $header -> pageHeader();
                         </script>
 <!-- Password recovery link -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="/recovery" class="text-body" style = "text-decoration: none;">¿Olvidaste la contraseña?</a>
+                            <a href="<?php echo root;?>recovery" class="text-body" style = "text-decoration: none;">¿Olvidaste la contraseña?</a>
                         </div>
 <!-- Submittion -->
                         <div class="text-center text-lg-start mt-4 pt-2">
                             <input type="submit" name="Login" value="Login" class="btn btn-primary btn-lg"
                             style="padding-left: 2.5rem; padding-right: 2.5rem;">
-                            <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes cuenta? <a href="/signup"
+                            <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes cuenta? <a href="<?php echo root;?>signup"
                                 style = "text-decoration: none;" class="link-danger">Regístrate</a></p>
                         </div>
                     </form>
