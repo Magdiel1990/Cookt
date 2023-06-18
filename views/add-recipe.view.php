@@ -27,18 +27,20 @@ require_once ("views/partials/nav.php");
                     <label class="input-group-text is-required" for="recipename">Nombre: </label>
                     <input  class="form-control" type="text" id="recipename" name="recipename" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="50" min-length="7" required>             
                 </div>
+
                 <div class="input-group mb-3">
-                    <div>
-                        <label class="input-group-text" for="imageUrl">Url de la imagen</label>
-                        <input class="form-control" type="url" name="imageUrl" id="imageUrl">
-                    </div>
-                    <div class="frame">
-                        <div class="dropzone">
-                            <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
-                            <input type="file" name="recipeImage" accept=".png, .jpeg, .jpg, .gif" class="upload-input form-control" id="recipeImage"/>
-                        </div>
-                    </div>
+                    <label class="input-group-text" for="imageUrl">Url de la imagen</label>
+                    <input class="form-control"  accept=".png, .jpeg, .jpg, .gif" type="url" name="imageUrl" id="imageUrl" placeholder="Formatos: jpg, png y gif" max-length="150" min-length="20">
                 </div>
+
+                <div class="frame">
+                    <div class="dropzone">
+                        <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+                        <input type="file" name="recipeImage" accept=".png, .jpeg, .jpg, .gif" class="upload-input form-control" id="recipeImage"/>
+                    </div>                       
+                </div>                    
+
+                <div id="imgMessage"></div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="category">Categoría: </label>                
@@ -87,8 +89,22 @@ require_once ("views/partials/nav.php");
             </form>
             
             <script>
+                pictureData();
                 add_recipe_validation();
-                textarea_indication();
+                textarea_indication();                
+
+//Format for the message showing the name of the picture uploaded
+                function pictureData() {
+                    var recipeImage = document.getElementById('recipeImage');
+                    var imgMessage = document.getElementById('imgMessage');
+
+                    recipeImage.onchange = function () {    
+                        imgMessage.innerHTML = recipeImage.files[0].name;
+                    }
+//Margin for the name of the image to be uploaded                    
+                    imgMessage.style.marginBottom = "15px";
+                    imgMessage.style.marginTop = "-3px";
+                }
 
 //Recipe addition validation method              
                 function add_recipe_validation() {
@@ -102,10 +118,12 @@ require_once ("views/partials/nav.php");
                     var ingredients = document.getElementById("ingredients").value;
                     var preparation = document.getElementById("preparation").value;
                     var recipeImage = document.getElementById("recipeImage");
+                    var imageURL = document.getElementById("imageUrl").value;
                     var message = document.getElementById("message");
                     var file = recipeImage.files[0];
                     var weight = file.size;
                     var fileType = file.type;
+                    var urlFileType = imageURL.type;
                     var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg"];
 
 //Conditions
@@ -134,7 +152,7 @@ require_once ("views/partials/nav.php");
                             return false;
                         }       
 //Image format validation
-                        if(!allowedImageTypes.includes(fileType)){
+                        if(!allowedImageTypes.includes(fileType) || !allowedImageTypes.includes(urlFileType)){
                             event.preventDefault();
                             message.innerHTML = "¡Formatos de imagen admitidos: jpg, png y gif!";
                             return false;

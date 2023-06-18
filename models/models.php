@@ -83,15 +83,19 @@ class Directories {
                 $name = pathinfo($path, PATHINFO_FILENAME);                 
                     if($name == $this -> fileName) {
 //File extension
-                        $ext = pathinfo($path, PATHINFO_EXTENSION);                        
+                        $ext = pathinfo($path, PATHINFO_EXTENSION);          
+//Default extension
+                    } else {
+                        $ext = "jpg";
                     }
                 }                  
             }
-            closedir($dir_handle);      
-
+            closedir($dir_handle); 
+           
             $imgDir = $this -> directory . $this -> fileName . "." . $ext;
 
             return $imgDir;
+     
         } else {
             return false;
         }

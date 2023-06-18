@@ -226,6 +226,7 @@ option {
     display: flex;
 	justify-content: space-evenly;
     flex-flow: row-reverse;
+    margin-top: 15px;
 }
 
 .center {
