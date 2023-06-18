@@ -103,7 +103,7 @@ require_once ("views/partials/nav.php");
                     }
 //Margin for the name of the image to be uploaded                    
                     imgMessage.style.marginBottom = "15px";
-                    imgMessage.style.marginTop = "-3px";
+                    imgMessage.style.marginTop = "5px";
                 }
 
 //Recipe addition validation method              
