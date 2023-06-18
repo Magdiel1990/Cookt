@@ -77,22 +77,19 @@ class Directories {
             $dir_handle = opendir($this -> directory);
             
             while(($file = readdir($dir_handle)) !== false) {
-            $path = $this -> directory . root . $file;
+            $path = $this -> directory . $file;
            
                 if(is_file($path)) {
                 $name = pathinfo($path, PATHINFO_FILENAME);                 
                     if($name == $this -> fileName) {
 //File extension
-                        $ext = pathinfo($path, PATHINFO_EXTENSION); 
-                       
-                    } else {
-                        $ext = "unk";
+                        $ext = pathinfo($path, PATHINFO_EXTENSION);                        
                     }
                 }                  
             }
             closedir($dir_handle);      
 
-            $imgDir = $this -> directory . root . $this -> fileName . "." . $ext;
+            $imgDir = $this -> directory . $this -> fileName . "." . $ext;
 
             return $imgDir;
         } else {
@@ -332,5 +329,26 @@ class IngredientList {
             echo '<option value="' . $row["ingredient"] . '">' . ucfirst($row["ingredient"]) . '</option>';
         }
     }
+}
+
+//Url existance verification
+class UrlVerification {
+    public $url;
+
+    function __construct($url){
+        $this -> url = $url;
+    }
+
+    public function urlVerif() {
+//Opening the URL in read mode
+        $id = @fopen($this -> url,"r");
+//Verification
+        if ($id) $open = true;
+        else $open = false;
+//Return de value
+        return $open;
+//Exiting the file
+        fclose($id);
+    }        
 }
 ?>

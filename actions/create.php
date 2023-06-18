@@ -181,7 +181,7 @@ if(isset($_POST['add_ingredient'])){
 /************************************************************************************************/
 
 //receive the data
-if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST['category']) && isset($_POST['cookingtime']) && isset($_POST['ingredients']) && isset($_POST['preparation'])){
+if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["recipeImage"]) && isset($_POST['category']) && isset($_POST['cookingtime']) && isset($_POST['ingredients']) && isset($_POST['preparation'])){
 
 //Data sanitization
   $filter = new Filter ($_POST['recipename'], FILTER_SANITIZE_STRING, $conn);
@@ -245,14 +245,64 @@ if(isset($_POST['recipename']) && isset($_FILES["recipeImage"]) && isset($_POST[
       $stmt -> execute();
       $stmt -> close(); 
 //If no image has been added
-        if($recipeImage ['name'] == null) {           
+        if ($recipeImage ['name'] == null && $_POST["imageUrl"] == "") {           
         $_SESSION['message'] = '¡Receta agregada exitosamente!';
         $_SESSION['message_alert'] = "success";
 
         header('Location: ' . root . 'add-recipe');
         exit;
-//If an image has been added     
-        } else {
+
+        } else if ($_POST["imageUrl"] != "") {
+// Remote image URL Sanitization   
+          $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL, $conn);
+          $url = $filter -> sanitization();
+//Url existance verification          
+          $URLVerif = new UrlVerification ($url);
+          $URLVerif = $URLVerif -> urlVerif();
+          
+          if($URLVerif === false) {
+            $_SESSION['message'] = '¡Receta agregada exitosamente sin imagen!';
+            $_SESSION['message_alert'] = "success";
+
+            header('Location: ' . root . 'add-recipe');
+            exit;        
+          } else {
+// Image path
+          $recipeImagesDir = "imgs/recipes/". $_SESSION['username'];
+
+            if (!file_exists($recipeImagesDir)) {
+                mkdir($recipeImagesDir, 0777, true);
+            }
+          
+          $ext = pathinfo($url, PATHINFO_EXTENSION);
+          $uploadOk = "";
+
+          if($ext  != "jpg" && $ext  != "jpeg" && $ext != "png" && $ext  != "gif") {
+            $uploadOk = '¡Formato de imagen no admitido!';
+          }   
+           
+         if(array_change_key_case(get_headers($url,1))['content-length'] > 300000){
+             $uploadOk = '¡El tamaño debe ser menor que 300 KB!';
+         }
+
+//Name of the saved image         
+          $recipeImagesDir = $recipeImagesDir . "/" . $recipename . "." . $ext;
+
+// Save image 
+          if(file_put_contents($recipeImagesDir, file_get_contents($url)) !== false){
+            $_SESSION['message'] = '¡Receta agregada exitosamente!';
+            $_SESSION['message_alert'] = "success";
+
+            header('Location: ' . root . 'add-recipe');
+          } else {
+            $_SESSION['message'] = $uploadOk;
+            $_SESSION['message_alert'] = "danger";
+
+            header('Location: ' . root . 'add-recipe');
+            exit;
+          }
+        }          
+      } else {
         $recipeImagesDir = "imgs/recipes/". $_SESSION['username'];
 
           if (!file_exists($recipeImagesDir)) {
@@ -353,7 +403,6 @@ if(isset($_POST['customingredient'])){
     }
   }
 }
-
 
 /************************************************************************************************/
 /******************************************USER ADITION CODE*************************************/

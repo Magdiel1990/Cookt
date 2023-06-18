@@ -27,12 +27,19 @@ require_once ("views/partials/nav.php");
                     <label class="input-group-text is-required" for="recipename">Nombre: </label>
                     <input  class="form-control" type="text" id="recipename" name="recipename" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="50" min-length="7" required>             
                 </div>
-                
-                <div class="mb-3">
-                    <label class="form-label" for="recipeImage">Foto de la receta</label>
-                    <input type="file" name="recipeImage" accept=".png, .jpeg, .jpg, .gif" class="form-control" id="recipeImage">
-                </div> 
-                
+                <div class="input-group mb-3">
+                    <div>
+                        <label class="input-group-text" for="imageUrl">Url de la imagen</label>
+                        <input class="form-control" type="url" name="imageUrl" id="imageUrl">
+                    </div>
+                    <div class="frame">
+                        <div class="dropzone">
+                            <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+                            <input type="file" name="recipeImage" accept=".png, .jpeg, .jpg, .gif" class="upload-input form-control" id="recipeImage"/>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="category">Categoría: </label>                
                     <select class="form-select" name="category" id="category">
@@ -101,7 +108,6 @@ require_once ("views/partials/nav.php");
                     var fileType = file.type;
                     var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg"];
 
-
 //Conditions
                     if(recipename == "" || preparation == "" || ingredients == ""){
                         event.preventDefault();
@@ -137,7 +143,6 @@ require_once ("views/partials/nav.php");
                         return true;                           
                     })
                 }
-
 //Textarea indications   
                 function textarea_indication() {
                     var preparation = document.getElementById("preparation");
@@ -165,11 +170,9 @@ require_once ("views/partials/nav.php");
                         recipename.spellcheck = false;     
                     })
                 }
-            </script>
-            
+            </script>            
         </div>
     </div>
-    
 </main>
 <?php
 //Exiting connection
