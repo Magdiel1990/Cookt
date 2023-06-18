@@ -120,8 +120,7 @@ require_once ("views/partials/nav.php");
                     var recipeImage = document.getElementById("recipeImage");
                     var imageURL = document.getElementById("imageUrl").value;
                     var message = document.getElementById("message");
-                    var file = recipeImage.files[0];
-                    var weight = file.size;
+                    var file = recipeImage.files[0];                   
                     var fileType = file.type;
                     var urlFileType = imageURL.type;
                     var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg"];
@@ -144,7 +143,26 @@ require_once ("views/partials/nav.php");
                         message.innerHTML = "¡Tiempo de cocción debe estar entre 5 - 180 minutos!";  
                         return false;
                     }      
-                    if (recipeImage.value != "") {
+
+                    if (imageURL != "") {
+//Weight of the file                        
+                        var weight = imageURL.size;
+//Size in Bytes     
+                        if(weight > 300000) {
+                            event.preventDefault();
+                            message.innerHTML = "¡El tamaño de la imagen debe ser menor que 300 KB!";  
+                            return false;
+                        }     
+                        
+                        if (!allowedImageTypes.includes(urlFileType)){
+                            event.preventDefault();
+                            message.innerHTML = "¡Formatos de imagen admitidos: jpg, png y gif!";
+                            return false;
+                        }
+
+                    } else if (recipeImage.value != "") {
+//Weight of the file                        
+                        var weight = file.size;
 //Size in Bytes     
                         if(weight > 300000) {
                             event.preventDefault();
@@ -152,7 +170,7 @@ require_once ("views/partials/nav.php");
                             return false;
                         }       
 //Image format validation
-                        if(!allowedImageTypes.includes(fileType) || !allowedImageTypes.includes(urlFileType)){
+                        if(!allowedImageTypes.includes(fileType)){
                             event.preventDefault();
                             message.innerHTML = "¡Formatos de imagen admitidos: jpg, png y gif!";
                             return false;
