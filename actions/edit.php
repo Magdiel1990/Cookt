@@ -116,7 +116,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
         <h3 class="text-center">Editar Receta</h3>     
         <div class="mt-3 col-auto">
             <div class="form card card-body">
-                <form enctype="multipart/form-data" action="update?editname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" method="POST" onsubmit="return validationNumberText('cookingTime', 'newRecipeName', /[a-zA-Z\t\h]+|(^$)/)">
+                <form id="recipe_form" enctype="multipart/form-data" action="update?editname=<?php echo $recipeName;?>&username=<?php echo $userName;?>" method="POST">
 
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="newRecipeName">Nombre: </label>
@@ -178,8 +178,9 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
     </div> 
     <script>
     pictureData();
+    imgValidation();   
 
-//Format for the message showing the name of the picture uploaded
+ //Format for the message showing the name of the picture uploaded
     function pictureData() {
         var recipeImage = document.getElementById('recipeImage');
         var imgMessage = document.getElementById('imgMessage');
@@ -190,6 +191,85 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 //Margin for the name of the image to be uploaded                    
         imgMessage.style.marginBottom = "15px";
         imgMessage.style.marginTop = "5px";
+    }
+
+//Image format validation
+    function imgValidation(){
+
+        var form = document.getElementById("recipe_form");    
+
+        form.addEventListener("submit", function(event) { 
+//Accepted formats            
+            var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG)$/i;
+            var regExp = /[a-zA-Z\t\h]+|(^$)/;
+            var imageUrlInput = document.getElementById('imageUrl');
+            var imageUrl = imageUrlInput.value;
+            var recipeImage = document.getElementById('recipeImage');            
+            var cookingTimeInput = document.getElementById('cookingTime');
+            var cookingTime = cookingTimeInput.value;
+            var ingredients = document.getElementById("ingredients").value;
+            var preparation = document.getElementById("preparation").value;
+            var newRecipeName = document.getElementById("newRecipeName").value;               
+
+            if(newRecipeName == "" || preparation == "" || ingredients == ""){
+                event.preventDefault();                
+                confirm("Completar los campos requeridos");                     
+                return false;
+            }
+
+            if(!newRecipeName.match(regExp)){ 
+                event.preventDefault();                
+                confirm ("¡Nombre de receta incorrecto!");                                
+                return false;
+            }
+
+            if(cookingTime <= 5 && cookingTime >= 180) {
+                event.preventDefault();
+                confirm("¡Tiempo de cocción incorrecto!");
+                cookingTimeInput.focus();                
+                return false;                
+            }
+
+            if (imageUrl != "") {
+//Weight of the file                        
+                var weight = imageUrl.size;
+//Size in Bytes     
+                if(weight > 300000) {
+                    event.preventDefault();
+                    confirm("¡El tamaño de la imagen debe ser menor que 300 KB!");  
+                    return false;
+                }     
+                
+                if (!ext.exec(imageUrl)){
+                    event.preventDefault();
+                    confirm("¡Formatos de imagen admitidos: jpg, png y gif!");
+                    return false;
+                }
+            } else if (recipeImage.value != "") {
+//File type                
+                var file = recipeImage.files[0]; 
+                var fileType = file.type;
+//Weight of the file                        
+                var weight = file.size;                
+//Size in Bytes     
+                if(weight > 300000) {
+                    event.preventDefault();
+                    confirm("¡El tamaño de la imagen debe ser menor que 300 KB!");  
+                    return false;
+                }       
+//Image format validation
+                if(!ext.exec(fileType)){
+                    event.preventDefault();
+                    confirm("¡Formatos de imagen admitidos: jpg, png y gif!");
+                    return false;
+                }
+//No image added               
+            } else {
+                alert("¡Ninguna imagen agregada para esta receta!");  
+            }
+            
+            return true;
+        })
     }
     </script>    
 </main>
