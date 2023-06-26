@@ -10,24 +10,24 @@
 <!-- Nav links -->        
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-white" href="<?php echo root;?>random" title="Sugerencias">Sugerencias</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="<?php echo root;?>custom" title="Elegir por ingredientes">Elegir por ingredientes</a>
-            </li>
-            <li class="nav-item dropdown"  <?php if($_SESSION['type'] == 'Viewer') { echo "style = 'display : none;'";}?>>
-                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa-solid fa-gears text-white"></i>
-                </a>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="<?php echo root;?>random" title="Sugerencias">Sugerencias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="<?php echo root;?>custom" title="Elegir por ingredientes">Elegir por ingredientes</a>
+                </li>
+                <li class="nav-item dropdown"  <?php if($_SESSION['type'] == 'Viewer') { echo "style = 'display : none;'";}?>>
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa-solid fa-gears text-white"></i>
+                    </a>
 <!-- Not Admin users can't access some of the links-->
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">                    
-                    <a class="dropdown-item" href="<?php echo root;?>ingredients" title="Ingredientes">Ingredientes</a>
-                    <a class="dropdown-item" href="<?php echo root;?>add-recipe" title="Recetas">Recetas</a>
-                    <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="<?php echo root;?>categories" title="Categorías">Categorías</a>
-                    <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="<?php echo root;?>user" title="Usuarios">Usuarios</a>
-                </div>
-            </li>            
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">                    
+                        <a class="dropdown-item" href="<?php echo root;?>ingredients" title="Ingredientes">Ingredientes</a>
+                        <a class="dropdown-item" href="<?php echo root;?>add-recipe" title="Recetas">Recetas</a>
+                        <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="<?php echo root;?>categories" title="Categorías">Categorías</a>
+                        <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="<?php echo root;?>user" title="Usuarios">Usuarios</a>
+                    </div>
+                </li>            
             </ul>
         </div>
 <!--User identification -->
@@ -40,7 +40,7 @@
             $files = new Directories($target_dir, $_SESSION["username"]);
             $imgprofileDir = $files -> directoryFiles();
             
-            if($imgprofileDir != false){
+            if($imgprofileDir !== false){
                 echo '<img src="' . $imgprofileDir . '" class="mx-2">';
             } else {
                 echo "<i class='fa-regular fa-user'></i>";

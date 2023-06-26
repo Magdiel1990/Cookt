@@ -54,10 +54,10 @@
         while($row = $result->fetch_assoc()){
             
             $output['data'] .= "<tr>";                    
-            $output['data'] .= "<td class='px-2'><a href='" . root . "recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta' class='tlink'>" . $row['recipename'] . "</a></td>";
-            $output['data'] .= "<td class='text-center px-2'>" . $row['cookingtime'] . "</td>";
-            $output['data'] .= "<td class='px-2'>" .ucfirst($row['category']). "</td>";            
-            $output['data'] .= "<td class='px-2'>";
+            $output['data'] .= "<td class='p-3'><a href='" . root . "recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta' class='tlink'>" . $row['recipename'] . "</a></td>";
+            $output['data'] .= "<td class='text-center'>" . $row['cookingtime'] . "</td>";
+            $output['data'] .= "<td class='p-3'>" .ucfirst($row['category']). "</td>";            
+            $output['data'] .= "<td class='p-3'>";
             $output['data'] .= "<div class='btn-group' role='group'>";
             $output['data'] .= "<a href='" . root . "edit?recipename=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "'" . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
             $output['data'] .= "<a href='" . root . "delete?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
