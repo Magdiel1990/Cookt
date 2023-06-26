@@ -16,6 +16,7 @@ require_once ("views/partials/nav.php");
 if(isset($_GET['categoryid'])){
 $categoryId = $_GET['categoryid'];
 
+//Verify the category existance
 $sql = "SELECT * FROM categories WHERE categoryid = '$categoryId';";
 
 $result = $conn -> query($sql);
@@ -27,7 +28,6 @@ if($result -> num_rows > 0) {
     require ("views/error_pages/404.php");
     die();
 }
-
 ?>
 <main class="container p-4">
 <?php
@@ -123,10 +123,20 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                         <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="50" min-length="7" required>
                     </div>
 
-                    <div class="mb-3 text-center">
-                        <label class="form-label" for="recipeImage">Imagen:</label>
-                        <input type="file" name="recipeImage" accept=".jpg, .jpeg, .png, .gif" class="form-control" id="recipeImage">
-                    </div> 
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="imageUrl">Url de la imagen</label>
+                        <input class="form-control"  accept=".png, .jpeg, .jpg, .gif" type="url" name="imageUrl" id="imageUrl" placeholder="Formatos: jpg, png y gif" max-length="150" min-length="20">
+                    </div>
+
+                    <div class="frame">
+                        <div class="dropzone">
+                            <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+                            <input type="file" name="recipeImage" accept=".png, .jpeg, .jpg, .gif" class="upload-input form-control" id="recipeImage"/>
+                        </div>                       
+                    </div>   
+                    
+                    <div id="imgMessage" class="text-center"></div>
+
                     <div class="row">
                         <div class="input-group mb-3 col">
                             <label class="input-group-text" for="category">Categoría: </label>                
@@ -165,9 +175,24 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                 </form>
             </div>
         </div>                 
-    </div>     
-</main>
+    </div> 
+    <script>
+    pictureData();
 
+//Format for the message showing the name of the picture uploaded
+    function pictureData() {
+        var recipeImage = document.getElementById('recipeImage');
+        var imgMessage = document.getElementById('imgMessage');
+
+        recipeImage.onchange = function () {    
+            imgMessage.innerHTML = recipeImage.files[0].name;
+        }
+//Margin for the name of the image to be uploaded                    
+        imgMessage.style.marginBottom = "15px";
+        imgMessage.style.marginTop = "5px";
+    }
+    </script>    
+</main>
 <?php
     } else {
         header('Location: ' . root . 'error404');
@@ -218,12 +243,12 @@ $num_rows  = $result -> num_rows;
 ?>
 <main class="container p-4">
     <?php
-        //Messages that are shown in the index page
+//Messages that are shown in the index page
         if(isset($_SESSION['message'])){
             $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
             echo $message -> buttonMessage();        
 
-            //Unsetting the messages variables so the message fades after refreshing the page.
+//Unsetting the messages variables so the message fades after refreshing the page.
             unset($_SESSION['message_alert'], $_SESSION['message']);
         }
     ?>

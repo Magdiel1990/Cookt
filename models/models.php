@@ -70,7 +70,7 @@ class Directories {
         $this -> directory = $directory;
         $this -> fileName = $fileName;
     }
-    
+ 
 //Method to get the file in the directory    
     public function directoryFiles(){
         if(file_exists($this -> directory)) {

@@ -135,12 +135,14 @@ if(isset($_POST['add_ingredient'])){
       $_SESSION['message_alert'] = "danger";
 
       header('Location: ' . root . 'ingredients');
+      exit;
   } else {
   if(!preg_match($pattern, $ingredient)){
       $_SESSION['message'] = '¡Ingrediente incorrecto!';
       $_SESSION['message_alert'] = "danger";
           
       header('Location: ' . root . 'ingredients');
+      exit;
   }
 //lowercase the variable
     $ingredient = strtolower($ingredient);
@@ -155,6 +157,7 @@ if(isset($_POST['add_ingredient'])){
         $_SESSION['message_alert'] = "success";
 
         header('Location: ' . root . 'ingredients');
+        exit;
     } else {
     $stmt = $conn -> prepare("INSERT INTO ingredients (ingredient, username) VALUES (?, ?);");
     $stmt->bind_param("ss", $ingredient, $_SESSION['username']);
@@ -165,12 +168,13 @@ if(isset($_POST['add_ingredient'])){
 
         $stmt -> close();
         header('Location: ' . root . 'ingredients');
-
+        exit;
       } else {
         $_SESSION['message'] = '¡Error al agregar ingrediente!';
         $_SESSION['message_alert'] = "danger";
             
         header('Location: ' . root . 'ingredients');
+        exit;
       }
     }
   }
@@ -251,7 +255,6 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
 
         header('Location: ' . root . 'add-recipe');
         exit;
-
         } else if ($_POST["imageUrl"] != "") {
 // Remote image URL Sanitization   
           $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL, $conn);
@@ -294,6 +297,7 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
             $_SESSION['message_alert'] = "success";
 
             header('Location: ' . root . 'add-recipe');
+            exit;
           } else {
             $_SESSION['message'] = $uploadOk;
             $_SESSION['message_alert'] = "danger";
@@ -376,13 +380,13 @@ if(isset($_POST['customingredient'])){
   
   $sql = "SELECT ingredientid FROM ingholder WHERE ingredientid = $ingredientId AND username = '" . $_SESSION['username'] . "';";
   $result = $conn -> query($sql);
-
-  //Check if the recipe has been added
+//Check if the recipe has been added
   if($result -> num_rows > 0){
       $_SESSION['message'] = '¡Ya ha sido agregado!';
       $_SESSION['message_alert'] = "success";
 
       header('Location: ' . root . 'custom');
+      exit;
   } else {
     $stmt = $conn -> prepare("INSERT INTO ingholder (ingredientid, username) VALUES (?, ?);");
     $stmt->bind_param ("is", $ingredientId, $_SESSION['username']);
@@ -394,12 +398,13 @@ if(isset($_POST['customingredient'])){
         $stmt -> close();            
 
         header('Location: ' . root . 'custom');
-
+        exit;
     } else {
       $_SESSION['message'] = '¡Error al agregar ingrediente!';
       $_SESSION['message_alert'] = "danger";
           
       header('Location: ' . root . 'custom');
+      exit;
     }
   }
 }
@@ -451,6 +456,7 @@ if(isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex'
         $_SESSION['message_alert'] = "danger";
 
         header('Location: ' . root . 'user');
+        exit;
 //If passwords don't match        
     } else {   
       if($password !== $passrepeat) {
@@ -458,6 +464,7 @@ if(isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex'
         $_SESSION['message_alert'] = "danger";  
         
         header('Location: ' . root . 'user');
+        exit;
 //Hash password            
       } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -481,17 +488,20 @@ if(isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex'
 
               $stmt->close();                  
               header('Location: ' . root . 'user');
+              exit;
             } else {
               $_SESSION['message'] = '¡Error al agregar usuario!';
               $_SESSION['message_alert'] = "danger";
                   
               header('Location: ' . root . 'user');
+              exit;
           }
         } else {
               $_SESSION['message'] = '¡Este usuario ya existe!';
               $_SESSION['message_alert'] = "success";
 
               header('Location: ' . root . 'user');
+              exit;
         }
       }
     }

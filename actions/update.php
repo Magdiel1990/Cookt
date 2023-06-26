@@ -8,7 +8,7 @@ require_once ("views/partials/head.php");
 /************************************************************************************************/
 
 
-if(isset($_GET["editname"]) && isset($_GET["username"]) && isset($_FILES["recipeImage"]) && isset($_POST["newRecipeName"]) && isset($_POST["category"])
+if(isset($_GET["editname"]) && isset($_GET["username"]) && isset($_POST["imageUrl"])&& isset($_FILES["recipeImage"]) && isset($_POST["newRecipeName"]) && isset($_POST["category"])
 && isset($_POST["cookingTime"]) && isset($_POST["ingredients"]) && isset($_POST["preparation"])){
 
 $oldName = $_GET["editname"];
@@ -29,40 +29,117 @@ $category = $_POST["category"];
 $recipeImage = $_FILES["recipeImage"];
 $userName = $_GET["username"];
 
-
 $sql = "SELECT categoryid FROM categories WHERE category = '$category';";
 $row = $conn -> query($sql) -> fetch_assoc();
 
 $categoryId = $row['categoryid'];
 
     if($newRecipeName == "" || $cookingTime == "" || $preparation == "" || $ingredients == ""){
-    //Message if the variable is null.
+//Message if the variable is null.
         $_SESSION['message'] = '¡Complete todos los campos!';
         $_SESSION['message_alert'] = "danger";
             
-    //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
         header('Location: ' . root . 'edit?recipename='. $oldName . '&username=' . $userName);
+        exit;
     } else {
-        if($cookingTime >= 5 && $cookingTime <= 180){
+//Cooking time verification    
+        if($cookingTime >= 5 && $cookingTime <= 180){            
 
-            if($recipeImage['name'] == null) {            
+            if($recipeImage['name'] == null && $_POST["imageUrl"] == "") {
+//Data update            
                 $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
                 if ($conn->query($sql)) {
-                    //Message if the variable is null.
+//Message if the variable is null.
                     $_SESSION['message'] = '¡Receta editada con éxito!';
                     $_SESSION['message_alert'] = "success";
                         
-                    //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
                     header('Location: ' . root . 'edit?recipename='. $newRecipeName .'&username=' . $userName);
-                    } else {
-                    //Message if the variable is null.
-                    $_SESSION['message'] = '¡Error al editar receta!';
-                    $_SESSION['message_alert'] = "danger";
+                    exit;
+                } else {
+//Message if the variable is null.
+                $_SESSION['message'] = '¡Error al editar receta!';
+                $_SESSION['message_alert'] = "danger";
 
-                    //The page is redirected to the add-recipe.php
-                    header('Location: ' . root . 'edit?recipename='. $oldName. '&username=' . $userName);
+//The page is redirected to the add-recipe.php
+                header('Location: ' . root . 'edit?recipename='. $oldName. '&username=' . $userName);
+                exit;
+                }  
+            } else if ($_POST["imageUrl"] != "") {
+//Data update  
+                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
+                if ($conn->query($sql)) {
+// Remote image URL Sanitization   
+                    $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL, $conn);
+                    $url = $filter -> sanitization();
+//Url existance verification          
+                    $URLVerif = new UrlVerification ($url);
+                    $URLVerif = $URLVerif -> urlVerif();
+                    
+                    if($URLVerif === false) {
+                        $_SESSION['message'] = '¡Receta editada exitosamente sin imagen!';
+                        $_SESSION['message_alert'] = "success";
+
+//The page is redirected to the edit.php
+                        header('Location: ' . root . 'edit?recipename='. $newRecipeName .'&username=' . $userName);
+                        exit;        
+                    } else {                    
+// Image path
+                        $recipeImagesDir = "imgs/recipes/". $_SESSION['username'];
+
+                        if (!file_exists($recipeImagesDir)) {
+                            mkdir($recipeImagesDir, 0777, true);
+                        }
+                    
+                        $ext = pathinfo($url, PATHINFO_EXTENSION);
+                        $uploadOk = "";
+//Format verification
+                        if($ext  != "jpg" && $ext  != "jpeg" && $ext != "png" && $ext  != "gif") {
+                            $uploadOk = '¡Formato de imagen no admitido!';
+                        }   
+//Size verification                
+                        if(array_change_key_case(get_headers($url,1))['content-length'] > 300000){
+                            $uploadOk = '¡El tamaño debe ser menor que 300 KB!';
+                        }
+//Deleting the old img
+                        $files = new Directories($recipeImagesDir, $oldName);
+                        $imgOldRecipeDir = $files -> directoryFiles();
+
+                        if($imgOldRecipeDir !== false) {
+                            if(file_exists($imgOldRecipeDir)){
+                                unlink($imgOldRecipeDir);
+                            }
+                        }
+//New name for the saved image         
+                        $recipeImagesDir = $recipeImagesDir . "/" . $newRecipeName . "." . $ext;
+
+// Save image 
+                        if(file_put_contents($recipeImagesDir, file_get_contents($url)) !== false){
+                            $_SESSION['message'] = '¡Receta editada exitosamente!';
+                            $_SESSION['message_alert'] = "success";
+
+                            header('Location: ' . root . 'edit?recipename='. $newRecipeName .'&username=' . $userName);
+                            exit;   
+                        } else {
+                            $_SESSION['message'] = $uploadOk;
+                            $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the edit.php
+                            header('Location: ' . root . 'edit?recipename='. $oldName. '&username=' . $userName);
+                            exit;
+                        }
                     }  
                 } else {
+//Message if the variable is null.
+                $_SESSION['message'] = '¡Error al editar receta!';
+                $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the edit.php
+                    header('Location: ' . root . 'edit?recipename='. $oldName. '&username=' . $userName);
+                    exit;
+                }
+            } else {
                 $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
                 
                 $target_dir = "imgs/recipes/". $userName  ."/";
@@ -70,69 +147,78 @@ $categoryId = $row['categoryid'];
                 $files = new Directories($target_dir, $oldName);
                 $imgOldRecipeDir = $files -> directoryFiles();
 
-                unlink($imgOldRecipeDir);
+//Delete the old img
+                if($imgOldRecipeDir !== false) {
+                    if(file_exists($imgOldRecipeDir)){
+                        unlink($imgOldRecipeDir);
+                    }
+                }
 
                 $fileExtension = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
                 $target_file = $target_dir . $newRecipeName . "." . $fileExtension;
                 $uploadOk = "";
 
+//Check if the new recipe img exists
                 if(file_exists($target_file)){
                     unlink($target_file);
                 }
                 
-                // Check if image file is a actual image or fake image
+// Check if image file is a actual image or fake image
                 if(isset($_POST["edit"])) {
                     $check = getimagesize($recipeImage["tmp_name"]);
                     if($check == false) {
                         $uploadOk = "¡Este archivo no es una imagen!";
                     } 
                 }
-                // Check file size
+// Check file size
                 if ($recipeImage["size"] > 300000) {
                     $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
                 }
 
-                // Allow certain file formats
+// Allow certain file formats
                 if($fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "png" && $fileExtension != "gif") {
                     $uploadOk = "¡Formato no admitido!";
                 } 
 
                 if ($uploadOk == "") {
                     if(move_uploaded_file($recipeImage["tmp_name"], $target_file) && $conn->query($sql)){
-                    //Success message.
+//Success message.
                     $_SESSION['message'] = '¡Receta editada con éxito!';
                     $_SESSION['message_alert'] = "success";
 
-                    //The page is redirected to the add-recipe.php
-                    header('Location: ' . root . 'edit?recipename='. $newRecipeName. '&username=' . $userName);   
+//The page is redirected to the add-recipe.php
+                    header('Location: ' . root . 'edit?recipename='. $newRecipeName. '&username=' . $userName);
+                    exit;   
                     } else {
                     //Failure message.
                     $_SESSION['message'] = '¡Error al editar receta!';
                     $_SESSION['message_alert'] = "danger";
 
-                    //The page is redirected to the add_units.php.
+//The page is redirected to the add_units.php.
                     header('Location: ' . root . 'edit?recipename=' . $oldName. '&username=' . $userName);
-                }
+                    exit;
+                    }
                 } else {
-                    //Failure message.
+//Failure message.
                     $_SESSION['message'] = $uploadOk;
                     $_SESSION['message_alert'] = "danger";
 
-                    //The page is redirected to the add_units.php.
+//The page is redirected to the add_units.php.
                     header('Location: ' . root . 'edit?recipename=' . $oldName. '&username=' . $userName);
+                    exit;
                 }     
             }
         } else {
-                //Message if the variable is null.
-                $_SESSION['message'] = '¡Tiempo de cocción incorrecto!';
-                $_SESSION['message_alert'] = "danger";
+//Message if the variable is null.
+            $_SESSION['message'] = '¡Tiempo de cocción incorrecto!';
+            $_SESSION['message_alert'] = "danger";
                     
-                //The page is redirected to the add-recipe.php
-                header('Location: ' . root . 'edit?recipename='. $oldName. '&username=' . $userName);
-        }       
+//The page is redirected to the add-recipe.php
+            header('Location: ' . root . 'edit?recipename='. $oldName. '&username=' . $userName);
+            exit;
+        }  
     }
 }
-
 
 /************************************************************************************************/
 /******************************************CATEGORY UPDATE CODE***********************************/
@@ -154,13 +240,13 @@ $oldCategoryName = $row['category'];
 
 
     if($newCategoryName == ""){
-    //Message if the variable is null.
+//Message if the variable is null.
         $_SESSION['message'] = '¡Llene todos los campos!';
         $_SESSION['message_alert'] = "danger";
             
-    //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
         header('Location: ' . root . 'edit?categoryid=' . $categoryId);
-
+        exit;
     } 
     if($categoryImage['name'] == null) {            
         $arrCategoryFiles = array();
@@ -184,19 +270,21 @@ $oldCategoryName = $row['category'];
 
                 $sql = "UPDATE categories SET category = '$newCategoryName' WHERE categoryid = '$categoryId';";
                 if ($conn->query($sql)) {
-                    //Message if the variable is null.
+//Message if the variable is null.
                     $_SESSION['message'] = '¡La categoría ha sido editada!';
                     $_SESSION['message_alert'] = "success";
                         
-                    //The page is redirected to the add_units.php.
+//The page is redirected to the add_units.php.
                     header('Location: ' . root . 'categories'); 
+                    exit;
                 } else {
-                    //Message if the variable is null.
+//Message if the variable is null.
                     $_SESSION['message'] = '¡Error al editar categoría!';
                     $_SESSION['message_alert'] = "danger";
                         
-                    //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
                     header('Location: ' . root . 'edit?categoryid=' . $categoryId);
+                    exit;
                 }
             }
         }
@@ -210,24 +298,24 @@ $oldCategoryName = $row['category'];
             unlink($target_file);
         }
         
-        // Check if image file is a actual image or fake image
+// Check if image file is a actual image or fake image
         if(isset($_POST["categoryeditionsubmit"])) {
             $check = getimagesize($categoryImage["tmp_name"]);
             if($check == false) {
                 $uploadOk = "¡Este archivo no es una imagen!";
             } 
         }
-        // Check if file already exists
+// Check if file already exists
         if (file_exists($target_file)) {
             $uploadOk = "¡Esta imagen ya existe!";
         }
 
-        // Check file size
+// Check file size
         if ($categoryImage["size"] > 300000) {
             $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
         }
 
-        // Allow certain file formats
+// Allow certain file formats
         if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "jpeg"
         && $fileExtension != "gif" ) {
             $uploadOk = "¡Formato no admitido!";
@@ -235,27 +323,30 @@ $oldCategoryName = $row['category'];
 
         if ($uploadOk == "") {
             if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $conn->query($sql)){
-            //Success message.
+//Success message.
             $_SESSION['message'] = '¡Categoría editada con éxito!';
             $_SESSION['message_alert'] = "success";
 
-            //The page is redirected to the add_units.php.
-            header('Location: ' . root . 'categories');    
+//The page is redirected to the add_units.php.
+            header('Location: ' . root . 'categories'); 
+            exit;   
             } else {
-            //Failure message.
+//Failure message.
             $_SESSION['message'] = '¡Error al editar categoría!';
             $_SESSION['message_alert'] = "danger";
 
-            //The page is redirected to the add_units.php.
+//The page is redirected to the add_units.php.
             header('Location: ' . root . 'edit?categoryid=' . $categoryId);
+            exit;
         }
         } else {
-            //Failure message.
+//Failure message.
             $_SESSION['message'] = $uploadOk;
             $_SESSION['message_alert'] = "danger";
 
-            //The page is redirected to the add_units.php.
+//The page is redirected to the add_units.php.
             header('Location: ' . root . 'edit?categoryid=' . $categoryId);
+            exit;
         }
     }    
 }
@@ -301,24 +392,24 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
             unlink($target_file);
         }
 
-        // Check if image file is a actual image or fake image
+// Check if image file is a actual image or fake image
         if(isset($_POST["usersubmit"])) {
             $check = getimagesize($profileImg["tmp_name"]);
             if($check == false) {
                 $uploadOk = "¡Este archivo no es una imagen!";
             } 
         }
-        // Check if file already exists
+// Check if file already exists
         if (file_exists($target_file)) {
             $uploadOk = "¡Esta imagen ya existe!";
         }
 
-        // Check file size
+// Check file size
         if ($profileImg["size"] > 300000) {
             $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
         }
 
-        // Allow certain file formats
+// Allow certain file formats
         if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "jpeg"
         && $fileExtension != "gif" ) {
             $uploadOk = "¡Formato no admitido!";
@@ -330,12 +421,13 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
     }
 
     if ($firstname == "" || $lastname == "" || $userName == "" || $sex == "") {
-    //Message if the variable is null.
+//Message if the variable is null.
         $_SESSION['message'] = '¡Complete todos los campos faltantes!';
         $_SESSION['message_alert'] = "danger";
             
-    //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
         header('Location: ' . root . 'edit?userid='. $userId);
+        exit;
     } else {
         if($actualPassword != "" && $newPassword != "" && $againNewPassword != ""){
             if($newPassword == $againNewPassword){
@@ -346,63 +438,71 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                     $sql = "UPDATE users SET password = '$hash_password', firstname = '$firstname',  lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
 
                     if ($conn->query($sql)) {
-                    //Message if the variable is null.
+//Message if the variable is null.
                     $_SESSION['message'] = '¡Usuario editado correctamente!';
                     $_SESSION['message_alert'] = "success";
                     
                         if($_SESSION["userid"] == $userId){
-                            //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
                             header('Location: ' . root . 'profile');
+                            exit;
                         } else {
-                            //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
                             header('Location: ' . root . 'user');
+                            exit;
                         }
                     } else {
-                    //Message if the variable is null.
+//Message if the variable is null.
                     $_SESSION['message'] = '¡Error al editar usuario!';
                     $_SESSION['message_alert'] = "danger";
 
-                    //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
                     header('Location: ' . root . 'edit?userid='. $userId);
+                    exit;
                     }  
                 } else {
-                    //Message if the variable is null.
+//Message if the variable is null.
                     $_SESSION['message'] = '¡Contraseña actual incorrecta!';
                     $_SESSION['message_alert'] = "danger";
                         
-                    //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
                     header('Location: ' . root . 'edit?userid='. $userId);
+                    exit;
                 }
             } else {
-                //Message if the variable is null.
+//Message if the variable is null.
                 $_SESSION['message'] = '¡Contraseñas nuevas no coinciden!';
                 $_SESSION['message_alert'] = "danger";
                     
-                //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
                 header('Location: ' . root . 'edit?userid='. $userId);
+                exit;
             }
         } else {            
             $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
             
             if ($conn->query($sql)) {
-            //Message if the variable is null.
+//Message if the variable is null.
             $_SESSION['message'] = '¡Usuario editado correctamente!';
             $_SESSION['message_alert'] = "success";
                 
                 if($_SESSION["userid"] == $userId){
-                    //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
                     header('Location: ' . root . 'profile');
+                    exit;
                 } else {
-                    //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
                     header('Location: ' . root . 'user');
+                    exit;
                 }
             } else {
-            //Message if the variable is null.
+//Message if the variable is null.
             $_SESSION['message'] = '¡Error al editar usuario!';
             $_SESSION['message_alert'] = "danger";
 
-            //The page is redirected to the add-recipe.php
+//The page is redirected to the add-recipe.php
             header('Location: ' . root . 'edit?userid='. $userId);
+            exit;
             }  
         }
     }
