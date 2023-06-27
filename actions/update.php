@@ -244,10 +244,20 @@ $oldCategoryName = $row['category'];
         $_SESSION['message'] = '¡Llene todos los campos!';
         $_SESSION['message_alert'] = "danger";
             
-//The page is redirected to the add-recipe.php
+//The page is redirected to the edit.php
         header('Location: ' . root . 'edit?categoryid=' . $categoryId);
         exit;
     } 
+
+    if(strlen($newCategoryName) > 20 || strlen($newCategoryName) < 2) {
+        $_SESSION['message'] = '¡Longitud de categoría incorrecta!';
+        $_SESSION['message_alert'] = "danger";
+            
+//The page is redirected to the edit.php
+        header('Location: ' . root . 'edit?categoryid=' . $categoryId);
+        exit;
+    } 
+
     if($categoryImage['name'] == null) {            
         $arrCategoryFiles = array();
         $iterator = new FilesystemIterator("imgs/categories");

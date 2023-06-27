@@ -40,79 +40,86 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
         header('Location: ' . root . 'categories');
         exit;
     } else {
+      if(strlen($category) > 20 || strlen($category) < 2) {
+        $_SESSION['message'] = '¡Longitud de categoría incorrecta!';
+        $_SESSION['message_alert'] = "danger";
+            
+        header('Location: ' . root . 'categories');
+        exit;
+      } else{
+  //lowercase the variable
+        $category = strtolower($category);
+  //Check if the category had been added
+        $sql = "SELECT category FROM categories WHERE category = '$category';";
+        $num_rows = $conn -> query($sql) -> num_rows;      
 
-//lowercase the variable
-      $category = strtolower($category);
-//Check if the category had been added
-      $sql = "SELECT category FROM categories WHERE category = '$category';";
-      $num_rows = $conn -> query($sql) -> num_rows;      
+        if($num_rows != 0){
+            $_SESSION['message'] = '¡Ya ha sido agregado!';
+            $_SESSION['message_alert'] = "success";
 
-      if($num_rows != 0){
-          $_SESSION['message'] = '¡Ya ha sido agregado!';
-          $_SESSION['message_alert'] = "success";
+            header('Location: ' . root . 'categories');
+            exit;
+        }  
+
+        $stmt = $conn -> prepare("INSERT INTO categories (category) VALUES (?);");
+        $stmt->bind_param("s", $category);
+          
+        $categoryImagesDir = "../imgs/categories";
+        if (!file_exists($categoryImagesDir)) {
+            mkdir($categoryImagesDir, 0777, true);
+        }
+
+        $target_dir = "../imgs/categories/";
+        $fileExtension = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
+        $target_file = $target_dir . $category . "." . $fileExtension;
+        $uploadOk = "";
+        
+  // Check if image file is a actual image or fake image
+        if(isset($_POST["categorySubmit"])) {
+          $check = getimagesize($categoryImage["tmp_name"]);
+          if($check == false) {
+              $uploadOk = "¡Este archivo no es una imagen!";
+          } 
+        }
+  // Check if file already exists
+        if (file_exists($target_file)) {
+          $uploadOk = "¡Esta imagen ya existe!";
+        }
+
+  // Check file size
+        if ($categoryImage["size"] > 300000) {
+            $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
+        }
+
+  // Allow certain file formats
+        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "jpeg"
+        && $fileExtension != "gif" ) {
+          $uploadOk = "¡Formato no admitido!";
+        } 
+
+        if ($uploadOk == "") {
+          if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $stmt -> execute()){
+            $_SESSION['message'] = '¡Categoría agregada con éxito!';
+            $_SESSION['message_alert'] = "success";
+
+            $stmt -> close();
+
+            header('Location: ' . root . 'categories');  
+            exit;  
+          } else {
+          $_SESSION['message'] = '¡Error al agregar categoría!';
+          $_SESSION['message_alert'] = "danger";
 
           header('Location: ' . root . 'categories');
           exit;
-      }  
-
-      $stmt = $conn -> prepare("INSERT INTO categories (category) VALUES (?);");
-      $stmt->bind_param("s", $category);
-        
-      $categoryImagesDir = "../imgs/categories";
-      if (!file_exists($categoryImagesDir)) {
-          mkdir($categoryImagesDir, 0777, true);
-      }
-
-      $target_dir = "../imgs/categories/";
-      $fileExtension = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
-      $target_file = $target_dir . $category . "." . $fileExtension;
-      $uploadOk = "";
-      
-// Check if image file is a actual image or fake image
-      if(isset($_POST["categorySubmit"])) {
-        $check = getimagesize($categoryImage["tmp_name"]);
-        if($check == false) {
-            $uploadOk = "¡Este archivo no es una imagen!";
-        } 
-      }
-// Check if file already exists
-      if (file_exists($target_file)) {
-        $uploadOk = "¡Esta imagen ya existe!";
-      }
-
-// Check file size
-      if ($categoryImage["size"] > 300000) {
-          $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
-      }
-
-// Allow certain file formats
-      if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "jpeg"
-      && $fileExtension != "gif" ) {
-        $uploadOk = "¡Formato no admitido!";
-      } 
-
-      if ($uploadOk == "") {
-        if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $stmt -> execute()){
-          $_SESSION['message'] = '¡Categoría agregada con éxito!';
-          $_SESSION['message_alert'] = "success";
-
-          $stmt -> close();
-
-          header('Location: ' . root . 'categories');  
-          exit;  
+          }
         } else {
-        $_SESSION['message'] = '¡Error al agregar categoría!';
-        $_SESSION['message_alert'] = "danger";
+          $_SESSION['message'] = $uploadOk;
+          $_SESSION['message_alert'] = "danger";
 
-        header('Location: ' . root . 'categories');
-        exit;
+          header('Location: ' . root . 'categories');
+          exit;
         }
-      } else {
-        $_SESSION['message'] = $uploadOk;
-        $_SESSION['message_alert'] = "danger";
-
-        header('Location: ' . root . 'categories');
-        exit;
       }
     }
   }
