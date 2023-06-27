@@ -27,7 +27,7 @@ require_once ("views/partials/nav.php");
 <!--Category form-->
     <h3>Agregar Categorías</h3>
 
-        <form class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="<?php echo root;?>create" autocomplete="on" onsubmit="return validation('add_categories', /[a-zA-Z\t\h]+|(^$)/)">
+        <form id="category_form" class="mt-3 col-auto"  enctype="multipart/form-data" method="POST" action="<?php echo root;?>create" autocomplete="on">
             
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="add_categories">Categoría: </label>
@@ -88,7 +88,8 @@ require_once ("views/partials/nav.php");
     </div>
 </main>
 <script>
-deleteMessage("btn-outline-danger", "categoría");   
+deleteMessage("btn-outline-danger", "categoría");
+formValidation();    
 
 //Delete message
 function deleteMessage(button, pageName){
@@ -104,6 +105,61 @@ var deleteButtons = document.getElementsByClassName(button);
             }
         })
     }
+}                  
+               
+//Image format validation
+function formValidation(){
+
+    var form = document.getElementById("category_form");    
+
+    form.addEventListener("submit", function(event) { 
+//Accepted formats            
+        var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG)$/i;
+        var regExp = /[a-zA-Z\t\h]+|(^$)/;
+        var categoryImageInput = document.getElementById('categoryImage');
+        var categoryImage = categoryImageInput.value;                            
+        var categoryNameInput = document.getElementById('add_categories');
+        var categoryName = categoryNameInput.value;
+        var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg"];  
+
+        if(categoryName == "") {
+            event.preventDefault();                
+            confirm ("¡Escriba el nombre de la categoría!");                                
+            return false;
+        }
+
+        if(categoryName.length < 2 || categoryName.length > 20) {
+            event.preventDefault();
+            confirm("¡Longitud de categoría incorrecta!");               
+            return false;                
+        }
+        
+        if(!categoryName.match(regExp)){ 
+            event.preventDefault();                
+            confirm ("¡Nombre de categoría incorrecto!");                                
+            return false;
+        }
+
+        if (categoryImage != "") {
+            var file = categoryImageInput.files[0];                   
+            var fileType = file.type;  
+//Weight of the file                        
+            var weight = file.size;
+//Size in Bytes     
+            if(weight > 300000) {
+                event.preventDefault();
+                confirm ("¡El tamaño de la imagen debe ser menor que 300 KB!");  
+                return false;
+            }       
+//Image format validation
+            if(!allowedImageTypes.includes(fileType)){
+                event.preventDefault();
+                confirm ("¡Formatos de imagen admitidos: jpg, png y gif!");
+                return false;
+            }                            
+        }
+        return true;               
+    })
 }
 </script>
 <?php
