@@ -370,17 +370,31 @@ $oldCategoryName = $row['category'];
 if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastname']) && isset($_POST['sex']) && isset($_POST['username']) && isset($_POST['userrol']) && isset($_POST['useremail']) && isset($_POST['new_password']) && isset($_POST['repite_password']) && isset($_POST['current_password'])  || isset($_FILES["profile"])){
   
     date_default_timezone_set("America/Santo_Domingo");
-  
+
+    $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
+    $firstname = $filter -> sanitization();
+
+    $filter = new Filter ($_POST['lastname'], FILTER_SANITIZE_STRING, $conn);
+    $lastname = $filter -> sanitization();
+
+    $filter = new Filter ($_POST['username'], FILTER_SANITIZE_STRING, $conn);
+    $username = $filter -> sanitization();
+
+    $filter = new Filter ($_POST['useremail'], FILTER_SANITIZE_EMAIL, $conn);
+    $userEmail = $filter -> sanitization();
+
+    $filter = new Filter ($_POST['current_password'], FILTER_SANITIZE_STRING, $conn);
+    $actualPassword = $filter -> sanitization();
+
+    $filter = new Filter ($_POST['new_password'], FILTER_SANITIZE_STRING, $conn);
+    $newPassword = $filter -> sanitization();
+
+    $filter = new Filter ($_POST['repite_password'], FILTER_SANITIZE_STRING, $conn);
+    $againNewPassword = $filter -> sanitization();
+
     $userId = $_GET['userid'];  
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $userName =  $_POST['username'];
     $userRol = $_POST['userrol'];
-    $userEmail = $_POST['useremail'];
     $state = isset($_POST['activeuser']) ? "yes" : "no";
-    $actualPassword = $_POST['current_password'];
-    $newPassword = $_POST['new_password'];
-    $againNewPassword = $_POST['repite_password'];  
     $sex = $_POST['sex'];
     $updateTime =  date("Y-m-d H:i:s");
     $profileImg = isset($_FILES["profile"]) ? $_FILES["profile"] : "";
@@ -439,7 +453,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
         }
     }
 
-    if ($firstname == "" || $lastname == "" || $userName == "" || $sex == "") {
+    if ($firstname == "" || $lastname == "" || $userName == "" || $sex == "" || $userEmail == "") {
 //Message if the variable is null.
         $_SESSION['message'] = '¡Complete todos los campos faltantes!';
         $_SESSION['message_alert'] = "danger";

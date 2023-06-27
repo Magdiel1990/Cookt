@@ -393,7 +393,7 @@ $num_rows  = $result -> num_rows;
     <div class="row mt-2 justify-content-center">
         <h3 class="text-center">Editar Usuario</h3>     
         <div class="mt-3 col-auto">
-            <form class="form card card-body" enctype="multipart/form-data" action="update?userid=<?php echo $userId; ?>" method="POST">
+            <form id="user_form" class="form card card-body" enctype="multipart/form-data" action="update?userid=<?php echo $userId; ?>" method="POST">
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
@@ -452,8 +452,8 @@ $num_rows  = $result -> num_rows;
                 <div class="text-center" id="imgMessage"></div>
 
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="useremail">Email: </label>
-                    <input class="form-control" value="<?php echo $email; ?>"  type="email" id="useremail" name="useremail" minlength="15" maxlength="70">
+                    <label class="input-group-text is-required" for="useremail">Email: </label>
+                    <input class="form-control" value="<?php echo $email; ?>"  type="email" id="useremail" name="useremail" minlength="15" maxlength="70" required>
                 </div>
                 
                 <div class="col text-center mb-3">
@@ -483,9 +483,10 @@ $num_rows  = $result -> num_rows;
                 </div>       
             </form>
             <script>
-            pictureData();    
+            pictureData(); 
+            formValidation();   
 
-            //Format for the message showing the name of the picture uploaded
+//Format for the message showing the name of the picture uploaded
                 function pictureData() {
                     var profile = document.getElementById('profile');
                     var imgMessage = document.getElementById('imgMessage');
@@ -493,9 +494,119 @@ $num_rows  = $result -> num_rows;
                     profile.onchange = function () {    
                         imgMessage.innerHTML = profile.files[0].name;
                     }
-            //Margin for the name of the image to be uploaded                    
+//Margin for the name of the image to be uploaded                    
                     imgMessage.style.marginBottom = "15px";
                     imgMessage.style.marginTop = "5px";
+                }
+
+//Image format validation
+                function formValidation(){
+
+                    var form = document.getElementById("user_form");    
+
+                    form.addEventListener("submit", function(event) { 
+//Accepted formats            
+                        var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG)$/i;
+                        var regExp = /[a-zA-Z\t\h]+|(^$)/;
+                        var firstname = document.getElementById("firstname").value;
+                        var lastname = document.getElementById("lastname").value;
+                        var username = document.getElementById("username").value;
+                        var current_password = document.getElementById("current_password").value;
+                        var new_password = document.getElementById("new_password").value;
+                        var repite_password = document.getElementById("repite_password").value;
+                        var profile = document.getElementById("profile");
+                        var sex = document.getElementsByName("sex");    
+                        var useremail = document.getElementById("useremail").value;   
+
+/*************************************Revisar esto */             
+                    for (var s of sex) {
+                        if (!s.checked) {
+                            sex = "";
+                        }
+                    }
+/*************************************************** */
+                    if (profile.value != "") {
+//File type                
+                        var file = profile.files[0]; 
+                        var fileType = file.type;
+//Weight of the file                        
+                        var weight = file.size;                
+//Size in Bytes     
+                        if(weight > 300000) {
+                            event.preventDefault();
+                            confirm("¡El tamaño de la imagen debe ser menor que 300 KB!");  
+                            return false;
+                        }       
+//Image format validation
+                        if(!ext.exec(fileType)){
+                            event.preventDefault();
+                            confirm("¡Formatos de imagen admitidos: jpg, png y gif!");
+                            return false;
+                        }             
+                    }
+
+                    if(firstname == "" || lastname == "" || username == "" || current_password == "" || useremail == "") {
+                        event.preventDefault();                        
+                        confirm ("¡Completar los campos requeridos!");             
+                        return false;
+                    }
+
+                    if(current_password != "" && new_password != "" && repite_password != ""){
+                        if(current_password.length < 8 || current_password.length > 50){
+                            event.preventDefault();
+                            confirm ("¡La contraseña debe tener de 8 a 50 caracteres!");                 
+                            return false;
+                        }
+
+                        if(new_password.length < 8 || new_password.length > 50){
+                            event.preventDefault();
+                            confirm ("¡La contraseña debe tener de 8 a 50 caracteres!");                 
+                            return false;
+                        }
+
+                        if(repite_password.length < 8 || repite_password.length > 50){
+                            event.preventDefault();
+                            confirm ("¡La contraseña debe tener de 8 a 50 caracteres!");                 
+                            return false;
+                        }
+                        if(new_password !== repite_password){
+                            event.preventDefault();
+                            confirm ("¡Contraseñas nuevas no coinciden!");
+                            return false;
+                        }                     
+                    }
+//Regular Expression    
+                    if(!firstname.match(regExp) || !lastname.match(regExp) || !username.match(regExp)){
+                        event.preventDefault();
+                        confirm ("¡Nombre, apellido o usuario incorrecto!");                 
+                        return false;
+                    }
+
+                    if(firstname.length < 2 || firstname.length > 30){
+                        event.preventDefault();
+                        confirm ("¡El nombre debe tener de 2 a 30 caracteres!");                 
+                        return false;
+                    } 
+
+                    if(lastname.length < 2 || lastname.length > 40){
+                        event.preventDefault();
+                        confirm ("¡El apellido debe tener de 2 a 40 caracteres!");                 
+                        return false;
+                    }
+
+                    if(username.length < 2 || username.length > 30){
+                        event.preventDefault();
+                        confirm ("¡El usuario debe tener de 2 a 30 caracteres!");                 
+                        return false;
+                    }                   
+                    
+                    if(useremail.length < 15 || useremail.length > 70){
+                        event.preventDefault();                        
+                        confirm ("¡El email debe tener de 15 a 70 caracteres!");                 
+                        return false;
+                    }                
+                    return true;          
+                    })
                 }
             </script>
         </div>                   

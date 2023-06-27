@@ -458,7 +458,7 @@ if(isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex'
         exit;
 //If null        
   } else {
-    if ($firstname == "" || $lastname == "" || $username == "" || $password == "" || $sex == "") {
+    if ($firstname == "" || $lastname == "" || $username == "" || $password == "" || $sex == "" || $email == "") {
         $_SESSION['message'] = '¡Complete todos los campos por favor!';
         $_SESSION['message_alert'] = "danger";
 

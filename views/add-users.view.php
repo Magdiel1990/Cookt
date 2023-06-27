@@ -72,8 +72,8 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                 </div>
 
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="useremail">Email: </label>
-                    <input class="form-control" type="email" id="useremail" name="useremail" minlength="15" maxlength="70">
+                    <label class="input-group-text is-required" for="useremail">Email: </label>
+                    <input class="form-control" type="email" id="useremail" name="useremail" minlength="15" maxlength="70" required>
                 </div>
 <!-- Current user is sent-->
                 <input type="hidden" name="session_user" value = "<?php echo $_SESSION['username']?>">
