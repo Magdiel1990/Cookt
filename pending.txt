@@ -1,4 +1,0 @@
-edit.php javascripts faltan
-poner upload image a profile y probar
-poner seccion para elegir las recetas que no tengan los ingredientes
-
