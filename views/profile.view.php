@@ -39,8 +39,11 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
     $files = new Directories($img_dir, $_SESSION['username']);
     $imgProfileDir = $files -> directoryProfiles();
 
+//Formats
+    $formats = array("jpg", "jpeg", "gif", "png");
+
 //If the file doesn't exist the default photo is shown
-    if(pathinfo($imgProfileDir, PATHINFO_EXTENSION) == "unk"){
+    if(!in_array(pathinfo($imgProfileDir, PATHINFO_EXTENSION), $formats)){
         $path = "src = 'imgs/unknown/unknown_user.png'";
     } else {
          $path = "src = '" . $imgProfileDir . "'";

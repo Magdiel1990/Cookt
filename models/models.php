@@ -86,7 +86,7 @@ class Directories {
                         $ext = pathinfo($path, PATHINFO_EXTENSION);          
 //Default extension
                     } else {
-                        $ext = "jpg";
+                        $ext = "unk";
                     }
                 }                  
             }

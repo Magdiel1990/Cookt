@@ -383,10 +383,15 @@ $num_rows  = $result -> num_rows;
                     </select>
                 </div>
 
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="profile">Foto de perfil: </label>
-                    <input class="form-control" type="file" id="profile" name="profile">
-                </div>   
+                <div class="frame-edit mb-2">
+                    <label class="form-label" for="profile">Foto</label>                    
+                    <div class="dropzone">                                     
+                        <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon"/>                        
+                        <input  class="upload-input form-control" id="profile" type="file" name="profile" accept=".png, .jpeg, .jpg, .gif"/>
+                    </div>                       
+                </div>     
+
+                <div class="text-center" id="imgMessage"></div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="useremail">Email: </label>
@@ -419,10 +424,25 @@ $num_rows  = $result -> num_rows;
                     </div>
                 </div>       
             </form>
+            <script>
+            pictureData();    
+
+            //Format for the message showing the name of the picture uploaded
+                function pictureData() {
+                    var profile = document.getElementById('profile');
+                    var imgMessage = document.getElementById('imgMessage');
+
+                    profile.onchange = function () {    
+                        imgMessage.innerHTML = profile.files[0].name;
+                    }
+            //Margin for the name of the image to be uploaded                    
+                    imgMessage.style.marginBottom = "15px";
+                    imgMessage.style.marginTop = "5px";
+                }
+            </script>
         </div>                   
     </div>     
 </main>
-
 <?php
         } else {
             header('Location: ' . root . 'error404');

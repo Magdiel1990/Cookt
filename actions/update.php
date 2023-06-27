@@ -382,16 +382,25 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
     }
 
     if($profileImg["name"] != ""){
-
         $target_dir = "imgs/users/";
+//If the directory doesnt exist it's created
+        if (!file_exists($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+
         $fileExtension = strtolower(pathinfo($profileImg["name"], PATHINFO_EXTENSION));
         $target_file = $target_dir . $_SESSION["username"] . "." . $fileExtension;
         $uploadOk = "";
 
-        if(is_file($target_file)){
-            unlink($target_file);
-        }
+        $files = new Directories($target_dir, $_SESSION["username"]);
+        $imgProfileDir = $files -> directoryFiles();
+        
+//Formats
+        $formats = array("jpg", "jpeg", "gif", "png");
 
+        if(in_array(pathinfo($imgProfileDir, PATHINFO_EXTENSION), $formats)){
+            unlink($imgProfileDir);
+        }
 // Check if image file is a actual image or fake image
         if(isset($_POST["usersubmit"])) {
             $check = getimagesize($profileImg["tmp_name"]);
