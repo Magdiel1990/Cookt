@@ -47,7 +47,7 @@ if($result -> num_rows > 0) {
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="categoryName">Nombre: </label>
-                    <input type="text" name="categoryName" value="<?php echo $category;?>" class="form-control" id="categoryName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="20" min-length="2" required>
+                    <input type="text" name="categoryName" value="<?php echo $category;?>" class="form-control" id="categoryName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="20" minlength="2" required>
                 </div>
 
                 <div class="mb-3">
@@ -178,12 +178,12 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="newRecipeName">Nombre: </label>
-                        <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="50" min-length="7" required>
+                        <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="50" minlength="7" required>
                     </div>
 
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="imageUrl">Url de la imagen</label>
-                        <input class="form-control"  accept=".png, .jpeg, .jpg, .gif" type="url" name="imageUrl" id="imageUrl" placeholder="Formatos: jpg, png y gif" max-length="150" min-length="20">
+                        <input class="form-control"  accept=".png, .jpeg, .jpg, .gif" type="url" name="imageUrl" id="imageUrl" placeholder="Formatos: jpg, png y gif" maxlength="150" minlength="20">
                     </div>
 
                     <div class="frame">
@@ -412,17 +412,17 @@ $num_rows  = $result -> num_rows;
                 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="current_password">Contraseña actual: </label>
-                    <input class="form-control" type="password" id="current_password" name="current_password"  minlength="8">
+                    <input class="form-control" type="password" id="current_password" name="current_password"  maxlength="50" minlength="8">
                 </div>      
                 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="new_password">Nueva contraseña: </label>
-                    <input class="form-control" type="password" id="new_password" name="new_password"  minlength="8">
+                    <input class="form-control" type="password" id="new_password" name="new_password"  maxlength="50" minlength="8">
                 </div>   
 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="repite_password">Repite nueva contraseña: </label>
-                    <input class="form-control" type="password" id="repite_password" name="repite_password" minlength="8">
+                    <input class="form-control" type="password" id="repite_password" name="repite_password" maxlength="50" minlength="8">
                 </div>   
 
                 <div style="<?php echo $userNameLabelState;?>" class="input-group mb-3">

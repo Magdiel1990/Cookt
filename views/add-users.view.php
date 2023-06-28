@@ -79,7 +79,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                 <input type="hidden" name="session_user" value = "<?php echo $_SESSION['username']?>">
                 <div class="text-center">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="sex" id="M" value="M" required>
+                        <input class="form-check-input" type="radio" name="sex" id="M" value="M" checked required>
                         <label class="form-check-label" for="M">M</label>
                     </div>
 

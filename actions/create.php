@@ -421,7 +421,7 @@ if(isset($_POST['customingredient'])){
 /************************************************************************************************/
 
 //receive the data
-if(isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex']) || isset($_POST['username']) || isset($_POST['userpassword']) || isset($_POST['userrol']) || isset($_POST['useremail']) || isset($_POST['session_user'])){
+if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex']) || isset($_POST['username']) || isset($_POST['userpassword']) || isset($_POST['userrol']) || isset($_POST['useremail']) || isset($_POST['session_user'])) {
 
   $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
   $firstname = $filter -> sanitization();
@@ -447,6 +447,7 @@ if(isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex'
   $rol = $_POST['userrol'];
   $state = $_POST['activeuser'];
   $sessionUser = $_POST['session_user'];
+  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/";
 
 //Check if the user is Admin
   $sql = "SELECT userid, `type` FROM users WHERE username ='$sessionUser';";
@@ -465,50 +466,71 @@ if(isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex'
         header('Location: ' . root . 'user');
         exit;
 //If passwords don't match        
-    } else {   
-      if($password !== $passrepeat) {
-        $_SESSION['message'] = '¡Contraseñas no coinciden!';
-        $_SESSION['message_alert'] = "danger";  
-        
+    } else {
+      if (!preg_match($pattern, $firstname) || !preg_match($pattern, $lastname) || !preg_match($pattern, $username)){
+        $_SESSION['message'] = '¡Nombre, apellido o usuario incorrecto!';
+        $_SESSION['message_alert'] = "danger";
+
         header('Location: ' . root . 'user');
         exit;
-//Hash password            
       } else {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        if(strlen($firstname) < 2 || strlen($firstname) > 30 || strlen($lastname) < 2 || strlen($lastname) > 40 || strlen($username) < 2 || strlen($username) > 30 ||  strlen($password) < 8 ||  strlen($password) > 50 || strlen($passrepeat) < 8 ||  strlen($passrepeat) > 50 || strlen($email) < 15 || strlen($email) > 70) {
+            $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
+            $_SESSION['message_alert'] = "danger";
 
-        if($state == "yes") {
-          $state = 1;
-        } else { 
-          $state = 0;
-        }
-//Check if it already exists
-        $sql = "SELECT userid FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
-        $num_rows = $conn -> query($sql) -> num_rows;
-
-        if($num_rows == 0) {          
-        $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-        $stmt->bind_param ("ssssssis", $firstname, $lastname, $username, $hashed_password, $rol, $userEmail, $state, $sex);
-
-          if ($stmt->execute()) {
-              $_SESSION['message'] = '¡Usuario agregado con éxito!';
-              $_SESSION['message_alert'] = "success";
-
-              $stmt->close();                  
-              header('Location: ' . root . 'user');
-              exit;
-            } else {
-              $_SESSION['message'] = '¡Error al agregar usuario!';
-              $_SESSION['message_alert'] = "danger";
-                  
-              header('Location: ' . root . 'user');
-              exit;
-          }
+            header('Location: ' . root . 'user');
+            exit;
         } else {
-              $_SESSION['message'] = '¡Este usuario ya existe!';
-              $_SESSION['message_alert'] = "success";
+            $sql = "SELECT userid FROM users WHERE username = '$username';";
+            $num_rows = $conn -> query($sql) -> num_rows;
 
+          if($num_rows == 0) {   
+            if($password != $passrepeat) {  
+              $_SESSION['message'] = '¡Contraseñas no coinciden!';
+              $_SESSION['message_alert'] = "danger";  
+              
               header('Location: ' . root . 'user');
               exit;
+//Hash password            
+            } else {
+              $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+              if($state == "yes") {
+                $state = 1;
+              } else { 
+                $state = 0;
+              }
+//Check if it already exists
+              $sql = "SELECT userid FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
+              $num_rows = $conn -> query($sql) -> num_rows;
+
+              if($num_rows == 0) {          
+              $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+              $stmt->bind_param ("ssssssis", $firstname, $lastname, $username, $hashed_password, $rol, $userEmail, $state, $sex);
+
+                if ($stmt->execute()) {
+                  $_SESSION['message'] = '¡Usuario agregado con éxito!';
+                  $_SESSION['message_alert'] = "success";
+
+                  $stmt->close();                  
+                  header('Location: ' . root . 'user');
+                  exit;
+                } else {
+                  $_SESSION['message'] = '¡Error al agregar usuario!';
+                  $_SESSION['message_alert'] = "danger";
+                      
+                  header('Location: ' . root . 'user');
+                  exit;
+                }
+              } else {
+                $_SESSION['message'] = '¡Este usuario ya existe!';
+                $_SESSION['message_alert'] = "success";
+
+                header('Location: ' . root . 'user');
+                exit;
+              }
+            }
+          }
         }
       }
     }

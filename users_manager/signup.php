@@ -32,71 +32,85 @@ if(!empty($_POST)) {
     $terms = $_POST ["terms"];
     $rol = $_POST ["rol"];
     $state = $_POST ["state"];
+    $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/";
+
+    if($terms == "yes") {
     
-    if ($firstname == "" || $lastname == "" || $username == "" || $password == ""  || $passrepeat == "" || $sex == "") {
+        if ($firstname == "" || $lastname == "" || $username == "" || $password == ""  || $passrepeat == "" || $sex == "" || $email == "") {
 
-        //Message if the variable is null.
-        $_SESSION['message'] = '¡Complete o seleccione todos los campos por favor!';
-        $_SESSION['message_alert'] = "danger";
-            
-    } else {
-        $sql = "SELECT userid FROM users WHERE username = '$username';";
-        $num_rows = $conn -> query($sql) -> num_rows;
-
-        if($num_rows == 0){   
-            if($password != $passrepeat) {
-            //Message if the variable is null.
-            $_SESSION['message'] = '¡Contraseñas no coinciden!';
-            $_SESSION['message_alert'] = "danger";  
-            
-            } else {
-
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-                if($state == "yes") {
-                $state = 1;
-                } else { 
-                $state = 0;
-                }
-
-                $sql = "SELECT userid FROM users WHERE firstname = '" . $firstname . "' AND lastname = '" . $lastname . "' AND username = '" . $username . "' AND `password` = '$hashed_password';";
-
-                $num_rows = $conn -> query($sql) -> num_rows;
-
-                if($num_rows == 0) {
-                
-                $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-                $stmt->bind_param ("ssssssis", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sex);
-
-                if ($stmt->execute()) {            
-                //The page is redirected to the add-recipe.php
-                header('Location: ' . root . 'login');
-                } else {
-                //Failure message.
-                    $_SESSION['message'] = '¡Error al agregar usuario!';
-                    $_SESSION['message_alert'] = "danger";
-                }
-                } else {
-                //Success message.
-                    $_SESSION['message'] = '¡Este usuario ya existe!';
-                    $_SESSION['message_alert'] = "success";                        
-                }
-            }
-        } else {
-            //Failure message.
-            $_SESSION['message'] = '¡Este usuario no está disponible!';
+//Message if the variable is null.
+            $_SESSION['message'] = '¡Complete o seleccione todos los campos por favor!';
             $_SESSION['message_alert'] = "danger";
+                
+        } else {
+            if (!preg_match($pattern, $firstname) || !preg_match($pattern, $lastname) || !preg_match($pattern, $username)){
+                $_SESSION['message'] = '¡Nombre, apellido o usuario incorrecto!';
+                $_SESSION['message_alert'] = "danger";
+            } else {
+                if(strlen($firstname) < 2 || strlen($firstname) > 30 || strlen($lastname) < 2 || strlen($lastname) > 40 || strlen($username) < 2 || strlen($username) > 30 ||  strlen($password) < 8 ||  strlen($password) > 50 || strlen($passrepeat) < 8 ||  strlen($passrepeat) > 50 || strlen($email) < 15 || strlen($email) > 70){
+                    $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
+                    $_SESSION['message_alert'] = "danger";
+                } else {
+                    $sql = "SELECT userid FROM users WHERE username = '$username';";
+                    $num_rows = $conn -> query($sql) -> num_rows;
+
+                    if($num_rows == 0){   
+                        if($password != $passrepeat) {
+                        //Message if the variable is null.
+                        $_SESSION['message'] = '¡Contraseñas no coinciden!';
+                        $_SESSION['message_alert'] = "danger";  
+                        
+                        } else {
+                            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                            if($state == "yes") {
+                                $state = 1;
+                            } else { 
+                                $state = 0;
+                            }
+
+                            $sql = "SELECT userid FROM users WHERE firstname = '" . $firstname . "' AND lastname = '" . $lastname . "' AND username = '" . $username . "' AND `password` = '$hashed_password';";
+
+                            $num_rows = $conn -> query($sql) -> num_rows;
+
+                            if($num_rows == 0) {
+                            
+                            $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+                            $stmt->bind_param ("ssssssis", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sex);
+
+                            if ($stmt->execute()) {            
+                            //The page is redirected to the add-recipe.php
+                            header('Location: ' . root . 'login');
+                            exit;
+                            } else {
+                            //Failure message.
+                                $_SESSION['message'] = '¡Error al agregar usuario!';
+                                $_SESSION['message_alert'] = "danger";
+                            }
+                            } else {
+                            //Success message.
+                                $_SESSION['message'] = '¡Este usuario ya existe!';
+                                $_SESSION['message_alert'] = "success";                        
+                            }
+                        }
+                    } else {
+                        //Failure message.
+                        $_SESSION['message'] = '¡Este usuario no está disponible!';
+                        $_SESSION['message_alert'] = "danger";
+                    }
+                }
+            }            
         }
+    } else {
+//Failure message.
+        $_SESSION['message'] = '¡Acepte primero los términos de servicio!';
+        $_SESSION['message_alert'] = "danger";
     }
 }
 
 $header = new PageHeaders($_SERVER["REQUEST_URI"]);
-$header = $header -> pageHeader();
-
-/*$userCreation = new User($firstname, $lastname, $username, $password, $passrepeat, $sex, $email, $terms, $rol, $state, "", $url, $conn);
-$userCreation -> newUser();*/
+$header = $header -> pageHeader();        
 ?>
-
 <!DOCTYPE html>
 <html lang="es" data-lt-installed="true">
 <head>
@@ -129,31 +143,31 @@ $userCreation -> newUser();*/
                                 <img src="<?php echo root;?>imgs/login/Picture.png" class="img-fluid" alt="Sample image">
                             </div>
                             <div class="col-md-9 col-lg-6 col-xl-6">
-                                <form action="<?php echo root;?>signup" method="POST" class="card-body p-md-5 text-black">
+                                <form id="signup-form" action="<?php echo root;?>signup" method="POST" class="card-body p-md-5 text-black">
                                     <h3 class="mb-3 text-center">Regístrate</h3>                        
                                     <div class="row">                                   
                                         <div class="col-md-6 mb-3">
                                             <div class="form-outline">
-                                                <input type="text" id="firstname" class="form-control form-control-md" name="firstname"/>
+                                                <input type="text" id="firstname" class="form-control form-control-md" name="firstname" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="30" minlength="2" required/>
                                                 <label class="form-label is-required" for="firstname">Nombre</label>
                                             </div>
                                         </div>
 
                                          <div class="col-md-6 mb-3">
                                             <div class="form-outline">
-                                                <input type="text" id="lastname" class="form-control form-control-md" name="lastname"/>
+                                                <input type="text" id="lastname" class="form-control form-control-md" name="lastname" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="40" minlength="2" required/>
                                                 <label class="form-label is-required" for="lastname">Apellido</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <div class="form-outline">
-                                                <input type="text" id="username" class="form-control form-control-md" name="username"/>
+                                                <input type="text" id="username" class="form-control form-control-md" name="username" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="30" minlength="2" required/>
                                                 <label class="form-label is-required" for="username">Usuario</label>
                                             </div>
                                         </div>                                      
 
                                         <div class="input-group col-md-4 mb-3">
-                                            <input type="password" id="password" class="form-control form-control-md" name="password"/>
+                                            <input type="password" id="password" class="form-control form-control-md" name="password" maxlength="50" minlength="8" required/>
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" onclick="showpass('password')"><i id="watchpass" class="fa-solid fa-eye"></i></button>        
                                             </div>                                                
@@ -161,27 +175,16 @@ $userCreation -> newUser();*/
                                         <label class="form-label is-required" for="password">Contraseña</label>
 
                                         <div class="input-group col-md-6 mb-3">
-                                            <input type="password" id="passrepeat" class="form-control form-control-md" name="passrepeat"/>
+                                            <input type="password" id="passrepeat" class="form-control form-control-md" name="passrepeat" maxlength="50" minlength="8" required/>
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" onclick="showpass('passrepeat')"><i id="watchpass" class="fa-solid fa-eye"></i></button>        
                                             </div>                                             
                                         </div>
                                         <label class="form-label is-required" for="passrepeat">Repita contraseña</label>
 
-                                        <script>
-                                            function showpass(id){
-                                            var tipo = document.getElementById(id);
-                                            
-                                                if(tipo.type == "password"){
-                                                    tipo.type = "text";                                                   
-                                                } else {
-                                                    tipo.type = "password";                                                                                   
-                                                }
-                                            }
-                                        </script>
                                         <div class="form-outline col-md-6 mb-3">
-                                            <input type="email" id="email" class="form-control form-control-md" name="email"/>
-                                            <label class="form-label" for="email">Correo electrónico</label>
+                                            <input type="email" id="email" class="form-control form-control-md" name="email" maxlength="70" minlength="15" required/>
+                                            <label class="form-label is-required" for="email">Correo electrónico</label>
                                         </div>
                                     </div>
 
@@ -189,7 +192,7 @@ $userCreation -> newUser();*/
                                         <h6 class="me-4 is-required">Género: </h6>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="sex" id="femaleGender"
-                                            value="F" />
+                                            value="F" checked required/>
                                             <label class="form-check-label" for="femaleGender">Mujer</label>
                                         </div>
                                         <div class="form-check form-check-inline">
@@ -241,6 +244,99 @@ $userCreation -> newUser();*/
             </div>
         </div>       
     </main>
+    <script>
+    userValidation();    
+
+//Show and hide the password
+    function showpass(id){
+    var tipo = document.getElementById(id);
+    
+        if(tipo.type == "password"){
+            tipo.type = "text";                                                   
+        } else {
+            tipo.type = "password";                                                                                   
+        }
+    }                                   
+
+//Form validation
+    function userValidation(){
+    var form = document.getElementById("signup-form");    
+
+        form.addEventListener("submit", function(event){ 
+            var regExp = /[a-zA-Z\t\h]+|(^$)/;
+            var firstname = document.getElementById("firstname").value;
+            var lastname = document.getElementById("lastname").value;
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var passrepeat = document.getElementById("passrepeat").value;
+            var sex = document.getElementsByName("sex");    
+            var email = document.getElementById("email").value; 
+            var terms = document.getElementById("terms");                
+
+            for (var s of sex) {
+                if (!s.checked) {
+                    sex = "";
+                }
+            }
+
+            if(terms != "yes") {
+                event.preventDefault();
+                confirm ("¡Acepte primero los términos de servicio!");             
+                return false;
+            }
+
+            if(firstname == "" || lastname == "" || username == "" || password == ""  || sex == "") {
+                event.preventDefault();
+                confirm ("¡Completar los campos requeridos!");             
+                return false;
+            }
+
+            if(password != passrepeat) {
+                event.preventDefault();
+                confirm ("¡Contraseñas no coinciden!");        
+                return false;
+            }
+
+//Regular Expression    
+            if(!firstname.match(regExp) || !lastname.match(regExp) || !username.match(regExp)){
+                event.preventDefault();
+                confirm ("¡Nombre, apellido o usuario incorrecto!");                 
+                return false;
+            }
+
+            if(firstname.length < 2 || firstname.length > 30){
+                event.preventDefault();
+                confirm ("¡El nombre debe tener de 2 a 30 caracteres!");                 
+                return false;
+            } 
+
+            if(lastname.length < 2 || lastname.length > 40){
+                event.preventDefault();
+                confirm ("¡El apellido debe tener de 2 a 40 caracteres!");                 
+                return false;
+            }
+
+            if(username.length < 2 || username.length > 30){
+                event.preventDefault();
+                confirm ("¡El usuario debe tener de 2 a 30 caracteres!");                 
+                return false;
+            }
+
+            if(password.length < 8 || password.length > 50){
+                event.preventDefault();
+                confirm ("¡La contraseña debe tener de 8 a 50 caracteres!");                 
+                return false;
+            }
+            
+            if(email.length < 15 || email.length > 70){
+                event.preventDefault();                        
+                confirm ("¡El email debe tener de 15 a 70 caracteres!");                 
+                return false;
+            }                
+            return true;
+        })
+    }
+    </script>
 <?php
 //Footer of the page.
 require_once ("views/partials/footer.php");

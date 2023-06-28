@@ -25,12 +25,12 @@ require_once ("views/partials/nav.php");
             
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="recipename">Nombre: </label>
-                    <input  class="form-control" type="text" id="recipename" name="recipename" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" max-length="50" min-length="7" required>             
+                    <input  class="form-control" type="text" id="recipename" name="recipename" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="50" minlength="7" required>             
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="imageUrl">Url de la imagen</label>
-                    <input class="form-control"  accept=".png, .jpeg, .jpg, .gif" type="url" name="imageUrl" id="imageUrl" placeholder="Formatos: jpg, png y gif" max-length="150" min-length="20">
+                    <input class="form-control"  accept=".png, .jpeg, .jpg, .gif" type="url" name="imageUrl" id="imageUrl" placeholder="Formatos: jpg, png y gif" maxlength="150" minlength="20">
                 </div>
 
                 <div class="frame">

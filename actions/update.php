@@ -39,7 +39,7 @@ $categoryId = $row['categoryid'];
         $_SESSION['message'] = '¡Complete todos los campos!';
         $_SESSION['message_alert'] = "danger";
             
-//The page is redirected to the add-recipe.php
+//The page is redirected to the edit.php
         header('Location: ' . root . 'edit?recipename='. $oldName . '&username=' . $userName);
         exit;
     } else {
@@ -54,7 +54,7 @@ $categoryId = $row['categoryid'];
                     $_SESSION['message'] = '¡Receta editada con éxito!';
                     $_SESSION['message_alert'] = "success";
                         
-//The page is redirected to the add-recipe.php
+//The page is redirected to the edit.php
                     header('Location: ' . root . 'edit?recipename='. $newRecipeName .'&username=' . $userName);
                     exit;
                 } else {
@@ -62,7 +62,7 @@ $categoryId = $row['categoryid'];
                 $_SESSION['message'] = '¡Error al editar receta!';
                 $_SESSION['message_alert'] = "danger";
 
-//The page is redirected to the add-recipe.php
+//The page is redirected to the edit.php
                 header('Location: ' . root . 'edit?recipename='. $oldName. '&username=' . $userName);
                 exit;
                 }  
@@ -186,7 +186,7 @@ $categoryId = $row['categoryid'];
                     $_SESSION['message'] = '¡Receta editada con éxito!';
                     $_SESSION['message_alert'] = "success";
 
-//The page is redirected to the add-recipe.php
+//The page is redirected to the edit.php
                     header('Location: ' . root . 'edit?recipename='. $newRecipeName. '&username=' . $userName);
                     exit;   
                     } else {
@@ -213,7 +213,7 @@ $categoryId = $row['categoryid'];
             $_SESSION['message'] = '¡Tiempo de cocción incorrecto!';
             $_SESSION['message_alert'] = "danger";
                     
-//The page is redirected to the add-recipe.php
+//The page is redirected to the edit.php
             header('Location: ' . root . 'edit?recipename='. $oldName. '&username=' . $userName);
             exit;
         }  
@@ -292,7 +292,7 @@ $oldCategoryName = $row['category'];
                     $_SESSION['message'] = '¡Error al editar categoría!';
                     $_SESSION['message_alert'] = "danger";
                         
-//The page is redirected to the add-recipe.php
+//The page is redirected to the edit.php
                     header('Location: ' . root . 'edit?categoryid=' . $categoryId);
                     exit;
                 }
@@ -398,6 +398,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
     $sex = $_POST['sex'];
     $updateTime =  date("Y-m-d H:i:s");
     $profileImg = isset($_FILES["profile"]) ? $_FILES["profile"] : "";
+    $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/";
  
     if($state == "yes") {
         $state = 1;        
@@ -458,29 +459,97 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
         $_SESSION['message'] = '¡Complete todos los campos faltantes!';
         $_SESSION['message_alert'] = "danger";
             
-//The page is redirected to the add-recipe.php
+//The page is redirected to the edit.php
         header('Location: ' . root . 'edit?userid='. $userId);
         exit;
     } else {
-        if($actualPassword != "" && $newPassword != "" && $againNewPassword != ""){
-            if($newPassword == $againNewPassword){
-                $sql = "SELECT password FROM users WHERE userid = '$userId ';";
-                $row = $conn -> query($sql) -> fetch_assoc();
-                if (password_verify($actualPassword, $row['password'])){
-                    $hash_password = password_hash($newPassword, PASSWORD_DEFAULT);
-                    $sql = "UPDATE users SET password = '$hash_password', firstname = '$firstname',  lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
+        if (!preg_match($pattern, $firstname) || !preg_match($pattern, $lastname) || !preg_match($pattern, $username)){
+                $_SESSION['message'] = '¡Nombre, apellido o usuario incorrecto!';
+                $_SESSION['message_alert'] = "danger";
 
+//The page is redirected to the edit.php
+                header('Location: ' . root . 'edit?userid='. $userId);
+                exit;
+            } else {
+            if(strlen($firstname) < 2 || strlen($firstname) > 30 || strlen($lastname) < 2 || strlen($lastname) > 40 || strlen($username) < 2 || strlen($username) > 30 ||  strlen($actualPassword) < 8 ||  strlen($actualPassword) > 50 || strlen($newPassword) < 8 ||  strlen($newPassword) > 50 || strlen($againNewPassword) < 8 ||  strlen($againNewPassword) || strlen($userEmail) < 15 || strlen($userEmail) > 70) {
+                $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
+                $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the edit.php
+                header('Location: ' . root . 'edit?userid='. $userId);
+                exit;
+            } else {
+                if($actualPassword != "" && $newPassword != "" && $againNewPassword != ""){
+                    if($newPassword == $againNewPassword){
+                        $sql = "SELECT password FROM users WHERE userid = '$userId ';";
+                        $row = $conn -> query($sql) -> fetch_assoc();
+                        if (password_verify($actualPassword, $row['password'])){
+                            $hash_password = password_hash($newPassword, PASSWORD_DEFAULT);
+                            $sql = "UPDATE users SET password = '$hash_password', firstname = '$firstname',  lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
+
+                            if ($conn->query($sql)) {
+//Message if the variable is null.
+                            $_SESSION['message'] = '¡Usuario editado correctamente!';
+                            $_SESSION['message_alert'] = "success";
+
+//The page is redirected to the edit.php
+                            header('Location: ' . root . 'edit?userid='. $userId);
+                            exit;
+                                        
+                                if($_SESSION["userid"] == $userId){
+//The page is redirected to the profile.php
+                                    header('Location: ' . root . 'profile');
+                                    exit;
+                                } else {
+//The page is redirected to the user.php
+                                    header('Location: ' . root . 'user');
+                                    exit;
+                                }
+                            } else {
+//Message if the variable is null.
+                            $_SESSION['message'] = '¡Error al editar usuario!';
+                            $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the edit.php
+                            header('Location: ' . root . 'edit?userid='. $userId);
+                            exit;
+                            }  
+                        } else {
+//Message if the variable is null.
+                            $_SESSION['message'] = '¡Contraseña actual incorrecta!';
+                            $_SESSION['message_alert'] = "danger";
+                                
+//The page is redirected to the edit.php
+                            header('Location: ' . root . 'edit?userid='. $userId);
+                            exit;
+                        }
+                    } else {
+//Message if the variable is null.
+                        $_SESSION['message'] = '¡Contraseñas nuevas no coinciden!';
+                        $_SESSION['message_alert'] = "danger";
+                            
+//The page is redirected to the edit.php
+                        header('Location: ' . root . 'edit?userid='. $userId);
+                        exit;
+                    }
+                } else {            
+                    $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
+                    
                     if ($conn->query($sql)) {
 //Message if the variable is null.
                     $_SESSION['message'] = '¡Usuario editado correctamente!';
                     $_SESSION['message_alert'] = "success";
-                    
+
+//The page is redirected to the edit.php
+                    header('Location: ' . root . 'edit?userid='. $userId);
+                    exit;
+                        
                         if($_SESSION["userid"] == $userId){
-//The page is redirected to the add-recipe.php
+//The page is redirected to the profile.php
                             header('Location: ' . root . 'profile');
                             exit;
                         } else {
-//The page is redirected to the add-recipe.php
+//The page is redirected to the user.php
                             header('Location: ' . root . 'user');
                             exit;
                         }
@@ -489,56 +558,14 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                     $_SESSION['message'] = '¡Error al editar usuario!';
                     $_SESSION['message_alert'] = "danger";
 
-//The page is redirected to the add-recipe.php
+//The page is redirected to the edit.php
                     header('Location: ' . root . 'edit?userid='. $userId);
                     exit;
                     }  
-                } else {
-//Message if the variable is null.
-                    $_SESSION['message'] = '¡Contraseña actual incorrecta!';
-                    $_SESSION['message_alert'] = "danger";
-                        
-//The page is redirected to the add-recipe.php
-                    header('Location: ' . root . 'edit?userid='. $userId);
-                    exit;
-                }
-            } else {
-//Message if the variable is null.
-                $_SESSION['message'] = '¡Contraseñas nuevas no coinciden!';
-                $_SESSION['message_alert'] = "danger";
-                    
-//The page is redirected to the add-recipe.php
-                header('Location: ' . root . 'edit?userid='. $userId);
-                exit;
+                }        
             }
-        } else {            
-            $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
-            
-            if ($conn->query($sql)) {
-//Message if the variable is null.
-            $_SESSION['message'] = '¡Usuario editado correctamente!';
-            $_SESSION['message_alert'] = "success";
-                
-                if($_SESSION["userid"] == $userId){
-//The page is redirected to the add-recipe.php
-                    header('Location: ' . root . 'profile');
-                    exit;
-                } else {
-//The page is redirected to the add-recipe.php
-                    header('Location: ' . root . 'user');
-                    exit;
-                }
-            } else {
-//Message if the variable is null.
-            $_SESSION['message'] = '¡Error al editar usuario!';
-            $_SESSION['message_alert'] = "danger";
-
-//The page is redirected to the add-recipe.php
-            header('Location: ' . root . 'edit?userid='. $userId);
-            exit;
-            }  
         }
-    }
+    }    
 ?>
 <?php
 }
