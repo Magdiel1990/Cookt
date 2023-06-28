@@ -148,26 +148,26 @@ $header = $header -> pageHeader();
                                     <div class="row">                                   
                                         <div class="col-md-6 mb-3">
                                             <div class="form-outline">
-                                                <input type="text" id="firstname" class="form-control form-control-md" name="firstname" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="30" minlength="2" required/>
+                                                <input type="text" id="firstname" class="form-control form-control-md" name="firstname" autocomplete="off" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="30" minlength="2" required/>
                                                 <label class="form-label is-required" for="firstname">Nombre</label>
                                             </div>
                                         </div>
 
                                          <div class="col-md-6 mb-3">
                                             <div class="form-outline">
-                                                <input type="text" id="lastname" class="form-control form-control-md" name="lastname" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="40" minlength="2" required/>
+                                                <input type="text" id="lastname" class="form-control form-control-md" name="lastname" autocomplete="off" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="40" minlength="2" required/>
                                                 <label class="form-label is-required" for="lastname">Apellido</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <div class="form-outline">
-                                                <input type="text" id="username" class="form-control form-control-md" name="username" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="30" minlength="2" required/>
+                                                <input type="text" id="username" class="form-control form-control-md" name="username" autocomplete="off" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="30" minlength="2" required/>
                                                 <label class="form-label is-required" for="username">Usuario</label>
                                             </div>
                                         </div>                                      
 
                                         <div class="input-group col-md-4 mb-3">
-                                            <input type="password" id="password" class="form-control form-control-md" name="password" maxlength="50" minlength="8" required/>
+                                            <input type="password" id="password" class="form-control form-control-md" name="password" autocomplete="off" maxlength="50" minlength="8" required/>
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" onclick="showpass('password')"><i id="watchpass" class="fa-solid fa-eye"></i></button>        
                                             </div>                                                
@@ -175,7 +175,7 @@ $header = $header -> pageHeader();
                                         <label class="form-label is-required" for="password">Contraseña</label>
 
                                         <div class="input-group col-md-6 mb-3">
-                                            <input type="password" id="passrepeat" class="form-control form-control-md" name="passrepeat" maxlength="50" minlength="8" required/>
+                                            <input type="password" id="passrepeat" class="form-control form-control-md" name="passrepeat" autocomplete="off" maxlength="50" minlength="8" required/>
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" onclick="showpass('passrepeat')"><i id="watchpass" class="fa-solid fa-eye"></i></button>        
                                             </div>                                             
@@ -183,7 +183,7 @@ $header = $header -> pageHeader();
                                         <label class="form-label is-required" for="passrepeat">Repita contraseña</label>
 
                                         <div class="form-outline col-md-6 mb-3">
-                                            <input type="email" id="email" class="form-control form-control-md" name="email" maxlength="70" minlength="15" required/>
+                                            <input type="email" id="email" class="form-control form-control-md" name="email" autocomplete="off" maxlength="70" minlength="15" required/>
                                             <label class="form-label is-required" for="email">Correo electrónico</label>
                                         </div>
                                     </div>
@@ -205,7 +205,8 @@ $header = $header -> pageHeader();
                                             value="O" />
                                             <label class="form-check-label" for="otherGender">Otro</label>
                                         </div>                                         
-                                    </div>          
+                                    </div>  
+                                            
                                     <div class="form-check d-flex justify-content-center mb-3">
                                         <input class="form-check-input me-2" type="checkbox" value="yes" id="terms" name="terms" required/>
                                         <label class="form-check-label is-required" for="terms">
