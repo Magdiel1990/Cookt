@@ -406,6 +406,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
         $state = 0;
     }
 
+/*** Picture handler ***/
     if($profileImg["name"] != ""){
         $target_dir = "imgs/users/";
 //If the directory doesnt exist it's created
@@ -454,6 +455,8 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
         }
     }
 
+
+/*** Strings handler ***/
     if ($firstname == "" || $lastname == "" || $username == "" || $sex == "" || $userEmail == "") {
 //Message if the variable is null.
         $_SESSION['message'] = '¡Complete todos los campos faltantes!';
@@ -481,12 +484,12 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
             } else {
                 if($actualPassword != "" && $newPassword != "" && $againNewPassword != ""){
                     if(strlen($actualPassword) < 8 ||  strlen($actualPassword) > 50 || strlen($newPassword) < 8 ||  strlen($newPassword) > 50 || strlen($againNewPassword) < 8 ||  strlen($againNewPassword)) {
-                    $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
-                    $_SESSION['message_alert'] = "danger";
+                        $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
+                        $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the edit.php
-                    header('Location: ' . root . 'edit?userid='. $userId);
-                    exit;
+                        header('Location: ' . root . 'edit?userid='. $userId);
+                        exit;
                     }
 
                     if($newPassword == $againNewPassword){
@@ -542,7 +545,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                         exit;
                     }
                 } else {            
-                    $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
+                    $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$username', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
                     
                     if ($conn->query($sql)) {
 //Message if the variable is null.

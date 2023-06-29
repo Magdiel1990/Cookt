@@ -365,7 +365,7 @@ $num_rows  = $result -> num_rows;
             $email = $row["email"];
             $currentPassword = $row["password"];
             $sex = $row["sex"];
-
+            
             if($num_rows == 1 && $_SESSION['username'] == $userName){
                 $userNameState = "hidden";
                 $userNameLabelState = "display: none;";    
