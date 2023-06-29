@@ -121,10 +121,10 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                     var email = document.getElementById("email").value; 
                     var message = document.getElementById("message");    
                     
-
+//Verify if an option of the radio input has been chosen    
                     for (var s of sex) {
-                        if (!s.checked) {
-                            sex = "";
+                        if (s.checked) {
+                            sex = s.value;
                         }
                     }
 
