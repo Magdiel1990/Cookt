@@ -92,7 +92,7 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
         }
 
   // Allow certain file formats
-        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "jpeg"
+        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "webp" && $fileExtension != "jpeg"
         && $fileExtension != "gif" ) {
           $uploadOk = "¡Formato no admitido!";
         } 
@@ -287,7 +287,7 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
           $ext = pathinfo($url, PATHINFO_EXTENSION);
           $uploadOk = "";
 
-          if($ext  != "jpg" && $ext  != "jpeg" && $ext != "png" && $ext  != "gif") {
+          if($ext  != "jpg" && $ext  != "jpeg" && $ext != "png" && $ext  != "gif" && $ext  != "webp") {
             $uploadOk = '¡Formato de imagen no admitido!';
           }   
            
@@ -342,7 +342,7 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
         }
 
 // Allow certain file formats
-        if($fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "png" && $fileExtension != "gif") {
+        if($fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "png" && $fileExtension != "webp" && $fileExtension != "gif") {
             $uploadOk = "¡Formato no admitido!";
         }      
 

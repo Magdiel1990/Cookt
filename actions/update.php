@@ -95,7 +95,7 @@ $categoryId = $row['categoryid'];
                         $ext = pathinfo($url, PATHINFO_EXTENSION);
                         $uploadOk = "";
 //Format verification
-                        if($ext  != "jpg" && $ext  != "jpeg" && $ext != "png" && $ext  != "gif") {
+                        if($ext  != "jpg" && $ext  != "jpeg" && $ext != "png" && $ext != "webp" && $ext  != "gif") {
                             $uploadOk = '¡Formato de imagen no admitido!';
                         }   
 //Size verification                
@@ -176,7 +176,7 @@ $categoryId = $row['categoryid'];
                 }
 
 // Allow certain file formats
-                if($fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "png" && $fileExtension != "gif") {
+                if($fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "png" && $fileExtension != "webp" && $fileExtension != "gif") {
                     $uploadOk = "¡Formato no admitido!";
                 } 
 
@@ -326,7 +326,7 @@ $oldCategoryName = $row['category'];
         }
 
 // Allow certain file formats
-        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "jpeg"
+        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "webp" && $fileExtension != "jpeg"
         && $fileExtension != "gif" ) {
             $uploadOk = "¡Formato no admitido!";
         } 
@@ -422,7 +422,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
         $imgProfileDir = $files -> directoryFiles();
         
 //Formats
-        $formats = array("jpg", "jpeg", "gif", "png");
+        $formats = array("jpg", "jpeg", "gif", "png", "webp");
 
         if(in_array(pathinfo($imgProfileDir, PATHINFO_EXTENSION), $formats)){
             unlink($imgProfileDir);
@@ -445,7 +445,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
         }
 
 // Allow certain file formats
-        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "jpeg"
+        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "webp" && $fileExtension != "jpeg"
         && $fileExtension != "gif" ) {
             $uploadOk = "¡Formato no admitido!";
         } 

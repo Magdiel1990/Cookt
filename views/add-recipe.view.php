@@ -30,13 +30,13 @@ require_once ("views/partials/nav.php");
 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="imageUrl">Url de la imagen</label>
-                    <input class="form-control"  accept=".png, .jpeg, .jpg, .gif" type="url" name="imageUrl" id="imageUrl" placeholder="Formatos: jpg, png y gif" maxlength="150" minlength="20">
+                    <input class="form-control"  accept=".png, .jpeg, .jpg, .gif, .webp" type="url" name="imageUrl" id="imageUrl" placeholder="Formatos: jpg, png, webp y gif" maxlength="150" minlength="20">
                 </div>
 
                 <div class="frame">
                     <div class="dropzone">
                         <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
-                        <input type="file" name="recipeImage" accept=".png, .jpeg, .jpg, .gif" class="upload-input form-control" id="recipeImage"/>
+                        <input type="file" name="recipeImage" accept=".png, .jpeg, .jpg, .gif, .webp" class="upload-input form-control" id="recipeImage"/>
                     </div>                       
                 </div>                    
 
@@ -123,7 +123,7 @@ require_once ("views/partials/nav.php");
                     var file = recipeImage.files[0];                   
                     var fileType = file.type;
                     var urlFileType = imageURL.type;
-                    var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg"];
+                    var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg", "image/webp"];
 
 //Conditions
                     if(recipename == "" || preparation == "" || ingredients == ""){
@@ -156,7 +156,7 @@ require_once ("views/partials/nav.php");
                         
                         if (!allowedImageTypes.includes(urlFileType)){
                             event.preventDefault();
-                            message.innerHTML = "¡Formatos de imagen admitidos: jpg, png y gif!";
+                            message.innerHTML = "¡Formatos de imagen admitidos: jpg, png, webp y gif!";
                             return false;
                         }
 
@@ -172,7 +172,7 @@ require_once ("views/partials/nav.php");
 //Image format validation
                         if(!allowedImageTypes.includes(fileType)){
                             event.preventDefault();
-                            message.innerHTML = "¡Formatos de imagen admitidos: jpg, png y gif!";
+                            message.innerHTML = "¡Formatos de imagen admitidos: jpg, png, webp y gif!";
                             return false;
                         }
                     }

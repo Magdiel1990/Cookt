@@ -36,7 +36,7 @@ require_once ("views/partials/nav.php");
 
             <div class="mb-3">
                 <label class="form-label is-required" for="categoryImage">Foto de la categoría</label>
-                <input type="file" name="categoryImage" accept=".png, .jpeg, .jpg, .gif" class="form-control" id="categoryImage" required>
+                <input type="file" name="categoryImage" accept=".png, .webp, .jpeg, .jpg, .gif" class="form-control" id="categoryImage" required>
             </div> 
 
             <div class="mb-3">
@@ -114,13 +114,12 @@ function formValidation(){
 
     form.addEventListener("submit", function(event) { 
 //Accepted formats            
-        var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG)$/i;
         var regExp = /[a-zA-Z\t\h]+|(^$)/;
         var categoryImageInput = document.getElementById('categoryImage');
         var categoryImage = categoryImageInput.value;                            
         var categoryNameInput = document.getElementById('add_categories');
         var categoryName = categoryNameInput.value;
-        var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg"];  
+        var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg", "image/webp"];  
 
         if(categoryName == "") {
             event.preventDefault();                
@@ -154,7 +153,7 @@ function formValidation(){
 //Image format validation
             if(!allowedImageTypes.includes(fileType)){
                 event.preventDefault();
-                confirm ("¡Formatos de imagen admitidos: jpg, png y gif!");
+                confirm ("¡Formatos de imagen admitidos: jpg, png, webp y gif!");
                 return false;
             }                            
         }

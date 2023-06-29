@@ -40,7 +40,7 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
     $imgProfileDir = $files -> directoryProfiles();
 
 //Formats
-    $formats = array("jpg", "jpeg", "gif", "png");
+    $formats = array("jpg", "jpeg", "gif", "png", "webp");
 
 //If the file doesn't exist the default photo is shown
     if(!in_array(pathinfo($imgProfileDir, PATHINFO_EXTENSION), $formats)){

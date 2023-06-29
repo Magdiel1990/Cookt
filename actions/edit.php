@@ -52,7 +52,7 @@ if($result -> num_rows > 0) {
 
                 <div class="mb-3">
                     <label class="form-label" for="categoryImage">Foto de la categoría</label>
-                    <input type="file" name="categoryImage" accept=".png, .jpeg, .jpg, .gif" class="form-control" id="categoryImage">
+                    <input type="file" name="categoryImage" accept=".webp, .png, .jpeg, .jpg, .gif" class="form-control" id="categoryImage">
                 </div> 
                 <div class="mt-2">
                     <input class="btn btn-primary" type="submit" value="Editar" name="categoryeditionsubmit">
@@ -69,13 +69,13 @@ if($result -> num_rows > 0) {
 
                     form.addEventListener("submit", function(event) { 
 //Accepted formats            
-                        var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG)$/i;
+                        var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG|.webp|.WEBP)$/i;
                         var regExp = /[a-zA-Z\t\h]+|(^$)/;
                         var categoryImageInput = document.getElementById('categoryImage');
                         var categoryImage = categoryImageInput.value;                            
                         var categoryNameInput = document.getElementById('categoryName');
                         var categoryName = categoryNameInput.value;
-                        var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg"];  
+                        var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg" , "image/webp"];  
 
                         if(categoryName == "") {
                             event.preventDefault();                
@@ -109,7 +109,7 @@ if($result -> num_rows > 0) {
 //Image format validation
                             if(!allowedImageTypes.includes(fileType)){
                                 event.preventDefault();
-                                confirm ("¡Formatos de imagen admitidos: jpg, png y gif!");
+                                confirm ("¡Formatos de imagen admitidos: webp, jpg, png y gif!");
                                 return false;
                             }                            
                         }
@@ -183,13 +183,13 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="imageUrl">Url de la imagen</label>
-                        <input class="form-control"  accept=".png, .jpeg, .jpg, .gif" type="url" name="imageUrl" id="imageUrl" placeholder="Formatos: jpg, png y gif" maxlength="150" minlength="20">
+                        <input class="form-control"  accept=".webp, .png, .jpeg, .jpg, .gif" type="url" name="imageUrl" id="imageUrl" placeholder="Formatos: webp, jpg, png y gif" maxlength="150" minlength="20">
                     </div>
 
                     <div class="frame">
                         <div class="dropzone">
                             <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
-                            <input type="file" name="recipeImage" accept=".png, .jpeg, .jpg, .gif" class="upload-input form-control" id="recipeImage"/>
+                            <input type="file" name="recipeImage" accept=".webp, .png, .jpeg, .jpg, .gif" class="upload-input form-control" id="recipeImage"/>
                         </div>                       
                     </div>   
                     
@@ -254,11 +254,11 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 //Image format validation
     function imgValidation(){
 
-        var form = document.getElementById("recipe_form");    
+        var form = document.getElemenWEBPtById("recipe_form");    
 
         form.addEventListener("submit", function(event) { 
 //Accepted formats            
-            var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG)$/i;
+            var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG|.webp|.WEBP)$/i;
             var regExp = /[a-zA-Z\t\h]+|(^$)/;
             var imageUrlInput = document.getElementById('imageUrl');
             var imageUrl = imageUrlInput.value;
@@ -300,7 +300,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                 
                 if (!ext.exec(imageUrl)){
                     event.preventDefault();
-                    confirm("¡Formatos de imagen admitidos: jpg, png y gif!");
+                    confirm("¡Formatos de imagen admitidos: webp, jpg, png y gif!");
                     return false;
                 }
             } else if (recipeImage.value != "") {
@@ -318,7 +318,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 //Image format validation
                 if(!ext.exec(fileType)){
                     event.preventDefault();
-                    confirm("¡Formatos de imagen admitidos: jpg, png y gif!");
+                    confirm("¡Formatos de imagen admitidos: webp, jpg, png y gif!");
                     return false;
                 }
 //No image added               
@@ -365,7 +365,7 @@ $num_rows  = $result -> num_rows;
             $email = $row["email"];
             $currentPassword = $row["password"];
             $sex = $row["sex"];
-            
+
             if($num_rows == 1 && $_SESSION['username'] == $userName){
                 $userNameState = "hidden";
                 $userNameLabelState = "display: none;";    
@@ -445,7 +445,7 @@ $num_rows  = $result -> num_rows;
                     <label class="form-label" for="profile">Foto</label>                    
                     <div class="dropzone">                                     
                         <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon"/>                        
-                        <input  class="upload-input form-control" id="profile" type="file" name="profile" accept=".png, .jpeg, .jpg, .gif"/>
+                        <input  class="upload-input form-control" id="profile" type="file" name="profile" accept=".webp, .png, .jpeg, .jpg, .gif"/>
                     </div>                       
                 </div>     
 
@@ -506,7 +506,7 @@ $num_rows  = $result -> num_rows;
 
                     form.addEventListener("submit", function(event) { 
 //Accepted formats            
-                        var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG)$/i;
+                        var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG|.webp|.WEBP)$/i;
                         var regExp = /[a-zA-Z\t\h]+|(^$)/;
                         var firstname = document.getElementById("firstname").value;
                         var lastname = document.getElementById("lastname").value;
@@ -540,7 +540,7 @@ $num_rows  = $result -> num_rows;
 //Image format validation
                         if(!ext.exec(fileType)){
                             event.preventDefault();
-                            confirm("¡Formatos de imagen admitidos: jpg, png y gif!");
+                            confirm("¡Formatos de imagen admitidos: webp, jpg, png y gif!");
                             return false;
                         }             
                     }
