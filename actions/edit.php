@@ -516,15 +516,15 @@ $num_rows  = $result -> num_rows;
                         var repite_password = document.getElementById("repite_password").value;
                         var profile = document.getElementById("profile");
                         var sex = document.getElementsByName("sex");    
-                        var useremail = document.getElementById("useremail").value;   
+                        var useremail = document.getElementById("useremail").value;  
 
-/*************************************Revisar esto */             
-                    for (var s of sex) {
-                        if (!s.checked) {
-                            sex = "";
+//Verify if an option of the radio input has been chosen                        
+                        for (var s of sex) {
+                            if (s.checked) {
+                                sex = s.value;
+                            }
                         }
-                    }
-/*************************************************** */
+
                     if (profile.value != "") {
 //File type                
                         var file = profile.files[0]; 
@@ -545,7 +545,7 @@ $num_rows  = $result -> num_rows;
                         }             
                     }
 
-                    if(firstname == "" || lastname == "" || username == "" || current_password == "" || useremail == "") {
+                    if(firstname == "" || lastname == "" || username == "" || sex == "" || useremail == "") {
                         event.preventDefault();                        
                         confirm ("¡Completar los campos requeridos!");             
                         return false;

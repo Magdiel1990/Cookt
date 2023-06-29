@@ -454,7 +454,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
         }
     }
 
-    if ($firstname == "" || $lastname == "" || $userName == "" || $sex == "" || $userEmail == "") {
+    if ($firstname == "" || $lastname == "" || $username == "" || $sex == "" || $userEmail == "") {
 //Message if the variable is null.
         $_SESSION['message'] = '¡Complete todos los campos faltantes!';
         $_SESSION['message_alert'] = "danger";
@@ -471,7 +471,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                 header('Location: ' . root . 'edit?userid='. $userId);
                 exit;
             } else {
-            if(strlen($firstname) < 2 || strlen($firstname) > 30 || strlen($lastname) < 2 || strlen($lastname) > 40 || strlen($username) < 2 || strlen($username) > 30 ||  strlen($actualPassword) < 8 ||  strlen($actualPassword) > 50 || strlen($newPassword) < 8 ||  strlen($newPassword) > 50 || strlen($againNewPassword) < 8 ||  strlen($againNewPassword) || strlen($userEmail) < 15 || strlen($userEmail) > 70) {
+            if(strlen($firstname) < 2 || strlen($firstname) > 30 || strlen($lastname) < 2 || strlen($lastname) > 40 || strlen($username) < 2 || strlen($username) > 30 || strlen($userEmail) < 15 || strlen($userEmail) > 70) {
                 $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
                 $_SESSION['message_alert'] = "danger";
 
@@ -480,6 +480,15 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                 exit;
             } else {
                 if($actualPassword != "" && $newPassword != "" && $againNewPassword != ""){
+                    if(strlen($actualPassword) < 8 ||  strlen($actualPassword) > 50 || strlen($newPassword) < 8 ||  strlen($newPassword) > 50 || strlen($againNewPassword) < 8 ||  strlen($againNewPassword)) {
+                    $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
+                    $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the edit.php
+                    header('Location: ' . root . 'edit?userid='. $userId);
+                    exit;
+                    }
+
                     if($newPassword == $againNewPassword){
                         $sql = "SELECT password FROM users WHERE userid = '$userId ';";
                         $row = $conn -> query($sql) -> fetch_assoc();
