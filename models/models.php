@@ -75,22 +75,27 @@ class Directories {
     public function directoryFiles() {
         if(file_exists($this -> directory)) {
             $dir_handle = opendir($this -> directory);
+//Setting the counter
+            $count = 0;
             
             while(($file = readdir($dir_handle)) !== false) {
-            $path = $this -> directory . $file;  
+            $path = $this -> directory . $file;
+//Excluding . and .. files             
                 if(is_file($path)) {
-                $name = pathinfo($path, PATHINFO_FILENAME);                 
+                    $name = pathinfo($path, PATHINFO_FILENAME);                 
                     if($name == $this -> fileName) {
+                        $count += 1;
 //File extension
                         return pathinfo($path, PATHINFO_EXTENSION);          
-//Default extension
-                    } else {
-                        return null;
-                    }
+                    } 
                 }                  
             }
+//If the image does not exist return null
+            if($count == 0) {
+                return null;
+            }
+
             closedir($dir_handle);
-//The directory doesn't exist                 
         }
     }
 //Directory size
