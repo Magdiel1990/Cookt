@@ -84,8 +84,13 @@ if(isset($_POST["category"])) {
             $imageDir = "imgs/recipes/" .  $_SESSION['username'] . "/";
 
             $files = new Directories($imageDir, $recipename);
-            $recipeImageDir = $files -> directoryFiles();
+            $ext = $files -> directoryFiles();
 
+            if($ext !== null) {
+                $recipeImageDir = $imageDir . $recipename . "." . $ext;
+            } else {
+                $recipeImageDir = "";
+            } 
             ?>
             <img src="<?php echo $recipeImageDir?>" title="receta" alt="Imangen de la receta" style="width:50%;height:850%;">
             <?php

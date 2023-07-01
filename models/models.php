@@ -72,36 +72,27 @@ class Directories {
     }
  
 //Method to get the file in the directory    
-    public function directoryFiles(){
+    public function directoryFiles() {
         if(file_exists($this -> directory)) {
             $dir_handle = opendir($this -> directory);
             
             while(($file = readdir($dir_handle)) !== false) {
-            $path = $this -> directory . $file;
-           
+            $path = $this -> directory . $file;  
                 if(is_file($path)) {
                 $name = pathinfo($path, PATHINFO_FILENAME);                 
                     if($name == $this -> fileName) {
 //File extension
-                        $ext = pathinfo($path, PATHINFO_EXTENSION);          
+                        return pathinfo($path, PATHINFO_EXTENSION);          
 //Default extension
                     } else {
-                        $ext = "unk";
+                        return null;
                     }
                 }                  
             }
-            closedir($dir_handle); 
-           
-            $imgDir = $this -> directory . $this -> fileName . "." . $ext;
-
-            return $imgDir;
-     
-        } else {
-            return false;
+            closedir($dir_handle);
+//The directory doesn't exist                 
         }
     }
-
-
 //Directory size
     public function directorySize(){
         
@@ -131,15 +122,6 @@ class Directories {
         }
 
         return $size;
-    }
-//Method for getting the profile images
-    public function directoryProfiles(){
-//If the directory doesn't exist, it is created    
-        if(!file_exists($this -> directory)) {
-            mkdir($this -> directory, 0777, true);
-        }        
-        
-        return self::directoryFiles();
     }
 }
 

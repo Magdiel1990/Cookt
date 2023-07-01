@@ -22,12 +22,16 @@ $result = $conn -> query($sql);
         exit;
     } else {
 //Deleting recipe img       
-        $target_dir = "imgs/recipes/". $_SESSION['username']  ."/";
+        $target_dir = "imgs/recipes/". $_SESSION['username']. "/";
 
         $files = new Directories($target_dir, $recipeName);
-        $imgRecipeDir = $files -> directoryFiles();
+        $ext = $files -> directoryFiles();
 
-        unlink($imgRecipeDir);        
+        if($ext !== null) {
+            $imageDir = $target_dir . $recipeName . "." . $ext;
+
+            unlink($imageDir);
+        }  
 
         $_SESSION['message'] = '¡Receta eliminada!';
         $_SESSION['message_alert'] = "success";
@@ -53,7 +57,11 @@ $categoryDir = "imgs/categories/";
 $files = new Directories($categoryDir , $categoryName);
 $categoryImgDir = $files -> directoryFiles();
 
-unlink($categoryImgDir);
+    if($ext !== null) {
+        $imageDir = $categoryDir . $categoryName . "." . $ext;
+
+        unlink($imageDir);
+    } 
 
 //Deleting the register with the name received.
 $sql = "DELETE FROM categories WHERE category = '$categoryName';";

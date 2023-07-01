@@ -20,8 +20,14 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
 
 //Recipe image file    
     $files = new Directories($imageDir, $recipe);
-    $recipeImageDir = $files -> directoryFiles();
-    
+    $ext = $files -> directoryFiles();
+
+    if($ext !== null) {
+        $recipeImageDir = $imageDir . $recipe . "." . $ext;
+    } else {
+        $recipeImageDir = "";
+    }
+
     $sql = "SELECT r.recipeid, 
     r.recipename,
     r.ingredients, 
@@ -72,7 +78,14 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
 
 //Object to get the image directory from the category
     $files = new Directories($categoryDir , $category);
-    $categoryImgDir = $files -> directoryFiles();
+    $ext = $files -> directoryFiles();
+    
+    if($ext !== null) {
+        $categoryImgDir = $categoryDir . $category . "." . $ext;
+    } else {
+        $categoryImgDir = "";
+    }
+
 ?>
 <main class="container mt-4">
     <div class="my-5" style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">

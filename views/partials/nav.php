@@ -38,14 +38,14 @@
             $target_dir ="imgs/users/";
 //User photo
             $files = new Directories($target_dir, $_SESSION["username"]);
-            $imgprofileDir = $files -> directoryFiles();
-            
-            if($imgprofileDir !== false){
+            $userExt = $files -> directoryFiles();
+
+            if($userExt !== null) {
+                $imgprofileDir = $target_dir . $_SESSION["username"] . "." . $userExt;
                 echo '<img src="' . $imgprofileDir . '" class="mx-2">';
             } else {
                 echo "<i class='fa-regular fa-user'></i>";
-            }
-            
+            }              
             ?>
             </a>  
 <!-- Logout button -->                  

@@ -70,8 +70,8 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
         }
 
         $target_dir = "../imgs/categories/";
-        $fileExtension = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
-        $target_file = $target_dir . $category . "." . $fileExtension;
+        $ext = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
+        $target_file = $target_dir . $category . "." . $ext;
         $uploadOk = "";
         
   // Check if image file is a actual image or fake image
@@ -92,8 +92,8 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
         }
 
   // Allow certain file formats
-        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "webp" && $fileExtension != "jpeg"
-        && $fileExtension != "gif" ) {
+        if($ext != "jpg" && $ext != "png" && $ext != "webp" && $ext != "jpeg"
+        && $ext != "gif" ) {
           $uploadOk = "¡Formato no admitido!";
         } 
 
@@ -278,28 +278,38 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
             exit;        
           } else {
 // Image path
-          $recipeImagesDir = "imgs/recipes/". $_SESSION['username'];
+          $recipeImagesDir = "imgs/recipes/". $_SESSION['username'] ."/";
 
             if (!file_exists($recipeImagesDir)) {
-                mkdir($recipeImagesDir, 0777, true);
+              mkdir($recipeImagesDir, 0777, true);
             }
           
           $ext = pathinfo($url, PATHINFO_EXTENSION);
           $uploadOk = "";
 
-          if($ext  != "jpg" && $ext  != "jpeg" && $ext != "png" && $ext  != "gif" && $ext  != "webp") {
+          if($ext != "jpg" && $ext != "jpeg" && $ext != "png" && $ext != "gif" && $ext != "webp") {
             $uploadOk = '¡Formato de imagen no admitido!';
           }   
            
-         if(array_change_key_case(get_headers($url,1))['content-length'] > 300000){
-             $uploadOk = '¡El tamaño debe ser menor que 300 KB!';
-         }
+          if(array_change_key_case(get_headers($url,1))['content-length'] > 300000){
+            $uploadOk = '¡El tamaño debe ser menor que 300 KB!';
+          }
+
+//Delete an old image if it exists
+          $files = new Directories($recipeImagesDir, $recipename);
+          $ext = $files -> directoryFiles();
+
+          if($ext !== null) {
+            $imageDir = $recipeImagesDir . $recipename . "." . $ext;
+
+            unlink($imageDir);
+          }
 
 //Name of the saved image         
-          $recipeImagesDir = $recipeImagesDir . "/" . $recipename . "." . $ext;
+          $imageDir = $recipeImagesDir . $recipename . "." . $ext;
 
 // Save image 
-          if(file_put_contents($recipeImagesDir, file_get_contents($url)) !== false){
+          if(file_put_contents($imageDir, file_get_contents($url)) !== false){
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
             $_SESSION['message_alert'] = "success";
 
@@ -314,14 +324,24 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
           }
         }          
       } else {
-        $recipeImagesDir = "imgs/recipes/". $_SESSION['username'];
+        $recipeImagesDir = "imgs/recipes/". $_SESSION['username']. "/" ;
 
           if (!file_exists($recipeImagesDir)) {
-              mkdir($recipeImagesDir, 0777, true);
+            mkdir($recipeImagesDir, 0777, true);
           }
 
-        $fileExtension = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
-        $target_file = $recipeImagesDir ."/".  $recipename . "." . $fileExtension;
+//Delete an old image if it exists
+        $files = new Directories($recipeImagesDir, $recipename);
+        $ext = $files -> directoryFiles();
+
+        if($ext !== null) {
+          $imageDir = $recipeImagesDir . $recipename . "." . $ext;
+
+          unlink($imageDir);
+        }
+          
+        $ext = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
+        $imageDir = $recipeImagesDir .  $recipename . "." . $ext;
         $uploadOk = "";
         
 // Check if image file is a actual image or fake image
@@ -331,10 +351,6 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
               $uploadOk = "¡Este archivo no es una imagen!";
           } 
         }
-// Check if file already exists
-        if (file_exists($target_file)) {
-            $uploadOk = "¡Esta imagen ya existe!";
-        }
 
 // Check file size
         if ($recipeImage["size"] > 300000) {
@@ -342,13 +358,13 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
         }
 
 // Allow certain file formats
-        if($fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "png" && $fileExtension != "webp" && $fileExtension != "gif") {
+        if($ext != "jpg" && $ext != "jpeg" && $ext != "png" && $ext != "webp" && $ext != "gif") {
             $uploadOk = "¡Formato no admitido!";
         }      
 
         if ($uploadOk == "") {
 
-            if(move_uploaded_file($recipeImage["tmp_name"], $target_file)){
+            if(move_uploaded_file($recipeImage["tmp_name"], $imageDir)){
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
             $_SESSION['message_alert'] = "success";
 

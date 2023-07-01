@@ -86,10 +86,20 @@ $categoryId = $row['categoryid'];
                         exit;        
                     } else {                    
 // Image path
-                        $recipeImagesDir = "imgs/recipes/". $_SESSION['username'];
+                        $recipeImagesDir = "imgs/recipes/". $_SESSION['username']. "/";
 
                         if (!file_exists($recipeImagesDir)) {
                             mkdir($recipeImagesDir, 0777, true);
+                        }
+
+//Deleting the old img
+                        $files = new Directories ($recipeImagesDir, $oldName);
+                        $ext = $files -> directoryFiles();
+
+                        if($ext !== null) {
+                            $imageDir = $recipeImagesDir . $oldName . "." . $ext;
+
+                            unlink($imageDir);
                         }
                     
                         $ext = pathinfo($url, PATHINFO_EXTENSION);
@@ -102,15 +112,7 @@ $categoryId = $row['categoryid'];
                         if(array_change_key_case(get_headers($url,1))['content-length'] > 300000){
                             $uploadOk = '¡El tamaño debe ser menor que 300 KB!';
                         }
-//Deleting the old img
-                        $files = new Directories($recipeImagesDir, $oldName);
-                        $imgOldRecipeDir = $files -> directoryFiles();
 
-                        if($imgOldRecipeDir !== false) {
-                            if(file_exists($imgOldRecipeDir)){
-                                unlink($imgOldRecipeDir);
-                            }
-                        }
 //New name for the saved image         
                         $recipeImagesDir = $recipeImagesDir . "/" . $newRecipeName . "." . $ext;
 
@@ -142,27 +144,22 @@ $categoryId = $row['categoryid'];
             } else {
                 $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
                 
-                $target_dir = "imgs/recipes/". $userName  ."/";
+                $target_dir = "imgs/recipes/". $userName . "/";
                 
                 $files = new Directories($target_dir, $oldName);
-                $imgOldRecipeDir = $files -> directoryFiles();
+                $ext = $files -> directoryFiles();
 
 //Delete the old img
-                if($imgOldRecipeDir !== false) {
-                    if(file_exists($imgOldRecipeDir)){
-                        unlink($imgOldRecipeDir);
-                    }
+                if($ext !== null) {
+                    $imageDir = $target_dir . $recipename . "." . $ext;
+
+                    unlink($imageDir);
                 }
 
-                $fileExtension = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
-                $target_file = $target_dir . $newRecipeName . "." . $fileExtension;
+                $ext = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
+                $target_file = $target_dir . $newRecipeName . "." . $ext;
                 $uploadOk = "";
 
-//Check if the new recipe img exists
-                if(file_exists($target_file)){
-                    unlink($target_file);
-                }
-                
 // Check if image file is a actual image or fake image
                 if(isset($_POST["edit"])) {
                     $check = getimagesize($recipeImage["tmp_name"]);
@@ -176,7 +173,7 @@ $categoryId = $row['categoryid'];
                 }
 
 // Allow certain file formats
-                if($fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "png" && $fileExtension != "webp" && $fileExtension != "gif") {
+                if($ext != "jpg" && $ext != "jpeg" && $ext != "png" && $ext != "webp" && $ext != "gif") {
                     $uploadOk = "¡Formato no admitido!";
                 } 
 
@@ -300,8 +297,8 @@ $oldCategoryName = $row['category'];
         }
     } else {
         $target_dir = "imgs/categories/";
-        $fileExtension = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
-        $target_file = $target_dir . $newCategoryName . "." . $fileExtension;
+        $ext = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
+        $target_file = $target_dir . $newCategoryName . "." . $ext;
         $uploadOk = "";
 
         if(is_file($target_file)){
@@ -326,8 +323,8 @@ $oldCategoryName = $row['category'];
         }
 
 // Allow certain file formats
-        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "webp" && $fileExtension != "jpeg"
-        && $fileExtension != "gif" ) {
+        if($ext != "jpg" && $ext != "png" && $ext != "webp" && $ext != "jpeg"
+        && $ext != "gif" ) {
             $uploadOk = "¡Formato no admitido!";
         } 
 
@@ -414,29 +411,28 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
             mkdir($target_dir, 0777, true);
         }
 
-        $fileExtension = strtolower(pathinfo($profileImg["name"], PATHINFO_EXTENSION));
-        $target_file = $target_dir . $_SESSION["username"] . "." . $fileExtension;
+//Delete an old image if it exists
+        $files = new Directories($target_dir, $_SESSION["username"]);
+        $ext = $files -> directoryFiles();
+
+        if($ext !== null) {
+          $imageDir = $target_dir . $username . "." . $ext;
+
+          unlink($imageDir);
+        }        
+
+//New picture data
+        $ext = strtolower(pathinfo($profileImg["name"], PATHINFO_EXTENSION));
+        $target_file = $target_dir . $_SESSION["username"] . "." . $ext;
         $uploadOk = "";
 
-        $files = new Directories($target_dir, $_SESSION["username"]);
-        $imgProfileDir = $files -> directoryFiles();
-        
-//Formats
-        $formats = array("jpg", "jpeg", "gif", "png", "webp");
 
-        if(in_array(pathinfo($imgProfileDir, PATHINFO_EXTENSION), $formats)){
-            unlink($imgProfileDir);
-        }
 // Check if image file is a actual image or fake image
         if(isset($_POST["usersubmit"])) {
             $check = getimagesize($profileImg["tmp_name"]);
             if($check == false) {
                 $uploadOk = "¡Este archivo no es una imagen!";
             } 
-        }
-// Check if file already exists
-        if (file_exists($target_file)) {
-            $uploadOk = "¡Esta imagen ya existe!";
         }
 
 // Check file size
@@ -445,8 +441,8 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
         }
 
 // Allow certain file formats
-        if($fileExtension != "jpg" && $fileExtension != "png" && $fileExtension != "webp" && $fileExtension != "jpeg"
-        && $fileExtension != "gif" ) {
+        if($ext != "jpg" && $ext != "png" && $ext != "webp" && $ext != "jpeg"
+        && $ext != "gif" ) {
             $uploadOk = "¡Formato no admitido!";
         } 
 
@@ -454,7 +450,6 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
             move_uploaded_file($profileImg["tmp_name"], $target_file);
         }
     }
-
 
 /*** Strings handler ***/
     if ($firstname == "" || $lastname == "" || $username == "" || $sex == "" || $userEmail == "") {

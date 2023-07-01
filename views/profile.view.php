@@ -35,18 +35,21 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
 //Users images directory        
     $img_dir = "imgs/users/";
 
-//Object of the users images
-    $files = new Directories($img_dir, $_SESSION['username']);
-    $imgProfileDir = $files -> directoryProfiles();
+    if(!file_exists($img_dir)) {
+        mkdir($img_dir, 0777, true);
+    }  
 
-//Formats
-    $formats = array("jpg", "jpeg", "gif", "png", "webp");
+//Delete an old image if it exists
+    $files = new Directories($img_dir, $_SESSION['username']);
+    $ext = $files -> directoryFiles();
 
 //If the file doesn't exist the default photo is shown
-    if(!in_array(pathinfo($imgProfileDir, PATHINFO_EXTENSION), $formats)){
-        $path = "src = 'imgs/unknown/unknown_user.png'";
+    if($ext !== null) {
+        $imgProfileDir = $img_dir . $_SESSION['username'] . "." . $ext;
+        $path = "src = '" . $imgProfileDir . "'";
+
     } else {
-         $path = "src = '" . $imgProfileDir . "'";
+        $path = "src = 'imgs/unknown/unknown_user.png'";
     }
 ?>
 <!-- Profile info-->  
