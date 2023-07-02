@@ -25,6 +25,7 @@ $_SESSION["location"] = root;
 
         <div class="col-auto">    
             <select class="form-select" id="num_registros" name="num_registros">
+                <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
@@ -77,7 +78,7 @@ $_SESSION["location"] = root;
             </tbody>
         </table>
     </div>
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-6">
             <label id="lbl-total"></label>
         </div>

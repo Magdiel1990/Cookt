@@ -40,17 +40,17 @@
     }        
 
 // Limit
-    $registros = isset($_POST["registros"]) ? $conn -> real_escape_string($_POST["registros"]) : 10;
+    $registros = isset($_POST["registros"]) ? $conn -> real_escape_string($_POST["registros"]) : 5;
     $pagina = isset($_POST["pagina"]) ? $conn -> real_escape_string($_POST["pagina"]) : 0;
     
     if(!$pagina) {
-        $inicio = 0;
+        $start = 0;
         $pagina = 1;
     } else {
-        $inicio = ($pagina - 1) * $registros;
+        $start = ($pagina - 1) * $registros;
     }
     
-    $limit = "LIMIT $inicio, $registros";
+    $limit = "LIMIT $start, $registros";
 
 //Query
     $sql = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ". implode(", ", $columns) . " 
@@ -68,7 +68,7 @@
     $totalFilter = $rowFilter[0];
 
 //filtered register query
-    $sqlTotal = "SELECT count(*) FROM $table $where";
+    $sqlTotal = "SELECT count(*) FROM recipe WHERE username = '" . $_SESSION['username'] . "';";
     $resTotal = $conn->query($sqlTotal);
     $rowTotal = $resTotal->fetch_array();
 
