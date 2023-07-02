@@ -38,6 +38,12 @@ footer {
     height: 2rem;
 }
 
+#logo:hover {
+    height: 2.2rem;
+    box-shadow: 1px 1px 16px rgb(255, 251, 247);
+    border-radius: 20%;
+}
+
 #profile {
     max-width: 20%;
     border-radius: 70%;
