@@ -21,8 +21,22 @@ $_SESSION["location"] = root;
 ?>
 
 <!--Form for filtering the recipes-->
-    <div class="row mt-2 text-center justify-content-center">
-        <h3>Recetas</h3>
+    <div class="row g-3">
+
+        <div class="col-auto">    
+            <select class="form-select" id="num_registros" name="num_registros">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </div>
+
+        <div class="col-auto">
+            <label for="num_registros" class="col-form-label">registros</label>
+        </div>
+
+        <div class="col-5"></div>
+
         <div class="col-auto">
             <div class="input-group mb-3">
                 <label for="search" class="input-group-text">Buscar: </label>
