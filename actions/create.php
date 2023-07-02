@@ -238,8 +238,9 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
 
       $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename' AND username = '" .  $_SESSION['username'] . "';";
       $result = $conn -> query($sql);
+      $num_rows = $result -> num_rows;
 //Check if the recipe exists            
-      if($result -> num_rows == 0){
+      if($num_rows == 0){
         
         if($cookingtime == "") { 
           $cookingtime = 0;
@@ -392,6 +393,12 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
             exit;
         }
       }
+    } else {
+            $_SESSION['message'] = '¡Esta receta ya existe!';
+            $_SESSION['message_alert'] = "danger";
+
+            header('Location: ' . root . 'add-recipe');
+            exit;
     }
   }
 }
