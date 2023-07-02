@@ -282,19 +282,7 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
 
             if (!file_exists($recipeImagesDir)) {
               mkdir($recipeImagesDir, 0777, true);
-            }
-          
-          $ext = pathinfo($url, PATHINFO_EXTENSION);
-          $uploadOk = "";
-
-          if($ext != "jpg" && $ext != "jpeg" && $ext != "png" && $ext != "gif" && $ext != "webp") {
-            $uploadOk = '¡Formato de imagen no admitido!';
-          }   
-           
-          if(array_change_key_case(get_headers($url,1))['content-length'] > 300000){
-            $uploadOk = '¡El tamaño debe ser menor que 300 KB!';
-          }
-
+            }        
 //Delete an old image if it exists
           $files = new Directories($recipeImagesDir, $recipename);
           $ext = $files -> directoryFiles();
@@ -305,8 +293,19 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
             unlink($imageDir);
           }
 
+          $ext = pathinfo($url, PATHINFO_EXTENSION);
+          $uploadOk = "";
+//Format verification
+          if($ext != "jpg" && $ext != "jpeg" && $ext != "png" && $ext != "gif" && $ext != "webp") {
+            $uploadOk = '¡Formato de imagen no admitido!';
+          }   
+//Size verification            
+          if(array_change_key_case(get_headers($url,1))['content-length'] > 300000){
+            $uploadOk = '¡El tamaño debe ser menor que 300 KB!';
+          }
+
 //Name of the saved image         
-          $imageDir = $recipeImagesDir . $recipename . "." . $ext;
+          $imageDir = $recipeImagesDir ."/". $recipename . "." . $ext;
 
 // Save image 
           if(file_put_contents($imageDir, file_get_contents($url)) !== false){

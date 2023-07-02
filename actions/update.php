@@ -151,9 +151,9 @@ $categoryId = $row['categoryid'];
 
 //Delete the old img
                 if($ext !== null) {
-                    $imageDir = $target_dir . $recipename . "." . $ext;
+                    $imageDir = $target_dir . $oldName . "." . $ext;
 
-                    unlink($imageDir);
+                    unlink ($imageDir);
                 }
 
                 $ext = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));

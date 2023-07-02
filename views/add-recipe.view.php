@@ -124,7 +124,7 @@ require_once ("views/partials/nav.php");
                     var fileType = file.type;
                     var urlFileType = imageURL.type;
                     var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg", "image/webp"];
-
+                   
 //Conditions
                     if(recipename == "" || preparation == "" || ingredients == ""){
                         event.preventDefault();
