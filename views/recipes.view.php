@@ -121,7 +121,8 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
                         <a class="btn btn-primary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Preparación
                         </a>
-                        <a class="btn btn-secondary" href="<?php echo $_SESSION["location"];?>">Regresar</a>
+                        <a href='<?php echo root . "edit?recipename=" . $row['recipename'] . "&username=" . $_SESSION['username']; ?>' class='btn btn-secondary' title='Editar'>Editar</a>
+                        <a class="btn btn-info" href="<?php echo $_SESSION["location"];?>">Regresar</a>
                     </div>
                     <div class="py-4">
                         <div class="collapse bg-form" id="collapse">

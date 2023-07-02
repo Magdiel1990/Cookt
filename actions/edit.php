@@ -228,7 +228,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                                       
                     <div class="mb-3 text-center">
                         <input class='btn btn-primary' type="submit" name="edit" value="Actualizar"> 
-                        <a href="<?php echo root;?>" class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
+                        <a href='<?php echo root . "recipes?recipe=" . $recipeName . "&username=" . $userName; ?>' class='btn btn-secondary' title="Regresar"><i class="fa-solid fa-right-from-bracket"></i></a>  
                     </div>
                 </form>
             </div>
