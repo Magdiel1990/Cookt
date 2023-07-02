@@ -100,7 +100,6 @@ thead {
 }
 
 .table_header {
-    font-weight: bold;
     font-size: 1.4rem;
     color:#ffffff;
     background-color: blue;
@@ -112,12 +111,12 @@ tbody {
 
 .tlink {
     text-decoration:none;
-    color: rgb(22, 182, 4);
+    color: #222;
 }
 
 table td, p, ul li, ol li, li a {
     font-size: 1.8rem;
-    color: rgb(22, 182, 4);  
+    color: #222; 
     text-decoration: none;
 }
 

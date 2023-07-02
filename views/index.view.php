@@ -21,7 +21,7 @@ $_SESSION["location"] = root;
 ?>
 
 <!--Form for filtering the recipes-->
-    <div class="row g-3">
+    <div class="row mt-2 g-3">
 
         <div class="col-auto">    
             <select class="form-select" id="num_registros" name="num_registros">
@@ -35,56 +35,97 @@ $_SESSION["location"] = root;
             <label for="num_registros" class="col-form-label">registros</label>
         </div>
 
-        <div class="col-5"></div>
-
+        <div class="col-3"></div>
+      
         <div class="col-auto">
             <div class="input-group mb-3">
                 <label for="search" class="input-group-text">Buscar: </label>
                 <input class="form-control" type="text" id="search" name="search" maxlength="50">
             </div>
         </div>
+
+        <div class="col-1"></div>
+
+        <div class="col-auto">
+            <div class="form-check form-check-inline">   
+                <input class="form-check-input" type="checkbox" id="name" name="orderby[]" value="r.recipename">
+                <label class="form-check-label" for="name">Nombre</label><br>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="category" name="orderby[]" value="c.category">
+                <label class="form-check-label" for="category">Categoría</label><br>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="time" name="orderby[]" value="r.cookingtime">
+                <label class="form-check-label" for="time">Tiempo</label><br>
+            </div> 
+        </div>        
     </div>
 <!-- Table to show the recipes-->
-    <div class="table-responsive-md mt-2">
-        <table class="table table-bordered table-md shadow">
+    <div class="table-responsive-sm mt-2">
+        <table class="table table-condensed shadow">
             <thead>
-                <tr class="table_header">
-                    <th class='px-2' scope="col">Receta</th>
-                    <th class='px-2 text-center' scope="col">Tiempo (min)</th>
-                    <th class='px-2' scope="col">Categoría</th>
-                    <th class='px-2' scope="col">Acciones</th>
+                <tr class="table_header text-center">
+                    <!--<th scope="col">#</th>-->
+                    <th scope="col">Receta</th>
+                    <th scope="col">Tiempo (min)</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody id="content">
             </tbody>
         </table>
     </div>
+    <div class="row">
+        <div class="col-6">
+            <label id="lbl-total"></label>
+        </div>
+        <div class="col-6" id="nav-pagination">            
+        </div>
+    </div>
 </main>
 <!-- Ajax script-->
 <script>
-getData();
+let paginaActual = 1;
+
+getData(paginaActual);
 
 //Adding event to the searching input.
 document.getElementById("search").addEventListener("keyup", function() {
-        getData()
-}, false)
+        getData(1)
+}, false);
+
+document.getElementById("num_registros").addEventListener("change", function() {
+        getData(paginaActual)
+}, false);
 
 //Function for getting the data
-function getData(){
-    let content = document.getElementById("content")
-    let input = document.getElementById("search").value
+function getData(pagina){
+    let content = document.getElementById("content");
+    let input = document.getElementById("search").value;
+    let num_registros = document.getElementById("num_registros").value;
+
+//When filtering and searching the page doesn't start from the begging    
+    if(pagina != null){
+        paginaActual = pagina;
+    }
 
     let url = "ajax/index-ajax.php";
-    let formaData = new FormData()
-    formaData.append("search", input)
+    let formaData = new FormData();
+    formaData.append("search", input);
+    formaData.append("registros", num_registros);
+    formaData.append("pagina", pagina);
     fetch(url, {
         method: "POST",
         body: formaData            
     }).then(response => response.json())
     .then(data => {
-        content.innerHTML = data.data
+        content.innerHTML = data.data;
+        document.getElementById("lbl-total").innerHTML = data.totalFilter + " de " + data.totalRegister;
+        document.getElementById("nav-pagination").innerHTML = data.pagination;
 //If there's an error.  
-    }).catch(err => console.log(err))
+    }).catch(err => console.log(err));
 }
 </script>
 <?php

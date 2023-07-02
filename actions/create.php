@@ -308,18 +308,26 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
           $imageDir = $recipeImagesDir ."/". $recipename . "." . $ext;
 
 // Save image 
-          if(file_put_contents($imageDir, file_get_contents($url)) !== false){
-            $_SESSION['message'] = '¡Receta agregada exitosamente!';
-            $_SESSION['message_alert'] = "success";
-
-            header('Location: ' . root . 'add-recipe');
-            exit;
-          } else {
+          if($uploadOk != "") {
             $_SESSION['message'] = $uploadOk;
             $_SESSION['message_alert'] = "danger";
 
             header('Location: ' . root . 'add-recipe');
             exit;
+          } else {
+            if(file_put_contents($imageDir, file_get_contents($url)) !== false){
+              $_SESSION['message'] = '¡Receta agregada exitosamente!';
+              $_SESSION['message_alert'] = "success";
+
+              header('Location: ' . root . 'add-recipe');
+              exit;
+            } else {
+              $_SESSION['message'] = '¡Error al cargar imagen!';
+              $_SESSION['message_alert'] = "success";
+
+              header('Location: ' . root . 'add-recipe');
+              exit;
+            }             
           }
         }          
       } else {
