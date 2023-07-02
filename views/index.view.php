@@ -45,22 +45,24 @@ $_SESSION["location"] = root;
             </div>
         </div>
 
-        <div class="col-1"></div>
+ <!--         <div class="col-1"></div>
 
-        <div class="col-auto">
-            <div class="form-check form-check-inline">   
-                <input class="form-check-input" type="checkbox" id="name" name="orderby[]" value="r.recipename">
-                <label class="form-check-label" for="name">Nombre</label><br>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="category" name="orderby[]" value="c.category">
-                <label class="form-check-label" for="category">Categoría</label><br>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="time" name="orderby[]" value="r.cookingtime">
-                <label class="form-check-label" for="time">Tiempo</label><br>
-            </div> 
-        </div>        
+ 
+    <div class="col-auto">
+        <div class="form-check form-check-inline">   
+            <input class="form-check-input" type="radio" id="name" name="orderby" value="r.recipename" checked>
+            <label class="form-check-label" for="name">Nombre</label><br>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="category" name="orderby" value="c.category">
+            <label class="form-check-label" for="category">Categoría</label><br>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="time" name="orderby" value="r.cookingtime">
+            <label class="form-check-label" for="time">Tiempo</label><br>
+        </div> 
+    </div> 
+-->       
     </div>
 <!-- Table to show the recipes-->
     <div class="table-responsive-sm mt-2">
@@ -117,6 +119,7 @@ function getData(pagina){
     formaData.append("search", input);
     formaData.append("registros", num_registros);
     formaData.append("pagina", pagina);
+
     fetch(url, {
         method: "POST",
         body: formaData            

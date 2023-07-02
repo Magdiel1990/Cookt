@@ -52,10 +52,10 @@
     
     $limit = "LIMIT $start, $registros";
 
-//Query
+//Query with limit
     $sql = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ". implode(", ", $columns) . " 
     FROM $table 
-    $where ORDER BY r.recipename $limit;";
+    $where ORDER BY recipename $limit;";
 
 //Count of the number of rows of the query
     $result = $conn->query($sql);
@@ -75,7 +75,7 @@
     $totalRegister = $rowTotal[0];
 
     $output = [];    
-    $output['totalFilter'] = $totalFilter;    
+    $output['totalFilter'] = $totalFilter; 
     $output['totalRegister'] = $totalRegister;
     $output['data'] = '';
     $output['pagination'] = '';
@@ -106,6 +106,7 @@
 
     if($output['totalRegister'] > 0) {
         $pageTotal = ceil($output['totalRegister'] / $registros);
+        $filterTotal = ceil($output['totalFilter'] / $registros);
 
         $output['pagination'] .= "<nav>";
         $output['pagination'] .= "<ul class='pagination'>";
@@ -118,8 +119,8 @@
 
         $end = $start + 9;
 
-        if($end > $pageTotal) {
-            $end = $pageTotal;
+        if($end > $filterTotal) {
+            $end = $filterTotal;
         }
         
         for($i = $start; $i <= $end; $i++){
