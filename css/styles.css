@@ -33,10 +33,15 @@ footer {
     color: white;
 }
 
-.navbar img {
+#logo, #profile {
     position: relative;
-    height: 2.1rem;
-    border-radius: 50%;
+    height: 2rem;
+}
+
+#profile {
+    max-width: 20%;
+    border-radius: 70%;
+    object-fit:contain;
 }
 
 .logo {
