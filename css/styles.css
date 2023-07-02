@@ -149,11 +149,12 @@ option {
     padding: 1.5rem;
 }
 
-
 .form ul li {
     list-style: none;
     font-size: 1.2rem;
 }
+
+
 
 /*Default user image*/
 .fa-user {
@@ -284,4 +285,11 @@ option {
 	width: 100%;
 	height: 100%;
 	opacity: 0;
+}
+
+/*Ingredient letter format*/
+#ingredient {
+    color: #000000;
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
 }

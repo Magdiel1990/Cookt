@@ -106,7 +106,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
 //Ingredients list                        
                             $html = "<ul>";
                             for($i = 0; $i<count($arrayIngredients); $i++){
-                                $html .= "<li>" . $arrayIngredients[$i] . "</li>";
+                                $html .= "<li id='ingredient'>" . $arrayIngredients[$i] . "</li>";
                             }
                             $html .= "</ul>";
                             echo $html;                         
