@@ -98,6 +98,42 @@ class Directories {
             closedir($dir_handle);
         }
     }
+
+//Users recipe picture
+    public function userRecipePictures() {
+        if(file_exists($this -> directory)) {
+            $dir_handle = opendir($this -> directory);
+
+//Array to store the pictures directories
+            $pictureNames = [];
+
+            while(($imgDir = readdir($dir_handle)) !== false) {
+                $userImgDir = $this -> directory . $imgDir;
+
+                if(file_exists($userImgDir)) {
+                    $picture_handler = opendir($userImgDir);
+                    while(($img = readdir($picture_handler)) !== false) {
+                        $imgRecipe = $userImgDir . "/" . $img;
+                        if(is_file($imgRecipe)) {
+                            $pictureNames [] = "$imgRecipe";     
+                        }                   
+                    }
+                }
+            }
+//Amount of recipes images
+            $count = count($pictureNames);
+
+            if($count == 0) {
+                return "imgs/login/Picture.png";
+            } else if ($count == 1) {
+                return $pictureNames[0];
+            } else {
+                return $pictureNames[rand(0,($count-1))];
+            }
+        } else {
+            return "imgs/login/Picture.png";
+        }
+    }
 //Directory size
     public function directorySize(){
         

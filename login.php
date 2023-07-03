@@ -8,6 +8,12 @@ session_start();
 //Including the database connection.
 $conn = DatabaseConnection::dbConnection();
 
+//Image to show at the login
+$userPictures = "imgs/recipes/";
+
+$loginPicture = new Directories($userPictures, null);
+$loginPicture = $loginPicture -> userRecipePictures();
+
 //Check if username and password are set
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
@@ -80,7 +86,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 //Title of the page
 $header = new PageHeaders($_SERVER["REQUEST_URI"]);
 $header = $header -> pageHeader();
-
 ?>
 <!DOCTYPE html>
 <html lang="es" data-lt-installed="true">
@@ -122,7 +127,7 @@ $header = $header -> pageHeader();
             <div class="row d-flex justify-content-center align-items-center">
 <!-- Login image-->
                 <div class="col-md-9 col-lg-6 col-xl-5">
-                    <img src="imgs/login/Picture.png" class="img-fluid img-thumbnail" alt="Sample image">
+                    <img src="<?php echo $loginPicture;?>" class="img-fluid img-thumbnail" alt="Sample image">
                 </div>
 <!-- Login form -->        
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 mt-4">
