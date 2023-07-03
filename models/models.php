@@ -260,7 +260,8 @@ class PageHeaders {
             root . "recovery" => "Recuperación",  
             root . "recipes" => "Recetas",
             root . "edit" => "Editar",
-            root . "user-recipes" => "Datos Generales"
+            root . "user-recipes" => "Datos Generales",
+            root. "terms-and-conditions" => "Términos y condiciones"
         ];
 
         switch ($this -> uri) {

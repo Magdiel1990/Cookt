@@ -210,7 +210,7 @@ $header = $header -> pageHeader();
                                     <div class="form-check d-flex justify-content-center mb-3">
                                         <input class="form-check-input me-2" type="checkbox" value="yes" id="terms" name="terms" required/>
                                         <label class="form-check-label is-required" for="terms">
-                                        Estoy de acuerdo con los <a href="#!">Términos de Servicio.</a>
+                                        Estoy de acuerdo con los <a href="<?php echo root. 'terms-and-conditions'?>">Términos de Servicio.</a>
                                         </label>
                                     </div> 
 

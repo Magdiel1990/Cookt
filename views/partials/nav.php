@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md navbar-dark px-4">
 <!-- Logo and dropdown button-->
         <div class="logo"> 
-            <a class="nav-link text-white" href="<?php echo root;?>"><img id="logo" src="<?php echo root;?>imgs/logo/logo2.png" alt="Logo" title="Página principal"></i></a>
+            <a class="nav-link text-white" href="<?php echo root;?>"><img id="logo" src="<?php echo root;?>imgs/logo/logo2.png" alt="Logo" title="Página principal"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>  
