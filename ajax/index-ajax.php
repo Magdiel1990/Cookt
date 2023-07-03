@@ -81,8 +81,7 @@
     $output['pagination'] = '';
 //If there are results for the query , they are shown.
     if($num_rows > 0) {
-        while($row = $result->fetch_assoc()){
-            
+        while($row = $result->fetch_assoc()){            
             $output['data'] .= "<tr>";                    
            // $output['data'] .= "<td class='p-3'>" . $row['count'] . "</td>";
             $output['data'] .= "<td><a href='" . root . "recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta' class='tlink'>" . $row['recipename'] . "</a></td>";
@@ -132,9 +131,7 @@
         }
         $output['pagination'] .= "</ul>";
         $output['pagination'] .= "</nav>";
-
     }
-
 
 //Json file is encoded and echoed excluding especial characters.
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
