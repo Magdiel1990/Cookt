@@ -20,10 +20,10 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
 //Check the data and if the user is active
-    $sql = "SELECT * FROM users WHERE username = ? AND `state` = ?;";
+    $sql = "SELECT * FROM users WHERE username = ? AND `state` = 1;";
 
     $stmt = $conn -> prepare($sql); 
-    $stmt->bind_param("si", $username, 1);
+    $stmt->bind_param("s", $username);
     $stmt->execute();
 
     $result = $stmt -> get_result(); 

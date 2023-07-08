@@ -38,6 +38,11 @@ footer {
     height: 2rem;
 }
 
+#profilePicture {
+    width: 300px;
+    height: 200px;
+}
+
 #logo:hover {
     height: 2.1rem;
     box-shadow: 1px 1px 16px rgb(255, 251, 247);
