@@ -8,9 +8,6 @@ require_once ("models/models.php");
 
 //Including the database connection.
 $conn = DatabaseConnection::dbConnection();
-
-$header = new PageHeaders($_SERVER["REQUEST_URI"]);
-$header = $header -> pageHeader();
 ?>
 <!DOCTYPE html>
 <html lang="es" data-lt-installed="true">
@@ -24,7 +21,7 @@ $header = $header -> pageHeader();
     <meta property="og:type" content="website">
     <meta name="ltm:domain" content="recipeholder.net">
     <meta name="description" content="Encuentra la receta de cocina fácil que estás buscando personalizadas de acuerdo a los ingredientes que tengas en tu casa.">
-    <title><?php echo $header;?></title>
+    <title>Recovery page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="shortcut icon" href="imgs/logo/logo2.png">
     <link rel="stylesheet" href="css/styles.css">
@@ -34,8 +31,67 @@ $header = $header -> pageHeader();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body class="bg-primary">
-    <main>
-        <div>Recovery page</div>
+    <main class="container p-4 my-3">
+        <div class="row justify-content-center">
+        <?php
+    //Messages
+            if(isset($_SESSION['message'])){
+            $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+            echo $message -> buttonMessage();         
+
+    //Unsetting the messages
+            unset($_SESSION['message_alert'], $_SESSION['message']);
+            }
+        ?>  <div class="col-auto order-last my-4">
+    <!--Form for adding the users-->
+                <h2 class="text-center mb-3">Editar usuario</h2>
+                <form method="POST" action="<?php echo root;?>update?id=<?php echo $_GET["id"];?>&pass=<?php echo $_GET["pass"];?>" id="user_form" class="text-center recovery-form">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text is-required" for="userpassword">Nueva contraseña: </label>
+                        <input class="form-control" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <label class="input-group-text is-required" for="passrepeat">Repetir contraseña: </label>
+                        <input class="form-control" type="password" id="passrepeat" name="passrepeat" minlength="8" maxlength="50">
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" name="Recovery" value="Confirmar" class="btn btn-primary">              
+                    </div>            
+                </form>
+                <script>
+                    userValidation(); 
+    //Form validation
+                    function userValidation(){
+                    var form = document.getElementById("user_form");    
+
+                    form.addEventListener("submit", function(event){ 
+                        var password = document.getElementById("password").value;
+                        var passrepeat = document.getElementById("passrepeat").value;
+ 
+                        if(password == ""  || passrepeat == "") {
+                            event.preventDefault();
+                            message.innerHTML = "¡Completar los campos requeridos!";             
+                            return false;
+                        }
+                        
+                        if(password != passrepeat) {
+                            event.preventDefault();
+                            message.innerHTML = "¡Contraseñas no coinciden!";        
+                            return false;
+                        }
+//Regular Expression    
+                        if(password.length < 8 || password.length > 50){
+                            event.preventDefault();
+                            message.innerHTML = "¡La contraseña debe tener de 8 a 50 caracteres!";                 
+                            return false;
+                        }         
+                        return true;
+                    })
+                }
+                </script>
+            </div>  
+        </div>
     </main>
 <?php
 //Footer of the page.

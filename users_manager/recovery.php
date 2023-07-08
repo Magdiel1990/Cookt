@@ -34,52 +34,49 @@ $header = $header -> pageHeader();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body class="bg-primary">
-    <main>
-        <section class="container">
-            <div class="p-5 m-4">                
-            </div>
-            <div class="p-2">
-                <h2 class="text-center">Reestablecer Contraseña</h2>                
-            </div>
-            <div class="row p-4 align-items-center justify-content-center">
-                <div class="col-auto">
-                    <form class="text-center recovery-form" action="<?php echo root;?>email" method="POST">
+    <main class="container">
+        <div class="p-5 m-4">                
+        </div>
+        <div class="p-2">
+            <h2 class="text-center">Reestablecer Contraseña</h2>                
+        </div>
+        <div class="row p-4 align-items-center justify-content-center">
+            <div class="col-auto">
+                <form class="text-center recovery-form" action="<?php echo root;?>email" method="POST">
 <!-- Email input -->
-                        <div class="form-outline mb-3">
-                            <label class="form-label mb-4" for="email">¿Olvidaste tu contraseña?</label>
-                            <input type="email" id="email" class="form-control" name="email" size="35" placeholder="Escribe tu correo electrónico"/>                        
-                        </div>
-                        <?php
+                    <div class="form-outline mb-3">
+                        <label class="form-label mb-4" for="email">¿Olvidaste tu contraseña?</label>
+                        <input type="email" id="email" class="form-control" name="email" size="35" placeholder="Escribe tu correo electrónico"/>                        
+                    </div>
+                    <?php
 //Messages that are shown in the add_units page
-                        if(isset($_SESSION['message'])){
-                        echo "<div class='my-1'>";
+                    if(isset($_SESSION['message'])){
+                    echo "<div class='my-1'>";
 
-                        $message = new Messages ($_SESSION['message'], $_SESSION['alert']);
-                        echo $message -> textMessage();  
+                    $message = new Messages ($_SESSION['message'], $_SESSION['alert']);
+                    echo $message -> textMessage();  
 
 //Unsetting the messages variables so the message fades after refreshing the page.
-                        unset($_SESSION['alert'], $_SESSION['message']);
-                       
-                        session_destroy();
+                    unset($_SESSION['alert'], $_SESSION['message']);
+                    
+                    session_destroy();
 
-                        echo "</div>";
-                        } else {
-                            echo "<div class='mt-4'></div>";
-                        }
-                        ?>
-                           
-                        <div class="text-center">
-                            <input type="submit" name="Recovery" value="Reestablecer contraseña" class="btn btn-primary">                              
-                            <p class="small fw-bold mb-0 mt-4">
-                                <a class="text-decoration-none px-2" href="/login">Login</a>
-                                ¿Si no tienes cuenta? 
-                                <a href="<?php echo root;?>signup" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
-                            </p>                  
-                        </div>                                    
-                    </form>
-                </div>
+                    echo "</div>";
+                    } else {
+                        echo "<div class='mt-4'></div>";
+                    }
+                    ?>                        
+                    <div class="text-center">
+                        <input type="submit" name="Recovery" value="Reestablecer contraseña" class="btn btn-primary">                              
+                        <p class="small fw-bold mb-0 mt-4">
+                            <a class="text-decoration-none px-2" href="/login">Login</a>
+                            ¿Si no tienes cuenta? 
+                            <a href="<?php echo root;?>signup" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
+                        </p>                  
+                    </div>                                    
+                </form>
             </div>
-        </section>
+        </div>
     </main>
 <?php
 //Footer of the page.

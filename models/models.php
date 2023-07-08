@@ -261,8 +261,7 @@ class PageHeaders {
             root . "edit" => "Editar",
             root . "user-recipes" => "Datos Generales",
             root. "terms-and-conditions" => "Términos y condiciones",
-            root. "reset-password" => "Recuperar contraseña",
-            root. "recovery-page" => "Recuperar contraseña"            
+            root. "reset-password" => "Recuperar contraseña",      
         ];
 
         switch ($this -> uri) {
