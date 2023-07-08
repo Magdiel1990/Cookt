@@ -44,20 +44,20 @@ $header = $header -> pageHeader();
             <div class="row p-4 align-items-center justify-content-center">
                 <div class="col-auto">
                     <form class="text-center recovery-form" action="<?php echo root;?>email" method="POST">
-                        <!-- Email input -->
+<!-- Email input -->
                         <div class="form-outline mb-3">
                             <label class="form-label mb-4" for="email">¿Olvidaste tu contraseña?</label>
                             <input type="email" id="email" class="form-control" name="email" size="35" placeholder="Escribe tu correo electrónico"/>                        
                         </div>
                         <?php
-                        //Messages that are shown in the add_units page
+//Messages that are shown in the add_units page
                         if(isset($_SESSION['message'])){
                         echo "<div class='my-1'>";
 
                         $message = new Messages ($_SESSION['message'], $_SESSION['alert']);
                         echo $message -> textMessage();  
 
-                        //Unsetting the messages variables so the message fades after refreshing the page.
+//Unsetting the messages variables so the message fades after refreshing the page.
                         unset($_SESSION['alert'], $_SESSION['message']);
                        
                         session_destroy();

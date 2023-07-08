@@ -9,10 +9,11 @@ require_once ("models/models.php");
 //Including the database connection.
 $conn = DatabaseConnection::dbConnection();
 
-if(isset($_POST['email'])){
-    $email = $_POST['email'];
+if(isset($_POST['email'])){    
 
-    if(!empty($email)){
+    if($_POST['email'] != ""){
+    $filter = new Filter ($_POST['email'], FILTER_SANITIZE_EMAIL, $conn);
+    $email = $filter -> sanitization();
     
     $sql = "SELECT email, sex, firstname, lastname FROM users WHERE email = '$email';";
     $result = $conn -> query($sql);
@@ -20,7 +21,7 @@ if(isset($_POST['email'])){
     
         if ($num_rows != 0) {
             $uniqcode = md5(uniqid(mt_rand()));
-            //Modificar este enlace por el del servidor
+//Link to reset password
             $resetPassLink = root ."reset-password?r_code=". $uniqcode;
 
             $row = $result -> fetch_assoc();
@@ -85,6 +86,5 @@ if(isset($_POST['email'])){
         header('Location: ' . root . 'recovery');
     }
 }
-
 $conn -> close();
 ?>

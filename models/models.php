@@ -61,7 +61,6 @@ class Messages {
     }    
 }
 
-
 class Directories {
     public $directory;
     public $fileName;
@@ -261,7 +260,8 @@ class PageHeaders {
             root . "recipes" => "Recetas",
             root . "edit" => "Editar",
             root . "user-recipes" => "Datos Generales",
-            root. "terms-and-conditions" => "Términos y condiciones"
+            root. "terms-and-conditions" => "Términos y condiciones",
+            root. "reset-password" => "Recuperar contraseña"
         ];
 
         switch ($this -> uri) {

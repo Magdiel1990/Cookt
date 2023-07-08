@@ -26,7 +26,7 @@ if($param == "") {
     root. "signup" => "controllers/signup.controller.php",
     root. "recovery" => "controllers/recovery.controller.php",
     root. "error404" => "controllers/404.controller.php",
-    root. "terms-and-conditions" => "controllers/terms.controller.php"
+    root. "terms-and-conditions" => "controllers/terms.controller.php"    
     ];
 //It comes with parameters
 } else {
