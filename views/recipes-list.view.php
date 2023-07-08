@@ -13,9 +13,13 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
 
 $username = $_GET["username"];
 
-$sql = "SELECT userid FROM users WHERE username = '$username';";
-$result = $conn -> query($sql);
+$sql = "SELECT userid FROM users WHERE username = ?;";
 
+$stmt = $conn -> prepare($sql); 
+$stmt->bind_param("s", $username);
+$stmt->execute();
+
+$result = $stmt -> get_result(); 
 //If the user exists
     if($result -> num_rows > 0) {
 ?>
@@ -48,7 +52,13 @@ $result = $conn -> query($sql);
                         date_default_timezone_set("America/Santo_Domingo");        
 
 //Recipes of each user
-                        $sql = "SELECT u.created_at  as `time`, max(a.lastlogin) as `lastlogin`, concat_ws(' ', u.firstname, u.lastname) as `fullname` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
+                        $sql = "SELECT u.created_at  as `time`, max(a.lastlogin) as `lastlogin`, concat_ws(' ', u.firstname, u.lastname) as `fullname` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = ?;";
+                        $stmt = $conn -> prepare($sql); 
+                        $stmt->bind_param("s", $username);
+                        $stmt->execute();
+
+                        $result = $stmt -> get_result(); 
+                        $row = $result -> fetch_assoc();   
                         $row = $conn -> query($sql) -> fetch_assoc();   
 //Days using the app                        
                         $time_days = round((strtotime(date("Y-m-d H:i:s")) - strtotime($row ['time'])) / 86400);
@@ -76,8 +86,13 @@ $result = $conn -> query($sql);
             <div class="text-center">
             <?php
 //Check if the user has added recipes
-                $sql = "SELECT recipename FROM recipe WHERE username = '$username';";
-                $result = $conn -> query($sql);
+                $sql = "SELECT recipename FROM recipe WHERE username = ?;";
+
+                $stmt = $conn -> prepare($sql); 
+                $stmt->bind_param("s", $username);
+                $stmt->execute();
+
+                $result = $stmt -> get_result();  
 
                 if($result -> num_rows > 0) {
                 ?>

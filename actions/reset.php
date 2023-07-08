@@ -10,8 +10,14 @@ if(isset($_GET['user_id']) && isset($_GET['reset'])) {
 
 $userId = $_GET['user_id'];
 //User data
-$sql = "SELECT * FROM users WHERE userid = '$userId';";
-$row = $conn -> query($sql) -> fetch_assoc();
+$sql = "SELECT * FROM users WHERE userid = ?;";
+
+$stmt = $conn -> prepare($sql); 
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+
+$result = $stmt -> get_result(); 
+$row = $result -> fetch_assoc();   
 
 $username = $row['username'];
 $password = $row['password'];

@@ -20,8 +20,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
 //Check the data and if the user is active
-    $sql = "SELECT * FROM users WHERE username = '$username' AND `state` = 1;";
-    $result = $conn -> query($sql);
+    $sql = "SELECT * FROM users WHERE username = ? AND `state` = ?;";
+
+    $stmt = $conn -> prepare($sql); 
+    $stmt->bind_param("si", $username, 1);
+    $stmt->execute();
+
+    $result = $stmt -> get_result(); 
   
     if ($result -> num_rows > 0) {
 
@@ -58,8 +63,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             $_SESSION['title'] = $title -> title(); 
 
 //Check if the user has ever logged in
-            $sql = "SELECT id FROM access WHERE userid=" . $_SESSION['userid'] . ";";  
-            $result = $conn -> query($sql);
+            $sql = "SELECT id FROM access WHERE userid= ?;";
+            $stmt = $conn -> prepare($sql); 
+            $stmt->bind_param("i", $_SESSION['userid']);
+            $stmt->execute();
+            $result = $stmt -> get_result(); 
 
 //Save the last access of the user      
             if($result -> num_rows == 0) {

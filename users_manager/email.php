@@ -15,8 +15,13 @@ if(isset($_POST['email'])){
     $filter = new Filter ($_POST['email'], FILTER_SANITIZE_EMAIL, $conn);
     $email = $filter -> sanitization();
     
-    $sql = "SELECT email, sex, firstname, lastname FROM users WHERE email = '$email';";
-    $result = $conn -> query($sql);
+    $sql = "SELECT email, sex, firstname, lastname FROM users WHERE email = ?;";
+
+    $stmt = $conn -> prepare($sql); 
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+
+    $result = $stmt -> get_result(); 
     $num_rows = $result -> num_rows;
     
         if ($num_rows != 0) {

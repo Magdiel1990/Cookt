@@ -9,8 +9,13 @@ require_once ("views/partials/nav.php");
 $_SESSION["location"] = root . "profile";
 
 //Users data
-$sql = "SELECT * FROM users WHERE userid = '". $_SESSION['userid']."';";
-$row = $conn -> query($sql) -> fetch_assoc();
+$sql = "SELECT * FROM users WHERE userid = ?;";
+$stmt = $conn -> prepare($sql); 
+$stmt->bind_param("i", $_SESSION['userid']);
+$stmt->execute();
+
+$result = $stmt -> get_result(); 
+$row = $result -> fetch_assoc();   
 
 $userName = $row["username"];
 $firstName =  $row["firstname"];

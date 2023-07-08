@@ -51,8 +51,13 @@ if(!empty($_POST)) {
                     $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
                     $_SESSION['message_alert'] = "danger";
                 } else {
-                    $sql = "SELECT userid FROM users WHERE username = '$username';";
-                    $num_rows = $conn -> query($sql) -> num_rows;
+                    $sql = "SELECT userid FROM users WHERE username = ?;";
+                    $stmt = $conn -> prepare($sql); 
+                    $stmt->bind_param("s", $username);
+                    $stmt->execute();
+
+                    $result = $stmt -> get_result(); 
+                    $num_rows = $result -> num_rows;
 
                     if($num_rows == 0){   
                         if($password != $passrepeat) {
@@ -69,9 +74,13 @@ if(!empty($_POST)) {
                                 $state = 0;
                             }
 
-                            $sql = "SELECT userid FROM users WHERE firstname = '" . $firstname . "' AND lastname = '" . $lastname . "' AND username = '" . $username . "' AND `password` = '$hashed_password';";
+                            $sql = "SELECT userid FROM users WHERE firstname = ? AND lastname = ? AND username = ? AND `password` = ?;";
+                            $stmt = $conn -> prepare($sql); 
+                            $stmt->bind_param("ssss", $firstname, $lastname, $username, $hashed_password);
+                            $stmt->execute();
 
-                            $num_rows = $conn -> query($sql) -> num_rows;
+                            $result = $stmt -> get_result();
+                            $num_rows = $result -> num_rows;
 
                             if($num_rows == 0) {
                             

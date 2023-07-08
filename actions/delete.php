@@ -146,8 +146,14 @@ if(isset($_GET['custom'])){
     
 $customName = $_GET['custom'];
 //Get the ingredient id of the custom page
-$sql = "SELECT id FROM ingredients WHERE ingredient = '$customName' AND username = '" . $_SESSION['username'] . "';";
-$row = $conn -> query($sql) -> fetch_assoc();
+$sql = "SELECT id FROM ingredients WHERE ingredient = ? AND username = ?;";
+$stmt = $conn -> prepare($sql); 
+$stmt->bind_param("ss", $customName, $_SESSION['username']);
+$stmt->execute();
+
+$result = $stmt -> get_result(); 
+$row = $result -> fetch_assoc();   
+
 $ingredientId = $row['id'];
 
 //Delete ingredient
@@ -187,9 +193,15 @@ $num_rows = $result -> num_rows;
 
 //If there are more than 1 Admin users or the user to be deleted is not an Admins
     if($num_rows > 1 || $type != "Admin") {
-//Username     
-    $sql = "SELECT username FROM users WHERE userid = '$userId';";
-    $row = $conn -> query($sql) -> fetch_assoc();
+//Username
+    $sql = "SELECT username FROM users WHERE userid = ?;";
+    $stmt = $conn -> prepare($sql); 
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+
+    $result = $stmt -> get_result(); 
+    $row = $result -> fetch_assoc(); 
+
     $username = $row['username'];
 //Delete user images directory
     $target_dir = "imgs/recipes/" . $username;

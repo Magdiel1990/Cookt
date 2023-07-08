@@ -17,9 +17,12 @@ if(isset($_GET['categoryid'])){
 $categoryId = $_GET['categoryid'];
 
 //Verify the category existance
-$sql = "SELECT * FROM categories WHERE categoryid = '$categoryId';";
+$sql = "SELECT * FROM categories WHERE categoryid = ?;";
+$stmt = $conn -> prepare($sql); 
+$stmt->bind_param("i", $categoryId);
+$stmt->execute();
 
-$result = $conn -> query($sql);
+$result = $stmt -> get_result(); 
 
 if($result -> num_rows > 0) {
     $row =  $result -> fetch_assoc();
@@ -143,10 +146,15 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
     from recipe r 
     join categories c 
     on r.categoryid = c.categoryid
-    WHERE r.recipename = '$recipeName' 
-    AND r.username = '$userName';";
+    WHERE r.recipename = ? 
+    AND r.username = ?;";
 
-    $row = $conn -> query($sql) -> fetch_assoc();
+    $stmt = $conn -> prepare($sql); 
+    $stmt->bind_param("ss", $recipeName, $userName);
+    $stmt->execute();
+
+    $result = $stmt -> get_result(); 
+    $row = $result -> fetch_assoc();   
 
     if(isset($row["cookingtime"]) && isset($row["ingredients"]) && isset($row["preparation"]) && isset($row["category"])) {
         $cookingTime = $row["cookingtime"];
@@ -200,9 +208,14 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                             <label class="input-group-text" for="category">Categoría: </label>                
                             <select class="form-select" name="category" id="category">
                                 <?php
-                                $sql = "SELECT category FROM categories WHERE NOT category='$category';";
+                                $sql = "SELECT category FROM categories WHERE NOT category= ?;";
+                                
+                                $stmt = $conn -> prepare($sql); 
+                                $stmt->bind_param("s", $category);
+                                $stmt->execute();
 
-                                $result = $conn -> query($sql);
+                                $result = $stmt -> get_result(); 
+
                                 echo '<option value="' . $category . '">' .  ucfirst($category) . '</option>';
                                 while($row = $result -> fetch_assoc()) {
                                     echo '<option value="' . $row["category"]  . '">' . ucfirst($row["category"]) . '</option>';
@@ -350,8 +363,13 @@ $result = $conn -> query($sql);
 $num_rows  = $result -> num_rows;
 
     if($num_rows > 0) {
-    $sql = "SELECT * FROM users WHERE userid = '$userId';";
-    $result = $conn -> query($sql);
+    $sql = "SELECT * FROM users WHERE userid = ?;";
+
+    $stmt = $conn -> prepare($sql); 
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+
+    $result = $stmt -> get_result(); 
     $num_rows = $result -> num_rows;
 
         if($num_rows > 0){
@@ -429,8 +447,13 @@ $num_rows  = $result -> num_rows;
                     <label class="input-group-text" for="userrol">Rol: </label>
                     <select class="form-select" name="userrol" id="userrol" <?php echo $userNameState; ?>>
                     <?php
-                        $sql = "SELECT type FROM type WHERE NOT type = '". $type ."'ORDER BY rand();";
-                        $result = $conn -> query($sql);
+                        $sql = "SELECT type FROM type WHERE NOT type = ? ORDER BY rand();";
+
+                        $stmt = $conn -> prepare($sql); 
+                        $stmt->bind_param("s", $type);
+                        $stmt->execute();
+
+                        $result = $stmt -> get_result(); 
 
                             echo "<option value='" . $type . "'>" . $type . "</option>";
 

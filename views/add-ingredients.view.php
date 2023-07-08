@@ -34,8 +34,12 @@ require_once ("views/partials/nav.php");
 <!--Ingredients list-->      
     <div class="table-responsive-sm mt-4">
          <?php
-            $sql = "SELECT ingredient FROM ingredients WHERE username = '" . $_SESSION['username'] . "' ORDER BY ingredient;";
-            $result = $conn -> query($sql);
+            $sql = "SELECT ingredient FROM ingredients WHERE username = ? ORDER BY ingredient;";
+            $stmt = $conn -> prepare($sql); 
+            $stmt->bind_param("s",  $_SESSION['username']);
+            $stmt->execute();
+
+            $result = $stmt -> get_result(); 
 
             if($result -> num_rows > 0){
         ?>

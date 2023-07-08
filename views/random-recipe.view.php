@@ -51,15 +51,24 @@ if(isset($_POST["category"])) {
     $category = $_POST["category"];
 
 //category id
-    $sql = "SELECT categoryid FROM categories WHERE category='$category';"; 
-    $row = $conn -> query($sql) -> fetch_assoc();
+    $sql = "SELECT categoryid FROM categories WHERE category= ?;"; 
+    $stmt = $conn -> prepare($sql); 
+    $stmt->bind_param("s", $category);
+    $stmt->execute();
+
+    $result = $stmt -> get_result(); 
+    $row = $result -> fetch_assoc();   
     $categoryId = $row['categoryid'];
 
 //Random recipe for that category
-    $sql = "SELECT recipename FROM recipe WHERE categoryid = '$categoryId'
-    AND username = '" . $_SESSION['username'] . "' ORDER BY rand() LIMIT 1;";
-    
-    $result = $conn -> query($sql);
+    $sql = "SELECT recipename FROM recipe WHERE categoryid = ?
+    AND username = ? ORDER BY rand() LIMIT 1;";
+
+    $stmt = $conn -> prepare($sql); 
+    $stmt->bind_param("is", $categoryId, $_SESSION['username']);
+    $stmt->execute();
+
+    $result = $stmt -> get_result(); 
     $num_rows = $result -> num_rows;
 //If there is no recipe
         if($num_rows == 0){
@@ -71,9 +80,15 @@ if(isset($_POST["category"])) {
 
         $sql = "SELECT DISTINCT cookingtime
                 FROM recipe  
-                WHERE recipename = '$recipename' AND username = '" . $_SESSION['username'] . "'";
-        
-        $row = $conn -> query($sql) -> fetch_assoc();
+                WHERE recipename = ? AND username = ?";
+
+        $stmt = $conn -> prepare($sql); 
+        $stmt->bind_param("ss", $recipename, $_SESSION['username']);
+        $stmt->execute();
+
+        $result = $stmt -> get_result(); 
+        $row = $result -> fetch_assoc();  
+
         $cookingtime = $row['cookingtime'];       
     ?>
     <div class="my-4">

@@ -29,8 +29,13 @@ $category = $_POST["category"];
 $recipeImage = $_FILES["recipeImage"];
 $userName = $_GET["username"];
 
-$sql = "SELECT categoryid FROM categories WHERE category = '$category';";
-$row = $conn -> query($sql) -> fetch_assoc();
+$sql = "SELECT categoryid FROM categories WHERE category = ?;";
+$stmt = $conn -> prepare($sql); 
+$stmt->bind_param("s", $category);
+$stmt->execute();
+
+$result = $stmt -> get_result(); 
+$row = $result -> fetch_assoc();   
 
 $categoryId = $row['categoryid'];
 
@@ -238,10 +243,16 @@ $newCategoryName = $filter -> sanitization();
 
 $categoryImage = $_FILES["categoryImage"];
 
-$sql = "SELECT category FROM categories WHERE categoryid = '$categoryId';";
-$row = $conn -> query($sql) -> fetch_assoc();
-$oldCategoryName = $row['category'];
+$sql = "SELECT category FROM categories WHERE categoryid = ?;";
 
+$stmt = $conn -> prepare($sql); 
+$stmt->bind_param("i", $categoryId);
+$stmt->execute();
+
+$result = $stmt -> get_result(); 
+$row = $result -> fetch_assoc();   
+
+$oldCategoryName = $row['category'];
 
     if($newCategoryName == ""){
 //Message if the variable is null.
@@ -495,8 +506,15 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                     }
 
                     if($newPassword == $againNewPassword){
-                        $sql = "SELECT password FROM users WHERE userid = '$userId ';";
-                        $row = $conn -> query($sql) -> fetch_assoc();
+                        $sql = "SELECT password FROM users WHERE userid = ?;";
+
+                        $stmt = $conn -> prepare($sql); 
+                        $stmt->bind_param("i", $userId);
+                        $stmt->execute();
+
+                        $result = $stmt -> get_result(); 
+                        $row = $result -> fetch_assoc();   
+
                         if (password_verify($actualPassword, $row['password'])){
                             $hash_password = password_hash($newPassword, PASSWORD_DEFAULT);
                             $sql = "UPDATE users SET password = '$hash_password', firstname = '$firstname',  lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";

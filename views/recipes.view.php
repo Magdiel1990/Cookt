@@ -39,10 +39,14 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     from recipe r     
     join categories c 
     on r.categoryid = c.categoryid    
-    WHERE r.recipename = '". $recipe . "' 
-    AND r.username = '" . $username . "';";
+    WHERE r.recipename = ?
+    AND r.username = ?;";
 
-    $result = $conn -> query($sql);
+    $stmt = $conn -> prepare($sql); 
+    $stmt->bind_param("ss", $recipe, $username);
+    $stmt->execute();
+
+    $result = $stmt -> get_result(); 
     $num_rows = $result -> num_rows;   
 
     if($num_rows > 0){

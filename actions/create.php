@@ -246,9 +246,14 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
           $cookingtime = 0;
         }
 //Get the category id        
-      $sql = "SELECT categoryid FROM categories WHERE category = '$category';";      
-      $row= $conn -> query($sql) -> fetch_assoc();
-      
+      $sql = "SELECT categoryid FROM categories WHERE category = ?;";   
+      $stmt = $conn -> prepare($sql); 
+      $stmt -> bind_param("s", $category);
+      $stmt -> execute();
+
+      $result = $stmt -> get_result(); 
+      $row = $result -> fetch_assoc();       
+     
       $categoryid = $row["categoryid"];
 
       $stmt = $conn -> prepare("INSERT INTO recipe (recipeid, ingredients, preparation, cookingtime, recipename, categoryid, username) VALUES (?, ?, ?, ?, ?, ?, ?);");
@@ -480,8 +485,14 @@ if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/";
 
 //Check if the user is Admin
-  $sql = "SELECT userid, `type` FROM users WHERE username ='$sessionUser';";
-  $row = $conn -> query($sql) -> fetch_assoc();
+  $sql = "SELECT userid, `type` FROM users WHERE username = ?;";
+  $stmt = $conn -> prepare($sql); 
+  $stmt->bind_param("s", $sessionUser);
+  $stmt->execute();
+
+  $result = $stmt -> get_result(); 
+  $row = $result -> fetch_assoc();   
+
   $sessionUserType = $row['type'];
 //If not, a error is launched
   if($sessionUserType !== 'Admin') {
