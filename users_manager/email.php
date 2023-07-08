@@ -29,7 +29,7 @@ if(isset($_POST['email'])){
         if ($num_rows != 0) {
             $uniqcode = md5(uniqid(mt_rand()));
 //Link to reset password
-            $resetPassLink = root ."reset-password?r_code=". $uniqcode;
+            $resetPassLink = "www.recipeholder.net". root ."reset-password?r_code=". $uniqcode;
 
             $row = $result -> fetch_assoc();
             $sex = $row ["sex"];
@@ -50,18 +50,18 @@ if(isset($_POST['email'])){
             }
 //Message
             $subject = "Reestablecimiento de Contraseña";
-            $message = $title . " " . $fullname . "."; 
-                "<br/>Hemos recibido un pedido de cambio de contraseña de tu cuenta. Si has sido tú, haz click en el siguiente enlace.
-                <br/><a href='".$resetPassLink."'>".$resetPassLink."</a>
-                <br/>Si no necesitas cambiar la contraseña, o no has sido quien lo ha solicitado, simplemente ignora este mensaje.";
+            $message = $title . " <b>" . $fullname . ".</b>"; 
+            $message .= "<p>Hemos recibido un pedido de cambio de contraseña de tu cuenta. Si has sido tú, haz click en el siguiente enlace.</p>";
+            $message .= "<a href='" . $resetPassLink . "'>" . $resetPassLink . "</a>";
+            $message .= "<p>Si no necesitas cambiar la contraseña, o no has sido quien lo ha solicitado, simplemente ignora este mensaje.</p>";
             //set content-type header for sending HTML email
             $headers = "MIME-Version: 1.0" . "\r\n";
-            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
             //additionals
             $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n" .
             "CC: magdielmagdiel01@gmail.com";
 //Send email
-            if (mail($email,$subject,$message,$headers) !== false) {
+            if (mail($email, $subject, $message, $headers) !== false) {
             $stmt = $conn -> prepare("INSERT INTO recovery (userid, forgot_pass_identity) VALUES (?, ?);");
             $stmt->bind_param ("is", $userid, $uniqcode);
             $stmt -> execute();
