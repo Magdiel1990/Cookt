@@ -1,4 +1,5 @@
 <?php
+//Session
 session_name("recovery");
 
 session_start();
@@ -12,10 +13,11 @@ $conn = DatabaseConnection::dbConnection();
 if(isset($_POST['email'])){    
 
     if($_POST['email'] != ""){
+//Sanitize        
     $filter = new Filter ($_POST['email'], FILTER_SANITIZE_EMAIL, $conn);
     $email = $filter -> sanitization();
-    
-    $sql = "SELECT email, sex, firstname, lastname FROM users WHERE email = ?;";
+//Email existance    
+    $sql = "SELECT userid, email, sex, firstname, lastname FROM users WHERE email = ?;";
 
     $stmt = $conn -> prepare($sql); 
     $stmt->bind_param("s", $email);
@@ -33,16 +35,20 @@ if(isset($_POST['email'])){
             $sex = $row ["sex"];
             $email = $row ["email"];
             $fullname = $row ["firstname"] . " " . $row ["lastname"];
-
+            $userid = $row ["userid"];
+//User title
             switch($sex)
             {
                 case "M":
                     $title = "Querido";
                     break;
-                default:
+                case "F":
                     $title = "Querida";
+                    break;
+                default:
+                    $title = "Queride";
             }
-
+//Message
             $subject = "Reestablecimiento de Contraseña";
             $message = $title . " " . $fullname . "."; 
                 "<br/>Hemos recibido un pedido de cambio de contraseña de tu cuenta. Si has sido tú, haz click en el siguiente enlace.
@@ -54,26 +60,27 @@ if(isset($_POST['email'])){
             //additionals
             $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n" .
             "CC: magdielmagdiel01@gmail.com";
+//Send email
+            if (mail($email,$subject,$message,$headers) !== false) {
+            $stmt = $conn -> prepare("INSERT INTO recovery (userid, forgot_pass_identity) VALUES (?, ?);");
+            $stmt->bind_param ("is", $userid, $uniqcode);
+            $stmt -> execute();
+            $stmt -> close(); 
 
-            //send email
-
-
-
-            
-          /*******************************phpmailer */
-
-
-
-
-            if(mail($email,$subject,$message,$headers) !== false) {
             //Message if the variable is null.
             $_SESSION['message'] = "¡Revisa tu correo, un mensaje ha sido enviado!";
             $_SESSION['alert'] = "success";
 
             //The page is redirected to the add-recipe.php
             header('Location: ' . root . 'recovery');
-            }    
+            } else {
+            //Message if the variable is null.
+            $_SESSION['message'] = "¡Error al enviar mensaje!";
+            $_SESSION['alert'] = "danger";
 
+            //The page is redirected to the add-recipe.php
+            header('Location: ' . root . 'recovery');
+            }            
         } else {
         //Message if the variable is null.
         $_SESSION['message'] = "¡Este correo no está registrado!";

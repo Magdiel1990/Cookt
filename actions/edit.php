@@ -358,8 +358,13 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 if(isset($_GET['userid'])) {
 $userId = $_GET['userid'];
 
-$sql = "SELECT userid FROM users WHERE type = 'Admin' AND userid = " . $_SESSION["userid"] . ";";
-$result = $conn -> query($sql);
+$sql = "SELECT userid FROM users WHERE type = 'Admin' AND userid = ?;";
+
+$stmt = $conn -> prepare($sql); 
+$stmt->bind_param("i", $_SESSION["userid"]);
+$stmt->execute();
+
+$result = $stmt -> get_result(); 
 $num_rows  = $result -> num_rows;
 
     if($num_rows > 0) {
