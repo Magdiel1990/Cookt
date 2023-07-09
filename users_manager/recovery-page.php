@@ -65,24 +65,24 @@ $conn = DatabaseConnection::dbConnection();
                     var form = document.getElementById("user_form");    
 
                     form.addEventListener("submit", function(event){ 
-                        var password = document.getElementById("password").value;
+                        var password = document.getElementById("userpassword").value;
                         var passrepeat = document.getElementById("passrepeat").value;
  
                         if(password == ""  || passrepeat == "") {
                             event.preventDefault();
-                            message.innerHTML = "¡Completar los campos requeridos!";             
+                            confirm ("¡Completar los campos requeridos!");             
                             return false;
                         }
                         
                         if(password != passrepeat) {
                             event.preventDefault();
-                            message.innerHTML = "¡Contraseñas no coinciden!";        
+                            confirm ("¡Contraseñas no coinciden!");        
                             return false;
                         }
 //Regular Expression    
                         if(password.length < 8 || password.length > 50){
                             event.preventDefault();
-                            message.innerHTML = "¡La contraseña debe tener de 8 a 50 caracteres!";                 
+                            confirm ("¡La contraseña debe tener de 8 a 50 caracteres!");                 
                             return false;
                         }         
                         return true;
