@@ -50,7 +50,6 @@ $conn = DatabaseConnection::dbConnection();
                         <label class="input-group-text is-required" for="userpassword">Nueva contraseña: </label>
                         <input class="form-control" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">
                     </div>
-
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="passrepeat">Repetir contraseña: </label>
                         <input class="form-control" type="password" id="passrepeat" name="passrepeat" minlength="8" maxlength="50">
