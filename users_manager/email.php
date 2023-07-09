@@ -36,6 +36,22 @@ if(isset($_POST['email'])){
             $email = $row ["email"];
             $fullname = $row ["firstname"] . " " . $row ["lastname"];
             $userid = $row ["userid"];
+            
+//Delete the old codes
+            $sql = "SELECT userid FROM recovery WHERE userid = ?;";
+
+            $stmt = $conn -> prepare($sql); 
+            $stmt->bind_param("i", $userid);
+            $stmt->execute();
+
+            $result = $stmt -> get_result(); 
+            $num_rows = $result -> num_rows;
+
+            if($num_rows > 0) {
+                $sql = "DELETE FROM recovery WHERE userid = '$userid';";
+                $conn -> query($sql);             
+            }
+
 //User title
             switch($sex)
             {
