@@ -51,7 +51,7 @@ $conn = DatabaseConnection::dbConnection();
         ?>  <div class="col-auto order-last my-4">
     <!--Form for adding the users-->
                 <h2 class="text-center mb-3">Editar usuario</h2>
-                <form method="POST" action="<?php echo root;?>update?id=<?php echo $_GET["id"];?>&pass=<?php echo $_GET["pass"];?>" id="user_form" class="text-center recovery-form">
+                <form method="POST" action="<?php echo root;?>password-change?id=<?php echo $_GET["id"];?>&pass=<?php echo $_GET["pass"];?>" id="user_form" class="text-center recovery-form">
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="userpassword">Nueva contraseña: </label>
                         <input class="form-control" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">

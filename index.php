@@ -41,7 +41,8 @@ if($param == "") {
     root. "update" => "controllers/update.controller.php",
     root. "user-recipes" => "controllers/recipes-list.controller.php",
     root. "reset-password" => "controllers/reset-password.controller.php",
-    root. "recovery-page" => "controllers/recovery-page.controller.php"
+    root. "recovery-page" => "controllers/recovery-page.controller.php",
+    root. "password-change" => "controllers/pass-change.controller.php"
     ];
 }
 
