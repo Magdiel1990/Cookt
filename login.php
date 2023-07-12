@@ -134,7 +134,7 @@ $header = $header -> pageHeader();
         <div class="container-fluid h-custom my-4">
             <div class="row d-flex justify-content-center align-items-center">
 <!-- Login image-->
-                <div class="col-md-9 col-lg-6 col-xl-5">
+                <div class="col-md-9 col-lg-6 col-xl-5" style="width: 450px; max-height: 380px;">
                     <img src="<?php echo $loginPicture;?>" class="img-fluid img-thumbnail" alt="Sample image">
                 </div>
 <!-- Login form -->        
