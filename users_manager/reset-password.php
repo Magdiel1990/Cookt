@@ -9,8 +9,8 @@ if(isset($_GET["r_code"])){
     $recovery_code = $_GET["r_code"];
 
     if(strlen($recovery_code) != 32) {
-        header('Location: ' . root . 'error404');
-        die();
+        header('Location: ' . root . 'not-found');
+        exit;
     } else {
         $sql = "SELECT userid FROM recovery WHERE forgot_pass_identity = ?;";        
         $stmt = $conn -> prepare($sql); 
@@ -25,7 +25,7 @@ if(isset($_GET["r_code"])){
             header('Location: ' . root . 'recovery-page?id=' . $userid . '&pass=' . $recovery_code);
             exit;
         } else {
-            header('Location: ' . root . 'error404');
+            header('Location: ' . root . 'not-found');
             exit;
         }
     } 
