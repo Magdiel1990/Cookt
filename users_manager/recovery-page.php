@@ -1,10 +1,16 @@
 <?php
 if(isset($_GET["id"]) && isset($_GET["pass"])) {
+//Models.
+require_once ("models/models.php");
+
+    if(strlen($_GET["pass"]) != 32) {
+        header('Location: ' . root . 'not-found');
+        exit;    
+    }
+
 session_name("recovery");
 
 session_start();
-//Models.
-require_once ("models/models.php");
 
 //Including the database connection.
 $conn = DatabaseConnection::dbConnection();
@@ -88,7 +94,7 @@ $conn = DatabaseConnection::dbConnection();
                         return true;
                     })
                 }
-                </script>
+                </script> 
             </div>  
         </div>
     </main>
@@ -96,7 +102,7 @@ $conn = DatabaseConnection::dbConnection();
 //Footer of the page.
 require_once ("views/partials/footer.php");
 } else {
-    header('Location: ' . root . 'error404');
+    header('Location: ' . root . 'not-found');
     exit;
 }
 ?>
