@@ -55,10 +55,20 @@ $conn = DatabaseConnection::dbConnection();
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="userpassword">Nueva contraseña: </label>
                         <input class="form-control" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary btn-lg" type="button">
+                                <i class="fa-solid fa-eye"></i>                                    
+                            </button>        
+                        </div>  
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="passrepeat">Repetir contraseña: </label>
                         <input class="form-control" type="password" id="passrepeat" name="passrepeat" minlength="8" maxlength="50">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary btn-lg" type="button">
+                                <i class="fa-solid fa-eye"></i>                                    
+                            </button>        
+                        </div>  
                     </div>
                     <div class="text-center">
                         <input type="submit" name="Recovery" value="Confirmar" class="btn btn-primary">              
@@ -66,6 +76,32 @@ $conn = DatabaseConnection::dbConnection();
                 </form>
                 <script>
                     userValidation(); 
+                    showpass();
+
+// Script to show and hide the password when clicking the button
+                    function showpass(){
+                        var fButton = document.getElementsByClassName("btn-outline-secondary")[0];
+                        var sButton = document.getElementsByClassName("btn-outline-secondary")[1];
+                        
+                        fButton.addEventListener("click", function(){
+                            var tipo = document.getElementById("userpassword");
+                            if(tipo.type == "password"){
+                                tipo.type = "text"; 
+                            } else {
+                                tipo.type = "password";                                                     
+                            }
+                        });
+                        
+                        sButton.addEventListener("click", function(){
+                            var tipo = document.getElementById("passrepeat");
+                            if(tipo.type == "password"){
+                                tipo.type = "text"; 
+                            } else {
+                                tipo.type = "password";                                                     
+                            }
+                        });
+                    }
+
     //Form validation
                     function userValidation(){
                     var form = document.getElementById("user_form");    
