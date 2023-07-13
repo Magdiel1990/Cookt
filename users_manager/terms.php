@@ -32,7 +32,7 @@ $header = $header -> pageHeader();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body>
-    <header class="container-fluid p-3">
+    <header class="container-fluid p-3" style="position: fixed; top: 0px;">
         <div class="row">   
             <div class="col-4"></div>         
             <div class="col-4 text-center">
@@ -44,7 +44,7 @@ $header = $header -> pageHeader();
             </div>
         </div>
     </header>
-    <main class="container-fluid">
+    <main class="container-fluid" style="margin-top: 8rem;;">
         <div class="row m-5">
             <div class="col-xs-12 terms">
                 <p>
