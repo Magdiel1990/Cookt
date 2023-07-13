@@ -29,21 +29,21 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
     ?>  <div class="col-auto order-last my-4">
 <!--Form for adding the users-->
             <h3 class="text-center mb-3">Agregar Usuarios</h3>
-            <form method="POST" action="/create" id="user_form">         
+            <form method="POST" action="<?php echo root?>create" id="user_form">         
                 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
-                    <input class="form-control" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30">
+                    <input class="form-control" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" required>
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="lastname">Apellido: </label>
-                    <input class="form-control" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="40">
+                    <input class="form-control" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="40" required>
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="username">Usuario: </label>
-                    <input class="form-control" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30">
+                    <input class="form-control" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" required>
                 </div>
 
                 <div class="input-group mb-3">

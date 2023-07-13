@@ -142,12 +142,12 @@ $header = $header -> pageHeader();
                     <form action="<?php echo root;?>login" method="POST">
 <!-- Email input -->
                         <div class="form-outline mb-3">
-                            <input type="text" id="username" class="form-control form-control-lg" name="username" autocomplete="off"/>
+                            <input type="text" id="username" class="form-control form-control-lg" name="username" autocomplete="off" required/>
                             <label class="form-label" for="username">Usuario</label>
                         </div>
 <!-- Password input -->
                         <div class="input-group mb-3">
-                            <input type="password" id="password" class="form-control form-control-lg" name="password"  autocomplete="off"/>        
+                            <input type="password" id="password" class="form-control form-control-lg" name="password"  autocomplete="off" required/>        
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary btn-lg" type="button">
                                     <i class="fa-solid fa-eye"></i>                                    

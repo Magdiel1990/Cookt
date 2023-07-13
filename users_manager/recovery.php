@@ -46,7 +46,7 @@ $header = $header -> pageHeader();
 <!-- Email input -->
                     <div class="form-outline mb-3">
                         <label class="form-label mb-4" for="email">¿Olvidaste tu contraseña?</label>
-                        <input type="email" id="email" class="form-control" name="email" size="35" placeholder="Escribe tu correo electrónico"/>                        
+                        <input type="email" id="email" class="form-control" name="email" size="35" placeholder="Escribe tu correo electrónico" required/>                        
                     </div>
                     <?php
 //Messages that are shown in the add_units page
@@ -69,7 +69,7 @@ $header = $header -> pageHeader();
                     <div class="text-center">
                         <input type="submit" name="Recovery" value="Reestablecer contraseña" class="btn btn-primary">                              
                         <p class="small fw-bold mb-0 mt-4">
-                            <a class="text-decoration-none px-2" href="/login">Login</a>
+                            <a class="text-decoration-none px-2" href="<?php echo root;?>login">Login</a>
                             ¿Si no tienes cuenta? 
                             <a href="<?php echo root;?>signup" style = "text-decoration: none;" class="link-danger px-2">Regístrate</a>
                         </p>                  

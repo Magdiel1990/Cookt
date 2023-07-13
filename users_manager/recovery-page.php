@@ -54,7 +54,7 @@ $conn = DatabaseConnection::dbConnection();
                 <form method="POST" action="<?php echo root;?>password-change?id=<?php echo $_GET["id"];?>&pass=<?php echo $_GET["pass"];?>" id="user_form" class="text-center recovery-form">
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="userpassword">Nueva contraseña: </label>
-                        <input class="form-control" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50">
+                        <input class="form-control" type="password" id="userpassword" name="userpassword" minlength="8" maxlength="50" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary btn-lg" type="button">
                                 <i class="fa-solid fa-eye"></i>                                    
@@ -63,7 +63,7 @@ $conn = DatabaseConnection::dbConnection();
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="passrepeat">Repetir contraseña: </label>
-                        <input class="form-control" type="password" id="passrepeat" name="passrepeat" minlength="8" maxlength="50">
+                        <input class="form-control" type="password" id="passrepeat" name="passrepeat" minlength="8" maxlength="50" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary btn-lg" type="button">
                                 <i class="fa-solid fa-eye"></i>                                    

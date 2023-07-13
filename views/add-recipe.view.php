@@ -71,7 +71,7 @@ require_once ("views/partials/nav.php");
 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="cookingtime">Tiempo de cocción: </label>
-                    <input class="form-control" type="number" id="cookingtime" name="cookingtime" placeholder="en minutos" max="180" min="5">             
+                    <input class="form-control" type="number" id="cookingtime" name="cookingtime" placeholder="en minutos" max="180" min="5" required>             
                 </div>    
                 
                 <div class="mb-3">

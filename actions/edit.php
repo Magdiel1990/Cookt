@@ -420,17 +420,17 @@ $num_rows  = $result -> num_rows;
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
-                    <input class="form-control"  value="<?php echo $firstName; ?>" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30">
+                    <input class="form-control"  value="<?php echo $firstName; ?>" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" required>
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="lastname">Apellido: </label>
-                    <input class="form-control"  value="<?php echo $lastName; ?>" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="40">
+                    <input class="form-control"  value="<?php echo $lastName; ?>" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="40" required>
                 </div>
 
                 <div style="<?php echo $userNameLabelState;?>" class="input-group mb-3">
                     <label class="input-group-text is-required" for="username">Usuario: </label>
-                    <input class="form-control" value="<?php echo $userName; ?>" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" <?php echo $userNameState; ?>>
+                    <input class="form-control" value="<?php echo $userName; ?>" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" required <?php echo $userNameState; ?>>
                 </div>
                 
                 <div class="input-group mb-3">
