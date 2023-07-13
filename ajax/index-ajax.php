@@ -111,12 +111,12 @@
         $output['pagination'] .= "<ul class='pagination'>";
         
         $start = 1;
-
-        if(($pagina - 4) > 1) {
-            $start = $pagina - 4;
+//Total Tabs
+        if(($pagina - 2 /*-4*/) > 1) {
+            $start = $pagina - 2 /*-4*/;
         }
 
-        $end = $start + 9;
+        $end = $start + 3 /*+8*/;
 
         if($end > $filterTotal) {
             $end = $filterTotal;
@@ -130,7 +130,7 @@
             }
         }
         $output['pagination'] .= "</ul>";
-        $output['pagination'] .= "</nav>";
+        $output['pagination'] .= "</nav>";        
     }
 
 //Json file is encoded and echoed excluding especial characters.

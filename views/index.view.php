@@ -133,7 +133,6 @@ function getData(pagina){
     }).catch(err => console.log(err));
 }
 
-
 //Delete message
 function deleteMessage(){
     var deleteButtons = document.getElementById("recipe");
