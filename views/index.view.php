@@ -81,11 +81,11 @@ $_SESSION["location"] = root;
             </tbody>
         </table>
     </div>
-    <div class="row mt-4">
+    <div class="row mt-4">        
+        <div class="col-8" id="nav-pagination">            
+        </div>
         <div class="col-6">
             <label id="lbl-total"></label>
-        </div>
-        <div class="col-6" id="nav-pagination">            
         </div>
     </div>
 </main>

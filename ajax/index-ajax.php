@@ -112,11 +112,11 @@
         
         $start = 1;
 //Total Tabs
-        if(($pagina - 2 /*-4*/) > 1) {
-            $start = $pagina - 2 /*-4*/;
+        if(($pagina - 7) > 1) {
+            $start = $pagina - 7;
         }
 
-        $end = $start + 3 /*+8*/;
+        $end = $start + 8;
 
         if($end > $filterTotal) {
             $end = $filterTotal;
