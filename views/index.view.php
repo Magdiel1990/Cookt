@@ -132,6 +132,19 @@ function getData(pagina){
 //If there's an error.  
     }).catch(err => console.log(err));
 }
+
+
+//Delete message
+function deleteMessage(){
+    var deleteButtons = document.getElementById("recipe");
+  
+    if(confirm("¿Desea eliminar esta receta?")) {
+        return true;
+    } else {
+        event.preventDefault();
+        return false;
+    }
+}
 </script>
 <?php
 //Footer.

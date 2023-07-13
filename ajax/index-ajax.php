@@ -90,7 +90,7 @@
             $output['data'] .= "<td>";
             $output['data'] .= "<div class='btn-group' role='group'>";
             $output['data'] .= "<a href='" . root . "edit?recipename=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "'" . "class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
-            $output['data'] .= "<a href='" . root . "delete?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+            $output['data'] .= "<a href='" . root . "delete?recipename=" . $row['recipename'] . "' " . "class='btn btn-outline-danger' title='Eliminar' onclick='deleteMessage()' id='recipe'><i class='fa-solid fa-trash'></i></a>";
             $output['data'] .= "</div>";
             $output['data'] .= "</td>";                     
             $output['data'] .= "</tr>";
