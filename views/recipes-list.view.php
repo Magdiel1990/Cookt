@@ -24,19 +24,19 @@ $result = $stmt -> get_result();
     if($result -> num_rows > 0) {
 ?>
 
-<main class="container p-4 mt-4">
+<main class="container mt-4">
     <div class="row justify-content-center form">
-        <div class="col-lg-8 col-xl-8 col-md-8 mb-5">
+        <div class="col-12 mb-5">
             <div class="text-center">
                 <h3>Datos del usuario <?php echo $username;?></h3>                
             </div>
-            <div class="table-responsive-md mt-2">
-                <table class="table table-sm shadow">
+            <div class="table-responsive-md mt-4">
+                <table class="table table-sm table-bordered shadow">
                     <thead>
                         <tr class="table_header">
-                            <th scope="col">Nombre completo</th>                
                             <th scope="col">Tiempo de uso</th>
-                            <th scope="col">Último acceso</th>                            
+                            <th scope="col">Último acceso</th>   
+                            <th scope="col">Hora</th>
                             <th scope="col">Imágenes</th>                 
                         </tr>
                     </thead>
@@ -52,28 +52,24 @@ $result = $stmt -> get_result();
                         date_default_timezone_set("America/Santo_Domingo");        
 
 //Recipes of each user
-                        $sql = "SELECT u.created_at  as `time`, max(a.lastlogin) as `lastlogin`, concat_ws(' ', u.firstname, u.lastname) as `fullname` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = ?;";
-                        $stmt = $conn -> prepare($sql); 
-                        $stmt->bind_param("s", $username);
-                        $stmt->execute();
-
-                        $result = $stmt -> get_result(); 
-                        $row = $result -> fetch_assoc();   
-                        $row = $conn -> query($sql) -> fetch_assoc();   
+                        $sql = "SELECT u.created_at  as `time`, max(a.lastlogin) as `lastlogin` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
+                        $result = $conn -> query($sql); 
+                        $row = $result -> fetch_assoc();     
 //Days using the app                        
                         $time_days = round((strtotime(date("Y-m-d H:i:s")) - strtotime($row ['time'])) / 86400);
-                        $fullname = $row ['fullname'];
 //Last time the user accessed                        
-                        $lastlogin = date("d-m-Y g:i A", strtotime($row ['lastlogin']));
+                        $logindate = date("d-m-Y", strtotime($row ['lastlogin']));
+                        $loginhour = date("g:i A", strtotime($row ['lastlogin']));
 //Never logged in
-                        if($lastlogin == "") {
-                            $lastlogin = "Nunca";
+                        if($logindate == "") {
+                            $logindate = "Nunca";
+                            $loginhour = "NA";
                         }
 //Data displayed
-                        $html = "<tr>";     
-                        $html .= "<td>" . $fullname . "</td>";                   
+                        $html = "<tr>";                                        
                         $html .= "<td>" . $time_days . " días</td>";
-                        $html .= "<td>" . $lastlogin . "</td>";                       
+                        $html .= "<td>" . $logindate . "</td>";  
+                        $html .= "<td>" . $loginhour . "</td>"; 
                         $html .= "<td>" . $size . "</td>";
                         $html .= "</tr>";
                         echo $html;
@@ -125,7 +121,7 @@ $result = $stmt -> get_result();
            
     </div>
 <!-- Button to come back tu users-->    
-    <div class="text-center mb-4">
+    <div class="text-center my-4">
         <a class="btn btn-secondary" href="<?php echo root;?>user">Usuarios</a>
     </div> 
 </main>
