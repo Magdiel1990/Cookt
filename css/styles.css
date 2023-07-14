@@ -56,7 +56,6 @@ footer {
 
 .logo {
     position: relative;  
-    left: 12px; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -87,10 +86,13 @@ footer {
     font-size: 1rem;
 }
 
-.logout {
+.logout{
     font-size: 1.1rem;
 }
 
+.fa-envelope {
+    font-size: 1.6rem;
+}
 /*Random recipe image link format*/
 .recipe_link {
     text-decoration: none;

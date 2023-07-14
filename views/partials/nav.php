@@ -31,8 +31,8 @@
             </ul>
         </div>
 <!--User identification -->
-        <div class="d-flex flex-row">            
-            <a class="px-3 text-white"  href="<?php echo root;?>profile" style="text-decoration: none;" title="Perfil">
+        <div class="d-flex flex-row">                 
+            <a class="text-white"  href="<?php echo root;?>profile" style="text-decoration: none;" title="Perfil">
             <?php echo $_SESSION['title'] . $_SESSION['firstname'] . " " .  $_SESSION['lastname'];?> 
             <?php
             $target_dir ="imgs/users/";
@@ -47,7 +47,9 @@
                 echo "<i class='fa-regular fa-user'></i>";
             }              
             ?>
-            </a>  
+            </a> 
+            <a href="#" class="nav-link text-light px-1"><i class="fa-regular fa-envelope"></i><span class="badge badge-danger">9</span>
+            <span class="sr-only">Mensajes no leídos</span></a>   
 <!-- Logout button -->                  
             <a class="nav-link text-white logout" href="<?php echo root;?>logout" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     
         </div>          
