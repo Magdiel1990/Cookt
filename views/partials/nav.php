@@ -1,3 +1,9 @@
+<?php
+$sql = "SELECT count(id) as `counter` FROM `log` WHERE state = 0;";
+$result = $conn -> query($sql);
+$row = $result -> fetch_assoc();
+$counter = $row ["counter"];
+?>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark px-4">
 <!-- Logo and dropdown button-->
@@ -26,6 +32,7 @@
                         <a class="dropdown-item" href="<?php echo root;?>add-recipe" title="Recetas">Recetas</a>
                         <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="<?php echo root;?>categories" title="Categorías">Categorías</a>
                         <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="<?php echo root;?>user" title="Usuarios">Usuarios</a>
+                        <a class="dropdown-item" href="#">Papelera</a>
                     </div>
                 </li>            
             </ul>
@@ -48,7 +55,7 @@
             }              
             ?>
             </a> 
-            <a href="#" class="nav-link text-light px-1"><i class="fa-regular fa-envelope"></i><span class="badge badge-danger">9</span>
+            <a href="#" class="nav-link text-light px-1" title="Notificaciones"><i class="fa-regular fa-envelope"></i><span class="badge badge-danger"><?php echo $counter;?></span>
             <span class="sr-only">Mensajes no leídos</span></a>   
 <!-- Logout button -->                  
             <a class="nav-link text-white logout" href="<?php echo root;?>logout" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     

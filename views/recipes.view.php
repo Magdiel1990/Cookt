@@ -96,7 +96,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
         <div class="row m-auto">
             <div class="d-flex flex-column justify-content-center align-items-center jumbotron">
 <!-- Ingredients-->
-                <div class="form p-2 my-4 col-9">
+                <div class="form p-3 my-4 col-11">
                     <div class="text-center">
                         <h1 class="display-4 text-info"> <?php echo $recipeName; ?> </h1>
                         <h5 class="text-warning" style='font-size: 1.5rem;' title="duración"> (<?php echo $cookingTime; ?> minutos)</h5>
@@ -145,9 +145,9 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
                     </div> 
                 </div>
 <!-- Preparation-->                        
-                <div class="py-4">
-                    <div class="collapse" id="collapse">
-                        <div class="card card-body text-dark" style="font-size: 1.5rem; text-align: justify;" title="preparación"> <?php echo ucfirst($preparation); ?> 
+                <div class="col-11 py-4">
+                    <div class="collaps" id="collapse">
+                        <div class="card card-body text-dark p-4" style="font-size: 1.5rem; text-align: justify;" title="preparación"> <?php echo ucfirst($preparation); ?> 
                             <span class="text-info mt-4 text-center" title="fecha"> <?php echo $date; ?> </span>            
                         </div>
                     </div>        
