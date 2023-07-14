@@ -89,7 +89,6 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     } else {
         $categoryImgDir = "";
     }
-
 ?>
 <main class="container mt-4">
     <div class="my-5" style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">

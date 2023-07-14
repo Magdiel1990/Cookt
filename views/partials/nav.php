@@ -55,7 +55,7 @@ $counter = $row ["counter"];
             }              
             ?>
             </a> 
-            <a href="#" class="nav-link text-light px-1" title="Notificaciones"><i class="fa-regular fa-envelope"></i><span class="badge badge-danger"><?php echo $counter;?></span>
+            <a href="#" class="nav-link text-light px-1" title="Notificaciones"><i class="fa-regular fa-envelope"></i><span class="badge badge-danger" id="notificationNumber"><?php echo $counter;?></span>
             <span class="sr-only">Mensajes no leídos</span></a>   
 <!-- Logout button -->                  
             <a class="nav-link text-white logout" href="<?php echo root;?>logout" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     
@@ -63,7 +63,8 @@ $counter = $row ["counter"];
     </nav>
 </header>
  <script>
-deleteMessage("logout");   
+deleteMessage("logout");  
+notificationColor(); 
 
 //Delete message
 function deleteMessage(button){
@@ -78,6 +79,16 @@ var deleteButtons = document.getElementsByClassName(button);
                 return false;
             }
         })
+    }
+}
+
+//Notification number color
+function notificationColor() {
+    var number = document.getElementById("notificationNumber");
+
+    if(number.value != 0) {
+        number.style.color = "red";
+        number.style.fontSize = "1.2rem";
     }
 }
 </script>
