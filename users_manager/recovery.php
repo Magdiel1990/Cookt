@@ -49,7 +49,7 @@ $header = $header -> pageHeader();
                         <input type="email" id="email" class="form-control" name="email" size="35" placeholder="Escribe tu correo electrónico" required/>                        
                     </div>
                     <?php
-//Messages that are shown in the add_units page
+//Messages
                     if(isset($_SESSION['message'])){
                     echo "<div class='my-1'>";
 
@@ -58,8 +58,6 @@ $header = $header -> pageHeader();
 
 //Unsetting the messages variables so the message fades after refreshing the page.
                     unset($_SESSION['alert'], $_SESSION['message']);
-                    
-                    session_destroy();
 
                     echo "</div>";
                     } else {

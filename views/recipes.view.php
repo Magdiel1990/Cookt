@@ -95,8 +95,8 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     <div class="my-5" style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">
         <div class="row m-auto">
             <div class="d-flex flex-column justify-content-center align-items-center jumbotron">
-
-                <div class="form p-2 my-4 col-lg-9 col-xl-9">
+<!-- Ingredients-->
+                <div class="form p-2 my-4 col-9">
                     <div class="text-center">
                         <h1 class="display-4 text-info"> <?php echo $recipeName; ?> </h1>
                         <h5 class="text-warning" style='font-size: 1.5rem;' title="duración"> (<?php echo $cookingTime; ?> minutos)</h5>
@@ -119,27 +119,85 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
                     </div>
                     <hr class="my-3">
                 </div>
-
-                <div class="p-2 col-lg-9 col-xl-9">
+<!-- Link-->                 
+                <div class="p-2 col-12">
                     <div class="lead text-center">
-                        <a class="btn btn-primary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapse" title='Preparación'>
                         Preparación
                         </a>
                         <a href='<?php echo root . "edit?recipename=" . $row['recipename'] . "&username=" . $_SESSION['username']; ?>' class='btn btn-secondary' title='Editar'>Editar</a>
-                        <a class="btn btn-info" href="<?php echo $_SESSION["location"];?>">Regresar</a>
+                        <a class='btn btn-warning dropdown-toggle' data-toggle="collapse" href="#share" role="button"  aria-expanded="false" aria-controls="share" title='Compartir'>Compartir</a>
+                        <a class="btn btn-info" href="<?php echo $_SESSION["location"];?>" title='Regresar'>Regresar</a>
                     </div>
-                    <div class="py-4">
-                        <div class="collapse bg-form" id="collapse">
-                            <div class="card card-body text-dark" style="font-size: 1.5rem; text-align: justify;" title="preparación"> <?php echo ucfirst($preparation); ?> 
-                                <span class="text-info mt-4 text-center" title="fecha"> <?php echo $date; ?> </span>            
-                            </div>
-                        </div>        
+                </div>
+<!-- Email box-->                 
+                <div class="row mt-4">
+                    <div class="col-12 collapse" id="share">
+                        <div class="recovery-form">                            
+                            <form method="POST" action="<?php echo root . 'share?recipe=' . base64_encode(serialize($recipe)) . '&username=' . $username;?>" class="text-center" id="share_form">
+                                <label class="form-label mb-2" for="email">Email:</label>
+                                <div class="input-group mb-3">                                
+                                    <input type="email" id="email" class="form-control" name="email" placeholder="Escribe el correo electrónico" minlength="15" maxlength="70" required/>
+                                    <button type="submit" form="share_form" name="share" class="btn btn-primary"><i class="fa-solid fa-share"></i></button>
+                                </div>
+                            </form>                               
+                        </div>
                     </div> 
-                </div>       
+                </div>
+<!-- Preparation-->                        
+                <div class="py-4">
+                    <div class="collapse" id="collapse">
+                        <div class="card card-body text-dark" style="font-size: 1.5rem; text-align: justify;" title="preparación"> <?php echo ucfirst($preparation); ?> 
+                            <span class="text-info mt-4 text-center" title="fecha"> <?php echo $date; ?> </span>            
+                        </div>
+                    </div>        
+                </div>        
             </div>
         </div>
     </div>
+    <?php
+        //Messages
+        if(isset($_SESSION['message'])){
+        echo "<h2 class='my-1 text-center'>";
+
+        $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+        echo $message -> textMessage();  
+
+        //Unsetting the messages variables so the message fades after refreshing the page.
+        unset($_SESSION['alert'], $_SESSION['message']);       
+
+        echo "</h2>";
+        } else {
+            echo "<div class='mt-4'></div>";
+        }
+    ?>   
 </main>
+<script>
+mailValidation(); 
+
+//Mail format validation
+function mailValidation(){
+
+    var form = document.getElementById("share_form");    
+
+    form.addEventListener("submit", function(event) {
+        var email = document.getElementById("email");
+
+        if(email.value == "") {
+            event.preventDefault();                
+            confirm ("¡Escriba el email!");                                
+            return false;
+        }
+
+        if(email.length < 15 || email.length > 70) {
+            event.preventDefault();
+            confirm("¡Longitud de email incorrecta!");               
+            return false;                
+        }     
+        return true;               
+    })
+}
+</script>
 <?php
 //Exiting connection
     $conn -> close();
