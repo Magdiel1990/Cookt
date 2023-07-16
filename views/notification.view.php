@@ -28,7 +28,7 @@ require_once ("views/partials/nav.php");
         $display = "";
     }
 ?>
-<main class="container row py-4">
+<main class="container py-4">
     <div class="row" <?php echo $display;?>>  
         <div class="col-auto">    
             <select class="form-select" id="num_registros" name="num_registros">
@@ -48,7 +48,7 @@ require_once ("views/partials/nav.php");
             <a href="<?php echo root . "delete?not_del=" . base64_encode("yes"); ?>" class='btn btn-outline-danger' title='Eliminar todas las notificaciones' onclick='deleteMessage()' id='notification'><i class='fa-solid fa-trash'></i></a>
         </div>
 
-        <div class="col-auto">
+        <div class="mt-2 col-auto">
             <h3>Notificaciones</h3>
         </div>
     </div>  
