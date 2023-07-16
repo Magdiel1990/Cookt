@@ -55,7 +55,6 @@
         $output['data'] .= '</div>'; 
         $output['data'] .= '</div>';  
         $output['data'] .= '</div>';   
-
         }
         $pageTotal = ceil($num_rows / $registros);
 

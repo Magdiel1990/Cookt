@@ -56,6 +56,7 @@ document.getElementById("num_registros").addEventListener("change", function() {
 //Function for getting the data
 function getData(pagina){
     let content = document.getElementById("content");
+    let pagination = document.getElementById("nav-pagination");
     let num_registros = document.getElementById("num_registros").value;
 
 //When filtering and searching the page doesn't start from the begging    
@@ -74,7 +75,7 @@ function getData(pagina){
     }).then(response => response.json())
     .then(data => {   
         content.innerHTML = data.data;  
-        document.getElementById("nav-pagination").innerHTML = data.pagination;
+        pagination.innerHTML = data.pagination;
 //If there's an error.  
     }).catch(err => console.log(err));
 }
