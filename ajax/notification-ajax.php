@@ -46,7 +46,7 @@
         $output['data'] .= '<div class="card-header">' . $timeAgo . '</div>';
         $output['data'] .= '<div class="card-body">';
         $output['data'] .= '<p class="card-text">' . $row ["log_message"] . '</p>';
-        $output['data'] .= '<a href="' . root . 'delete?messageid=' . $row['id'] . '&type=' . $row["type"] . '" class="btn btn-danger">Eliminar</a>';
+        $output['data'] .= '<a href="' . root . 'delete?messageid=' . $row['id'] . '&type=' . $row["type"] . '" class="btn btn-danger" onclick="deleteMessageLoop()">Eliminar</a>';
                     
         if($row["type"] == "share"){
             $output['data'] .= ' <a href="' . root . 'create?messageid=' . $row['id'] . '&type=' . $row["type"] .'" class="btn btn-primary">Aceptar</a>';

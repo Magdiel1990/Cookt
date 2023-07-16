@@ -63,6 +63,7 @@ require_once ("views/partials/nav.php");
 let paginaActual = 1;
 
 getData(paginaActual);
+deleteMessage();
 
 document.getElementById("num_registros").addEventListener("change", function() {
         getData(paginaActual)
@@ -93,6 +94,31 @@ function getData(pagina){
         pagination.innerHTML = data.pagination;
 //If there's an error.  
     }).catch(err => console.log(err));
+}
+
+//Delete message
+function deleteMessage(){
+var deleteButton = document.getElementById("notification");
+
+    deleteButton.addEventListener("click", function(event){    
+        if(confirm("¿Desea eliminar todas las notificaciones?")) {
+            return true;
+        } else {
+            event.preventDefault();
+            return false;
+        }
+    })   
+}
+
+//Delete messeage for loop
+function deleteMessageLoop(){  
+    if(confirm("¿Desea eliminar esta notificación?")) {
+        event.preventDefault();
+        return true;
+    } else {
+        event.preventDefault();
+        return false;
+    }
 }
 </script>
 <?php
