@@ -53,7 +53,7 @@
     $limit = "LIMIT $start, $registros";
 
 //Query with limit
-    $sql = "SELECT DISTINCT SQL_CALC_FOUND_ROWS ". implode(", ", $columns) . " 
+    $sql = "SELECT SQL_CALC_FOUND_ROWS ". implode(", ", $columns) . " 
     FROM $table 
     $where ORDER BY recipename $limit;";
 

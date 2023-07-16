@@ -91,6 +91,22 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     }
 ?>
 <main class="container mt-4">
+    <?php
+//Messages
+        if(isset($_SESSION['message'])){
+        echo "<h2 class='my-1 text-center'>";
+
+        $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+        echo $message -> textMessage();  
+
+//Unsetting the messages variables so the message fades after refreshing the page.
+        unset($_SESSION['alert'], $_SESSION['message']);       
+
+        echo "</h2>";
+        } else {
+            echo "<div class='mt-4'></div>";
+        }
+    ?>   
     <div class="my-5" style="background: url('<?php echo $categoryImgDir; ?>') center; background-size: auto;">
         <div class="row m-auto">
             <div class="d-flex flex-column justify-content-center align-items-center jumbotron">
@@ -153,23 +169,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
                 </div>        
             </div>
         </div>
-    </div>
-    <?php
-        //Messages
-        if(isset($_SESSION['message'])){
-        echo "<h2 class='my-1 text-center'>";
-
-        $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
-        echo $message -> textMessage();  
-
-        //Unsetting the messages variables so the message fades after refreshing the page.
-        unset($_SESSION['alert'], $_SESSION['message']);       
-
-        echo "</h2>";
-        } else {
-            echo "<div class='mt-4'></div>";
-        }
-    ?>   
+    </div>   
 </main>
 <script>
 mailValidation(); 

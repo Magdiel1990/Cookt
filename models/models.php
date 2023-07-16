@@ -39,7 +39,7 @@ class Messages {
 //Method for the button message.
     public function buttonMessage() {
         if(isset($this -> message_alert)){
-            $html = "<div class='row justify-content-center'>";
+            $html = "<div class='row justify-content-center mt-2'>";
             $html .= "<div class='col-auto alert alert-" . $this -> message_alert . " alert-dismissible fade show' role='alert'>";
             $html .= "<button type='button' class='close border-0' data-dismiss='alert' aria-label='Close'>";
             $html .= "<span>" . $this -> message . "</span>";        
@@ -261,7 +261,11 @@ class PageHeaders {
             root . "edit" => "Editar",
             root . "user-recipes" => "Datos Generales",
             root. "terms-and-conditions" => "Términos y condiciones",
-            root. "reset-password" => "Recuperar contraseña",      
+            root. "reset-password" => "Recuperar contraseña",   
+            root. "notifications" => "Notificaciones",
+            root. "recycle" => "Papelera de reciclaje",
+            root . "not-found" => "No encontrado",
+            root. "recovery-page" => "Recuperación"   
         ];
 
         switch ($this -> uri) {
@@ -378,5 +382,33 @@ class UrlVerification {
 //Exiting the file
         fclose($id);
     }        
+}
+
+class DateCalculation {
+    public $date;
+
+    function __construct($date){
+        $this -> date = $date;
+    }
+
+    public function timeAgo() {
+        date_default_timezone_set("America/Santo_Domingo");
+        
+        $timestamp = strtotime($this -> date);       
+        
+        $strTime = array("segundo", "minuto", "hora", "día", "mes", "año");
+        $length = array("60","60","24","30","12","10");
+
+        $currentTime = time();
+        if($currentTime >= $timestamp) {
+            $diff = time()- $timestamp;
+            for($i = 0; $diff >= $length[$i] && $i < count($length)-1; $i++) {
+                $diff = $diff / $length[$i];
+            }
+
+            $diff = round($diff);
+            return "Hace " . $diff . " " . $strTime[$i] . "(s)";
+        }
+    }
 }
 ?>

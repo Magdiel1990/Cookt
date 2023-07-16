@@ -245,6 +245,72 @@ $num_rows = $result -> num_rows;
     }
 }
 
+
+/************************************************************************************************/
+/***********************************NOTIFICATION DELETION CODE***********************************/
+/************************************************************************************************/
+
+if(isset($_GET['messageid']) && isset($_GET['type'])) {
+    $messageid = $_GET['messageid'];
+    $type = $_GET['type'];
+//If it is a share notification
+    if($type == "share") {
+        $sql = "SELECT date FROM `log` WHERE id = '$messageid';";
+        $result = $conn -> query($sql);
+        if($result -> num_rows == 0){
+            header('Location: ' . root . 'error404');
+            exit;
+        } else {
+            $row = $result -> fetch_assoc();
+            $date = $row["date"];
+//Selecting the id of the share information
+            $sql = "SELECT recipeid FROM shares WHERE date = '$date' AND share_to = '" . $_SESSION["username"] . "';";
+            $result = $conn -> query($sql);
+            if($result -> num_rows == 0){
+               $sql = "DELETE FROM `log` WHERE id = '$messageid';";
+               if($conn -> query($sql)) {
+                    $_SESSION['message'] = '¡Notificación eliminada!';
+                    $_SESSION['message_alert'] = "success";
+
+//The page is redirected to the notifications
+                    header('Location: ' . root . 'notifications');
+                    exit;
+               } else {
+                    $_SESSION['message'] = '¡Error al eliminar notificación!';
+                    $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the notifications
+                    header('Location: ' . root . 'notifications');
+                    exit;
+               }
+//If the record is only in the share and not in the log               
+            } else {
+                $row = $result -> fetch_assoc();
+                $sql = "DELETE FROM shares WHERE recipeid = '" . $row["recipeid"] . "';";
+                $sql .= "DELETE FROM `log` WHERE id = '$messageid';";
+
+                 if($conn -> multi_query($sql)) {
+                    $_SESSION['message'] = '¡Notificación eliminada!';
+                    $_SESSION['message_alert'] = "success";
+
+//The page is redirected to the notifications
+                    header('Location: ' . root . 'notifications');
+                    exit;
+                } else {
+                    $_SESSION['message'] = '¡Error al eliminar notificación!';
+                    $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the notifications
+                    header('Location: ' . root . 'notifications');
+                    exit;
+               }
+            }
+        }
+    } /*else {
+
+    }*/
+}
+
 //Exiting db connection.
 $conn -> close(); 
 

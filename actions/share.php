@@ -62,18 +62,14 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
                     header('Location: ' . root . 'recipes?recipe=' . $recipe. '&username=' . $_GET["username"]); 
                     exit;  
                 } else {
-                    $sql = "INSERT INTO shares (share_from, share_to, recipeid) VALUES (?, ?, ?);";
-                    $stmt = $conn -> prepare($sql); 
-                    $stmt->bind_param("ssi", $username, $destination, $recipeid);
-                    
-                    if($stmt->execute()) {
+                    $sql = "INSERT INTO shares (share_from, share_to, recipeid) VALUES ('$username', '$destination', '$recipeid');";
+                   
+                    if($conn -> query($sql)) {
                         $log_message = "El usuario " . $username . " te ha compartido la receta \"" . $recipe . "\".";
                         $type = "share";
-                        $sql = "INSERT INTO `log` (username, log_message, type) VALUES (?, ?, ?);";
-                        $stmt = $conn -> prepare($sql); 
-                        $stmt->bind_param("sss", $destination, $log_message, $type);
+                        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message', '$type', 0);";
 
-                        if($stmt->execute()) {
+                        if($conn -> query($sql)) {
                             $_SESSION['message'] = '¡Receta ha sido compartida con ' . $email . '!';
                             $_SESSION['message_alert'] = "success";
 

@@ -1,10 +1,15 @@
 <?php
-$sql = "SELECT count(id) as `counter` FROM `log` WHERE state = 0;";
+$sql = "SELECT count(id) as `counter` FROM `log` WHERE username = '" . $_SESSION["username"] . "' AND state = 0;";
 $result = $conn -> query($sql);
 $row = $result -> fetch_assoc();
 $counter = $row ["counter"];
+
+//When no message, it displays nothing
+if($counter == 0){
+    $counter = "";
+}
 ?>
-<header>
+<header class="py-2">
     <nav class="navbar navbar-expand-md navbar-dark px-4">
 <!-- Logo and dropdown button-->
         <div class="logo"> 
@@ -32,7 +37,7 @@ $counter = $row ["counter"];
                         <a class="dropdown-item" href="<?php echo root;?>add-recipe" title="Recetas">Recetas</a>
                         <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="<?php echo root;?>categories" title="Categorías">Categorías</a>
                         <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="<?php echo root;?>user" title="Usuarios">Usuarios</a>
-                        <a class="dropdown-item" href="#">Papelera</a>
+                        <a class="dropdown-item" href="<?php echo root. "recycle";?>">Papelera</a>
                     </div>
                 </li>            
             </ul>
@@ -49,14 +54,14 @@ $counter = $row ["counter"];
 
             if($userExt !== null) {
                 $imgprofileDir = $target_dir . $_SESSION["username"] . "." . $userExt;
-                echo '<img id="profile" src="' . $imgprofileDir . '" class="mx-2">';
+                echo '<img id="profile" src="' . $imgprofileDir . '">';
             } else {
                 echo "<i class='fa-regular fa-user'></i>";
             }              
             ?>
             </a> 
-            <a href="#" class="nav-link text-light px-1" title="Notificaciones"><i class="fa-regular fa-envelope"></i><span class="badge badge-danger" id="notificationNumber"><?php echo $counter;?></span>
-            <span class="sr-only">Mensajes no leídos</span></a>   
+            <a id="counter" href="<?php echo root. "notifications";?>" class="nav-link text-light mx-4 position-relative" title="Notificaciones"><i class="fa-regular fa-envelope"></i><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationNumber"><?php echo $counter;?></span>
+            <span class="visually-hidden">Mensajes no leídos</span></a>   
 <!-- Logout button -->                  
             <a class="nav-link text-white logout" href="<?php echo root;?>logout" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     
         </div>          
@@ -64,7 +69,7 @@ $counter = $row ["counter"];
 </header>
  <script>
 deleteMessage("logout");  
-notificationColor(); 
+resetCounter();
 
 //Delete message
 function deleteMessage(button){
@@ -82,13 +87,12 @@ var deleteButtons = document.getElementsByClassName(button);
     }
 }
 
-//Notification number color
-function notificationColor() {
-    var number = document.getElementById("notificationNumber");
+function resetCounter() {
+var counter = document.getElementById("counter");
+counter.addEventListener("click", function(event) {
 
-    if(number.value != 0) {
-        number.style.color = "red";
-        number.style.fontSize = "1.2rem";
-    }
+var notificationNumber = document.getElementById("notificationNumber").value;
+notificationNumber = "";
+});
 }
 </script>

@@ -577,8 +577,78 @@ if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex
     }
   }
 }
-?>
-<?php
+
+/************************************************************************************************/
+/**********************************NOTIFICATION RECIPE ADITION CODE******************************/
+/************************************************************************************************/
+
+//receive the data
+if (isset($_GET['messageid']) && isset($_GET['type'])) {
+  $messageid = $_GET['messageid'];
+  $type = $_GET['type'];
+
+//Only if it is a shared recipe
+  if($type != "share" ){
+    header('Location: ' . root . 'error404');
+    exit;
+  } else {
+//Getting the date    
+    $sql = "SELECT date FROM `log` WHERE id = '$messageid';";
+    $result = $conn -> query($sql);
+    $row = $result -> fetch_assoc();
+    
+    $date = $row["date"];
+//Getting the id 
+    $sql = "SELECT recipeid FROM shares WHERE date = '$date' AND share_to = '" . $_SESSION["username"] . "';";
+    $result = $conn -> query($sql);
+    $row = $result -> fetch_assoc();
+
+    $recipeid = $row["recipeid"];
+//Getting the recipe name
+    $sql = "SELECT * FROM recipe WHERE recipeid = '$recipeid';";
+    $result = $conn -> query($sql);
+    $row = $result -> fetch_assoc();
+
+    $recipename = $row["recipename"];
+//Verifying if the recipe already exists
+    $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipename' AND username = '" . $_SESSION["username"] . "';";
+    $result = $conn -> query($sql);
+
+    if($result -> num_rows == 0){
+      $categoryid = $row["categoryid"];
+      $ingredients = $row["ingredients"];
+      $preparation = $row["preparation"];
+      $cookingtime = $row["cookingtime"];
+
+      $sql = "INSERT INTO recipe (recipename, categoryid, username, ingredients, preparation, cookingtime) VALUES ('$recipename', '$categoryid', '" . $_SESSION["username"]. "', '$ingredients', '$preparation', '$cookingtime');";
+      if($conn -> query($sql)) {
+        $sql = "DELETE FROM shares WHERE recipeid = '$recipeid';";
+        $sql .= "DELETE FROM `log` WHERE id = '$messageid';";
+
+//The page is redirected to the notifications
+        if($conn -> multi_query($sql)) {
+          $_SESSION['message'] = '¡Receta agragada exitosamente!';
+          $_SESSION['message_alert'] = "success";
+
+          header('Location: ' . root . 'notifications');
+          exit;
+        }
+      } else {
+        $_SESSION['message'] = '¡Error al agregar receta!';
+        $_SESSION['message_alert'] = "danger";
+
+        header('Location: ' . root . 'notifications');
+        exit;
+      }     
+    } else {
+        $_SESSION['message'] = '¡Esta receta ya ha sido agregada!';
+        $_SESSION['message_alert'] = "danger";
+
+        header('Location: ' . root . 'notifications');
+        exit;      
+    }
+  }
+}
 //Exiting db connection.
 $conn -> close(); 
 ?>

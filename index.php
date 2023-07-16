@@ -20,14 +20,15 @@ if($param == "") {
     root. "ingredients" => "controllers/ingredients.controller.php",
     root. "add-recipe" => "controllers/add-recipe.controller.php",
     root. "categories" => "controllers/categories.controller.php",
-    root. "user" => "controllers/users.controller.php",
-    root. "create" => "controllers/create.controller.php",    
+    root. "user" => "controllers/users.controller.php", 
     root. "email" => "controllers/email.controller.php",
     root. "signup" => "controllers/signup.controller.php",
     root. "recovery" => "controllers/recovery.controller.php",
     root. "error404" => "controllers/404.controller.php",
     root. "terms-and-conditions" => "controllers/terms.controller.php",   
-    root . "not-found" => "controllers/notfound.controller.php"
+    root . "not-found" => "controllers/notfound.controller.php",
+    root. "notifications" => "controllers/notification.controller.php",
+    root. "recycle" => "controllers/recycle.controller.php"
     ];
 //It comes with parameters
 } else {
@@ -38,6 +39,7 @@ if($param == "") {
     root. "custom" => "controllers/custom.controller.php",
     root. "reset" => "controllers/reset.controller.php",
     root. "edit" => "controllers/edit.controller.php",
+    root. "create" => "controllers/create.controller.php",
     root. "update" => "controllers/update.controller.php",
     root. "share" => "controllers/share.controller.php",
     root. "user-recipes" => "controllers/recipes-list.controller.php",
