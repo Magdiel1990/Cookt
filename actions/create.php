@@ -522,55 +522,72 @@ if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex
             header('Location: ' . root . 'user');
             exit;
         } else {
+            $sql = "SELECT userid FROM exusers WHERE username = '$username' AND email = '$email' AND firstname = '$firstname';";
+            $num_rows = $conn -> query($sql) -> num_rows;
+
+            if($num_rows == 0) { 
             $sql = "SELECT userid FROM users WHERE username = '$username';";
             $num_rows = $conn -> query($sql) -> num_rows;
 
-          if($num_rows == 0) {   
-            if($password != $passrepeat) {  
-              $_SESSION['message'] = '¡Contraseñas no coinciden!';
-              $_SESSION['message_alert'] = "danger";  
-              
-              header('Location: ' . root . 'user');
-              exit;
-//Hash password            
-            } else {
-              $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            if($num_rows == 0) {   
+              if($password != $passrepeat) {  
+                $_SESSION['message'] = '¡Contraseñas no coinciden!';
+                $_SESSION['message_alert'] = "danger";  
+                
+                header('Location: ' . root . 'user');
+                exit;
+  //Hash password            
+              } else {
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-              if($state == "yes") {
-                $state = 1;
-              } else { 
-                $state = 0;
-              }
-//Check if it already exists
-              $sql = "SELECT userid FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
-              $num_rows = $conn -> query($sql) -> num_rows;
+                if($state == "yes") {
+                  $state = 1;
+                } else { 
+                  $state = 0;
+                }
+  //Check if it already exists
+                $sql = "SELECT userid FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
+                $num_rows = $conn -> query($sql) -> num_rows;
 
-              if($num_rows == 0) {          
-              $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-              $stmt->bind_param ("ssssssis", $firstname, $lastname, $username, $hashed_password, $rol, $userEmail, $state, $sex);
+                if($num_rows == 0) {          
+                $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+                $stmt->bind_param ("ssssssis", $firstname, $lastname, $username, $hashed_password, $rol, $userEmail, $state, $sex);
 
-                if ($stmt->execute()) {
-                  $_SESSION['message'] = '¡Usuario agregado con éxito!';
+                  if ($stmt->execute()) {
+                    $_SESSION['message'] = '¡Usuario agregado con éxito!';
+                    $_SESSION['message_alert'] = "success";
+
+                    $stmt->close();                  
+                    header('Location: ' . root . 'user');
+                    exit;
+                  } else {
+                    $_SESSION['message'] = '¡Error al agregar usuario!';
+                    $_SESSION['message_alert'] = "danger";
+                        
+                    header('Location: ' . root . 'user');
+                    exit;
+                  }
+                } else {
+                  $_SESSION['message'] = '¡Este usuario ya existe!';
                   $_SESSION['message_alert'] = "success";
 
-                  $stmt->close();                  
-                  header('Location: ' . root . 'user');
-                  exit;
-                } else {
-                  $_SESSION['message'] = '¡Error al agregar usuario!';
-                  $_SESSION['message_alert'] = "danger";
-                      
                   header('Location: ' . root . 'user');
                   exit;
                 }
-              } else {
-                $_SESSION['message'] = '¡Este usuario ya existe!';
-                $_SESSION['message_alert'] = "success";
-
-                header('Location: ' . root . 'user');
-                exit;
               }
+            } else {
+              $_SESSION['message'] = '¡Este nombre de usuario ya existe!';
+              $_SESSION['message_alert'] = "danger";
+
+              header('Location: ' . root . 'user');
+              exit;
             }
+          } else {
+              $_SESSION['message'] = '¡Haz click en activar!';
+              $_SESSION['message_alert'] = "danger";
+
+              header('Location: ' . root . 'user');
+              exit;
           }
         }
       }

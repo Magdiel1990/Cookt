@@ -194,7 +194,7 @@ $num_rows = $result -> num_rows;
 //If there are more than 1 Admin users or the user to be deleted is not an Admins
     if($num_rows > 1 || $type != "Admin") {
 //Username
-    $sql = "SELECT username FROM users WHERE userid = ?;";
+    $sql = "SELECT * FROM users WHERE userid = ?;";
     $stmt = $conn -> prepare($sql); 
     $stmt->bind_param("i", $userId);
     $stmt->execute();
@@ -203,6 +203,14 @@ $num_rows = $result -> num_rows;
     $row = $result -> fetch_assoc(); 
 
     $username = $row['username'];
+    $firstname = $row['firstname'];
+    $lastname = $row['lastname'];
+    $password = $row['password'];
+    $type = $row['type'];
+    $email = $row['email'];
+    $state = $row['state'];
+    $sex = $row['sex'];
+
 //Delete user images directory
     $target_dir = "imgs/recipes/" . $username;
     
@@ -225,6 +233,9 @@ $num_rows = $result -> num_rows;
             exit;
             }
         } else {
+            $sql = "INSERT INTO exusers (username, firstname, lastname, password, type, email, state, sex) VALUES ('$username','$firstname','$lastname','$password','$type','$email','$state','$sex');";
+            $conn -> query($sql);
+            
             $_SESSION['message'] = '¡Usuario eliminado!';
             $_SESSION['message_alert'] = "success";
             
