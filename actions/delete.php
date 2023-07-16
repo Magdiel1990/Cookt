@@ -245,7 +245,6 @@ $num_rows = $result -> num_rows;
     }
 }
 
-
 /************************************************************************************************/
 /***********************************NOTIFICATION DELETION CODE***********************************/
 /************************************************************************************************/
@@ -309,6 +308,37 @@ if(isset($_GET['messageid']) && isset($_GET['type'])) {
     } /*else {
 
     }*/
+}
+
+
+/************************************************************************************************/
+/***********************************NOTIFICATION TOTAL DELETION CODE***********************************/
+/************************************************************************************************/
+
+if(isset($_GET['not_del'])) {
+    if($_GET['not_del'] === base64_encode("yes")) {
+        $sql = "DELETE FROM shares;";
+        $sql .= "DELETE FROM `log`;";
+
+        if($conn -> multi_query($sql)) {
+            $_SESSION['message'] = '¡Todas las notificaciones eliminadas!';
+            $_SESSION['message_alert'] = "success";
+
+//The page is redirected to the notifications
+            header('Location: ' . root . 'notifications');
+            exit;
+        } else {
+            $_SESSION['message'] = '¡Error al eliminar las notificaciones!';
+            $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the notifications
+            header('Location: ' . root . 'notifications');
+            exit;
+        }   
+    } else {
+        header('Location: ' . root . 'error404');
+        exit;
+    }   
 }
 
 //Exiting db connection.

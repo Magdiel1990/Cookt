@@ -33,7 +33,7 @@
     $result= $conn -> query($sql); 
     if($num_rows = $result -> num_rows == 0){
         $output['data'] .= '<div class="d-flex justify-content-center align-items-center">';
-        $output['data'] .= '<h3 class="text-secondary">No hay notificaciones...</h3>';
+        $output['data'] .= '<h3 class="text-secondary text-center">No hay notificaciones...</h3>';
         $output['data'] .= '</div>';
     } else {  
         while($row = $result -> fetch_assoc()){
@@ -41,7 +41,7 @@
         $timeAgo = new DateCalculation($row["date"]); 
         $timeAgo = $timeAgo -> timeAgo();  
         
-        $output['data'] .= '<div class="py-4 col-auto">'; 
+        $output['data'] .= '<div class="py-2 col-auto">'; 
         $output['data'] .= '<div class="card">';
         $output['data'] .= '<div class="card-header">' . $timeAgo . '</div>';
         $output['data'] .= '<div class="card-body">';

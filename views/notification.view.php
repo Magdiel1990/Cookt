@@ -17,26 +17,41 @@ require_once ("views/partials/nav.php");
 //Unsetting the messages
     unset($_SESSION['message_alert'], $_SESSION['message']);
     }
+
+    $sql = "SELECT id FROM `log` WHERE username = '" . $_SESSION["username"] . "';";
+    $result= $conn -> query($sql);
+    $num_rows = $result -> num_rows;
+
+    if($num_rows == 0) {
+        $display = "style='display:none;'";
+    } else {
+        $display = "";
+    }
 ?>
-<main class="container row py-4">    
-    <div class="col-auto">    
-        <select class="form-select" id="num_registros" name="num_registros">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="50">50</option>
-        </select>
-    </div>
+<main class="container row py-4">
+    <div class="row" <?php echo $display;?>>  
+        <div class="col-auto">    
+            <select class="form-select" id="num_registros" name="num_registros">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+        </div>
 
-    <div class="col-5">
-        <label for="num_registros" class="col-form-label">registros</label>
-    </div>
+        <div class="col-auto">
+            <label for="num_registros" class="col-form-label">registros</label>
+        </div>
 
-    <div class="mt-2 col-auto">
-        <h3>Notificaciones</h3>
-    </div>
+        <div class="col-6">
+            <a href="<?php echo root . "delete?not_del=" . base64_encode("yes"); ?>" class='btn btn-outline-danger' title='Eliminar todas las notificaciones' onclick='deleteMessage()' id='notification'><i class='fa-solid fa-trash'></i></a>
+        </div>
 
+        <div class="col-auto">
+            <h3>Notificaciones</h3>
+        </div>
+    </div>  
     <div class="col-auto" id="content">
     </div>        
 
