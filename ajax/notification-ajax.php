@@ -32,7 +32,7 @@
     $sql = "SELECT id, log_message, type, date FROM `log` WHERE username = '" . $_SESSION["username"] . "' ORDER BY id desc" . $limit .";";
     $result= $conn -> query($sql); 
     if($num_rows = $result -> num_rows == 0){
-        $output['data'] .= '<div class="d-flex justify-content-center align-items-center">';
+        $output['data'] .= '<div class="mt-4">';
         $output['data'] .= '<h3 class="text-secondary text-center">No hay notificaciones...</h3>';
         $output['data'] .= '</div>';
     } else {  
