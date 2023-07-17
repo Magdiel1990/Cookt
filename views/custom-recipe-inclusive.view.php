@@ -57,7 +57,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
         <div class="col-auto">
         <?php
 //List of chosen ingredients 
-        $sql = "SELECT i.ingredient, ih.ingredientid FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "';";
+        $sql = "SELECT i.ingredient, ih.ingredientid FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "' AND i.state = 1;";
 
         $result = $conn -> query($sql);
 
@@ -91,7 +91,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
         
         $arrayCount = count($ingArray);
 //Recipes of the user
-        $sql = "SELECT r.recipename, r.ingredients, c.category FROM recipe r JOIN categories c ON r.categoryid = c.categoryid WHERE username = '" . $_SESSION['username'] . "'";
+        $sql = "SELECT r.recipename, r.ingredients, c.category FROM recipe r JOIN categories c ON r.categoryid = c.categoryid WHERE username = '" . $_SESSION['username'] . "' AND r.state = 1";
         $result = $conn -> query($sql);
         
             if($result -> num_rows != 0){

@@ -4,6 +4,12 @@ require_once ("views/partials/head.php");
 
 $_SESSION['location'] = root;
 
+//Verify that data comes
+if(empty($_POST) || empty($_GET)) {
+    header('Location: ' . root);
+    exit;  
+}
+
 /************************************************************************************************/
 /******************************************RECIPE UPDATE CODE************************************/
 /************************************************************************************************/
@@ -30,7 +36,7 @@ $category = $_POST["category"];
 $recipeImage = $_FILES["recipeImage"];
 $userName = $_GET["username"];
 
-$sql = "SELECT categoryid FROM categories WHERE category = ?;";
+$sql = "SELECT categoryid FROM categories WHERE category = ? AND state = 1;";
 $stmt = $conn -> prepare($sql); 
 $stmt->bind_param("s", $category);
 $stmt->execute();
@@ -54,7 +60,7 @@ $categoryId = $row['categoryid'];
 
             if($recipeImage['name'] == null && $_POST["imageUrl"] == "") {
 //Data update            
-                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
+                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName' AND state = 1;";
                 if ($conn->query($sql)) {
 //Message if the variable is null.
                     $_SESSION['message'] = '¡Receta editada con éxito!';
@@ -74,7 +80,7 @@ $categoryId = $row['categoryid'];
                 }  
             } else if ($_POST["imageUrl"] != "") {
 //Data update  
-                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
+                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName' AND state = 1;";
                 if ($conn->query($sql)) {
 // Remote image URL Sanitization   
                     $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL, $conn);
@@ -155,7 +161,7 @@ $categoryId = $row['categoryid'];
                     exit;
                 }
             } else {
-                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName';";
+                $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName' AND state = 1;";
                 
                 $target_dir = "imgs/recipes/". $userName . "/";
                 
@@ -244,7 +250,7 @@ $newCategoryName = $filter -> sanitization();
 
 $categoryImage = $_FILES["categoryImage"];
 
-$sql = "SELECT category FROM categories WHERE categoryid = ?;";
+$sql = "SELECT category FROM categories WHERE categoryid = ? AND state = 1;";
 
 $stmt = $conn -> prepare($sql); 
 $stmt->bind_param("i", $categoryId);
@@ -294,7 +300,7 @@ $oldCategoryName = $row['category'];
 
                 rename($categoryDir, $newCategoryDir);
 
-                $sql = "UPDATE categories SET category = '$newCategoryName' WHERE categoryid = '$categoryId';";
+                $sql = "UPDATE categories SET category = '$newCategoryName' WHERE categoryid = '$categoryId' AND state = 1;";
                 if ($conn->query($sql)) {
 //Message if the variable is null.
                     $_SESSION['message'] = '¡La categoría ha sido editada!';

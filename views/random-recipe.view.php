@@ -24,11 +24,11 @@ if(isset($_POST["category"])) {
                 <select class="form-select" name="category" id="category">
                     <?php
                     if(isset($_SESSION['categoryName'])){
-                        $sql = "SELECT category FROM categories WHERE NOT category='" . $_SESSION['categoryName'] . "';";                    
+                        $sql = "SELECT category FROM categories WHERE NOT category='" . $_SESSION['categoryName'] . "' AND state = 1;";                    
                         
                         echo "<option value='" . $_SESSION['categoryName'] . "'>" . ucfirst($_SESSION['categoryName']) . "</option>";
                     } else {
-                        $sql = "SELECT category FROM categories;";                                      
+                        $sql = "SELECT category FROM categories WHERE state = 1;";                                      
                     }
 
                     $result = $conn -> query($sql); 
@@ -51,7 +51,7 @@ if(isset($_POST["category"])) {
     $category = $_POST["category"];
 
 //category id
-    $sql = "SELECT categoryid FROM categories WHERE category= ?;"; 
+    $sql = "SELECT categoryid FROM categories WHERE category= ? AND state = 1;"; 
     $stmt = $conn -> prepare($sql); 
     $stmt->bind_param("s", $category);
     $stmt->execute();
@@ -62,7 +62,7 @@ if(isset($_POST["category"])) {
 
 //Random recipe for that category
     $sql = "SELECT recipename FROM recipe WHERE categoryid = ?
-    AND username = ? ORDER BY rand() LIMIT 1;";
+    AND username = ? AND state = 1 ORDER BY rand() LIMIT 1;";
 
     $stmt = $conn -> prepare($sql); 
     $stmt->bind_param("is", $categoryId, $_SESSION['username']);
@@ -80,7 +80,7 @@ if(isset($_POST["category"])) {
 
         $sql = "SELECT DISTINCT cookingtime
                 FROM recipe  
-                WHERE recipename = ? AND username = ?";
+                WHERE recipename = ? AND username = ? AND state = 1";
 
         $stmt = $conn -> prepare($sql); 
         $stmt->bind_param("ss", $recipename, $_SESSION['username']);

@@ -208,7 +208,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                             $userid = $row['userid'];
 
 //Recipes of each user
-                            $sql = "SELECT count(recipeid) as `count` FROM recipe WHERE username = '$username';";
+                            $sql = "SELECT count(recipeid) as `count` FROM recipe WHERE username = '$username' AND state = 1;";
                             $row = $conn -> query($sql) -> fetch_assoc();   
                             $recipeCount = $row ['count'];
 //Active users are colored green and inactive, gray                            

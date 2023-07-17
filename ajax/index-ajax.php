@@ -36,7 +36,7 @@
 
 //The final where delection.
         $where = substr_replace($where, "", -3);
-        $where .= "AND username = '" . $_SESSION['username'] . "')";
+        $where .= "AND username = '" . $_SESSION['username'] . " AND r.state = 1')";
     }        
 
 // Limit
@@ -68,7 +68,7 @@
     $totalFilter = $rowFilter[0];
 
 //filtered register query
-    $sqlTotal = "SELECT count(*) FROM recipe WHERE username = '" . $_SESSION['username'] . "';";
+    $sqlTotal = "SELECT count(*) FROM recipe WHERE username = '" . $_SESSION['username'] . "' AND state = 1";
     $resTotal = $conn->query($sqlTotal);
     $rowTotal = $resTotal->fetch_array();
 

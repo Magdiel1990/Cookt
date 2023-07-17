@@ -11,7 +11,7 @@ if(isset($_GET['recipename'])){
 //Getting the name.
 $recipeName = $_GET['recipename'];
 
-$sql = "DELETE FROM recipe WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
+$sql = "UPDATE recipe SET state = 0 WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
 $result = $conn -> query($sql);
 
     if(!$result){
@@ -64,10 +64,10 @@ $categoryImgDir = $files -> directoryFiles();
     } 
 
 //Deleting the register with the name received.
-$sql = "DELETE FROM categories WHERE category = '$categoryName';";
-$result = $conn -> query($sql);
+    $sql = "UPDATE categories SET state = 0 WHERE category = '$categoryName';";
+    $result = $conn -> query($sql);
 
-    if($result !== true){
+    if(!$result){
         $_SESSION['message'] = '¡Error al eliminar la categoría!';
         $_SESSION['message_alert'] = "danger";
 
@@ -83,35 +83,6 @@ $result = $conn -> query($sql);
 } 
 
 /************************************************************************************************/
-/********************INGREDIENT DELETION WHEN ADDING THE RECIPE CODE*****************************/
-/************************************************************************************************/
-
-//Verifying that the id value comes with data.
-if(isset($_GET['id'])){
-    
-//Getting the name.
-$recipeid = $_GET['id'];
-
-//Deleting recipe
-$sql = "DELETE FROM reholder WHERE re_id = $recipeid AND username = '" . $_SESSION['username'] . "';";
-
-$result = $conn -> query($sql);
-    if(!$result){
-        $_SESSION['message'] = '¡Error al eliminar ingrediente!';
-        $_SESSION['message_alert'] = "danger";
-
-        header('Location: ' . root . 'add-recipe');
-        exit;
-    } else {
-        $_SESSION['message'] = '¡Ingrediente eliminado!';
-        $_SESSION['message_alert'] = "success";
-
-        header('Location: ' . root . 'add-recipe');
-        exit;
-    }
-}
-
-/************************************************************************************************/
 /***************************************INGREDIENT DELETION CODE*********************************/
 /************************************************************************************************/
 
@@ -120,7 +91,7 @@ if(isset($_GET['ingredientname'])){
 //Ingredient
 $ingredientName = $_GET['ingredientname'];
 
-$sql = "DELETE FROM ingredients WHERE ingredient = '$ingredientName' AND username = '" . $_SESSION['username'] . "';";
+$sql = "UPDATE ingredients SET state = 0 WHERE ingredient = '$ingredientName' AND username = '" . $_SESSION['username'] . "';";
 $result = $conn -> query($sql);
 
     if(!$result){
@@ -148,7 +119,7 @@ $customName = $_GET['custom'];
 $uri = $_GET['uri'];
 
 //Get the ingredient id of the custom page
-$sql = "SELECT id FROM ingredients WHERE ingredient = ? AND username = ?;";
+$sql = "SELECT id FROM ingredients WHERE ingredient = ? AND username = ? AND state = 1;";
 $stmt = $conn -> prepare($sql); 
 $stmt->bind_param("ss", $customName, $_SESSION['username']);
 $stmt->execute();
@@ -196,7 +167,7 @@ $num_rows = $result -> num_rows;
 //If there are more than 1 Admin users or the user to be deleted is not an Admins
     if($num_rows > 1 || $type != "Admin") {
 //Username
-    $sql = "SELECT * FROM users WHERE userid = ?;";
+    $sql = "SELECT username FROM users WHERE userid = ?;";
     $stmt = $conn -> prepare($sql); 
     $stmt->bind_param("i", $userId);
     $stmt->execute();
@@ -205,13 +176,6 @@ $num_rows = $result -> num_rows;
     $row = $result -> fetch_assoc(); 
 
     $username = $row['username'];
-    $firstname = $row['firstname'];
-    $lastname = $row['lastname'];
-    $password = $row['password'];
-    $type = $row['type'];
-    $email = $row['email'];
-    $state = $row['state'];
-    $sex = $row['sex'];
 
 //Delete user images directory
     $target_dir = "imgs/recipes/" . $username;

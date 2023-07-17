@@ -307,7 +307,7 @@ class IngredientList {
 
     $conn = DatabaseConnection::dbConnection();
 
-    $sql = "SELECT " . $this -> table2 ."." . $this -> column . " FROM " . $this -> table1 . " JOIN " . $this -> table2 . " ON " . $this -> table2 . ".id = " . $this -> table1 . ".ingredientid WHERE " . $this -> table1 . ".username = '" . $this -> username . "';";
+    $sql = "SELECT " . $this -> table2 ."." . $this -> column . " FROM " . $this -> table1 . " JOIN " . $this -> table2 . " ON " . $this -> table2 . ".id = " . $this -> table1 . ".ingredientid WHERE " . $this -> table1 . ".username = '" . $this -> username . "' AND state = 1;";
     $result = $conn -> query($sql);
     
     return $result;
@@ -325,7 +325,7 @@ class IngredientList {
         $num_rows = $result -> num_rows;        
 
         if ($num_rows == 0) {
-            $where = "WHERE username = '" . $this -> username . "'";                                               
+            $where = "WHERE username = '" . $this -> username . "' AND state = 1";                                               
         } else {
             $where = "WHERE NOT ingredient IN (";
 
@@ -334,7 +334,7 @@ class IngredientList {
             }
             
             $where = substr_replace($where, "", -2);
-            $where .= ") AND username = '" . $this -> username . "' ORDER BY " . $this -> column;                        
+            $where .= ") AND username = '" . $this -> username . "' AND state = 1 ORDER BY " . $this -> column;                        
         }
         return $where;
     }  

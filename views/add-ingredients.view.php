@@ -34,7 +34,7 @@ require_once ("views/partials/nav.php");
 <!--Ingredients list-->      
     <div class="table-responsive-sm mt-4">
          <?php
-            $sql = "SELECT ingredient FROM ingredients WHERE username = ? ORDER BY ingredient;";
+            $sql = "SELECT ingredient FROM ingredients WHERE username = ? AND state = 1 ORDER BY ingredient;";
             $stmt = $conn -> prepare($sql); 
             $stmt->bind_param("s",  $_SESSION['username']);
             $stmt->execute();
@@ -52,16 +52,16 @@ require_once ("views/partials/nav.php");
             </thead>
             <tbody>  
             <?php              
-                while($row = $result -> fetch_assoc()){
-                    $html = "<tr>";
-                    $html .= "<td class='px-2' title='ingrediente'>" . ucfirst($row['ingredient']) . "</td>";
-                    $html .= "<td class='px-2'>";
+            while($row = $result -> fetch_assoc()){
+                $html = "<tr>";
+                $html .= "<td class='px-2' title='ingrediente'>" . ucfirst($row['ingredient']) . "</td>";
+                $html .= "<td class='px-2'>";
 //Delete button                    
-                    $html .= "<a href='" . root . "delete?ingredientname=" . $row['ingredient'] . "' class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
-                    $html .= "</td>";
-                    $html .= "</tr>";
-                    echo $html;
-                }
+                $html .= "<a href='" . root . "delete?ingredientname=" . $row['ingredient'] . "' class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                $html .= "</td>";
+                $html .= "</tr>";
+                echo $html;
+            }
             ?>
             </tbody>
         </table>

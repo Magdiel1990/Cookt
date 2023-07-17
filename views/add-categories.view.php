@@ -56,7 +56,7 @@ require_once ("views/partials/nav.php");
             </thead>
             <tbody>                
                 <?php
-                    $sql = "SELECT * FROM categories ORDER BY category;";
+                    $sql = "SELECT * FROM categories WHERE state = 1 ORDER BY category;";
                     $result = $conn -> query($sql);
 
                     if($result -> num_rows > 0){

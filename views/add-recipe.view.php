@@ -48,7 +48,7 @@ require_once ("views/partials/nav.php");
                         <?php
 //We retrieve the last chosen category
                         if(isset($_SESSION['category'])){
-                            $sql = "SELECT category FROM categories WHERE NOT category = ? ORDER BY rand();";
+                            $sql = "SELECT category FROM categories WHERE NOT category = ? AND state = 1 ORDER BY rand();";
                             $stmt = $conn -> prepare($sql); 
                             $stmt->bind_param("s", $_SESSION['category']);
                             $stmt->execute();
@@ -58,7 +58,7 @@ require_once ("views/partials/nav.php");
                            echo '<option value="' .  $_SESSION['category'] . '">' . ucfirst( $_SESSION['category']) . '</option>';
 //If no category had been picked, random categories are shown                        
                         } else {
-                            $sql = "SELECT category FROM categories ORDER BY rand();";
+                            $sql = "SELECT category FROM categories WHERE state = 1 ORDER BY rand();";
                             $result = $conn -> query($sql);
                         }
 

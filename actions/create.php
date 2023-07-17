@@ -11,6 +11,12 @@ require_once ("models/models.php");
 //Including the database connection.
 $conn = DatabaseConnection::dbConnection();
 
+//Verify that data comes
+if(empty($_POST) || empty($_GET)) {
+    header('Location: ' . root);
+    exit;  
+}
+
 /************************************************************************************************/
 /***************************************CATEGORIES ADITION CODE**************************************/
 /************************************************************************************************/
@@ -50,7 +56,7 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
   //lowercase the variable
         $category = strtolower($category);
   //Check if the category had been added
-        $sql = "SELECT category FROM categories WHERE category = '$category';";
+        $sql = "SELECT category FROM categories WHERE category = '$category' AND state = 1;";
         $num_rows = $conn -> query($sql) -> num_rows;      
 
         if($num_rows != 0){
@@ -154,7 +160,7 @@ if(isset($_POST['add_ingredient'])){
 //lowercase the variable
     $ingredient = strtolower($ingredient);
 
-    $sql = "SELECT ingredient FROM ingredients WHERE ingredient = '$ingredient' AND username = '" .  $_SESSION['username'] . "';";
+    $sql = "SELECT ingredient FROM ingredients WHERE ingredient = '$ingredient' AND username = '" .  $_SESSION['username'] . "' AND state = 1;";
 
     $num_rows = $conn -> query($sql) -> num_rows;
 
@@ -236,7 +242,7 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
   } 
       $_SESSION['category'] = $category;
 
-      $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename' AND username = '" .  $_SESSION['username'] . "';";
+      $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename' AND username = '" .  $_SESSION['username'] . "' AND state = 1;";
       $result = $conn -> query($sql);
       $num_rows = $result -> num_rows;
 //Check if the recipe exists            
@@ -246,7 +252,7 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
           $cookingtime = 0;
         }
 //Get the category id        
-      $sql = "SELECT categoryid FROM categories WHERE category = ?;";   
+      $sql = "SELECT categoryid FROM categories WHERE category = ? AND state = 1;";   
       $stmt = $conn -> prepare($sql); 
       $stmt -> bind_param("s", $category);
       $stmt -> execute();
@@ -417,7 +423,7 @@ if(isset($_POST['customingredient']) && isset($_POST['uri'])){
   $ingredient = $_POST['customingredient'];
   $uri = $_POST['uri'];
 
-  $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "';";
+  $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "' AND state = 1;";
   $row = $conn -> query($sql) -> fetch_assoc();
   $ingredientId = $row['id'];
   
@@ -434,7 +440,7 @@ if(isset($_POST['customingredient']) && isset($_POST['uri'])){
     $stmt = $conn -> prepare("INSERT INTO ingholder (ingredientid, username) VALUES (?, ?);");
     $stmt->bind_param ("is", $ingredientId, $_SESSION['username']);
 
-    if ($stmt -> execute()) {
+    if($stmt -> execute()) {
         $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
         $_SESSION['message_alert'] = "success";
 
@@ -640,13 +646,13 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
 
     $recipeid = $row["recipeid"];
 //Getting the recipe name
-    $sql = "SELECT * FROM recipe WHERE recipeid = '$recipeid';";
+    $sql = "SELECT * FROM recipe WHERE recipeid = '$recipeid' AND state = 1;";
     $result = $conn -> query($sql);
     $row = $result -> fetch_assoc();
 
     $recipename = $row["recipename"];
 //Verifying if the recipe already exists
-    $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipename' AND username = '" . $_SESSION["username"] . "';";
+    $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipename' AND username = '" . $_SESSION["username"] . "' AND state = 1;";
     $result = $conn -> query($sql);
 
     if($result -> num_rows == 0){

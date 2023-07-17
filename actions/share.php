@@ -5,6 +5,12 @@ session_name("Login");
 //Iniciating session. 
 session_start();
 
+//Verify that data comes
+if(empty($_POST) || empty($_GET)) {
+    header('Location: ' . root);
+    exit;  
+}
+
 //Models.
 require_once ("models/models.php");
 
@@ -48,7 +54,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
                 $row = $result -> fetch_assoc();
                 $destination = $row["username"];
 
-                $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipe' AND username = '$username';";
+                $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipe' AND username = '$username' AND state = 1;";
                 $result = $conn -> query($sql); 
                 $row = $result -> fetch_assoc();
                 $recipeid = $row["recipeid"];

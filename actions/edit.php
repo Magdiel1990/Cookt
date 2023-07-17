@@ -17,7 +17,7 @@ if(isset($_GET['categoryid'])){
 $categoryId = $_GET['categoryid'];
 
 //Verify the category existance
-$sql = "SELECT * FROM categories WHERE categoryid = ?;";
+$sql = "SELECT * FROM categories WHERE categoryid = ? AND state = 1;";
 $stmt = $conn -> prepare($sql); 
 $stmt->bind_param("i", $categoryId);
 $stmt->execute();
@@ -147,7 +147,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
     join categories c 
     on r.categoryid = c.categoryid
     WHERE r.recipename = ? 
-    AND r.username = ?;";
+    AND r.username = ? AND r.state = 1;";
 
     $stmt = $conn -> prepare($sql); 
     $stmt->bind_param("ss", $recipeName, $userName);
@@ -208,7 +208,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                             <label class="input-group-text" for="category">Categoría: </label>                
                             <select class="form-select" name="category" id="category">
                                 <?php
-                                $sql = "SELECT category FROM categories WHERE NOT category= ?;";
+                                $sql = "SELECT category FROM categories WHERE NOT category= ? AND state = 1;";
                                 
                                 $stmt = $conn -> prepare($sql); 
                                 $stmt->bind_param("s", $category);
