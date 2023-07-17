@@ -78,9 +78,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                        
             $conn -> query($sql);
             
-            header("Location: ". $_SESSION['location']);
-
-           
+            header("Location: ". $_SESSION['location']);           
         } else {
             $_SESSION['message'] = "¡Usuario o contraseña incorrectos!";
             $_SESSION['message_alert'] = "danger";

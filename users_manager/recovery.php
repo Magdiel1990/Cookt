@@ -2,6 +2,7 @@
 session_name("recovery");
 
 session_start();
+
 //Models.
 require_once ("models/models.php");
 

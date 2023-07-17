@@ -1,7 +1,9 @@
 <?php
-session_name("signup");
+session_name("Login");
 
 session_start();
+
+unset ($_SESSION['location']);
 
 //Models.
 require_once ("models/models.php");

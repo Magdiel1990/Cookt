@@ -3,7 +3,6 @@ session_name("signup");
 
 session_start();
 
-
 //Models.
 require_once ("models/models.php");
 

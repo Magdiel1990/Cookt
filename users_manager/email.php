@@ -4,6 +4,8 @@ session_name("recovery");
 
 session_start();
 
+unset ($_SESSION['location']);
+
 //Models.
 require_once ("models/models.php");
 
