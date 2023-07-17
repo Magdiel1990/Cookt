@@ -50,8 +50,8 @@ footer {
 }
 
 #profile {
-    max-width: 20%;
-    object-fit:contain;
+    max-width: 30%;
+    object-fit:fill;
 }
 
 .logo {

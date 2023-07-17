@@ -57,16 +57,16 @@ if($counter == 0){
 
             if($userExt !== null) {
                 $imgprofileDir = $target_dir . $_SESSION["username"] . "." . $userExt;
-                echo '<img id="profile" src="' . $imgprofileDir . '">';
+                echo '<img class="mx-2" id="profile" src="' . $imgprofileDir . '">';
             } else {
                 echo "<i class='fa-regular fa-user'></i>";
             }              
             ?>
             </a> 
-            <a id="counter" href="<?php echo root. "notifications";?>" class="nav-link text-light mx-4 position-relative" title="Notificaciones"><i class="fa-regular fa-envelope"></i><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationNumber"><?php echo $counter;?></span>
+            <a id="counter" href="<?php echo root. "notifications";?>" class="mx-2 nav-link text-light position-relative" title="Notificaciones"><i class="fa-regular fa-envelope"></i><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationNumber"><?php echo $counter;?></span>
             <span class="visually-hidden">Mensajes no leídos</span></a>   
 <!-- Logout button -->                  
-            <a class="nav-link text-white logout" href="<?php echo root;?>logout" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     
+            <a class="nav-link text-white logout mx-3" href="<?php echo root;?>logout" title="Salir"> <i class="fa-solid fa-right-from-bracket"></i></a>     
         </div>          
     </nav>
 </header>
