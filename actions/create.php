@@ -550,11 +550,27 @@ if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex
                 $sql = "SELECT userid FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
                 $num_rows = $conn -> query($sql) -> num_rows;
 
-                if($num_rows == 0) {          
-                $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-                $stmt->bind_param ("ssssssis", $firstname, $lastname, $username, $hashed_password, $rol, $userEmail, $state, $sex);
+                if($num_rows == 0) { 
+                  
+                $uniqcode = md5(uniqid(mt_rand()));
 
-                  if ($stmt->execute()) {
+                $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex, email_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                $stmt->bind_param ("ssssssiss", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sex, $uniqcode);
+//Confirmation link                            
+                $confirmPassLink = "www.recipeholder.net". root ."email_confirm?code=". $uniqcode;
+//Message
+                $subject = "Confirmación de correo";                            
+                $message = "<p>Has sido suscrito en la página de recetas: recipeholder.net. Si no te interesa usar este servicio, ignora este mensaje, de lo contrario haz click en el enlace de confirmación.</p>";
+                $message .= "<a href='" . $confirmPassLink . "'>" . $confirmPassLink . "</a>";                           
+//set content-type header for sending HTML email
+                $headers = "MIME-Version: 1.0" . "\r\n";
+                $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+//additionals
+                $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n" .
+                "CC: magdielmagdiel01@gmail.com";
+//Send email
+
+                  if ($stmt->execute() && mail($email, $subject, $message, $headers)) {
                     $_SESSION['message'] = '¡Usuario agregado con éxito!';
                     $_SESSION['message_alert'] = "success";
 

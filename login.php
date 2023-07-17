@@ -20,7 +20,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
 //Check the data and if the user is active
-    $sql = "SELECT * FROM users WHERE username = ? AND `state` = 1;";
+    $sql = "SELECT * FROM users WHERE username = ? AND `state` = 1 OR email_code = null;";
 
     $stmt = $conn -> prepare($sql); 
     $stmt->bind_param("s", $username);
@@ -86,7 +86,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             $_SESSION['message_alert'] = "danger";
         }
     } else {
-        $_SESSION['message'] = "¡Usuario o contraseña incorrectos!";
+        $_SESSION['message'] = "¡Póngase en contacto con el administrador o confirme desde su correo electrónico!";
         $_SESSION['message_alert'] = "danger";
     }
 } 
