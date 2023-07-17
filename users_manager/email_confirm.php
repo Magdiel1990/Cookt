@@ -29,14 +29,17 @@ if(isset($_GET["code"])){
         if($num_rows != 0) {
             $sql = "UPDATE users SET email_code = null WHERE userid = '$id';";
             if($conn -> query($sql)){ 
-                $_SESSION['message'] = '¡Correo verificado correctamente!';
+                $_SESSION['message'] = '¡Correo verificado o reactivado correctamente!';
                 $_SESSION['message_alert'] = "success";
 
                 header('Location: ' . root . 'login');
                 exit;
             }
         } else {
-            header('Location: ' . root . 'not-found');
+            $_SESSION['message'] = '¡Error al reactivar o verificar correo!';
+            $_SESSION['message_alert'] = "danger";
+
+            header('Location: ' . root . 'login');
             exit;
         }
     } 

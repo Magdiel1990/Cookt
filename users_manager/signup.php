@@ -164,8 +164,18 @@ $header = $header -> pageHeader();
                             <div class="col-md-8 col-lg-6 col-xl-5">
                                 <img src="<?php echo root;?>imgs/login/Picture.png" class="img-fluid" alt="Sample image">
                             </div>
-                            <div class="col-md-9 col-lg-6 col-xl-6">
+                            <div class="col-md-9 col-lg-6 col-xl-6">                                
                                 <form id="signup-form" action="<?php echo root;?>signup" method="POST" class="card-body p-md-5 text-black">
+                                    <?php
+                                    //Messages that are shown in the add_units page
+                                    if(isset($_SESSION['message'])){
+                                    $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+                                    echo $message -> buttonMessage();    
+
+                                    //Unsetting the messages variables so the message fades after refreshing the page.
+                                    unset($_SESSION['message_alert'], $_SESSION['message']);
+                                    }
+                                    ?>
                                     <h3 class="mb-3 text-center">Regístrate</h3>                        
                                     <div class="row">                                   
                                         <div class="col-md-6 mb-3">
@@ -244,22 +254,15 @@ $header = $header -> pageHeader();
 
                                     <div class="d-flex justify-content-center">
                                         <h5 class="mt-2 pt-1">
+                                            <a class="text-decoration-none px-2" href="<?php echo root;?>reactivate-account">Reactivar</a>
+                                        </h5>
+                                        <h5 class="mt-2 pt-1">
                                             <a class="text-decoration-none px-2" href="<?php echo root;?>login">Login</a>
                                         </h5>
                                         <input type="reset" class="btn btn-light btn-lg" value="Limpiar todo">
                                         <input type="submit" class="btn btn-warning btn-lg ms-2" value="Registrarse">
                                     </div>
-                                </form>
-                                <?php
-                                    //Messages that are shown in the add_units page
-                                    if(isset($_SESSION['message'])){
-                                    $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
-                                    echo $message -> buttonMessage();    
-
-                                    //Unsetting the messages variables so the message fades after refreshing the page.
-                                    unset($_SESSION['message_alert'], $_SESSION['message']);
-                                    }
-                                ?>
+                                </form>                                
                             </div>
                         </div>
                     </div>

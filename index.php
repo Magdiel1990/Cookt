@@ -30,7 +30,9 @@ if($param == "") {
     root. "terms-and-conditions" => "controllers/terms.controller.php",   
     root . "not-found" => "controllers/notfound.controller.php",
     root. "notifications" => "controllers/notification.controller.php",
-    root. "recycle" => "controllers/recycle.controller.php"
+    root. "recycle" => "controllers/recycle.controller.php",
+    root. "reactivate-account" => "controllers/reactivate-account.controller.php",
+    root. "reactivate" => "controllers/reactivate.controller.php"
     ];
 //It comes with parameters
 } else {

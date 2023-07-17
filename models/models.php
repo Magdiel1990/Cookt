@@ -266,7 +266,8 @@ class PageHeaders {
             root. "notifications" => "Notificaciones",
             root. "recycle" => "Papelera de reciclaje",
             root . "not-found" => "No encontrado",
-            root. "recovery-page" => "Recuperación"   
+            root. "recovery-page" => "Recuperación",
+            root. "reactivate-account" => "Reactivar cuenta"   
         ];
 
         switch ($this -> uri) {

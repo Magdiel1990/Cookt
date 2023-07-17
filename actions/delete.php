@@ -219,8 +219,11 @@ $num_rows = $result -> num_rows;
         if(file_exists($target_dir)) {
             unlink($target_dir);
         }
-//Deleting the register with the id received.
-        $sql = "DELETE FROM users WHERE userid = '$userId';";    
+
+//Unique code for disabling the account        
+        $uniqcode = md5(uniqid(mt_rand()));
+//Inserting the code so the user can't get in
+        $sql = "INSERT INTO users (email_code) VALUES ('$uniqcode');";
         $result = $conn -> query($sql);
     
         if(!$result){
@@ -228,16 +231,13 @@ $num_rows = $result -> num_rows;
             $_SESSION['message_alert'] = "danger";
     
             if($_SESSION["location"] == root . "profile") {
-            header('Location: ' . root . 'profile'); 
-            exit;   
+                header('Location: ' . root . 'profile'); 
+                exit;   
             } else {
-            header('Location: ' . root . 'user');
-            exit;
+                header('Location: ' . root . 'user');
+                exit;
             }
-        } else {
-            $sql = "INSERT INTO exusers (username, firstname, lastname, password, type, email, state, sex) VALUES ('$username','$firstname','$lastname','$password','$type','$email','$state','$sex');";
-            $conn -> query($sql);
-            
+        } else {            
             $_SESSION['message'] = '¡Usuario eliminado!';
             $_SESSION['message_alert'] = "success";
             

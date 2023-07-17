@@ -523,89 +523,90 @@ if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex
             header('Location: ' . root . 'user');
             exit;
         } else {
-            $sql = "SELECT userid FROM exusers WHERE username = '$username' AND email = '$email' AND firstname = '$firstname';";
-            $num_rows = $conn -> query($sql) -> num_rows;
+          $sql = "SELECT userid FROM users WHERE username = '$username' AND email = '$email';";
+          $result = $conn -> query($sql);
 
-            if($num_rows == 0) { 
-            $sql = "SELECT userid FROM users WHERE username = '$username';";
-            $num_rows = $conn -> query($sql) -> num_rows;
+          if($result -> num_rows == 0) {   
+            if($password != $passrepeat) {  
+              $_SESSION['message'] = '¡Contraseñas no coinciden!';
+              $_SESSION['message_alert'] = "danger";  
+              
+              header('Location: ' . root . 'user');
+              exit;
+//Hash password            
+            } else {
+              $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            if($num_rows == 0) {   
-              if($password != $passrepeat) {  
-                $_SESSION['message'] = '¡Contraseñas no coinciden!';
-                $_SESSION['message_alert'] = "danger";  
+              if($state == "yes") {
+                $state = 1;
+              } else { 
+                $state = 0;
+              }
+//Check if it already exists
+              $sql = "SELECT email_code FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
+              $result = $conn -> query($sql);
+
+              if($result -> num_rows == 0) { 
                 
-                header('Location: ' . root . 'user');
-                exit;
-  //Hash password            
-              } else {
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+              $uniqcode = md5(uniqid(mt_rand()));
 
-                if($state == "yes") {
-                  $state = 1;
-                } else { 
-                  $state = 0;
-                }
-  //Check if it already exists
-                $sql = "SELECT userid FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
-                $num_rows = $conn -> query($sql) -> num_rows;
-
-                if($num_rows == 0) { 
-                  
-                $uniqcode = md5(uniqid(mt_rand()));
-
-                $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex, email_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
-                $stmt->bind_param ("ssssssiss", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sex, $uniqcode);
+              $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex, email_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+              $stmt->bind_param ("ssssssiss", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sex, $uniqcode);
 //Confirmation link                            
-                $confirmPassLink = "www.recipeholder.net". root ."email_confirm?code=". $uniqcode;
+              $confirmPassLink = "www.recipeholder.net". root ."email_confirm?code=". $uniqcode;
 //Message
-                $subject = "Confirmación de correo";                            
-                $message = "<p>Has sido suscrito en la página de recetas: recipeholder.net. Si no te interesa usar este servicio, ignora este mensaje, de lo contrario haz click en el enlace de confirmación.</p>";
-                $message .= "<a href='" . $confirmPassLink . "'>" . $confirmPassLink . "</a>";                           
+              $subject = "Confirmación de correo";                            
+              $message = "<p>Has sido suscrito en la página de recetas: recipeholder.net. Si no te interesa usar este servicio, ignora este mensaje, de lo contrario haz click en el enlace de confirmación.</p>";
+              $message .= "<a href='" . $confirmPassLink . "'>" . $confirmPassLink . "</a>";                           
 //set content-type header for sending HTML email
-                $headers = "MIME-Version: 1.0" . "\r\n";
-                $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+              $headers = "MIME-Version: 1.0" . "\r\n";
+              $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 //additionals
-                $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n" .
-                "CC: magdielmagdiel01@gmail.com";
+              $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n" .
+              "CC: magdielmagdiel01@gmail.com";
 //Send email
 
-                  if ($stmt->execute() && mail($email, $subject, $message, $headers)) {
-                    $_SESSION['message'] = '¡Usuario agregado con éxito!';
-                    $_SESSION['message_alert'] = "success";
-
-                    $stmt->close();                  
-                    header('Location: ' . root . 'user');
-                    exit;
-                  } else {
-                    $_SESSION['message'] = '¡Error al agregar usuario!';
-                    $_SESSION['message_alert'] = "danger";
-                        
-                    header('Location: ' . root . 'user');
-                    exit;
-                  }
-                } else {
-                  $_SESSION['message'] = '¡Este usuario ya existe!';
+                if ($stmt->execute() && mail($email, $subject, $message, $headers)) {
+                  $_SESSION['message'] = '¡Usuario agregado con éxito!';
                   $_SESSION['message_alert'] = "success";
 
+                  $stmt->close();                  
+                  header('Location: ' . root . 'user');
+                  exit;
+                } else {
+                  $_SESSION['message'] = '¡Error al agregar usuario!';
+                  $_SESSION['message_alert'] = "danger";
+                      
                   header('Location: ' . root . 'user');
                   exit;
                 }
-              }
-            } else {
-              $_SESSION['message'] = '¡Este nombre de usuario ya existe!';
-              $_SESSION['message_alert'] = "danger";
+              } else {
+                $_SESSION['message'] = '¡Este usuario ya existe!';
+                $_SESSION['message_alert'] = "success";
 
-              header('Location: ' . root . 'user');
-              exit;
+                header('Location: ' . root . 'user');
+                exit;
+              }
             }
           } else {
-              $_SESSION['message'] = '¡Haz click en activar!';
+            $row = $result -> fetch_assoc();
+            $email_code = $row ["email_code"];
+//The user had deleted his account, reactivate
+            if($email_code != null) {
+              $_SESSION['message'] = '¡Este usuario ya existe, reactiva tu cuenta!';
+              $_SESSION['message_alert'] = "danger";
+
+              header('Location: ' . root . 'reactive-account');
+              exit;
+//The user is already registered and his account is active              
+            } else {
+              $_SESSION['message'] = '¡Este usuario ya existe!';
               $_SESSION['message_alert'] = "danger";
 
               header('Location: ' . root . 'user');
               exit;
-          }
+            } 
+          }           
         }
       }
     }
