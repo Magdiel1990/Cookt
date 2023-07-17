@@ -71,6 +71,12 @@ $header = $header -> pageHeader();
     <link rel="shortcut icon" href= "<?php echo root;?>imgs/logo/logo2.png">
     <link rel="stylesheet" href="<?php echo root;?>css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
+    <script>
+//Avoid resubmission form  
+        if (window.history.replaceState) { 
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
     <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>

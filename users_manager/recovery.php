@@ -31,7 +31,12 @@ $header = $header -> pageHeader();
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>    
+    <script>
+    //Avoid resubmission form  
+    if (window.history.replaceState) { 
+        window.history.replaceState(null, null, window.location.href);
+    }
+    </script> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body class="bg-primary">
