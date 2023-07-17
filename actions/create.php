@@ -66,7 +66,7 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
             header('Location: ' . root . 'categories');
             exit;
         }  
-
+        
         $stmt = $conn -> prepare("INSERT INTO categories (category) VALUES (?);");
         $stmt->bind_param("s", $category);
           

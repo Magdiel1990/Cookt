@@ -71,11 +71,15 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
                     $sql = "INSERT INTO shares (share_from, share_to, recipeid) VALUES ('$username', '$destination', '$recipeid');";
                    
                     if($conn -> query($sql)) {
-                        $log_message = "El usuario " . $username . " te ha compartido la receta \"" . $recipe . "\".";
+                        $log_message_receiver = "El usuario " . $username . " te ha compartido la receta \"" . $recipe . "\".";
+                        $log_message_sender = "Has compartido la receta \"" . $recipe . "\" con el usuario " . $destination . ".";
+                        
                         $type = "share";
-                        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message', '$type', 0);";
 
-                        if($conn -> query($sql)) {
+                        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message_receiver', '$type', 0);";
+                        $sql .= "INSERT INTO `log` (username, log_message, type, state) VALUES ('$username', '$log_message_sender', '$type', 0);";
+
+                        if($conn -> multi_query($sql)) {
                             $_SESSION['message'] = '¡Receta ha sido compartida con ' . $email . '!';
                             $_SESSION['message_alert'] = "success";
 

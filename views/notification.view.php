@@ -113,7 +113,6 @@ var deleteButton = document.getElementById("notification");
 //Delete messeage for loop
 function deleteMessageLoop(){  
     if(confirm("¿Desea eliminar esta notificación?")) {
-        event.preventDefault();
         return true;
     } else {
         event.preventDefault();
