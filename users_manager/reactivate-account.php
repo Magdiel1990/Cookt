@@ -44,11 +44,11 @@ $header = $header -> pageHeader();
         </div>
         <div class="row p-4 align-items-center justify-content-center">
             <div class="col-auto">
-                <form class="text-center recovery-form" action="<?php echo root;?>reactivate" method="POST">
+                <form class="text-center recovery-form" action="<?php echo root;?>reactivate" method="POST" id="reactivate_form">
 <!-- Email input -->
                     <div class="form-outline mb-3">
                         <label class="form-label mb-4" for="email">Email</label>
-                        <input type="email" id="email" class="form-control" name="email" size="35" placeholder="Escribe tu correo electrónico" required/>                        
+                        <input type="email" id="email" class="form-control" name="email" size="35" maxlength="70" minlength="15" placeholder="Escribe tu correo electrónico" required/>                        
                     </div>
 
                     <?php
@@ -79,6 +79,31 @@ $header = $header -> pageHeader();
             </div>
         </div>
     </main>
+    <script>
+    emailValidation(); 
+
+//Form validation
+    function emailValidation(){
+    var form = document.getElementById("reactivate_form");    
+
+        form.addEventListener("submit", function(event){ 
+            var email = document.getElementById("email").value;        
+
+            if(email == "") {
+                event.preventDefault();
+                message.innerHTML = "¡Escriba el correo!";             
+                return false;
+            }
+
+            if(email.length < 15 || email.length > 70){
+                event.preventDefault();                        
+                message.innerHTML = "¡El email debe tener de 15 a 70 caracteres!";                 
+                return false;
+            }                
+            return true;
+        })
+    }
+    </script>
 <?php
 //Footer of the page.
 require_once ("views/partials/footer.php");
