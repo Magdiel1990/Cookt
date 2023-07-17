@@ -282,7 +282,7 @@ $header = $header -> pageHeader();
     }                                   
 
 //Form validation
-    function userValidation(){
+   /* function userValidation(){
     var form = document.getElementById("signup-form");    
 
         form.addEventListener("submit", function(event){ 
@@ -358,7 +358,7 @@ $header = $header -> pageHeader();
             }                
             return true;
         })
-    }
+    }*/
     </script>
 <?php
 //Footer of the page.
