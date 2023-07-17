@@ -71,6 +71,12 @@ footer {
     left: 1.5rem;         
 }
 
+.navbar-collapse .nav-item:hover, .navbar-collapse .dropdown-item:hover {
+    font-size: 18px;
+    background: rgba(83, 244, 104, 0.12); 
+    border: 1px dotted rgba(0, 0, 255, 0.239);  
+}
+
 #navbarNavDropdown {
     position: inherit;
     right: 1rem;
