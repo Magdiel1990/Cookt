@@ -25,7 +25,10 @@ if($counter == 0){
                     <a class="nav-link text-white" href="<?php echo root;?>random" title="Sugerencias">Sugerencias</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="<?php echo root;?>custom" title="Elegir por ingredientes">Elegir por ingredientes</a>
+                    <a class="nav-link text-white" href="<?php echo root;?>custom-inclusive" title="Elegir por ingredientes">Incluir ingredientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="<?php echo root;?>custom-exclusive" title="Elegir por ingredientes">Excluir ingredientes</a>
                 </li>
                 <li class="nav-item dropdown"  <?php if($_SESSION['type'] == 'Viewer') { echo "style = 'display : none;'";}?>>
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

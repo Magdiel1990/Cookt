@@ -6,7 +6,6 @@ require_once ("views/partials/head.php");
 require_once ("views/partials/nav.php");
 
 $_SESSION['location'] = $_SERVER["REQUEST_URI"];
-
 ?>
 
 <main class="container p-4">
@@ -41,6 +40,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                     $options -> ingredientOptions();                   
                     ?>
                 </select> 
+                <input type="hidden" name="uri" value="custom-inclusive">
                 <input class="btn btn-primary" type="submit" value="Agregar"> 
                 <?php
 //If there is no ingredient added                
@@ -69,7 +69,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
             $html .= "<ol>";
             while($row = $result -> fetch_assoc()) {
                 $html .= "<li>";
-                $html .= "<a href='" . root . "delete?custom=" . $row['ingredient'] . "' " . "title='Eliminar' class='click-del'>";
+                $html .= "<a href='" . root . "delete?custom=" . $row['ingredient'] . "&uri=custom-inclusive' " . "title='Eliminar' class='click-del'>";
                 $html .= ucfirst($row["ingredient"]);
                 $html .= "</a>";
                 $html .= "</li>";

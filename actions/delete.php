@@ -142,9 +142,11 @@ $result = $conn -> query($sql);
 /***************************************CHOOSE BY INGREDIENT***********************************/
 /************************************************************************************************/
 
-if(isset($_GET['custom'])){
+if(isset($_GET['custom']) && isset($_GET['uri'])){
     
 $customName = $_GET['custom'];
+$uri = $_GET['uri'];
+
 //Get the ingredient id of the custom page
 $sql = "SELECT id FROM ingredients WHERE ingredient = ? AND username = ?;";
 $stmt = $conn -> prepare($sql); 
@@ -165,13 +167,13 @@ $result = $conn -> query($sql);
         $_SESSION['message'] = '¡Error al eliminar el ingrediente!';
         $_SESSION['message_alert'] = "danger";
 
-        header('Location: ' . root . 'custom');
+        header('Location: ' . root . $uri);
         exit;
     } else {
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
-        header('Location: ' . root . 'custom');
+        header('Location: ' . root . $uri);
         exit;
     }
 } 

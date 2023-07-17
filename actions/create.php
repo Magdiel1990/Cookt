@@ -413,8 +413,9 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
 /************************************************************************************************/
 
 //receive the data
-if(isset($_POST['customingredient'])){
+if(isset($_POST['customingredient']) && isset($_POST['uri'])){ 
   $ingredient = $_POST['customingredient'];
+  $uri = $_POST['uri'];
 
   $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "';";
   $row = $conn -> query($sql) -> fetch_assoc();
@@ -427,7 +428,7 @@ if(isset($_POST['customingredient'])){
       $_SESSION['message'] = '¡Ya ha sido agregado!';
       $_SESSION['message_alert'] = "success";
 
-      header('Location: ' . root . 'custom');
+      header('Location: ' . root . $uri);
       exit;
   } else {
     $stmt = $conn -> prepare("INSERT INTO ingholder (ingredientid, username) VALUES (?, ?);");
@@ -439,13 +440,13 @@ if(isset($_POST['customingredient'])){
 
         $stmt -> close();            
 
-        header('Location: ' . root . 'custom');
+        header('Location: ' . root . $uri);
         exit;
     } else {
       $_SESSION['message'] = '¡Error al agregar ingrediente!';
       $_SESSION['message_alert'] = "danger";
           
-      header('Location: ' . root . 'custom');
+      header('Location: ' . root . $uri);
       exit;
     }
   }
