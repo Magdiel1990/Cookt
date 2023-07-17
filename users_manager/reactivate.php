@@ -9,7 +9,7 @@ require_once ("models/models.php");
 //Including the database connection.
 $conn = DatabaseConnection::dbConnection();
 
-if(isset($_GET["email"])){
+if(isset($_POST["email"])){
 
     $filter = new Filter ($_POST["email"], FILTER_SANITIZE_EMAIL, $conn);
     $email = $filter -> sanitization();

@@ -32,7 +32,7 @@ if($param == "") {
     root. "notifications" => "controllers/notification.controller.php",
     root. "recycle" => "controllers/recycle.controller.php",
     root. "reactivate-account" => "controllers/reactivate-account.controller.php",
-    root. "reactivate" => "controllers/reactivate.controller.php"
+    root. "reactivate" => "controllers/reactivate.controller.php"     
     ];
 //It comes with parameters
 } else {
@@ -49,7 +49,7 @@ if($param == "") {
     root. "reset-password" => "controllers/reset-password.controller.php",
     root. "recovery-page" => "controllers/recovery-page.controller.php",
     root. "password-change" => "controllers/pass-change.controller.php",
-    root. "email_confirm" => "controllers/email_confirm.controller.php"    
+    root. "email_confirm" => "controllers/email_confirm.controller.php"      
     ];
 }
 

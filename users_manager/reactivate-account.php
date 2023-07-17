@@ -1,7 +1,9 @@
 <?php
-session_name("recovery");
+session_name("signup");
 
 session_start();
+
+
 //Models.
 require_once ("models/models.php");
 
@@ -54,11 +56,11 @@ $header = $header -> pageHeader();
                     if(isset($_SESSION['message'])){
                     echo "<div class='my-1'>";
 
-                    $message = new Messages ($_SESSION['message'], $_SESSION['alert']);
+                    $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
                     echo $message -> textMessage();  
 
 //Unsetting the messages variables so the message fades after refreshing the page.
-                    unset($_SESSION['alert'], $_SESSION['message']);
+                    unset($_SESSION['message_alert'], $_SESSION['message']);
 
                     echo "</div>";
                     } else {
@@ -66,7 +68,7 @@ $header = $header -> pageHeader();
                     }
                     ?>                        
                     <div class="text-center">
-                        <input type="submit" name="Recovery" value="Reactivar" class="btn btn-primary">                              
+                        <input type="submit" name="reactivate" value="Reactivar" class="btn btn-primary">                              
                         <p class="small fw-bold mb-0 mt-4">
                             <a class="text-decoration-none px-2" href="<?php echo root;?>login">Login</a>
                             ¿Si no tienes cuenta? 
