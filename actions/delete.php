@@ -229,6 +229,22 @@ $num_rows = $result -> num_rows;
 
             $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
             $conn -> query($sql);
+
+//Confirmation link                            
+            $confirmPassLink = "www.recipeholder.net". root ."email_confirm?code=". $uniqcode;
+//Message
+            $subject = "Confirmación de desactivación de cuenta";                            
+            $message = "<p>Has desactivado tu cuenta de recipeholder.net. Si deseas reactivarla en el futuro, haz click en el siguiente link.</p>";
+            $message .= "<a href='" . $confirmPassLink . "'>" . $confirmPassLink . "</a>";                           
+//set content-type header for sending HTML email
+            $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+//additionals
+            $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n" .
+            "CC: magdielmagdiel01@gmail.com";
+            
+//Send email
+            mail($email, $subject, $message, $headers);
     
             $_SESSION['message'] = '¡Usuario eliminado!';
             $_SESSION['message_alert'] = "success";
