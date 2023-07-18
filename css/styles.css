@@ -28,6 +28,10 @@ footer {
     height: 8rem;
 }
 
+.fa-linkedin:hover, .fa-github:hover, .fa-instagram:hover, .fa-facebook-f:hover {
+    font-size: 2rem;
+}
+
 /*Nav format*/
 
 .navbar-toggler{
