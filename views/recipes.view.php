@@ -32,7 +32,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     r.recipename,
     r.ingredients, 
     r.cookingtime,
-    r.created_at, 
+    r.date, 
     r.preparation, 
     c.category, 
     r.username
@@ -66,9 +66,9 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     $preparation = str_replace('rn', ' ', $preparation);
 
 //Day, month and year of the day the recipe was added
-    $day = $date = date ("d", strtotime($row["created_at"]));     
-    $month = date ("M", strtotime($row["created_at"]));
-    $year = $date = date ("Y", strtotime($row["created_at"]));
+    $day = $date = date ("d", strtotime($row["date"]));     
+    $month = date ("M", strtotime($row["date"]));
+    $year = $date = date ("Y", strtotime($row["date"]));
 
 //Object to convert to spanish months
     $timeConvertor = new TimeConvertor ($month);
