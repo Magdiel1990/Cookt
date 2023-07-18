@@ -47,7 +47,7 @@ if($counter == 0){
         </div>
 <!--User identification -->
         <div class="d-flex flex-row">                 
-            <a class="text-white"  href="<?php echo root;?>profile" style="text-decoration: none;" title="Perfil">
+            <a class="text-white"  href="<?php echo root;?>profile" style="text-decoration: none;" title="Perfil" id="username">
             <?php echo $_SESSION['title'] . $_SESSION['firstname'] . " " .  $_SESSION['lastname'];?> 
             <?php
             $target_dir ="imgs/users/";

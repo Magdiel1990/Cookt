@@ -16,7 +16,8 @@ h3 {
 
 /*Header, footer and main format*/
 header, footer {
-    background: rgb(4, 4, 99);    
+    background: rgb(71, 216, 241);
+    background: linear-gradient(39deg, rgba(243,255,42,0.6) 0%, rgba(71, 216, 241,1) 28%); 
 }
 
 main {
@@ -36,12 +37,13 @@ footer {
 #logo, #profile {
     position: relative;
     height: 2rem;
+    border-radius: 20%;
 }
 
 #logo:hover {
-    height: 2.1rem;
-    box-shadow: 1px 1px 16px rgb(255, 251, 247);
-    border-radius: 20%;
+    height: 2.3rem;
+    box-shadow: 1px 1px 16px rgb(223, 73, 73);
+    border-radius: 40%;
 }
 
 #profile {
@@ -69,7 +71,7 @@ footer {
 .navbar-collapse .nav-item:hover, .navbar-collapse .dropdown-item:hover {
     font-size: 18px;
     background: rgba(83, 244, 104, 0.12); 
-    border: 1px dotted rgba(0, 0, 255, 0.239);  
+    border: 1px dotted rgba(0, 0, 255, 0.3);  
 }
 
 #navbarNavDropdown {
@@ -81,10 +83,20 @@ footer {
     font-size: 1rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+    font-weight: bolder;
 }
 
 .dropdown-item {
     font-size: 1rem;
+    font-weight: bolder;
+}
+
+#username {
+    font-weight: bolder;
+}
+
+#username:hover {
+    font-size: 1.2rem;
 }
 
 .logout{
@@ -115,7 +127,7 @@ thead {
 .table_header {
     font-size: 1.4rem;
     color:#ffffff;
-    background-color: blue;
+    background-color: rgb(71, 216, 241);
 }
 
 tbody {
