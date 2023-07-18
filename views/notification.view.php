@@ -5,10 +5,6 @@ require_once ("views/partials/head.php");
 //Nav
 require_once ("views/partials/nav.php");
 
-//Reseting the message counter
-    $sql = "UPDATE `log` SET `state` = 1 WHERE `state` = 0;";
-    $conn->query($sql);
-
 //Messages
     if(isset($_SESSION['message'])){
     $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
@@ -121,6 +117,9 @@ function deleteMessageLoop(){
 }
 </script>
 <?php
+//Reseting the message counter
+$conn-> query ("UPDATE `log` SET `state` = 1 WHERE `state` = 0;");
+
 //Exiting connection
 $conn -> close();
 
