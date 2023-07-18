@@ -44,6 +44,13 @@ $sql = "DELETE FROM users WHERE username = '$username';";
         VALUES ($userId, '$username', '$firstname', '$lastname', '$password', '$type', '$email', $state, '$sex');";
 
         if($conn -> query($sql) === TRUE){
+//Notification message        
+            $log_message = "Has reiniciado el usuario \"" . $username . "\".";       
+            $type = "reset";
+
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);  
+
             $_SESSION['message'] = '¡Usuario reseteado!';
             $_SESSION['message_alert'] = "success";
 

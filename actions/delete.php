@@ -21,6 +21,13 @@ $result = $conn -> query($sql);
         header('Location: ' . root);
         exit;
     } else {
+//Notification message        
+        $log_message = "Has eliminado la receta \"" . $recipeName . "\".";       
+        $type = "delete";
+
+        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+        $conn -> query($sql);
+
 //Deleting recipe img       
         $target_dir = "imgs/recipes/". $_SESSION['username']. "/";
 
@@ -74,6 +81,13 @@ $categoryImgDir = $files -> directoryFiles();
         header('Location: ' . root . 'categories');
         exit;
     } else {
+//Notification message        
+        $log_message = "Has eliminado la categoría \"" . $categoryName . "\".";       
+        $type = "delete";
+
+        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+        $conn -> query($sql);
+
         $_SESSION['message'] = '¡Categoría eliminada!';
         $_SESSION['message_alert'] = "success";
 
@@ -101,6 +115,13 @@ $result = $conn -> query($sql);
         header('Location: ' . root . 'ingredients');
         exit;
     } else {
+//Notification message        
+        $log_message = "Has eliminado el ingrediente \"" . $ingredientName . "\".";       
+        $type = "delete";
+
+        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+        $conn -> query($sql);
+
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
 
@@ -201,7 +222,14 @@ $num_rows = $result -> num_rows;
                 header('Location: ' . root . 'user');
                 exit;
             }
-        } else {            
+        } else {       
+//Notification message        
+            $log_message = "Has eliminado el usuario \"" . $username . "\".";       
+            $type = "delete";
+
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
+    
             $_SESSION['message'] = '¡Usuario eliminado!';
             $_SESSION['message_alert'] = "success";
             
@@ -282,11 +310,34 @@ if(isset($_GET['messageid']) && isset($_GET['type'])) {
                }
             }
         }
-    } /*else {
+    } else {
+        $sql = "SELECT id FROM `log` WHERE id = '$messageid' AND username = '" . $_SESSION["username"] . "';";
+        $result = $conn -> query($sql);
 
-    }*/
+        if($result -> num_rows > 0){
+            $sql = "DELETE FROM `log` WHERE id = '$messageid';";
+            if($conn -> query($sql)) {
+                $_SESSION['message'] = '¡Notificación eliminada!';
+                $_SESSION['message_alert'] = "success";
+
+//The page is redirected to the notifications
+                header('Location: ' . root . 'notifications');
+                exit;
+            } else {
+                $_SESSION['message'] = '¡Error al eliminar notificación!';
+                $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the notifications
+                header('Location: ' . root . 'notifications');
+                exit;
+            }
+//If the record is only in the share and not in the log               
+        } else {
+            header('Location: ' . root . 'error404');
+            exit;
+        }
+    }
 }
-
 
 /************************************************************************************************/
 /***********************************NOTIFICATION TOTAL DELETION CODE***********************************/

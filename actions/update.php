@@ -62,6 +62,12 @@ $categoryId = $row['categoryid'];
 //Data update            
                 $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName' AND state = 1;";
                 if ($conn->query($sql)) {
+//Notification message        
+                    $log_message = "Has actualizado la receta \"" . $oldName . "\" por el nuevo nombre \"" . $newRecipeName . "\".";       
+                    $type = "update";
+
+                    $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                    $conn -> query($sql);  
 //Message if the variable is null.
                     $_SESSION['message'] = '¡Receta editada con éxito!';
                     $_SESSION['message_alert'] = "success";
@@ -82,6 +88,12 @@ $categoryId = $row['categoryid'];
 //Data update  
                 $sql = "UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName' AND state = 1;";
                 if ($conn->query($sql)) {
+//Notification message        
+                    $log_message = "Has actualizado la receta \"" . $oldName . "\" por el nuevo nombre \"" . $newRecipeName . "\".";       
+                    $type = "update";
+
+                    $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                    $conn -> query($sql);  
 // Remote image URL Sanitization   
                     $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL, $conn);
                     $url = $filter -> sanitization();
@@ -198,6 +210,12 @@ $categoryId = $row['categoryid'];
 
                 if ($uploadOk == "") {
                     if(move_uploaded_file($recipeImage["tmp_name"], $target_file) && $conn->query($sql)){
+//Notification message        
+                    $log_message = "Has actualizado la receta \"" . $oldName . "\" por el nuevo nombre \"" . $newRecipeName . "\".";       
+                    $type = "update";
+
+                    $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                    $conn -> query($sql);  
 //Success message.
                     $_SESSION['message'] = '¡Receta editada con éxito!';
                     $_SESSION['message_alert'] = "success";
@@ -302,6 +320,12 @@ $oldCategoryName = $row['category'];
 
                 $sql = "UPDATE categories SET category = '$newCategoryName' WHERE categoryid = '$categoryId' AND state = 1;";
                 if ($conn->query($sql)) {
+//Notification message        
+                    $log_message = "Has actualizado la categoría \"" . $oldCategoryName . "\" por el nuevo nombre \"" . $newCategoryName . "\".";       
+                    $type = "update";
+
+                    $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                    $conn -> query($sql);  
 //Message if the variable is null.
                     $_SESSION['message'] = '¡La categoría ha sido editada!';
                     $_SESSION['message_alert'] = "success";
@@ -355,6 +379,13 @@ $oldCategoryName = $row['category'];
 
         if ($uploadOk == "") {
             if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $conn->query($sql)){
+//Notification message        
+            $log_message = "Has actualizado la categoría \"" . $oldCategoryName . "\" por el nuevo nombre \"" . $newCategoryName . "\".";       
+            $type = "update";
+
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);  
+
 //Success message.
             $_SESSION['message'] = '¡Categoría editada con éxito!';
             $_SESSION['message_alert'] = "success";
@@ -527,6 +558,13 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                             $sql = "UPDATE users SET password = '$hash_password', firstname = '$firstname',  lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
 
                             if ($conn->query($sql)) {
+
+//Notification message        
+                            $log_message = "Has actualizado el usuario \"" . $username . "\".";       
+                            $type = "update";
+
+                            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                            $conn -> query($sql);  
 //Message if the variable is null.
                             $_SESSION['message'] = '¡Usuario editado correctamente!';
                             $_SESSION['message_alert'] = "success";
@@ -575,6 +613,12 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                     $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$username', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
                     
                     if ($conn->query($sql)) {
+//Notification message        
+                    $log_message = "Has actualizado el usuario \"" . $username . "\".";       
+                    $type = "update";
+
+                    $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                    $conn -> query($sql);  
 //Message if the variable is null.
                     $_SESSION['message'] = '¡Usuario editado correctamente!';
                     $_SESSION['message_alert'] = "success";

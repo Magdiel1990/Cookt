@@ -105,6 +105,13 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
 
         if ($uploadOk == "") {
           if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $stmt -> execute()){
+//Notification message        
+            $log_message = "Has creado la categoría \"" . $category . "\".";       
+            $type = "add";
+
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);    
+            
             $_SESSION['message'] = '¡Categoría agregada con éxito!';
             $_SESSION['message_alert'] = "success";
 
@@ -176,6 +183,13 @@ if(isset($_POST['add_ingredient'])){
     $stmt->bind_param("ss", $ingredient, $_SESSION['username']);
 
     if ($stmt -> execute()) {
+//Notification message        
+        $log_message = "Has creado el ingrediente \"" . $ingredient . "\".";       
+        $type = "add";
+
+        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+        $conn -> query($sql);  
+
         $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
         $_SESSION['message_alert'] = "success";
 
@@ -267,6 +281,14 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
       
       $stmt -> execute();
       $stmt -> close(); 
+
+//Notification message        
+      $log_message = "Has creado la receta \"" . $recipename . "\".";       
+      $type = "add";
+
+      $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+      $conn -> query($sql);  
+
 //If no image has been added
         if ($recipeImage ['name'] == null && $_POST["imageUrl"] == "") {           
         $_SESSION['message'] = '¡Receta agregada exitosamente!';
@@ -283,6 +305,13 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
           $URLVerif = $URLVerif -> urlVerif();
           
           if($URLVerif === false) {
+//Notification message        
+            $log_message = "Has creado la receta \"" . $recipename . "\".";       
+            $type = "add";
+
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);  
+
             $_SESSION['message'] = '¡Receta agregada exitosamente sin imagen!';
             $_SESSION['message_alert'] = "success";
 
@@ -328,6 +357,13 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
             exit;
           } else {
             if(file_put_contents($imageDir, file_get_contents($url)) !== false){
+//Notification message        
+              $log_message = "Has creado la receta \"" . $recipename . "\".";       
+              $type = "add";
+
+              $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+              $conn -> query($sql);  
+
               $_SESSION['message'] = '¡Receta agregada exitosamente!';
               $_SESSION['message_alert'] = "success";
 
@@ -384,6 +420,13 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
         if ($uploadOk == "") {
 
             if(move_uploaded_file($recipeImage["tmp_name"], $imageDir)){
+//Notification message        
+            $log_message = "Has creado la receta \"" . $recipename . "\".";       
+            $type = "add";
+
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);  
+            
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
             $_SESSION['message_alert'] = "success";
 
@@ -573,6 +616,13 @@ if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex
 //Send email
 
                 if ($stmt->execute() && mail($email, $subject, $message, $headers)) {
+//Notification message        
+                  $log_message = "Has creado el usuario \"" . $username . "\".";       
+                  $type = "add";
+
+                  $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                  $conn -> query($sql);  
+
                   $_SESSION['message'] = '¡Usuario agregado con éxito!';
                   $_SESSION['message_alert'] = "success";
 
@@ -668,6 +718,13 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
 
 //The page is redirected to the notifications
         if($conn -> multi_query($sql)) {
+//Notification message        
+          $log_message = "Has aceptado la receta \"" . $$recipename . "\".";       
+          $type = "add";
+
+          $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+          $conn -> query($sql);  
+
           $_SESSION['message'] = '¡Receta agragada exitosamente!';
           $_SESSION['message_alert'] = "success";
 
