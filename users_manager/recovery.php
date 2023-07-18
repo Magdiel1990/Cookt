@@ -39,7 +39,7 @@ $header = $header -> pageHeader();
     </script> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
-<body class="bg-primary">
+<body class="bg-dark">
     <main class="container">
         <div class="p-5 m-4">                
         </div>
