@@ -257,15 +257,15 @@ $header = $header -> pageHeader();
 
                                     <input type="hidden" id="url" name="url" value = "<?php echo $_SERVER["REQUEST_URI"];?>"/>
 
-                                    <div class="d-flex justify-content-center">
-                                        <h5 class="mt-2 pt-1">
-                                            <a class="text-decoration-none px-2" href="<?php echo root;?>reactivate-account">Reactivar</a>
+                                    <div class="row p-2 justify-content-center">
+                                        <h5 class="col-auto mt-2">
+                                            <a class="text-decoration-none" href="<?php echo root;?>reactivate-account">Reactivar</a>
                                         </h5>
-                                        <h5 class="mt-2 pt-1">
-                                            <a class="text-decoration-none px-2" href="<?php echo root;?>login">Login</a>
+                                        <h5 class="col-auto mt-2">
+                                            <a class="text-decoration-none" href="<?php echo root;?>login">Login</a>
                                         </h5>
-                                        <input type="reset" class="btn btn-light btn-lg" value="Limpiar todo">
-                                        <input type="submit" class="btn btn-warning btn-lg ms-2" value="Registrarse">
+                                        <input class="col-auto btn btn-light btn-lg me-2" type="reset" value="Limpiar todo">
+                                        <input class="col-auto btn btn-warning btn-lg" type="submit" value="Registrarse">
                                     </div>
                                 </form>                                
                             </div>
@@ -290,7 +290,7 @@ $header = $header -> pageHeader();
     }                                   
 
 //Form validation
-   /* function userValidation(){
+function userValidation(){
     var form = document.getElementById("signup-form");    
 
         form.addEventListener("submit", function(event){ 
@@ -302,7 +302,7 @@ $header = $header -> pageHeader();
             var passrepeat = document.getElementById("passrepeat").value;
             var sex = document.getElementsByName("sex");    
             var email = document.getElementById("email").value; 
-            var terms = document.getElementById("terms");                
+            var terms = document.getElementById("terms").value;                     
 
             for (var s of sex) {
                 if (!s.checked) {
@@ -366,7 +366,7 @@ $header = $header -> pageHeader();
             }                
             return true;
         })
-    }*/
+    }
     </script>
 <?php
 //Footer of the page.
