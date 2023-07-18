@@ -197,7 +197,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                     </thead>
                     <tbody>                
                         <?php
-                        $sql = "SELECT type, username, state, userid FROM users ORDER BY type;";
+                        $sql = "SELECT email_code, type, username, state, userid FROM users ORDER BY type;";
 
                         $result = $conn -> query($sql);                    
 
@@ -206,15 +206,19 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                             $username = $row['username'];
                             $state = $row['state'];
                             $userid = $row['userid'];
+                            $email_code = $row['email_code'];
 
 //Recipes of each user
                             $sql = "SELECT count(recipeid) as `count` FROM recipe WHERE username = '$username' AND state = 1;";
                             $row = $conn -> query($sql) -> fetch_assoc();   
                             $recipeCount = $row ['count'];
 //Active users are colored green and inactive, gray                            
-                            if($state == 1) {
+                            if($state == 1 && $email_code == null) {
                                 $state = "activo";
                                 $color = "rgb(22, 182, 4)";
+                            } else if ($email_code != null) {
+                                $state = "desactivado";
+                                $color = "rgb(234, 169, 247)";
                             } else {
                                 $state = "inactivo";
                                 $color = "#aaa";
