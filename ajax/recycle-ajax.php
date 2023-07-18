@@ -29,8 +29,9 @@
     $output['data'] = ''; 
     $output['pagination'] = '';
 
-    $sql = "SELECT id, log_message, type, date FROM `log` WHERE username = '" . $_SESSION["username"] . "' ORDER BY id desc" . $limit .";";
+    $sql = "SELECT categoryid FROM categories WHERE state = 0 UNION SELECT id FROM ingredients WHERE state = 0 AND username = '" . $_SESSION['username'] . "' UNION SELECT recipeid FROM recipe WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
     $result= $conn -> query($sql); 
+
     if($result -> num_rows == 0){
         $output['data'] .= '<div class="mt-4">';
         $output['data'] .= '<h3 class="text-secondary text-center">No hay notificaciones...</h3>';

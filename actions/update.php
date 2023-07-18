@@ -555,7 +555,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
 
                         if (password_verify($actualPassword, $row['password'])){
                             $hash_password = password_hash($newPassword, PASSWORD_DEFAULT);
-                            $sql = "UPDATE users SET password = '$hash_password', firstname = '$firstname',  lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
+                            $sql = "UPDATE users SET password = '$hash_password', firstname = '$firstname',  lastname = '$lastname', username = '$userName', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex' WHERE userid = '$userId';";
 
                             if ($conn->query($sql)) {
 
@@ -610,7 +610,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                         exit;
                     }
                 } else {            
-                    $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$username', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex', updated_at = '$updateTime' WHERE userid = '$userId';";
+                    $sql = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', username = '$username', type = '$userRol', email = '$userEmail', state='$state', sex = '$sex' WHERE userid = '$userId';";
                     
                     if ($conn->query($sql)) {
 //Notification message        
