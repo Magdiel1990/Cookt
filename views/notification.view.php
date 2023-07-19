@@ -76,7 +76,7 @@ function getData(pagina){
         paginaActual = pagina;
     }
 
-    let url = "ajax/notification-ajax.php";
+    let url = "ajax/notification.php";
     let formaData = new FormData();
     formaData.append("registros", num_registros);
     formaData.append("pagina", pagina);

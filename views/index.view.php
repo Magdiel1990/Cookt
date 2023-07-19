@@ -115,7 +115,7 @@ function getData(pagina){
         paginaActual = pagina;
     }
 
-    let url = "ajax/index-ajax.php";
+    let url = "ajax/index.php";
     let formaData = new FormData();
     formaData.append("search", input);
     formaData.append("registros", num_registros);

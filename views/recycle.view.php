@@ -17,26 +17,6 @@ require_once ("views/partials/nav.php");
     $sql = "SELECT categoryid FROM categories WHERE state = 0 UNION SELECT id FROM ingredients WHERE state = 0 AND username = '" . $_SESSION['username'] . "' UNION SELECT recipeid FROM recipe WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
     $result = $conn -> query($sql);
     $count =  $result -> num_rows;
-
-
-
-    $recycle = [];  
-    
-    $recycle ['category'] = ''; 
-    $recycle ['recipe'] = ''; 
-    $recycle ['ingredients'] = ''; 
-
-    $sql = "SELECT categoryid, category, date FROM categories WHERE state = 0;"; 
-    $result = $conn -> query($sql); 
-
-    if($result -> num_rows != 0) {
-        while ($row = $result -> fetch_assoc()) {
-            $recycle ['category'] = array ($row["categoryid"], $row["category"], $row["date"]);
-        }
-    }
-
-    printf($recycle);
-
  
     if($count == 0) {
         $display = "style='display:none;'";
@@ -65,7 +45,7 @@ require_once ("views/partials/nav.php");
         </div>
 
         <div class="mt-2 col-auto">
-            <h3>Notificaciones</h3>
+            <h3>Papelera de reciclaje</h3>
         </div>
     </div>  
     <div class="col-auto" id="content">
@@ -96,7 +76,7 @@ function getData(pagina){
         paginaActual = pagina;
     }
 
-    let url = "ajax/recycle-ajax.php";
+    let url = "ajax/recycle.php";
     let formaData = new FormData();
     formaData.append("registros", num_registros);
     formaData.append("pagina", pagina);

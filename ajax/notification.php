@@ -24,37 +24,14 @@
     }   
 
     $limit = " LIMIT $start, $registros";
-    
-//Array for the deleted items
-    $recycle = [];  
-    
-    $recycle ['category'] = ''; 
-    $recycle ['recipe'] = ''; 
-    $recycle ['ingredients'] = ''; 
-
-    $sql = "SELECT categoryid, category, date FROM categories WHERE state = 0;"; 
-    $result = $conn -> query($sql); 
-
-    if($result -> num_rows != 0) {
-        while ($row = $result -> fetch_assoc()) {
-            $recycle ['category']['id'] = $row["categoryid"];
-            $recycle ['category']['category'] = $row["category"];
-            $recycle ['category']['date'] = $row["date"];
-        }
-    }
-
-    var_dump($recycle);
-   
-    
-    $sql = "SELECT id FROM ingredients WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
-    $sql = "SELECT recipeid FROM recipe WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
-    $result= $conn -> query($sql); 
 
     $output = [];   
     $output['data'] = ''; 
     $output['pagination'] = '';
 
-    if($result -> num_rows == 0){
+    $sql = "SELECT id, log_message, type, date FROM `log` WHERE username = '" . $_SESSION["username"] . "' ORDER BY id desc" . $limit .";";
+    $result= $conn -> query($sql); 
+    if($num_rows = $result -> num_rows == 0){
         $output['data'] .= '<div class="mt-4">';
         $output['data'] .= '<h3 class="text-secondary text-center">No hay notificaciones...</h3>';
         $output['data'] .= '</div>';
@@ -62,8 +39,8 @@
         while($row = $result -> fetch_assoc()){
 //Time ago calculation                
         $timeAgo = new DateCalculation($row["date"]); 
-        $timeAgo = $timeAgo -> timeAgo(); 
-
+        $timeAgo = $timeAgo -> timeAgo();  
+        
         $output['data'] .= '<div class="py-2 col-auto">'; 
         $output['data'] .= '<div class="card">';
         $output['data'] .= '<div class="card-header">' . $timeAgo . '</div>';
@@ -77,6 +54,7 @@
 
         $output['data'] .= '</div>'; 
         $output['data'] .= '</div>';  
+        $output['data'] .= '</div>'; 
         $output['data'] .= '</div>';   
         }
         $pageTotal = ceil($num_rows / $registros);
