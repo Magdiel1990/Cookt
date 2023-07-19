@@ -386,7 +386,7 @@ if(isset($_GET['not_del'])) {
 }
 
 /************************************************************************************************/
-/***********************************RECYCLE DELETION CODE***********************************/
+/***************************************RECYCLE DELETION CODE************************************/
 /************************************************************************************************/
 
 if(isset($_GET['id']) && isset($_GET['table'])) {
@@ -428,6 +428,37 @@ if(isset($_GET['id']) && isset($_GET['table'])) {
         header('Location: ' . root . 'recycle');
         exit;
     }
+}
+
+/************************************************************************************************/
+/***************************************EMPTY RECYCLE CODE************************************/
+/************************************************************************************************/
+
+if(isset($_GET['empty'])) {
+    if($_GET['empty'] === base64_encode("yes")) {
+        $sql = "DELETE FROM recipe WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
+        $sql .= "DELETE FROM ingredients WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
+        $sql .= "DELETE FROM categories WHERE state = 0;";
+
+        if($conn -> multi_query($sql)) {
+            $_SESSION['message'] = '¡Todos los elementos han sido eliminados!';
+            $_SESSION['message_alert'] = "success";
+
+//The page is redirected to the notifications
+            header('Location: ' . root . 'notifications');
+            exit;
+        } else {
+            $_SESSION['message'] = '¡Error al eliminar todos los elementos!';
+            $_SESSION['message_alert'] = "danger";
+
+//The page is redirected to the notifications
+            header('Location: ' . root . 'notifications');
+            exit;
+        }   
+    } else {
+        header('Location: ' . root . 'error404');
+        exit;
+    }   
 }
 
 //Exiting db connection.

@@ -32,7 +32,6 @@ require_once ("views/partials/nav.php");
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
-                <option value="50">50</option>
             </select>
         </div>
 
@@ -41,7 +40,7 @@ require_once ("views/partials/nav.php");
         </div>
 
         <div class="col-6">
-            <a href="<?php echo root . "delete?not_del=" . base64_encode("yes"); ?>" class='btn btn-outline-danger' title='Eliminar todas las notificaciones' onclick='deleteMessage()' id='notification'><i class='fa-solid fa-trash'></i></a>
+            <a href="<?php echo root . "delete?empty=" . base64_encode("yes"); ?>" class='btn btn-outline-danger' title='Vaciar papelera' onclick='deleteMessage()' id='recycle'><i class='fa-solid fa-trash'></i></a>
         </div>
 
         <div class="mt-2 col-auto">
@@ -94,26 +93,16 @@ function getData(pagina){
 
 //Delete message
 function deleteMessage(){
-var deleteButton = document.getElementById("notification");
+var deleteButton = document.getElementById("recycle");
 
     deleteButton.addEventListener("click", function(event){    
-        if(confirm("¿Desea eliminar todos los elementos?")) {
+        if(confirm("¿Desea vaciar la papelera?")) {
             return true;
         } else {
             event.preventDefault();
             return false;
         }
     })   
-}
-
-//Delete messeage for loop
-function deleteMessageLoop(){  
-    if(confirm("¿Desea eliminar este elemento?")) {
-        return true;
-    } else {
-        event.preventDefault();
-        return false;
-    }
 }
 </script>
 <?php
