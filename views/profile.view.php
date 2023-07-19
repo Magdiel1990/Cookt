@@ -24,7 +24,7 @@ $type = $row["type"];
 $email = $row["email"] ? $row["email"] : "No tiene correo";
 $currentPassword = $row["password"];
 $sex = $row["sex"];
-$date = date("d-m-Y", strtotime($row["date"]));
+$date = date("d-m-Y", strtotime($row["created_at"]));
 ?>
 
 <main class="container p-4">

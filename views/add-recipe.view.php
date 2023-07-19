@@ -20,7 +20,7 @@ require_once ("views/partials/nav.php");
     
     <div class="m-2 justify-content-center row">         
         <h3 class="text-center mb-3">Agregar Receta</h3>
-        <div class="col-lg-6 col-md-8 col-sm-9 col-xl-5">
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xl-7">
             <form class="text-center form" id="add_recipe_form" enctype="multipart/form-data" method="POST" action="<?php echo root;?>create">
             
                 <div class="input-group mb-3">

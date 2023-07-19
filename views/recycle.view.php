@@ -15,8 +15,29 @@ require_once ("views/partials/nav.php");
     }
 
     $sql = "SELECT categoryid FROM categories WHERE state = 0 UNION SELECT id FROM ingredients WHERE state = 0 AND username = '" . $_SESSION['username'] . "' UNION SELECT recipeid FROM recipe WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
-    $count = $conn -> query($sql) -> num_rows;
+    $result = $conn -> query($sql);
+    $count =  $result -> num_rows;
 
+
+
+    $recycle = [];  
+    
+    $recycle ['category'] = ''; 
+    $recycle ['recipe'] = ''; 
+    $recycle ['ingredients'] = ''; 
+
+    $sql = "SELECT categoryid, category, date FROM categories WHERE state = 0;"; 
+    $result = $conn -> query($sql); 
+
+    if($result -> num_rows != 0) {
+        while ($row = $result -> fetch_assoc()) {
+            $recycle ['category'] = array ($row["categoryid"], $row["category"], $row["date"]);
+        }
+    }
+
+    printf($recycle);
+
+ 
     if($count == 0) {
         $display = "style='display:none;'";
     } else {
