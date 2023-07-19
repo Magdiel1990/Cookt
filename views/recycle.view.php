@@ -97,7 +97,7 @@ function deleteMessage(){
 var deleteButton = document.getElementById("notification");
 
     deleteButton.addEventListener("click", function(event){    
-        if(confirm("¿Desea eliminar todas las notificaciones?")) {
+        if(confirm("¿Desea eliminar todos los elementos?")) {
             return true;
         } else {
             event.preventDefault();
@@ -108,7 +108,7 @@ var deleteButton = document.getElementById("notification");
 
 //Delete messeage for loop
 function deleteMessageLoop(){  
-    if(confirm("¿Desea eliminar esta notificación?")) {
+    if(confirm("¿Desea eliminar este elemento?")) {
         return true;
     } else {
         event.preventDefault();

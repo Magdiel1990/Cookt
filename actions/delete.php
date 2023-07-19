@@ -389,9 +389,46 @@ if(isset($_GET['not_del'])) {
 /***********************************RECYCLE DELETION CODE***********************************/
 /************************************************************************************************/
 
+if(isset($_GET['id']) && isset($_GET['table'])) {
+    $id = $_GET['id'];
+    $table = $_GET['table'];
 
+//Possible tables
+    $tables = ["recipe", "ingredients", "categories"];
 
+    if(!in_array($table, $tables)) {
+        header('Location: ' . root . 'error404');
+        exit;     
+    }
 
+//id determination
+    switch ($table) {
+        case "recipe":
+            $idName = "recipeid";
+            break;
+        case "ingredients":
+            $idName = "id";
+            break;                    
+        default:
+            $idName = "categoryid";
+    }
+    
+    $sql = "DELETE FROM $table WHERE $idName = '$id' AND state = 0;";
+
+    if($conn -> query($sql)) {
+        $_SESSION['message'] = '¡Elemento eliminado exitosamente!';
+        $_SESSION['message_alert'] = "success";
+
+        header('Location: ' . root . 'recycle');
+        exit;
+    } else {
+        $_SESSION['message'] = '¡Error al eliminar elemento!';
+        $_SESSION['message_alert'] = "danger";
+
+        header('Location: ' . root . 'recycle');
+        exit;
+    }
+}
 
 //Exiting db connection.
 $conn -> close(); 

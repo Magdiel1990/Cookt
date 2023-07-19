@@ -28,7 +28,7 @@ if($param == "") {
     root. "recovery" => "controllers/recovery.controller.php",
     root. "error404" => "controllers/404.controller.php",
     root. "terms-and-conditions" => "controllers/terms.controller.php",   
-    root . "not-found" => "controllers/notfound.controller.php",
+    root. "not-found" => "controllers/notfound.controller.php",
     root. "notifications" => "controllers/notification.controller.php",
     root. "recycle" => "controllers/recycle.controller.php",
     root. "reactivate-account" => "controllers/reactivate-account.controller.php",
