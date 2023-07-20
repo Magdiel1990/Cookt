@@ -104,6 +104,16 @@ var deleteButton = document.getElementById("recycle");
         }
     })   
 }
+
+//Delete messeage for loop
+function deleteMessageLoop(){  
+    if(confirm("¿Desea eliminar este elemento?")) {
+        return true;
+    } else {
+        event.preventDefault();
+        return false;
+    }
+}
 </script>
 <?php
 //Reseting the message counter

@@ -5,10 +5,10 @@
 /************************************************************************************************/
 
 //Verify that data comes
-if(empty($_POST) || empty($_GET)) {
+/*if(empty($_POST) || empty($_GET)) {
     header('Location: ' . root);
     exit;  
-}
+}*/
 
 //Models.
 require_once ("models/models.php");

@@ -5,10 +5,10 @@ require_once ("views/partials/head.php");
 $_SESSION['location'] = root;
 
 //Verify that data comes
-if(empty($_POST) || empty($_GET)) {
+/*if(empty($_POST) || empty($_GET)) {
     header('Location: ' . root);
     exit;  
-}
+}*/
 
 /************************************************************************************************/
 /******************************************RECIPE UPDATE CODE************************************/
@@ -648,9 +648,54 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                 }        
             }
         }
-    }    
-?>
-<?php
+    }
+}
+
+/************************************************************************************************/
+/*********************************RESTORE FROM RECIPE BIN CODE***********************************/
+/************************************************************************************************/
+
+//receive the data
+if(isset($_GET['id']) && isset($_GET['table'])) {
+    $id = $_GET['id'];
+    $table = $_GET['table'];
+
+
+//Possible tables
+    $tables = ["recipe", "ingredients", "categories"];
+
+    if(!in_array($table, $tables)) {
+        header('Location: ' . root . 'error404');
+        exit;     
+    }
+
+//id determination
+    switch ($table) {
+        case "recipe":
+            $idName = "recipeid";
+            break;
+        case "ingredients":
+            $idName = "id";
+            break;                    
+        default:
+            $idName = "categoryid";
+    }   
+
+    $sql = "UPDATE $table SET state = 1 WHERE $idName = '$id';";
+
+    if($conn -> query($sql)) {
+        $_SESSION['message'] = '¡Elemento restaurado exitosamente!';
+        $_SESSION['message_alert'] = "success";
+
+        header('Location: ' . root . 'recycle');
+        exit;
+    } else {
+        $_SESSION['message'] = '¡Error al restaurar elemento!';
+        $_SESSION['message_alert'] = "danger";
+
+        header('Location: ' . root . 'recycle');
+        exit;
+    } 
 }
 $conn->close();
 ?>
