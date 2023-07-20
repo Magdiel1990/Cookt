@@ -13,7 +13,7 @@
 //Including the database connection.
     $conn = DatabaseConnection::dbConnection();    
 
-    $registros = isset($_POST["registros"]) ? $conn -> real_escape_string($_POST["registros"]) : 5;
+    $registros = isset($_POST["registros"]) ? $conn -> real_escape_string($_POST["registros"]) : 10;
     $pagina = isset($_POST["pagina"]) ? $conn -> real_escape_string($_POST["pagina"]) : 0;
 
     if(!$pagina) {
@@ -23,7 +23,7 @@
         $start = ($pagina - 1) * $registros;
     }   
 
-    $limit = " LIMIT $start, $registros";
+   // $limit = " LIMIT $start, $registros";
     
 //Main array
     $recycle = [];  
@@ -35,7 +35,7 @@
     $sql = "SELECT categoryid, category, date FROM categories WHERE state = 0;"; 
     $result = $conn -> query($sql); 
 
-    if($result -> num_rows != 0) {
+    if($result -> num_rows > 0) {
 
         while ($row = $result -> fetch_assoc()) {
             array_push ($recycle, ["categories", $row["categoryid"], $row["category"], $row["date"]]);
@@ -46,7 +46,7 @@
     $sql = "SELECT id, ingredient, date FROM ingredients WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
     $result = $conn -> query($sql); 
 
-    if($result -> num_rows != 0) {
+    if($result -> num_rows > 0) {
 
         while ($row = $result -> fetch_assoc()) {
             array_push ($recycle, ["ingredients", $row["id"], $row["ingredient"], $row["date"]]);
@@ -57,7 +57,7 @@
     $sql = "SELECT recipeid, recipename, date FROM recipe WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
     $result = $conn -> query($sql); 
 
-    if($result -> num_rows != 0) {
+    if($result -> num_rows > 0) {
 
         while ($row = $result -> fetch_assoc()) {
             array_push ($recycle, ["recipe", $row["recipeid"], $row["recipename"], $row["date"]]);
@@ -96,7 +96,7 @@ $count = count($recycle);
 
             $output['data'] .= '<div class="py-2 col-auto">'; 
             $output['data'] .= '<div class="card">';
-            $output['data'] .= '<div class="card-header">' . $recycle[$i][3] . '</div>';
+            $output['data'] .= '<div class="card-header">' . date("D d-m-Y", strtotime($recycle[$i][3])) . '</div>';
             $output['data'] .= '<div class="card-body">';
             $output['data'] .= '<h5 class="card-title ' . $color . '">' . $title . '</h5>';
             $output['data'] .= '<p class="card-text">' . $log_message . '</p>';
@@ -138,7 +138,7 @@ $count = count($recycle);
         $output['pagination'] .= "</nav>";  
     } else {
         $output['data'] .= '<div class="mt-4">';
-        $output['data'] .= '<h3 class="text-secondary text-center">No hay notificaciones...</h3>';
+        $output['data'] .= '<h3 class="text-secondary text-center">Papelera vacía...</h3>';
         $output['data'] .= '</div>';
     }      
 

@@ -28,10 +28,9 @@ require_once ("views/partials/nav.php");
     <div class="row" <?php echo $display;?>>  
         <div class="col-auto">    
             <select class="form-select" id="num_registros" name="num_registros">
-                <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="20">20</option>
-                <option value="30">30</option>
+                <option value="40">40</option>
             </select>
         </div>
 
@@ -42,12 +41,8 @@ require_once ("views/partials/nav.php");
         <div class="col-6">
             <a href="<?php echo root . "delete?empty=" . base64_encode("yes"); ?>" class='btn btn-outline-danger' title='Vaciar papelera' onclick='deleteMessage()' id='recycle'><i class='fa-solid fa-trash'></i></a>
         </div>
-
-        <div class="mt-2 col-auto">
-            <h3>Papelera de reciclaje</h3>
-        </div>
     </div>  
-    <div class="col-auto" id="content">
+    <div class="row my-3" id="content">
     </div>        
 
     <div class="col-8" id="nav-pagination">            
