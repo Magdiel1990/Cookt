@@ -79,26 +79,26 @@ $count = count($recycle);
                     $log_message = $recycle[$i][2];
                     $table = "recipe";
                     $title = "RECETA";
-                    $color = "text-warning";
+                    $color = "warning";
                     break;
                 case "ingredients":
                     $log_message = $recycle[$i][2];
                     $table = "ingredients";
                     $title = "INGREDIENTE";
-                    $color = "text-success";
+                    $color = "success";
                     break;                    
                 default:
                     $log_message = $recycle[$i][2];
                     $table = "categories";
                     $title = "CATEGORÍA";
-                    $color = "text-primary";
+                    $color = "secondary";
             }                   
 
             $output['data'] .= '<div class="py-2 col-auto">'; 
             $output['data'] .= '<div class="card">';
-            $output['data'] .= '<div class="card-header">' . date("D d-m-Y", strtotime($recycle[$i][3])) . '</div>';
+            $output['data'] .= '<h5 class="card-header text-center text-light bg-'. $color . '">' . date("D d-m-Y", strtotime($recycle[$i][3])) . '</h5>';
             $output['data'] .= '<div class="card-body">';
-            $output['data'] .= '<h5 class="card-title ' . $color . '">' . $title . '</h5>';
+            $output['data'] .= '<h6 class="card-title text-center">' . $title . '</h6>';
             $output['data'] .= '<p class="card-text">' . $log_message . '</p>';
             $output['data'] .= '<div class="btn-group" role="group">';
             $output['data'] .= '<a href="' . root . 'delete?id=' .  $recycle[$i][1] . '&table=' . $table . '" class="btn btn-danger" onclick="deleteMessageLoop()">Eliminar</a>';
