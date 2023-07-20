@@ -23,7 +23,7 @@
     $search = isset($_POST["search"]) ? $conn -> real_escape_string($_POST["search"]) : null; 
 
 //Filter where
-    $where = " WHERE username = '" . $_SESSION['username'] . "'";
+    $where = " WHERE username = '" . $_SESSION['username'] . "' AND r.state = 1";
 
 //If the variable search isn't null, the query is done with the where.
     if($search != null){
@@ -36,7 +36,7 @@
 
 //The final where delection.
         $where = substr_replace($where, "", -3);
-        $where .= "AND username = '" . $_SESSION['username'] . " AND r.state = 1')";
+        $where .= "AND username = '" . $_SESSION['username'] . "' AND r.state = 1)";
     }        
 
 // Limit
