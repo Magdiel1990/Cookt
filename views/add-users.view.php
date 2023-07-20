@@ -33,17 +33,17 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
-                    <input class="form-control" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" required>
+                    <input class="form-control" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" minlength="2" maxlength="30" required>
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="lastname">Apellido: </label>
-                    <input class="form-control" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="40" required>
+                    <input class="form-control" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" minlength="2" maxlength="40" required>
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="username">Usuario: </label>
-                    <input class="form-control" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" required>
+                    <input class="form-control" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" minlength="2" maxlength="30" required>
                 </div>
 
                 <div class="input-group mb-3">
@@ -111,7 +111,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                 var form = document.getElementById("user_form");    
 
                 form.addEventListener("submit", function(event){ 
-                    var regExp = /[a-zA-Z\t\h]+|(^$)/;
+                    var regExp = /[a-zA-Z,;:\t\h]+|(^$)/;
                     var firstname = document.getElementById("firstname").value;
                     var lastname = document.getElementById("lastname").value;
                     var username = document.getElementById("username").value;

@@ -25,7 +25,7 @@ require_once ("views/partials/nav.php");
             
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="recipename">Nombre: </label>
-                    <input  class="form-control" type="text" id="recipename" name="recipename" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="50" minlength="7" required>             
+                    <input  class="form-control" type="text" id="recipename" name="recipename" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="50" minlength="7" required>             
                 </div>
 
                 <div class="input-group mb-3">
@@ -114,7 +114,7 @@ require_once ("views/partials/nav.php");
                     var form = document.getElementById("add_recipe_form");
                     form.addEventListener("submit", function(event){
 
-                    var regExp = /[a-zA-Z\t\h]+|(^$)/;
+                    var regExp = /[a-zA-Z,;:\t\h]+|(^$)/;
                     var recipename = document.getElementById("recipename").value;
                     var cookingtime = document.getElementById("cookingtime").value;
                     var ingredients = document.getElementById("ingredients").value;

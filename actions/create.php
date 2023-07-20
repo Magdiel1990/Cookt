@@ -29,7 +29,7 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
   $categoryImage = $_FILES["categoryImage"];
 
 //Regex that the category should have
-  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/";   
+  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:\t\h]+|(^$)/";   
 
   if ($category == "" || $categoryImage ['name'] == null){
 
@@ -147,7 +147,7 @@ if(isset($_POST['add_ingredient'])){
   $filter = new Filter ($_POST['add_ingredient'], FILTER_SANITIZE_STRING, $conn);
   $ingredient = $filter -> sanitization();
   
-  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
+  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:\t\h]+|(^$)/"; 
  
 //Variable is null.
   if ($ingredient == ""){
@@ -230,7 +230,7 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
   $category = $_POST['category']; 
   $recipeImage = $_FILES["recipeImage"];  
 
-  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/"; 
+  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:\t\h]+|(^$)/"; 
 //If this variables are null
   if ($recipename == "" || $preparation == "" || $ingredients == "") {
       $_SESSION['message'] = '¡Falta nombre de la receta o la preparación!';
@@ -532,7 +532,7 @@ if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex
   $rol = $_POST['userrol'];
   $state = $_POST['activeuser'];
   $sessionUser = $_POST['session_user'];
-  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/";
+  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:\t\h]+|(^$)/";
 
 //Check if the user is Admin
   $sql = "SELECT userid, `type` FROM users WHERE username = ?;";

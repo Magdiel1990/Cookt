@@ -25,7 +25,7 @@ require_once ("views/partials/nav.php");
         <form method="POST" id="ingform" action="<?php echo root;?>create" autocomplete="on" class="mt-3 col-auto">
             <div class="input-group mb-4">
                 <label  class="input-group-text is-required" for="add_ingredient">Ingrediente: </label>
-                <input  class="form-control" type="text" id="add_ingredient" name="add_ingredient" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="20" autofocus required>
+                <input  class="form-control" type="text" id="add_ingredient" name="add_ingredient" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" minlength="2" maxlength="20" autofocus required>
                 <input class="btn btn-success" type="submit" value="Agregar">
             </div>
         </form>
@@ -85,7 +85,7 @@ function add_ingredient_validation() {
     var form = document.getElementById("ingform");    
 
     form.addEventListener("submit", function (event){
-    var regExp = /[a-zA-Z\t\h]+|(^$)/;
+    var regExp = /[a-zA-Z,;:\t\h]+|(^$)/;
     var message = document.getElementById("message");    
     var ingredient = document.getElementById("add_ingredient").value;
 

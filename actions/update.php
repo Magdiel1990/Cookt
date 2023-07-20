@@ -451,7 +451,7 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
     $sex = $_POST['sex'];
     $updateTime =  date("Y-m-d H:i:s");
     $profileImg = isset($_FILES["profile"]) ? $_FILES["profile"] : "";
-    $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/";
+    $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:\t\h]+|(^$)/";
  
     if($state == "yes") {
         $state = 1;        

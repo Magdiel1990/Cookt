@@ -31,7 +31,7 @@ require_once ("views/partials/nav.php");
             
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="add_categories">Categoría: </label>
-                <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="50" autofocus required>
+                <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" minlength="2" maxlength="50" autofocus required>
             </div>
 
             <div class="mb-3">
@@ -114,7 +114,7 @@ function formValidation(){
 
     form.addEventListener("submit", function(event) { 
 //Accepted formats            
-        var regExp = /[a-zA-Z\t\h]+|(^$)/;
+        var regExp = /[a-zA-Z,;:\t\h]+|(^$)/;
         var categoryImageInput = document.getElementById('categoryImage');
         var categoryImage = categoryImageInput.value;                            
         var categoryNameInput = document.getElementById('add_categories');

@@ -50,7 +50,7 @@ if($result -> num_rows > 0) {
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="categoryName">Nombre: </label>
-                    <input type="text" name="categoryName" value="<?php echo $category;?>" class="form-control" id="categoryName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="20" minlength="2" required>
+                    <input type="text" name="categoryName" value="<?php echo $category;?>" class="form-control" id="categoryName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="20" minlength="2" required>
                 </div>
 
                 <div class="mb-3">
@@ -73,7 +73,7 @@ if($result -> num_rows > 0) {
                     form.addEventListener("submit", function(event) { 
 //Accepted formats            
                         var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG|.webp|.WEBP)$/i;
-                        var regExp = /[a-zA-Z\t\h]+|(^$)/;
+                        var regExp = /[a-zA-Z,;:\t\h]+|(^$)/;
                         var categoryImageInput = document.getElementById('categoryImage');
                         var categoryImage = categoryImageInput.value;                            
                         var categoryNameInput = document.getElementById('categoryName');
@@ -186,7 +186,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="newRecipeName">Nombre: </label>
-                        <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" maxlength="50" minlength="7" required>
+                        <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="50" minlength="7" required>
                     </div>
 
                     <div class="input-group mb-3">
@@ -272,7 +272,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
         form.addEventListener("submit", function(event) { 
 //Accepted formats            
             var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG|.webp|.WEBP)$/i;
-            var regExp = /[a-zA-Z\t\h]+|(^$)/;
+            var regExp = /[a-zA-Z,;:\t\h]+|(^$)/;
             var imageUrlInput = document.getElementById('imageUrl');
             var imageUrl = imageUrlInput.value;
             var recipeImage = document.getElementById('recipeImage');            
@@ -420,17 +420,17 @@ $num_rows  = $result -> num_rows;
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
-                    <input class="form-control"  value="<?php echo $firstName; ?>" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" required>
+                    <input class="form-control"  value="<?php echo $firstName; ?>" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" minlength="2" maxlength="30" required>
                 </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="lastname">Apellido: </label>
-                    <input class="form-control"  value="<?php echo $lastName; ?>" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="40" required>
+                    <input class="form-control"  value="<?php echo $lastName; ?>" type="text" id="lastname" name="lastname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" minlength="2" maxlength="40" required>
                 </div>
 
                 <div style="<?php echo $userNameLabelState;?>" class="input-group mb-3">
                     <label class="input-group-text is-required" for="username">Usuario: </label>
-                    <input class="form-control" value="<?php echo $userName; ?>" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ]+" minlength="2" maxlength="30" required <?php echo $userNameState; ?>>
+                    <input class="form-control" value="<?php echo $userName; ?>" type="text" id="username" name="username"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" minlength="2" maxlength="30" required <?php echo $userNameState; ?>>
                 </div>
                 
                 <div class="input-group mb-3">
@@ -535,7 +535,7 @@ $num_rows  = $result -> num_rows;
                     form.addEventListener("submit", function(event) { 
 //Accepted formats            
                         var ext=/(.jpg|.JPG|.jpeg|.JPEG|.png|.PNG|.webp|.WEBP)$/i;
-                        var regExp = /[a-zA-Z\t\h]+|(^$)/;
+                        var regExp = /[a-zA-Z,;:\t\h]+|(^$)/;
                         var firstname = document.getElementById("firstname").value;
                         var lastname = document.getElementById("lastname").value;
                         var username = document.getElementById("username").value;
