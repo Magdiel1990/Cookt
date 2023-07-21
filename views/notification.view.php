@@ -36,11 +36,11 @@ require_once ("views/partials/nav.php");
 
         <div class="col-auto">
             <label for="num_registros" class="col-form-label">registros</label>
+            <label id="lbl-total" class="col-form-label"></label>
         </div>
-
-        <div class="col-6">
+        <div class="col-auto">
             <a href="<?php echo root . "delete?not_del=" . base64_encode("yes"); ?>" class='btn btn-outline-danger' title='Eliminar todas las notificaciones' onclick='deleteMessage()' id='notification'><i class='fa-solid fa-trash'></i></a>
-        </div>
+        </div>      
     </div>  
     
     <div class="row my-3 justify-content-start" id="content">
@@ -57,7 +57,7 @@ getData(paginaActual);
 deleteMessage();
 
 document.getElementById("num_registros").addEventListener("change", function() {
-        getData(paginaActual)
+        getData(paginaActual);
 }, false);
 
 //Function for getting the data
@@ -65,6 +65,7 @@ function getData(pagina){
     let content = document.getElementById("content");
     let pagination = document.getElementById("nav-pagination");
     let num_registros = document.getElementById("num_registros").value;
+    let totalRegister = document.getElementById("lbl-total");
 
 //When filtering and searching the page doesn't start from the begging    
     if(pagina != null){
@@ -83,6 +84,7 @@ function getData(pagina){
     .then(data => {   
         content.innerHTML = data.data;  
         pagination.innerHTML = data.pagination;
+        totalRegister.innerHTML = "de " + data.totalRegister;
 //If there's an error.  
     }).catch(err => console.log(err));
 }

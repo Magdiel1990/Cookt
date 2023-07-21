@@ -25,8 +25,13 @@ $result = $conn -> query($sql);
         $log_message = "Has eliminado la receta \"" . $recipeName . "\".";       
         $type = "delete";
 
-        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-        $conn -> query($sql);
+        $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
+        $result = $conn -> query($sql); 
+
+        if($result -> num_rows == 0) {
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
+        }
 
 //Deleting recipe img       
         $target_dir = "imgs/recipes/". $_SESSION['username']. "/";
@@ -85,8 +90,13 @@ $categoryImgDir = $files -> directoryFiles();
         $log_message = "Has eliminado la categoría \"" . $categoryName . "\".";       
         $type = "delete";
 
-        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-        $conn -> query($sql);
+        $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
+        $result = $conn -> query($sql); 
+
+        if($result -> num_rows == 0) {
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
+        }      
 
         $_SESSION['message'] = '¡Categoría eliminada!';
         $_SESSION['message_alert'] = "success";
@@ -119,8 +129,13 @@ $result = $conn -> query($sql);
         $log_message = "Has eliminado el ingrediente \"" . $ingredientName . "\".";       
         $type = "delete";
 
-        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-        $conn -> query($sql);
+        $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
+        $result = $conn -> query($sql); 
+
+        if($result -> num_rows == 0) {
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
+        }      
 
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
@@ -227,10 +242,15 @@ $num_rows = $result -> num_rows;
             $log_message = "Has eliminado el usuario \"" . $username . "\".";       
             $type = "delete";
 
-            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-            $conn -> query($sql);
+            $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
+            $result = $conn -> query($sql); 
 
-//Confirmation link                            
+            if($result -> num_rows == 0) {
+                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                $conn -> query($sql);
+            }      
+
+        //Confirmation link                            
             $confirmPassLink = "www.recipeholder.net". root ."email_confirm?code=". $uniqcode;
 //Message
             $subject = "Confirmación de desactivación de cuenta";                            

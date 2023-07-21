@@ -13,7 +13,7 @@
 //Including the database connection.
     $conn = DatabaseConnection::dbConnection();    
 
-    $registros = isset($_POST["registros"]) ? $conn -> real_escape_string($_POST["registros"]) : 5;
+    $registros = isset($_POST["registros"]) ? $conn -> real_escape_string($_POST["registros"]) : 10;
     $pagina = isset($_POST["pagina"]) ? $conn -> real_escape_string($_POST["pagina"]) : 0;
 
     if(!$pagina) {
@@ -28,15 +28,39 @@
     $output = [];   
     $output['data'] = ''; 
     $output['pagination'] = '';
+    $output['totalRegister'] = '';
 
-    $sql = "SELECT id, log_message, type, date FROM `log` WHERE username = '" . $_SESSION["username"] . "' ORDER BY id desc" . $limit .";";
-    $result= $conn -> query($sql); 
-    if($num_rows = $result -> num_rows == 0){
+//Array of the columns to be querried from the database.
+    $columns = ["id", "log_message", "type", "date"];
+
+//Query with limit
+    $sql = "SELECT SQL_CALC_FOUND_ROWS ". implode(", ", $columns) . "
+    FROM `log` WHERE username = '" . $_SESSION["username"] . "' ORDER BY id desc" . $limit .";";
+    $result = $conn -> query($sql); 
+    $num_rows = $result -> num_rows;
+
+//filtered register query
+    $sqlFilter = "SELECT FOUND_ROWS()";
+    $resFilter = $conn->query($sqlFilter);
+    $rowFilter = $resFilter->fetch_array();
+    $totalFilter = $rowFilter[0];
+
+//filtered register query
+    $sqlTotal = "SELECT count(id) FROM `log` WHERE username = '" . $_SESSION["username"] . "';";   
+    $resTotal = $conn->query($sqlTotal);
+    $rowTotal = $resTotal->fetch_array();
+
+    $totalRegister = $rowTotal[0]; 
+
+//Total registers
+    $output['totalRegister'] = $totalRegister;
+
+    if($num_rows == 0){
         $output['data'] .= '<div class="mt-4">';
-        $output['data'] .= '<h3 class="text-secondary text-center">No hay notificaciones...</h3>';
+        $output['data'] .= '<h3 class="text-secondary text-center">Ningún elemento encontrado...</h3>';
         $output['data'] .= '</div>';
     } else {  
-        while($row = $result -> fetch_assoc()){
+        while($row =  $result -> fetch_assoc()){
 //Time ago calculation                
         $timeAgo = new DateCalculation($row["date"]); 
         $timeAgo = $timeAgo -> timeAgo();  
@@ -49,7 +73,7 @@
         $output['data'] .= '<a href="' . root . 'delete?messageid=' . $row['id'] . '&type=' . $row["type"] . '" class="btn btn-danger" onclick="deleteMessageLoop()">Eliminar</a>';
                     
         if($row["type"] == "share"){
-            $output['data'] .= ' <a href="' . root . 'create?messageid=' . $row['id'] . '&type=' . $row["type"] .'" class="btn btn-primary">Aceptar</a>';
+            $output['data'] .= '<a href="' . root . 'create?messageid=' . $row['id'] . '&type=' . $row["type"] .'" class="btn btn-primary">Aceptar</a>';
         }
 
         $output['data'] .= '</div>'; 
@@ -57,10 +81,13 @@
         $output['data'] .= '</div>'; 
         $output['data'] .= '</div>';   
         }
-        $pageTotal = ceil($num_rows / $registros);
+    } 
+
+    if($totalRegister  > 0) {
+        $filterTotal = ceil($totalFilter / $registros);
 
         $output['pagination'] .= "<nav>";
-        $output['pagination'] .= "<ul class='pagination'>";        
+        $output['pagination'] .= "<ul class='pagination'>";            
 
         $start = 1;
 //Total Tabs
@@ -70,8 +97,8 @@
 
         $end = $start + 8;
 
-        if($end > $pageTotal) {
-            $end = $pageTotal;
+        if($end > $filterTotal) {
+            $end = $filterTotal;
         }
         
         for($i = $start; $i <= $end; $i++){
@@ -83,7 +110,8 @@
         }
         $output['pagination'] .= "</ul>";
         $output['pagination'] .= "</nav>";  
-    }      
+    }
+        
 
 //Json file is encoded and echoed excluding especial characters.
     echo json_encode($output, JSON_UNESCAPED_UNICODE);

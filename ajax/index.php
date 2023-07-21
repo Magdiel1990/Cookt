@@ -23,7 +23,7 @@
     $search = isset($_POST["search"]) ? $conn -> real_escape_string($_POST["search"]) : null; 
 
 //Filter where
-    $where = " WHERE username = '" . $_SESSION['username'] . "' AND r.state = 1";
+    $where = "WHERE username = '" . $_SESSION['username'] . "' AND r.state = 1";
 
 //If the variable search isn't null, the query is done with the where.
     if($search != null){
@@ -36,7 +36,7 @@
 
 //The final where delection.
         $where = substr_replace($where, "", -3);
-        $where .= "AND username = '" . $_SESSION['username'] . "' AND r.state = 1)";
+        $where .= ") AND username = '" . $_SESSION['username'] . "' AND r.state = 1";
     }        
 
 // Limit
@@ -57,6 +57,7 @@
     FROM $table 
     $where ORDER BY recipename $limit;";
 
+  
 //Count of the number of rows of the query
     $result = $conn->query($sql);
     $num_rows = $result-> num_rows;
@@ -105,7 +106,7 @@
 
     if($output['totalRegister'] > 0) {
         $pageTotal = ceil($output['totalRegister'] / $registros);
-        $filterTotal = ceil($output['totalFilter'] / $registros);
+        //$filterTotal = ceil($output['totalFilter'] / $registros);
 
         $output['pagination'] .= "<nav>";
         $output['pagination'] .= "<ul class='pagination'>";
@@ -118,8 +119,8 @@
 
         $end = $start + 8;
 
-        if($end > $filterTotal) {
-            $end = $filterTotal;
+        if($end > $pageTotal) {
+            $end = $pageTotal;
         }
         
         for($i = $start; $i <= $end; $i++){
