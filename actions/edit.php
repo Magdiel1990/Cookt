@@ -468,14 +468,14 @@ $num_rows  = $result -> num_rows;
                     ?>               
                     </select>
                 </div>
-
+               
                 <div class="frame-edit mb-2">
-                    <label class="form-label" for="profile">Foto</label>                    
-                    <div class="dropzone">                                     
-                        <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon"/>                        
-                        <input  class="upload-input form-control" id="profile" type="file" name="profile" accept=".webp, .png, .jpeg, .jpg, .gif"/>
+                    <label class="form-label" for="profile">Foto</label>      
+                    <div class="dropzone">
+                        <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+                        <input type="file" name="profile" accept=".png, .jpeg, .jpg, .gif, .webp" class="upload-input form-control" id="profile"/>
                     </div>                       
-                </div>     
+                </div>               
 
                 <div class="text-center" id="imgMessage"></div>
 
