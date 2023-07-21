@@ -66,13 +66,8 @@ $categoryId = $row['categoryid'];
                     $log_message = "Has actualizado la receta \"" . $oldName . "\" por el nuevo nombre \"" . $newRecipeName . "\".";       
                     $type = "update";
 
-                    $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-                    $result = $conn -> query($sql); 
-
-                    if($result -> num_rows == 0) {
-                        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                        $conn -> query($sql);
-                    }       
+                    $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                    $conn -> query($sql);
 
 //Message if the variable is null.
                     $_SESSION['message'] = '¡Receta editada con éxito!';
@@ -98,13 +93,9 @@ $categoryId = $row['categoryid'];
                     $log_message = "Has actualizado la receta \"" . $oldName . "\" por el nuevo nombre \"" . $newRecipeName . "\".";       
                     $type = "update";
 
-                    $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-                    $result = $conn -> query($sql); 
-
-                    if($result -> num_rows == 0) {
-                        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                        $conn -> query($sql);
-                    }     
+                    $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                    $conn -> query($sql);
+ 
 // Remote image URL Sanitization   
                     $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL, $conn);
                     $url = $filter -> sanitization();
@@ -225,13 +216,9 @@ $categoryId = $row['categoryid'];
                     $log_message = "Has actualizado la receta \"" . $oldName . "\" por el nuevo nombre \"" . $newRecipeName . "\".";       
                     $type = "update";
 
-                    $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-                    $result = $conn -> query($sql); 
+                    $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                    $conn -> query($sql);
 
-                    if($result -> num_rows == 0) {
-                        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                        $conn -> query($sql);
-                    }     
 //Success message.
                     $_SESSION['message'] = '¡Receta editada con éxito!';
                     $_SESSION['message_alert'] = "success";
@@ -340,13 +327,9 @@ $oldCategoryName = $row['category'];
                     $log_message = "Has actualizado la categoría \"" . $oldCategoryName . "\" por el nuevo nombre \"" . $newCategoryName . "\".";       
                     $type = "update";
 
-                    $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-                    $result = $conn -> query($sql); 
+                    $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                    $conn -> query($sql);
 
-                    if($result -> num_rows == 0) {
-                        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                        $conn -> query($sql);
-                    }       
 //Message if the variable is null.
                     $_SESSION['message'] = '¡La categoría ha sido editada!';
                     $_SESSION['message_alert'] = "success";
@@ -404,13 +387,8 @@ $oldCategoryName = $row['category'];
             $log_message = "Has actualizado la categoría \"" . $oldCategoryName . "\" por el nuevo nombre \"" . $newCategoryName . "\".";       
             $type = "update";
 
-            $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-            $result = $conn -> query($sql); 
-
-            if($result -> num_rows == 0) {
-                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                $conn -> query($sql);
-            }     
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
 
 //Success message.
             $_SESSION['message'] = '¡Categoría editada con éxito!';
@@ -588,13 +566,9 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                             $log_message = "Has actualizado el usuario \"" . $username . "\".";       
                             $type = "update";
 
-                            $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-                            $result = $conn -> query($sql); 
-
-                            if($result -> num_rows == 0) {
-                                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                                $conn -> query($sql);
-                            }     
+                            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                            $conn -> query($sql);
+ 
 //Message if the variable is null.
                             $_SESSION['message'] = '¡Usuario editado correctamente!';
                             $_SESSION['message_alert'] = "success";
@@ -647,13 +621,9 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
                     $log_message = "Has actualizado el usuario \"" . $username . "\".";       
                     $type = "update";
 
-                    $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-                    $result = $conn -> query($sql); 
+                    $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                    $conn -> query($sql);
 
-                    if($result -> num_rows == 0) {
-                        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                        $conn -> query($sql);
-                    }     
 //Message if the variable is null.
                     $_SESSION['message'] = '¡Usuario editado correctamente!';
                     $_SESSION['message_alert'] = "success";
@@ -695,7 +665,6 @@ if(isset($_GET['id']) && isset($_GET['table'])) {
     $id = $_GET['id'];
     $table = $_GET['table'];
 
-
 //Possible tables
     $tables = ["recipe", "ingredients", "categories"];
 
@@ -717,8 +686,9 @@ if(isset($_GET['id']) && isset($_GET['table'])) {
     }   
 
     $sql = "UPDATE $table SET state = 1 WHERE $idName = '$id';";
+    $sql .= "DELETE FROM recycle WHERE elementid = '$id';";
 
-    if($conn -> query($sql)) {
+    if($conn -> multi_query($sql)) {
         $_SESSION['message'] = '¡Elemento restaurado exitosamente!';
         $_SESSION['message_alert'] = "success";
 

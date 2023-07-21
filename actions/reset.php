@@ -48,13 +48,8 @@ $sql = "DELETE FROM users WHERE username = '$username';";
             $log_message = "Has reiniciado el usuario \"" . $username . "\".";       
             $type = "reset";
 
-            $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-            $result = $conn -> query($sql); 
-
-            if($result -> num_rows == 0) {
-                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                $conn -> query($sql);
-            }      
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
 
             $_SESSION['message'] = '¡Usuario reseteado!';
             $_SESSION['message_alert'] = "success";

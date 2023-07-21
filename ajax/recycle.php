@@ -23,55 +23,7 @@ if(!$pagina) {
     $start = ($pagina - 1) * $registros;
 }   
 
-//Main array
-$recycle = [];  
-
-//Type of query
-$type = "delete";
-
-//Category array
-$sql = "SELECT categoryid, category, date FROM categories WHERE state = 0;"; 
-$result = $conn -> query($sql); 
-
-if($result -> num_rows > 0) {
-    while ($row = $result -> fetch_assoc()) {
-        array_push ($recycle, ["categories", $row["categoryid"], $row["category"], $row["date"]]);
-    }
-}
-
-//Ingredient array
-$sql = "SELECT id, ingredient, date FROM ingredients WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
-$result = $conn -> query($sql); 
-
-if($result -> num_rows > 0) {
-
-    while ($row = $result -> fetch_assoc()) {
-        array_push ($recycle, ["ingredients", $row["id"], $row["ingredient"], $row["date"]]);
-    }
-}
-
-//Recipe array
-$sql = "SELECT recipeid, recipename, date FROM recipe WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
-$result = $conn -> query($sql); 
-
-if($result -> num_rows > 0) {
-
-    while ($row = $result -> fetch_assoc()) {
-        array_push ($recycle, ["recipe", $row["recipeid"], $row["recipename"], $row["date"]]);
-    }
-}
-
-/***********************Work on this */
-$totalRegister = count($recycle);
-
-if($registros > $totalRegister) {
-    $registros = $totalRegister;
-}
-
-$recycleLimit = array_slice($recycle, $start, $registros);
-
-/********************************* */
-$totalFilter = count($recycleLimit);
+$limit = " LIMIT $start, $registros";
 
 //Store the messages
 $output = [];   
@@ -79,26 +31,45 @@ $output['pagination'] = '';
 $output['data'] = '';
 $output['totalRegister'] = '';
 
+//Array of the columns to be querried from the database.
+$columns = ["id", "name", "type", "date", "elementid"];
+
+//Query with limit
+$sql = "SELECT SQL_CALC_FOUND_ROWS ". implode(", ", $columns) . "
+FROM recycle WHERE username = '" . $_SESSION["username"] . "' ORDER BY id desc" . $limit .";";
+$result = $conn -> query($sql); 
+$num_rows = $result -> num_rows;
+
+//filtered register query
+$sqlFilter = "SELECT FOUND_ROWS()";
+$resFilter = $conn->query($sqlFilter);
+$rowFilter = $resFilter->fetch_array();
+$totalFilter = $rowFilter[0];
+
+//filtered register query
+$sqlTotal = "SELECT count(id) FROM recycle WHERE username = '" . $_SESSION["username"] . "';";   
+$resTotal = $conn->query($sqlTotal);
+$rowTotal = $resTotal->fetch_array();
+
+$totalRegister = $rowTotal[0]; 
+
+//Total registers
 $output['totalRegister'] = $totalRegister;
 
 if($totalFilter > 0) {
-    for($i = 0; $i < $totalFilter; $i++){          
-
-        switch ($recycle[$i][0]) {
-            case "recipe":
-                $log_message = $recycle[$i][2];
+    while($row = $result->fetch_assoc()){
+        switch ($row ["type"]) {
+            case "Receta":
                 $table = "recipe";
                 $title = "RECETA";
                 $color = "warning";
                 break;
-            case "ingredients":
-                $log_message = $recycle[$i][2];
+            case "Ingrediente":
                 $table = "ingredients";
                 $title = "INGREDIENTE";
                 $color = "success";
                 break;                    
             default:
-                $log_message = $recycle[$i][2];
                 $table = "categories";
                 $title = "CATEGORÍA";
                 $color = "secondary";
@@ -106,24 +77,25 @@ if($totalFilter > 0) {
 
         $output['data'] .= '<div class="py-2 col-auto">'; 
         $output['data'] .= '<div class="card">';
-        $output['data'] .= '<h5 class="card-header text-center text-light bg-'. $color . '">' . date("D d-m-Y", strtotime($recycle[$i][3])) . '</h5>';
+        $output['data'] .= '<h5 class="card-header text-center text-light bg-'. $color . '">' . $row['date'] . '</h5>';
         $output['data'] .= '<div class="card-body">';
         $output['data'] .= '<h6 class="card-title text-center text-'. $color . '">' . $title . '</h6>';
-        $output['data'] .= '<p class="card-text">' . $log_message . '</p>';
+        $output['data'] .= '<p class="card-text">' . $row['name'] . '</p>';
         $output['data'] .= '<div class="btn-group" role="group">';
-        $output['data'] .= '<a href="' . root . 'delete?id=' .  $recycle[$i][1] . '&table=' . $table . '" class="btn btn-outline-danger" onclick="deleteMessageLoop()">Eliminar</a>';
-        $output['data'] .= '<a href="' . root . 'update?id=' .  $recycle[$i][1] . '&table=' . $table . '" class="btn btn-primary">Restaurar</a>';
+        $output['data'] .= '<a href="' . root . 'delete?id='. $row['elementid'] .'&table=' . $table . '" class="btn btn-outline-danger" onclick="deleteMessageLoop()">Eliminar</a>';
+        $output['data'] .= '<a href="' . root . 'update?id='. $row['elementid'] .'&table=' . $table . '" class="btn btn-primary">Restaurar</a>';
         $output['data'] .= '</div>'; 
         $output['data'] .= '</div>'; 
         $output['data'] .= '</div>';  
         $output['data'] .= '</div>';  
         $output['data'] .= '</div>';              
-    }    
+    } 
 } else {
     $output['data'] .= '<div class="mt-4">';
     $output['data'] .= '<h3 class="text-secondary text-center">Ningún elemento encontrado...</h3>';
     $output['data'] .= '</div>';
-}      
+}  
+
 
 if($totalRegister > 0) {
     $totalRegister = ceil($totalRegister / $registros);

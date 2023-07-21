@@ -11,6 +11,14 @@ if(isset($_GET['recipename'])){
 //Getting the name.
 $recipeName = $_GET['recipename'];
 
+//Getting the id
+$sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
+$result = $conn -> query($sql);
+$row = $result -> fetch_assoc();
+
+$id = $row ["recipeid"];
+
+//Deleting
 $sql = "UPDATE recipe SET state = 0 WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
 $result = $conn -> query($sql);
 
@@ -25,13 +33,9 @@ $result = $conn -> query($sql);
         $log_message = "Has eliminado la receta \"" . $recipeName . "\".";       
         $type = "delete";
 
-        $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-        $result = $conn -> query($sql); 
-
-        if($result -> num_rows == 0) {
-            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-            $conn -> query($sql);
-        }
+        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+        $sql .= "INSERT INTO recycle (name, type, username, elementid) VALUES ('$recipeName', 'Receta', '" . $_SESSION['username'] . "', '$id');";
+        $conn -> multi_query($sql);
 
 //Deleting recipe img       
         $target_dir = "imgs/recipes/". $_SESSION['username']. "/";
@@ -62,6 +66,13 @@ if(isset($_GET['categoryname'])){
 //Category.
 $categoryName = $_GET['categoryname'];
 
+//Getting the id
+$sql = "SELECT categoryid FROM categories WHERE category = '$categoryName';";
+$result = $conn -> query($sql);
+$row = $result -> fetch_assoc();
+
+$id = $row["categoryid"];
+
 //Category directory
 $categoryDir = "imgs/categories/";
 
@@ -90,13 +101,10 @@ $categoryImgDir = $files -> directoryFiles();
         $log_message = "Has eliminado la categoría \"" . $categoryName . "\".";       
         $type = "delete";
 
-        $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-        $result = $conn -> query($sql); 
+        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+        $sql .= "INSERT INTO recycle (name, type, username, elementid) VALUES ('$categoryName', 'Categoría', '" . $_SESSION['username'] . "', '$id');";
 
-        if($result -> num_rows == 0) {
-            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-            $conn -> query($sql);
-        }      
+        $result = $conn -> multi_query($sql);
 
         $_SESSION['message'] = '¡Categoría eliminada!';
         $_SESSION['message_alert'] = "success";
@@ -115,6 +123,13 @@ if(isset($_GET['ingredientname'])){
 //Ingredient
 $ingredientName = $_GET['ingredientname'];
 
+//Getting the id
+$sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredientName' AND username = '" . $_SESSION['username'] . "';";
+$result = $conn -> query($sql);
+$row = $result -> fetch_assoc();
+
+$id = $row ["id"];
+
 $sql = "UPDATE ingredients SET state = 0 WHERE ingredient = '$ingredientName' AND username = '" . $_SESSION['username'] . "';";
 $result = $conn -> query($sql);
 
@@ -129,13 +144,10 @@ $result = $conn -> query($sql);
         $log_message = "Has eliminado el ingrediente \"" . $ingredientName . "\".";       
         $type = "delete";
 
-        $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-        $result = $conn -> query($sql); 
+        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+        $sql .= "INSERT INTO recycle (name, type, username, elementid) VALUES ('$ingredientName', 'Ingrediente', '" . $_SESSION['username'] . "', '$id');";
 
-        if($result -> num_rows == 0) {
-            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-            $conn -> query($sql);
-        }      
+        $result = $conn -> multi_query($sql);
 
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
@@ -242,15 +254,9 @@ $num_rows = $result -> num_rows;
             $log_message = "Has eliminado el usuario \"" . $username . "\".";       
             $type = "delete";
 
-            $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-            $result = $conn -> query($sql); 
-
-            if($result -> num_rows == 0) {
-                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                $conn -> query($sql);
-            }      
-
-        //Confirmation link                            
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
+//Confirmation link                            
             $confirmPassLink = "www.recipeholder.net". root ."email_confirm?code=". $uniqcode;
 //Message
             $subject = "Confirmación de desactivación de cuenta";                            
@@ -465,14 +471,14 @@ if(isset($_GET['empty'])) {
             $_SESSION['message_alert'] = "success";
 
 //The page is redirected to the notifications
-            header('Location: ' . root . 'notifications');
+            header('Location: ' . root . 'recycle');
             exit;
         } else {
             $_SESSION['message'] = '¡Error al eliminar todos los elementos!';
             $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the notifications
-            header('Location: ' . root . 'notifications');
+            header('Location: ' . root . 'recycle');
             exit;
         }   
     } else {

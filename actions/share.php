@@ -83,20 +83,15 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
                             
                             $type = "share";
 
-                            $sql = "SELECT id FROM `log` WHERE log_message = '$log_message_sender' AND username = '" . $_SESSION["username"] . "';";
-                            $result = $conn -> query($sql); 
-
-                            if($result -> num_rows == 0) {
-                                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message_receiver', '$type', 0);";
-                                $sql .= "INSERT INTO `log` (username, log_message, type, state) VALUES ('$username', '$log_message_sender', '$type', 0);";
-                                $conn -> multi_query($sql);
-                            }                                  
+                            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message_receiver', '$type', 0);";
+                            $sql .= "INSERT INTO `log` (username, log_message, type, state) VALUES ('$username', '$log_message_sender', '$type', 0);";
+                            $conn -> multi_query($sql);                            
                             
-                                $_SESSION['message'] = '¡Receta ha sido compartida con ' . $email . '!';
-                                $_SESSION['message_alert'] = "success";
+                            $_SESSION['message'] = '¡Receta ha sido compartida con ' . $email . '!';
+                            $_SESSION['message_alert'] = "success";
 
-                                header('Location: ' . root . 'recipes?recipe=' . $recipe . '&username=' . $_GET["username"]); 
-                                exit;                           
+                            header('Location: ' . root . 'recipes?recipe=' . $recipe . '&username=' . $_GET["username"]); 
+                            exit;                           
                         } else {
                             $_SESSION['message'] = '¡Error al compartir receta!';
                             $_SESSION['message_alert'] = "danger";

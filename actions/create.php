@@ -109,13 +109,8 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
             $log_message = "Has creado la categoría \"" . $category . "\".";       
             $type = "add";
 
-            $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-            $result = $conn -> query($sql); 
-
-            if($result -> num_rows == 0) {
-              $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-              $conn -> query($sql);
-            }      
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
 
             $_SESSION['message'] = '¡Categoría agregada con éxito!';
             $_SESSION['message_alert'] = "success";
@@ -192,13 +187,8 @@ if(isset($_POST['add_ingredient'])){
         $log_message = "Has creado el ingrediente \"" . $ingredient . "\".";       
         $type = "add";
 
-        $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-        $result = $conn -> query($sql); 
-
-        if($result -> num_rows == 0) {
-            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-            $conn -> query($sql);
-        }      
+        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+        $conn -> query($sql);
 
         $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
         $_SESSION['message_alert'] = "success";
@@ -296,13 +286,8 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
       $log_message = "Has creado la receta \"" . $recipename . "\".";       
       $type = "add";
 
-      $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-      $result = $conn -> query($sql); 
-
-      if($result -> num_rows == 0) {
-        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-        $conn -> query($sql);
-      }      
+      $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+      $conn -> query($sql);
 
 //If no image has been added
         if ($recipeImage ['name'] == null && $_POST["imageUrl"] == "") {           
@@ -324,13 +309,8 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
             $log_message = "Has creado la receta \"" . $recipename . "\".";       
             $type = "add";
 
-            $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-            $result = $conn -> query($sql); 
-
-            if($result -> num_rows == 0) {
-                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                $conn -> query($sql);
-            }      
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
 
             $_SESSION['message'] = '¡Receta agregada exitosamente sin imagen!';
             $_SESSION['message_alert'] = "success";
@@ -381,13 +361,8 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
               $log_message = "Has creado la receta \"" . $recipename . "\".";       
               $type = "add";
 
-              $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-              $result = $conn -> query($sql); 
-
-              if($result -> num_rows == 0) {
-                  $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                  $conn -> query($sql);
-              }      
+              $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+              $conn -> query($sql);
 
               $_SESSION['message'] = '¡Receta agregada exitosamente!';
               $_SESSION['message_alert'] = "success";
@@ -449,14 +424,9 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
             $log_message = "Has creado la receta \"" . $recipename . "\".";       
             $type = "add";
 
-            $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-            $result = $conn -> query($sql); 
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
 
-            if($result -> num_rows == 0) {
-              $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-              $conn -> query($sql);
-            }      
-            
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
             $_SESSION['message_alert'] = "success";
 
@@ -649,14 +619,9 @@ if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex
 //Notification message        
                   $log_message = "Has creado el usuario \"" . $username . "\".";       
                   $type = "add";
-
-                  $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-                  $result = $conn -> query($sql); 
-
-                  if($result -> num_rows == 0) {
-                      $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                      $conn -> query($sql);
-                  }      
+                  
+                  $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                  $conn -> query($sql);
 
                   $_SESSION['message'] = '¡Usuario agregado con éxito!';
                   $_SESSION['message_alert'] = "success";
@@ -757,13 +722,8 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
           $log_message = "Has aceptado la receta \"" . $$recipename . "\".";       
           $type = "add";
 
-          $sql = "SELECT id FROM `log` WHERE log_message = '$log_message' AND username = '" . $_SESSION["username"] . "';";
-          $result = $conn -> query($sql); 
-
-          if($result -> num_rows == 0) {
-              $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-              $conn -> query($sql);
-          }       
+          $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+          $conn -> query($sql);
 
           $_SESSION['message'] = '¡Receta agragada exitosamente!';
           $_SESSION['message_alert'] = "success";
