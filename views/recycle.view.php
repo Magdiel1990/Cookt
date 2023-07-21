@@ -14,10 +14,16 @@ require_once ("views/partials/nav.php");
     unset($_SESSION['message_alert'], $_SESSION['message']);
     }
 
-    $sql = "SELECT categoryid FROM categories WHERE state = 0 UNION SELECT id FROM ingredients WHERE state = 0 AND username = '" . $_SESSION['username'] . "' UNION SELECT recipeid FROM recipe WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
-    $result = $conn -> query($sql);
-    $count =  $result -> num_rows;
- 
+//total registers
+    $sql = "SELECT categoryid FROM categories WHERE state = 0;"; 
+    $count =  $conn -> query($sql) -> num_rows;      
+
+    $sql = "SELECT id FROM ingredients WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
+    $count +=  $conn -> query($sql) -> num_rows;
+
+    $sql = "SELECT recipeid FROM recipe WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
+    $count +=  $conn -> query($sql) -> num_rows;
+
     if($count == 0) {
         $display = "style='display:none;'";
     } else {
@@ -76,6 +82,8 @@ function getData(pagina){
     let formaData = new FormData();
     formaData.append("registros", num_registros);
     formaData.append("pagina", pagina);
+
+    console.log()
 
     fetch(url, {
         method: "POST",

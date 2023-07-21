@@ -34,7 +34,6 @@ $sql = "SELECT categoryid, category, date FROM categories WHERE state = 0;";
 $result = $conn -> query($sql); 
 
 if($result -> num_rows > 0) {
-
     while ($row = $result -> fetch_assoc()) {
         array_push ($recycle, ["categories", $row["categoryid"], $row["category"], $row["date"]]);
     }
@@ -62,8 +61,16 @@ if($result -> num_rows > 0) {
     }
 }
 
-//Array limit
+/***********************Work on this */
+$totalRegister = count($recycle);
+
+if($registros > $totalRegister) {
+    $registros = $totalRegister;
+}
+
 $recycleLimit = array_slice($recycle, $start, $registros);
+
+/********************************* */
 $totalFilter = count($recycleLimit);
 
 //Store the messages
@@ -71,8 +78,6 @@ $output = [];
 $output['pagination'] = '';
 $output['data'] = '';
 $output['totalRegister'] = '';
-
-$totalRegister = count($recycle);
 
 $output['totalRegister'] = $totalRegister;
 
