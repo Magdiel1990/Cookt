@@ -60,7 +60,7 @@ if($counter == 0){
                 $imgprofileDir = $target_dir . $_SESSION["username"] . "." . $userExt;
                 echo '<img class="mx-2" id="profile" src="' . $imgprofileDir . '">';
             } else {
-                echo "<i class='fa-regular fa-user'></i>";
+                echo "<i class='mx-2 fa-regular fa-user'></i>";
             }              
             ?>
             </a> 
