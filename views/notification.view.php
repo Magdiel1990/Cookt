@@ -38,6 +38,7 @@ require_once ("views/partials/nav.php");
             <label for="num_registros" class="col-form-label">registros</label>
             <label id="lbl-total" class="col-form-label"></label>
         </div>
+
         <div class="col-auto">
             <a href="<?php echo root . "delete?not_del=" . base64_encode("yes"); ?>" class='btn btn-outline-danger' title='Eliminar todas las notificaciones' onclick='deleteMessage()' id='notification'><i class='fa-solid fa-trash'></i></a>
         </div>      
@@ -115,7 +116,9 @@ function deleteMessageLoop(){
 </script>
 <?php
 //Reseting the message counter
-$conn-> query ("UPDATE `log` SET `state` = 1 WHERE `state` = 0;");
+if($_SERVER["REQUEST_URI"] ==  "/notifications") {
+    $conn-> query ("UPDATE `log` SET `state` = 1 WHERE `state` = 0;");
+}
 
 //Exiting connection
 $conn -> close();
