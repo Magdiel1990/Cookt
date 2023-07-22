@@ -702,5 +702,36 @@ if(isset($_GET['id']) && isset($_GET['table'])) {
         exit;
     } 
 }
+
+/************************************************************************************************/
+/******************************************SETTING UPDATE CODE***********************************/
+/************************************************************************************************/
+
+if(isset($_GET['settingid'])) {
+
+    $notification = isset($_POST['notification']) ? 1 : 0;
+    $shares = isset($_POST["share"]) ? 1 : 0;    
+    $recycle = isset($_POST["recycle"]) ? 1 : 0;
+
+    $sql = "UPDATE users SET notification = '$notification',  shares = '$shares', recycle = '$recycle' WHERE username = '" . $_SESSION['username'] . "';";
+
+    if($conn -> query($sql)) {
+        $_SESSION['message'] = '¡Los cambios han sido aplicados!';
+        $_SESSION['message_alert'] = "success";
+
+        header('Location: ' . root . 'settings');
+        exit;
+
+    } else {
+        $_SESSION['message'] = '¡Error al aplicar cambios!';
+        $_SESSION['message_alert'] = "danger";
+
+        header('Location: ' . root . 'settings');
+        exit;
+
+    }
+}
+
+//Exit connection
 $conn->close();
 ?>

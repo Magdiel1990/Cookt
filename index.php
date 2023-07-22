@@ -33,7 +33,8 @@ if($param == "") {
     root. "recycle" => "controllers/recycle.controller.php",
     root. "reactivate-account" => "controllers/reactivate-account.controller.php",
     root. "reactivate" => "controllers/reactivate.controller.php",
-    root. "settings" => "controllers/settings.controller.php"      
+    root. "settings" => "controllers/settings.controller.php",
+    root. "update" => "controllers/update.controller.php"          
     ];
 //It comes with parameters
 } else {
