@@ -83,9 +83,11 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
                             
                             $type = "share";
 
-                            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message_receiver', '$type', 0);";
-                            $sql .= "INSERT INTO `log` (username, log_message, type, state) VALUES ('$username', '$log_message_sender', '$type', 0);";
-                            $conn -> multi_query($sql);                            
+                            if($_SESSION['notification'] == 1) {
+                                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message_receiver', '$type', 0);";
+                                $sql .= "INSERT INTO `log` (username, log_message, type, state) VALUES ('$username', '$log_message_sender', '$type', 0);";
+                                $conn -> multi_query($sql);                     
+                            }
                             
                             $_SESSION['message'] = '¡Receta ha sido compartida con ' . $email . '!';
                             $_SESSION['message_alert'] = "success";

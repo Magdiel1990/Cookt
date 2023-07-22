@@ -33,9 +33,15 @@ $result = $conn -> query($sql);
         $log_message = "Has eliminado la receta \"" . $recipeName . "\".";       
         $type = "delete";
 
-        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-        $sql .= "INSERT INTO recycle (name, type, username, elementid) VALUES ('$recipeName', 'Receta', '" . $_SESSION['username'] . "', '$id');";
-        $conn -> multi_query($sql);
+        if($_SESSION['notification'] == 1) {
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
+        }
+
+        if($_SESSION['recycle'] == 1) {
+            $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$recipeName', 'Receta', '" . $_SESSION['username'] . "', '$id');";
+            $conn -> query($sql);
+        }
 
 //Deleting recipe img       
         $target_dir = "imgs/recipes/". $_SESSION['username']. "/";
@@ -101,10 +107,15 @@ $categoryImgDir = $files -> directoryFiles();
         $log_message = "Has eliminado la categoría \"" . $categoryName . "\".";       
         $type = "delete";
 
-        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-        $sql .= "INSERT INTO recycle (name, type, username, elementid) VALUES ('$categoryName', 'Categoría', '" . $_SESSION['username'] . "', '$id');";
+        if($_SESSION['notification'] == 1) {
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $result = $conn -> query($sql);
+        }
 
-        $result = $conn -> multi_query($sql);
+        if($_SESSION['recycle'] == 1) {
+            $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$categoryName', 'Categoría', '" . $_SESSION['username'] . "', '$id');";
+            $result = $conn -> query($sql);
+        }
 
         $_SESSION['message'] = '¡Categoría eliminada!';
         $_SESSION['message_alert'] = "success";
@@ -144,10 +155,15 @@ $result = $conn -> query($sql);
         $log_message = "Has eliminado el ingrediente \"" . $ingredientName . "\".";       
         $type = "delete";
 
-        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-        $sql .= "INSERT INTO recycle (name, type, username, elementid) VALUES ('$ingredientName', 'Ingrediente', '" . $_SESSION['username'] . "', '$id');";
+        if($_SESSION['notification'] == 1) {
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $conn -> query($sql);
+        }
 
-        $result = $conn -> multi_query($sql);
+        if($_SESSION['recycle'] == 1) {
+            $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$ingredientName', 'Ingrediente', '" . $_SESSION['username'] . "', '$id');";
+            $conn -> query($sql);
+        }
 
         $_SESSION['message'] = '¡Ingrediente eliminado!';
         $_SESSION['message_alert'] = "success";
@@ -254,8 +270,10 @@ $num_rows = $result -> num_rows;
             $log_message = "Has eliminado el usuario \"" . $username . "\".";       
             $type = "delete";
 
-            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-            $conn -> query($sql);
+            if($_SESSION['notification'] == 1) {
+                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                $conn -> query($sql);
+            }
 //Confirmation link                            
             $confirmPassLink = "www.recipeholder.net". root ."email_confirm?code=". $uniqcode;
 //Message

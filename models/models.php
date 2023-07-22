@@ -414,4 +414,24 @@ class DateCalculation {
         }
     }
 }
+
+/*class Settings {
+    public $element;
+    public $username;
+
+    function __construct($element){
+        $this -> element = $element;
+        $this -> username = $username;
+    }
+
+    public function notification() {        
+        $sql = "SELECT " . $this -> element . " FROM users WHERE username = '" . $this -> username . "';";
+        $result = $conn -> query($sql);
+        $row = $result -> fetch_assoc();
+
+        $value = $row [$this -> element];
+
+        return $value;        
+    }
+}*/
 ?>

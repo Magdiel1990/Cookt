@@ -54,6 +54,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             $_SESSION['type'] = $row['type'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['state'] = $row['state'];
+            $_SESSION['notification'] = $row['notification'];
+            $_SESSION['shares'] = $row['shares'];
+            $_SESSION['recycle'] = $row['recycle'];
 
 //Last login calculation.
             $_SESSION["last_access"] = date("Y-m-j H:i:s");        
