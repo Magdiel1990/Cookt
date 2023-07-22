@@ -15,19 +15,13 @@ require_once ("views/partials/nav.php");
     }
 
 //total registers
-    $sql = "SELECT categoryid FROM categories WHERE state = 0;"; 
+    $sql = "SELECT id FROM recycle WHERE username = '" . $_SESSION['username'] . "';";
     $count =  $conn -> query($sql) -> num_rows;      
 
-    $sql = "SELECT id FROM ingredients WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
-    $count +=  $conn -> query($sql) -> num_rows;
-
-    $sql = "SELECT recipeid FROM recipe WHERE state = 0 AND username = '" . $_SESSION['username'] . "';";
-    $count +=  $conn -> query($sql) -> num_rows;
-
-    if($count == 0) {
-        $display = "style='display:none;'";
+    if($count > 0) {
+        $display = "";        
     } else {
-        $display = "";
+        $display = "style='display:none;'";
     }
 ?>
 <main class="container py-4">
