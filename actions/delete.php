@@ -18,50 +18,78 @@ $row = $result -> fetch_assoc();
 
 $id = $row ["recipeid"];
 
+//Deleting recipe img       
+$target_dir = "imgs/recipes/". $_SESSION['username']. "/";
+
+$files = new Directories($target_dir, $recipeName);
+$ext = $files -> directoryFiles();
+
+if($ext !== null) {
+    $imageDir = $target_dir . $recipeName . "." . $ext;
+
+    unlink($imageDir);
+}  
+
 //Deleting
-$sql = "UPDATE recipe SET state = 0 WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
-$result = $conn -> query($sql);
+    if($_SESSION['recycle'] == 1) {
+        $sql = "UPDATE recipe SET state = 0 WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
+        $result = $conn -> query($sql);
 
-    if(!$result){
-        $_SESSION['message'] = '¡Error al eliminar la receta!';
-        $_SESSION['message_alert'] = "danger";
+        if(!$result){
+            $_SESSION['message'] = '¡Error al eliminar la receta!';
+            $_SESSION['message_alert'] = "danger";
 
-        header('Location: ' . root);
-        exit;
-    } else {
+            header('Location: ' . root);
+            exit;
+        } else {
 //Notification message        
-        $log_message = "Has eliminado la receta \"" . $recipeName . "\".";       
-        $type = "delete";
+            $log_message = "Has eliminado la receta \"" . $recipeName . "\".";       
+            $type = "delete";
 
-        if($_SESSION['notification'] == 1) {
-            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-            $conn -> query($sql);
-        }
+            if($_SESSION['notification'] == 1) {
+                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                $conn -> query($sql);
+            }
 
-        if($_SESSION['recycle'] == 1) {
             $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$recipeName', 'Receta', '" . $_SESSION['username'] . "', '$id');";
             $conn -> query($sql);
-        }
 
-//Deleting recipe img       
-        $target_dir = "imgs/recipes/". $_SESSION['username']. "/";
-
-        $files = new Directories($target_dir, $recipeName);
-        $ext = $files -> directoryFiles();
-
-        if($ext !== null) {
-            $imageDir = $target_dir . $recipeName . "." . $ext;
-
-            unlink($imageDir);
-        }  
-
-        $_SESSION['message'] = '¡Receta eliminada!';
-        $_SESSION['message_alert'] = "success";
+            $_SESSION['message'] = '¡Receta eliminada!';
+            $_SESSION['message_alert'] = "success";
 
 //After the recipe has been deleted, the page is redirected to the index.php.
-        header('Location: ' . root);
-        exit;
+            header('Location: ' . root);
+            exit;
+        }
+    } else {
+        $sql = "DELETE FROM recipe WHERE recipename = '$recipeName' AND username = '" . $_SESSION['username'] . "';";
+        $result = $conn -> query($sql);
+
+        if(!$result){
+            $_SESSION['message'] = '¡Error al eliminar la receta!';
+            $_SESSION['message_alert'] = "danger";
+
+            header('Location: ' . root);
+            exit;
+        } else {
+//Notification message        
+            $log_message = "Has eliminado la receta \"" . $recipeName . "\".";       
+            $type = "delete";
+
+            if($_SESSION['notification'] == 1) {
+                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                $conn -> query($sql);
+            }
+
+            $_SESSION['message'] = '¡Receta eliminada!';
+            $_SESSION['message_alert'] = "success";
+
+//After the recipe has been deleted, the page is redirected to the index.php.
+            header('Location: ' . root);
+            exit;
+        }
     }
+
 }
 
 /************************************************************************************************/
@@ -86,45 +114,75 @@ $categoryDir = "imgs/categories/";
 $files = new Directories($categoryDir , $categoryName);
 $categoryImgDir = $files -> directoryFiles();
 
-    if($ext !== null) {
-        $imageDir = $categoryDir . $categoryName . "." . $ext;
+if($ext !== null) {
+    $imageDir = $categoryDir . $categoryName . "." . $ext;
 
-        unlink($imageDir);
-    } 
-
-//Deleting the register with the name received.
-    $sql = "UPDATE categories SET state = 0 WHERE category = '$categoryName';";
-    $result = $conn -> query($sql);
-
-    if(!$result){
-        $_SESSION['message'] = '¡Error al eliminar la categoría!';
-        $_SESSION['message_alert'] = "danger";
-
-        header('Location: ' . root . 'categories');
-        exit;
-    } else {
-//Notification message        
-        $log_message = "Has eliminado la categoría \"" . $categoryName . "\".";       
-        $type = "delete";
-
-        if($_SESSION['notification'] == 1) {
-            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-            $result = $conn -> query($sql);
-        }
-
-        if($_SESSION['recycle'] == 1) {
-            $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$categoryName', 'Categoría', '" . $_SESSION['username'] . "', '$id');";
-            $result = $conn -> query($sql);
-        }
-
-        $_SESSION['message'] = '¡Categoría eliminada!';
-        $_SESSION['message_alert'] = "success";
-
-        header('Location: ' . root . 'categories');
-        exit;
-    }
+    unlink($imageDir);
 } 
 
+    if($_SESSION['recycle'] == 1) {
+    //Deleting the register with the name received.
+        $sql = "UPDATE categories SET state = 0 WHERE category = '$categoryName';";
+        $result = $conn -> query($sql);
+
+        if(!$result){
+            $_SESSION['message'] = '¡Error al eliminar la categoría!';
+            $_SESSION['message_alert'] = "danger";
+
+            header('Location: ' . root . 'categories');
+            exit;
+        } else {
+    //Notification message        
+            $log_message = "Has eliminado la categoría \"" . $categoryName . "\".";       
+            $type = "delete";
+
+            if($_SESSION['notification'] == 1) {
+                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                $result = $conn -> query($sql);
+            }
+
+            $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$categoryName', 'Categoría', '" . $_SESSION['username'] . "', '$id');";
+            $result = $conn -> query($sql);
+
+
+            $_SESSION['message'] = '¡Categoría eliminada!';
+            $_SESSION['message_alert'] = "success";
+
+            header('Location: ' . root . 'categories');
+            exit;
+        }
+    } else {
+    //Deleting the register with the name received.
+        $sql = "DELETE FROM categories WHERE category = '$categoryName';";
+        $result = $conn -> query($sql);
+        
+        if(!$result){
+            $_SESSION['message'] = '¡Error al eliminar la categoría!';
+            $_SESSION['message_alert'] = "danger";
+
+            header('Location: ' . root . 'categories');
+            exit;
+        } else {
+    //Notification message        
+            $log_message = "Has eliminado la categoría \"" . $categoryName . "\".";       
+            $type = "delete";
+
+            if($_SESSION['notification'] == 1) {
+                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                $result = $conn -> query($sql);
+            }
+
+            $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$categoryName', 'Categoría', '" . $_SESSION['username'] . "', '$id');";
+            $result = $conn -> query($sql);
+
+            $_SESSION['message'] = '¡Categoría eliminada!';
+            $_SESSION['message_alert'] = "success";
+
+            header('Location: ' . root . 'categories');
+            exit;
+        }
+    } 
+}
 /************************************************************************************************/
 /***************************************INGREDIENT DELETION CODE*********************************/
 /************************************************************************************************/
@@ -140,36 +198,68 @@ $result = $conn -> query($sql);
 $row = $result -> fetch_assoc();
 
 $id = $row ["id"];
+    if($_SESSION['recycle'] == 1) {
+        $sql = "UPDATE ingredients SET state = 0 WHERE ingredient = '$ingredientName' AND username = '" . $_SESSION['username'] . "';";
+        $result = $conn -> query($sql);
 
-$sql = "UPDATE ingredients SET state = 0 WHERE ingredient = '$ingredientName' AND username = '" . $_SESSION['username'] . "';";
-$result = $conn -> query($sql);
+        if(!$result){
+            $_SESSION['message'] = '¡Error al eliminar ingrediente!';
+            $_SESSION['message_alert'] = "danger";
 
-    if(!$result){
-        $_SESSION['message'] = '¡Error al eliminar ingrediente!';
-        $_SESSION['message_alert'] = "danger";
+            header('Location: ' . root . 'ingredients');
+            exit;
+        } else {
+    //Notification message        
+            $log_message = "Has eliminado el ingrediente \"" . $ingredientName . "\".";       
+            $type = "delete";
 
-        header('Location: ' . root . 'ingredients');
-        exit;
+            if($_SESSION['notification'] == 1) {
+                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                $conn -> query($sql);
+            }
+
+            if($_SESSION['recycle'] == 1) {
+                $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$ingredientName', 'Ingrediente', '" . $_SESSION['username'] . "', '$id');";
+                $conn -> query($sql);
+            }
+
+            $_SESSION['message'] = '¡Ingrediente eliminado!';
+            $_SESSION['message_alert'] = "success";
+
+            header('Location: ' . root . 'ingredients');
+            exit;
+        }
     } else {
-//Notification message        
-        $log_message = "Has eliminado el ingrediente \"" . $ingredientName . "\".";       
-        $type = "delete";
+        $sql = "DELETE FROM ingredients WHERE ingredient = '$ingredientName' AND username = '" . $_SESSION['username'] . "';";
+        $result = $conn -> query($sql);
 
-        if($_SESSION['notification'] == 1) {
-            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-            $conn -> query($sql);
+        if(!$result){
+            $_SESSION['message'] = '¡Error al eliminar ingrediente!';
+            $_SESSION['message_alert'] = "danger";
+
+            header('Location: ' . root . 'ingredients');
+            exit;
+        } else {
+    //Notification message        
+            $log_message = "Has eliminado el ingrediente \"" . $ingredientName . "\".";       
+            $type = "delete";
+
+            if($_SESSION['notification'] == 1) {
+                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                $conn -> query($sql);
+            }
+
+            if($_SESSION['recycle'] == 1) {
+                $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$ingredientName', 'Ingrediente', '" . $_SESSION['username'] . "', '$id');";
+                $conn -> query($sql);
+            }
+
+            $_SESSION['message'] = '¡Ingrediente eliminado!';
+            $_SESSION['message_alert'] = "success";
+
+            header('Location: ' . root . 'ingredients');
+            exit;
         }
-
-        if($_SESSION['recycle'] == 1) {
-            $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$ingredientName', 'Ingrediente', '" . $_SESSION['username'] . "', '$id');";
-            $conn -> query($sql);
-        }
-
-        $_SESSION['message'] = '¡Ingrediente eliminado!';
-        $_SESSION['message_alert'] = "success";
-
-        header('Location: ' . root . 'ingredients');
-        exit;
     }
 } 
 

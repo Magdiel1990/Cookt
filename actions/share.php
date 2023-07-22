@@ -38,7 +38,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
             header('Location: ' . root . 'recipes?recipe=' . $recipe . '&username=' . $_GET["username"]); 
             exit;
         } else {
-            $sql = "SELECT email, username FROM users WHERE email = ?;";
+            $sql = "SELECT email, username, shares FROM users WHERE email = ?;";
             $stmt = $conn -> prepare($sql); 
             $stmt->bind_param("s", $email);
             $stmt->execute();
@@ -53,8 +53,9 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
             } else {
                 $row = $result -> fetch_assoc();
                 $destination = $row["username"];
+                $shares = $row["shares"];
 
-                if ($destination == $_SESSION["username"]) {
+                if ($destination == $_SESSION["username"] || $shares == 0) {
                     $_SESSION['message'] = '¡No puedes compartir la receta con este usuario!';
                     $_SESSION['message_alert'] = "danger";
 
