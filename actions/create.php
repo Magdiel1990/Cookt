@@ -11,12 +11,6 @@ require_once ("models/models.php");
 //Including the database connection.
 $conn = DatabaseConnection::dbConnection();
 
-//Verify that data comes
-/*if(empty($_POST) || empty($_GET)) {
-    header('Location: ' . root);
-    exit;  
-}*/
-
 /************************************************************************************************/
 /***************************************CATEGORIES ADITION CODE**************************************/
 /************************************************************************************************/
@@ -765,4 +759,10 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
 }
 //Exiting db connection.
 $conn -> close(); 
+
+//Verify that data comes
+if(empty($_POST) || empty($_GET)) {
+    header('Location: ' . root);
+    exit;  
+}
 ?>

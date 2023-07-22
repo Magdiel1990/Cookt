@@ -5,12 +5,6 @@ session_name("Login");
 //Iniciating session. 
 session_start();
 
-//Verify that data comes
-/*if(empty($_POST) || empty($_GET)) {
-    header('Location: ' . root);
-    exit;  
-}*/
-
 //Models.
 require_once ("models/models.php");
 
@@ -110,4 +104,10 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
 }
 //Exiting connection
 $conn -> close();
+
+//Verify that data comes
+if(empty($_POST) || empty($_GET)) {
+    header('Location: ' . root);
+    exit;  
+}
 ?>

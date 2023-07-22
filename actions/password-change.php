@@ -4,12 +4,6 @@
 /***************************************PASSWORD RECOVERY CODE***********************************/
 /************************************************************************************************/
 
-//Verify that data comes
-/*if(empty($_POST) || empty($_GET)) {
-    header('Location: ' . root);
-    exit;  
-}*/
-
 //Models.
 require_once ("models/models.php");
 
@@ -94,5 +88,12 @@ $key = $_GET['pass'];
         exit;
     }
 }
+//Exit connection
 $conn->close();
+
+//Verify that data comes
+if(empty($_POST) || empty($_GET)) {
+    header('Location: ' . root);
+    exit;  
+}
 ?>

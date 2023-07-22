@@ -4,12 +4,6 @@ require_once ("views/partials/head.php");
 
 $_SESSION['location'] = root;
 
-//Verify that data comes
-/*if(empty($_POST) || empty($_GET)) {
-    header('Location: ' . root);
-    exit;  
-}*/
-
 /************************************************************************************************/
 /******************************************RECIPE UPDATE CODE************************************/
 /************************************************************************************************/
@@ -748,4 +742,10 @@ if(isset($_GET['settingid'])) {
 
 //Exit connection
 $conn->close();
+
+//Verify that data comes
+if(empty($_POST) || empty($_GET)) {
+    header('Location: ' . root);
+    exit;  
+}
 ?>

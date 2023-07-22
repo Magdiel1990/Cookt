@@ -600,4 +600,10 @@ $conn -> close();
 
 //Footer 
 include("views/partials/footer.php");
+
+//Verify that data comes
+if(empty($_POST) || empty($_GET)) {
+    header('Location: ' . root);
+    exit;  
+}
 ?>
