@@ -158,16 +158,6 @@ table td, p, ul li, ol li, li a {
     text-decoration: none;
 }
 
-.suggestion_container {
-    border: solid 2px #999;
-    padding: 1rem;
-}
-
-.suggestion_container ul li a, .suggestion_container ul li {
-    color: rgb(22, 93, 244); 
-    margin: 1rem 0;
-}
-
 /*Form format*/
 label, select, input, option {
     font-size: 1.2rem;

@@ -79,7 +79,6 @@
         $output['data'] .= '</div>'; 
         $output['data'] .= '</div>';  
         $output['data'] .= '</div>'; 
-        $output['data'] .= '</div>';   
         }
     } 
 

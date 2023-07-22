@@ -84,7 +84,6 @@
     if($num_rows > 0) {
         while($row = $result->fetch_assoc()){            
             $output['data'] .= "<tr>";                    
-           // $output['data'] .= "<td class='p-3'>" . $row['count'] . "</td>";
             $output['data'] .= "<td><a href='" . root . "recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta' class='tlink'>" . $row['recipename'] . "</a></td>";
             $output['data'] .= "<td>" . $row['cookingtime'] . "</td>";
             $output['data'] .= "<td>" .ucfirst($row['category']). "</td>";            
@@ -106,7 +105,6 @@
 
     if($output['totalRegister'] > 0) {
         $pageTotal = ceil($output['totalRegister'] / $registros);
-        //$filterTotal = ceil($output['totalFilter'] / $registros);
 
         $output['pagination'] .= "<nav>";
         $output['pagination'] .= "<ul class='pagination'>";
