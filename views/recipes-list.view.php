@@ -52,7 +52,7 @@ $result = $stmt -> get_result();
                         date_default_timezone_set("America/Santo_Domingo");        
 
 //Recipes of each user
-                        $sql = "SELECT u.date as `time`, max(a.lastlogin) as `lastlogin` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
+                        $sql = "SELECT u.created_at as `time`, max(a.lastlogin) as `lastlogin` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
                         $result = $conn -> query($sql); 
                         $row = $result -> fetch_assoc();     
 //Days using the app                        
