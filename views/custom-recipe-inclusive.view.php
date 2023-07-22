@@ -84,7 +84,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
         ?>
         </div>
             
-        <div class="col-auto">
+        <div class="row mt-2">
         <?php
 //Array containing the chosen recipes        
         if(isset($ingArray)){
@@ -117,18 +117,17 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                 if(isset($recipes) && count($recipes) != 0) {
                     $countRecipe = count($recipes);
                     $html = "";
-                    $html .= "<div class='suggestion_container'>";
-                    $html .= "<ul>";
-                    for($i = 0; $i < $countRecipe; $i++){                    
-                        $html .= "<li>";
-                        $html .= "<a href='" . root . "recipes?recipe=" . $recipes[$i] . "&username=" . $_SESSION['username'] . "' title='receta'>";
-                        $html .= $recipes[$i];
-                        $html .= "</a>";
-                        $html .= " <span class='text-secondary small'>(" . $category[$i] . ")</span>";
-                        $html .= "</li>";         
+                    for($i = 0; $i < $countRecipe; $i++){    
+                        $html .= '<div class="my-2 py-2 col-auto">'; 
+                        $html .= '<div class="card">';
+                        $html .= '<h4 class="card-header">' . $category[$i] . '</h4>';
+                        $html .= '<div class="card-body">';
+                        $html .= '<p class="card-text">' . $recipes[$i] . '</p>';
+                        $html .= "<a class='btn btn-primary' href='" . root . "recipes?recipe=" . $recipes[$i] . "&username=" . $_SESSION['username'] . "' title='receta'>Ver</a>";
+                        $html .= '</div>'; 
+                        $html .= '</div>';  
+                        $html .= '</div>'; 
                     }
-                    $html .= "</ul>";
-                    $html .= "</div>";
                     echo $html;
 //If there is no match                  
                 } else {
