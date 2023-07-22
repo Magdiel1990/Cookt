@@ -99,7 +99,7 @@
     } else {
 //Else this message is shown.
         $output['data'] .= "<tr>";
-        $output['data'] .= "<td colspan = '3'>No hay resultados</td>";
+        $output['data'] .= "<td colspan = '4'>No hay resultados</td>";
         $output['data'] .= "</tr>";
     }
 
