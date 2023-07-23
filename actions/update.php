@@ -720,8 +720,9 @@ if(isset($_GET['settingid'])) {
     $notification = isset($_POST['notification']) ? 1 : 0;
     $shares = isset($_POST["share"]) ? 1 : 0;    
     $recycle = isset($_POST["recycle"]) ? 1 : 0;
+    $reminders = isset($_POST["reminder"]) ? 1 : 0;
 
-    $sql = "UPDATE users SET notification = '$notification',  shares = '$shares', recycle = '$recycle' WHERE username = '" . $_SESSION['username'] . "';";
+    $sql = "UPDATE users SET notification = '$notification',  shares = '$shares', recycle = '$recycle', reminders = '$reminders' WHERE username = '" . $_SESSION['username'] . "';";
 
     if($conn -> query($sql)) {
         $_SESSION['message'] = '¡Los cambios han sido aplicados!';

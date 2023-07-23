@@ -6,7 +6,7 @@ require_once ("views/partials/head.php");
 require_once ("views/partials/nav.php");
 
 //Verify the user settings
-$sql = "SELECT notification, recycle, shares FROM users WHERE username = '" . $_SESSION['username'] . "';";
+$sql = "SELECT notification, recycle, shares, reminders FROM users WHERE username = '" . $_SESSION['username'] . "';";
 $result = $conn -> query($sql);
 $row = $result -> fetch_assoc();
 
@@ -14,6 +14,7 @@ $row = $result -> fetch_assoc();
 $notification = $row["notification"];
 $shares = $row["shares"];
 $recycle = $row["recycle"];
+$reminder = $row["reminders"];
 
 //random id
 $id = rand(0,100);
@@ -49,6 +50,11 @@ $id = rand(0,100);
              <div class="form-check form-switch my-4">
                 <label class="form-check-label" for="share">Aceptar que otros usuarios me compartan recetas</label>
                 <input class="form-check-input" type="checkbox" role="switch" id="share" name="share" <?php if($shares == 1) {echo "checked";}?>>
+            </div>
+
+            <div class="form-check form-switch my-4">
+                <label class="form-check-label" for="reminder">Aceptar recomendaciones por el correo</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="reminder" name="reminder" <?php if($reminder == 1) {echo "checked";}?>>
             </div>
 
             <div class="my-4 text-center">
