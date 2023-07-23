@@ -57,14 +57,17 @@ $result = $stmt -> get_result();
                         $row = $result -> fetch_assoc();     
 //Days using the app                        
                         $time_days = round((strtotime(date("Y-m-d H:i:s")) - strtotime($row ['time'])) / 86400);
-//Last time the user accessed                        
-                        $logindate = date("d-m-Y", strtotime($row ['lastlogin']));
-                        $loginhour = date("g:i A", strtotime($row ['lastlogin']));
+
 //Never logged in
-                        if($logindate == "") {
+                        if($row ['lastlogin'] === null) {
                             $logindate = "Nunca";
                             $loginhour = "NA";
+                        } else {
+//Last time the user accessed                        
+                            $logindate = date("d-m-Y", strtotime($row ['lastlogin']));
+                            $loginhour = date("g:i A", strtotime($row ['lastlogin']));
                         }
+
 //Data displayed
                         $html = "<tr>";                                        
                         $html .= "<td>" . $time_days . " días</td>";
