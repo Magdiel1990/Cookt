@@ -725,6 +725,10 @@ if(isset($_GET['settingid'])) {
     $sql = "UPDATE users SET notification = '$notification',  shares = '$shares', recycle = '$recycle', reminders = '$reminders' WHERE username = '" . $_SESSION['username'] . "';";
 
     if($conn -> query($sql)) {
+//Session variables reassignations
+        $_SESSION['notification'] = $notification;
+        $_SESSION['shares'] = $shares;
+        $_SESSION['recycle'] = $recycle;
         $_SESSION['message'] = '¡Los cambios han sido aplicados!';
         $_SESSION['message_alert'] = "success";
 
