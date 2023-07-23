@@ -28,39 +28,101 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
     $result = $stmt -> get_result(); 
   
-    if ($result -> num_rows > 0) {
+        if ($result -> num_rows > 0) {
 
-        $row = $result -> fetch_assoc();
+            $row = $result -> fetch_assoc();
 //Verify the password       
-        if (password_verify($password, $row['password'])) {
-            
+            if (password_verify($password, $row['password'])) {
+                
 //When a new user logs in, the index page is always the first page to load.
-            if($_SESSION['username'] != $row['username']) {
-                unset($_SESSION['location']);
-            }
+                if($_SESSION['username'] != $row['username']) {
+                    unset($_SESSION['location']);
+                }
 
-            if(!isset($_SESSION['location'])){
-                $_SESSION['location'] = root;
-            }
+                if(!isset($_SESSION['location'])){
+                    $_SESSION['location'] = root;
+                }
 
 //Cookie creation      
-            session_set_cookie_params(0, root, $_SERVER["HTTP_HOST"], 0);
-            
+                session_set_cookie_params(0, root, $_SERVER["HTTP_HOST"], 0);
+                
 //Session variables assignations
-            $_SESSION['userid'] = $row['userid'];
-            $_SESSION['firstname'] = $row['firstname'];
-            $_SESSION['lastname'] = $row['lastname'];
-            $_SESSION['username'] = $row['username'];
-            $_SESSION['type'] = $row['type'];
-            $_SESSION['email'] = $row['email'];
-            $_SESSION['state'] = $row['state'];
-            $_SESSION['notification'] = $row['notification'];
-            $_SESSION['shares'] = $row['shares'];
-            $_SESSION['recycle'] = $row['recycle'];
+                $_SESSION['userid'] = $row['userid'];
+                $_SESSION['firstname'] = $row['firstname'];
+                $_SESSION['lastname'] = $row['lastname'];
+                $_SESSION['username'] = $row['username'];
+                $_SESSION['type'] = $row['type'];
+                $_SESSION['email'] = $row['email'];
+                $_SESSION['state'] = $row['state'];
+                $_SESSION['notification'] = $row['notification'];
+                $_SESSION['shares'] = $row['shares'];
+                $_SESSION['recycle'] = $row['recycle'];
 
 //Last login calculation.
-            $_SESSION["last_access"] = date("Y-m-j H:i:s");        
-            
+                $_SESSION["last_access"] = date("Y-m-j H:i:s");  
+
+//Random recipe reminders to the email      
+                $reminder = $row['reminders'];
+
+                if ($reminder == 1) {
+                    $sql = "SELECT suggestion_day FROM users WHERE username = '" . $_SESSION['username'] . "';";
+                    $row = $conn -> query($sql) -> fetch_assoc(); 
+
+                    if($row["suggestion_day"] > 0) {
+                    $days = rand(1, 30);   
+//Saving next suggestin date
+                    $sql = "UPDATE users SET suggestion_day = '" . $days . "' WHERE username = '" . $_SESSION['username'] . "';";
+                    $conn -> query($sql);
+
+                    $sql = "SELECT suggestion_day FROM users WHERE username = '" . $_SESSION['username'] . "';";
+                    $row = $conn -> query($sql) -> fetch_assoc(); 
+
+//Calculation when the reminder should be sent                
+                    $future_day = new DateCalculation(null, $row["suggestion_day"]);
+                    $future_day = $future_day -> addDays();               
+
+                        if(date('Y-m-d') >= $future_day) {
+                        $recipeArray = [];
+
+                        $sql = "SELECT recipeid FROM recipe WHERE username = '" . $_SESSION['username'] . "';";
+                        $result = $conn -> query($sql); 
+//id of the recipes
+                            while ($row = $result -> fetch_assoc()) {
+                                $recipeArray [] = $row["recipeid"];
+                            }
+
+                        $count = count($recipeArray);
+//random id
+                        $key = rand(0, $count - 1); 
+
+                        $sql = "SELECT recipename FROM recipe WHERE recipeid = '" . $recipeArray [$key] . "' AND username = '" . $_SESSION['username'] . "';";
+                        $row = $conn -> query($sql) -> fetch_assoc();
+                                
+                        $recipeRecomendation = "www.recipeholder.net". root ."?recipe=" . $row ["recipename"] . "&username=" . $row['username'];
+//Message
+                        $subject = "Recomendación";                            
+                        $message = "<p>Esta receta podría interesarte para hoy.</p>";
+                        $message .= "<a href='" . $recipeRecomendation . "'>" . $recipeRecomendation . "</a>";                           
+//set content-type header for sending HTML email
+                        $headers = "MIME-Version: 1.0" . "\r\n";
+                        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+//additionals
+                        $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n";
+
+                            if(mail($email, $subject, $message, $headers)) {                            
+                                $days = rand(1, 30);   
+//Saving next suggestin date
+                                $sql = "UPDATE users SET suggestion_day = '" . $days . "' WHERE username = '" . $_SESSION['username'] . "';";
+                                $conn -> query($sql);
+                            }
+                        }
+                    } else {
+//Saving next suggestin date
+                        $sql = "UPDATE users SET suggestion_day = '" . rand(1, 30) . "' WHERE username = '" . $_SESSION['username'] . "';";
+                        $conn -> query($sql);
+                    }
+                }
+                
 //Object to determine the title of the user            
             $title = new TitleConvertor($row['sex']);
             $_SESSION['title'] = $title -> title(); 
@@ -130,7 +192,7 @@ $header = $header -> pageHeader();
     unset($_SESSION['message_alert'], $_SESSION['message']);
     }
 ?>  
-    
+
     <section class="my-4">
         <div class="container-fluid h-custom my-4">
             <div class="row d-flex justify-content-center align-items-center">

@@ -26,7 +26,6 @@ $ext = $files -> directoryFiles();
 
 if($ext !== null) {
     $imageDir = $target_dir . $recipeName . "." . $ext;
-
     unlink($imageDir);
 }  
 

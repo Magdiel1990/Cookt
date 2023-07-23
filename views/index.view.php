@@ -21,7 +21,7 @@ $_SESSION["location"] = root;
 ?>
 
 <!--Form for filtering the recipes-->
-    <div class="row mt-2 g-3">
+    <div class="row mt-4 g-3">
 
         <div class="col-auto">    
             <select class="form-select" id="num_registros" name="num_registros">
@@ -66,7 +66,7 @@ $_SESSION["location"] = root;
 -->       
     </div>
 <!-- Table to show the recipes-->
-    <div class="table-responsive-sm mt-2">
+    <div class="table-responsive-sm mt-4">
         <table class="table table-condensed shadow">
             <thead>
                 <tr class="table_header text-center">

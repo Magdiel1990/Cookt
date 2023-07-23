@@ -389,9 +389,11 @@ class UrlVerification {
 
 class DateCalculation {
     public $date;
+    public $days;
 
-    function __construct($date){
+    function __construct($date, $days){
         $this -> date = $date;
+        $this -> days = $days;
     }
 
     public function timeAgo() {
@@ -413,25 +415,16 @@ class DateCalculation {
             return "Hace " . $diff . " " . $strTime[$i] . "(s)";
         }
     }
+
+    public function addDays() {
+//Todays date        
+        $date = date('Y-m-d');
+//Adding days to todays date
+        $mod_date = strtotime($date. "+" . $this -> days);
+
+        $mod_date = date('Y-m-d', $mod_date);
+
+        return $mod_date;
+    }
 }
-
-/*class Settings {
-    public $element;
-    public $username;
-
-    function __construct($element){
-        $this -> element = $element;
-        $this -> username = $username;
-    }
-
-    public function notification() {        
-        $sql = "SELECT " . $this -> element . " FROM users WHERE username = '" . $this -> username . "';";
-        $result = $conn -> query($sql);
-        $row = $result -> fetch_assoc();
-
-        $value = $row [$this -> element];
-
-        return $value;        
-    }
-}*/
 ?>
