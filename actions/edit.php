@@ -656,7 +656,7 @@ $conn -> close();
 require_once ("views/partials/footer.php");
 
 //Verify that data comes
-if(empty($_POST) || empty($_GET)) {
+if(empty($_GET)) {
     header('Location: ' . root);
     exit;  
 }

@@ -66,17 +66,17 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 
         } else {
             $html = "<div>";
-            $html .= "<ol>";
+            $html .= "<ul class='custom-list'>";
             while($row = $result -> fetch_assoc()) {
                 $html .= "<li>";
-                $html .= "<a href='" . root . "delete?custom=" . $row['ingredient'] . "&uri=custom-inclusive' " . "title='Eliminar' class='click-del'>";
+                $html .= "<a href='" . root . "delete?custom=" . $row['ingredient'] . "&uri=custom-inclusive' " . "title='Eliminar' class='click-del-link'>";
                 $html .= ucfirst($row["ingredient"]);
                 $html .= "</a>";
                 $html .= "</li>";
 //Ingredients are added into an array                
                 $ingArray[] = $row["ingredient"];
             }
-            $html .= "</ol>";
+            $html .= "</ul>";
             $html .= "</div>";                   
             $html .= "</div>";      
             echo $html;
@@ -122,7 +122,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                         $html .= '<h4 class="card-header">' . $category[$i] . '</h4>';
                         $html .= '<div class="card-body">';
                         $html .= '<p class="card-text">' . $recipes[$i] . '</p>';
-                        $html .= "<a class='btn btn-primary' href='" . root . "recipes?recipe=" . $recipes[$i] . "&username=" . $_SESSION['username'] . "' title='receta'>Ver</a>";
+                        $html .= "<a class='see-btn btn btn-primary' href='" . root . "recipes?recipe=" . $recipes[$i] . "&username=" . $_SESSION['username'] . "' title='receta'>Ver</a>";
                         $html .= '</div>'; 
                         $html .= '</div>';  
                         $html .= '</div>'; 

@@ -46,8 +46,7 @@ footer {
 
 #logo:hover {
     height: 2.3rem;
-    box-shadow: 1px 1px 16px rgb(223, 73, 73);
-    border-radius: 40%;
+    box-shadow: 1px 1px 16px -4px rgb(223, 73, 73);
 }
 
 #profile {
@@ -137,6 +136,12 @@ footer {
     color: rgb(4, 4, 99);
 }
 
+/*Ingredient format*/
+.ingredient:hover {
+    text-transform: uppercase;
+    font-size: 1.6rem;
+}
+
 /*Tables*/
 thead {
     background-color:#444444;
@@ -148,13 +153,22 @@ thead {
     background-color: rgb(71, 216, 241);
 }
 
+.table_header:hover {
+    color: rgb(71, 216, 241);
+    background-color:rgb(255, 246, 234);
+}
+
 tbody {
     background-color:rgb(255, 246, 234);
 }
 
-.tlink {
+#tlink {
     text-decoration:none;
     color: #222;
+}
+
+#tlink:hover {
+    font-size: 2rem;
 }
 
 table td, p, ul li, ol li, li a {
@@ -186,8 +200,18 @@ option {
     list-style: none;
     font-size: 1.2rem;
 }
-
-
+/*Custom*/
+.click-del-link:hover {
+    font-size: 2rem;
+    color:rgb(249, 43, 43);
+}
+.custom-list {
+    list-style: none;
+}
+.see-btn:hover {
+    position: relative;
+    font-size: 1.2rem;
+}
 
 /*Default user image*/
 .fa-user {

@@ -245,7 +245,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                             
                             $html = "<tr>";                        
                             $html .= "<td>";
-                            $html .="<a class='tlink' style='color:" . $color . ";' $recipeList>";
+                            $html .="<a id='tlink' style='color:" . $color . ";' $recipeList>";
                             $html .= $username;
                             $html .="</a>";
                             $html .= "</td>";

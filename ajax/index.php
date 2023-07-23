@@ -83,8 +83,8 @@
 //If there are results for the query , they are shown.
     if($num_rows > 0) {
         while($row = $result->fetch_assoc()){            
-            $output['data'] .= "<tr>";                    
-            $output['data'] .= "<td><a href='" . root . "recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta' class='tlink'>" . $row['recipename'] . "</a></td>";
+            $output['data'] .= "<tr id='maintable'>";                    
+            $output['data'] .= "<td><a class='p-2 my-2' href='" . root . "recipes?recipe=" . $row['recipename'] . "&username=" . $_SESSION['username'] . "' title='receta' id='tlink'>" . $row['recipename'] . "</a></td>";
             $output['data'] .= "<td>" . $row['cookingtime'] . "</td>";
             $output['data'] .= "<td>" .ucfirst($row['category']). "</td>";            
             $output['data'] .= "<td>";
