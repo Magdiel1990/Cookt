@@ -28,6 +28,9 @@ footer {
     height: auto;
 }
 
+.fa-linkedin, .fa-github, .fa-instagram, .fa-facebook-f {
+    transition: font-size linear 0.2s;
+}
 .fa-linkedin:hover, .fa-github:hover, .fa-instagram:hover, .fa-facebook-f:hover {
     font-size: 2rem;
 }
@@ -71,6 +74,10 @@ footer {
     left: 1.5rem;         
 }
 
+.navbar-collapse .nav-item, .navbar-collapse .dropdown-item {    
+    transition: background ease-out 0.1s, font-size ease-out 0.1s, border ease-out 0.1s;
+}
+
 .navbar-collapse .nav-item:hover, .navbar-collapse .dropdown-item:hover {
     font-size: 18px;
     background: rgba(83, 244, 104, 0.12); 
@@ -106,8 +113,9 @@ footer {
     font-size: 1.2rem;
 }
 
-.logout{
+.logout {
     font-size: 1.1rem;
+    transition: color ease-in 0.5s, font-size ease-out 0.5s;
 }
 
 .logout i:hover {
@@ -139,6 +147,10 @@ footer {
 }
 
 /*Ingredient format*/
+.ingredient {
+    transition: text-transform ease-in 1s;
+}
+
 .ingredient:hover {
     text-transform: uppercase;
     font-size: 1.6rem;
@@ -153,6 +165,7 @@ thead {
     font-size: 1.4rem;
     color:#ffffff;
     background-color: rgb(71, 216, 241);
+    transition: color ease-out 0.5s, background-color ease-in 0.3s;    
 }
 
 .table_header:hover {
@@ -167,6 +180,7 @@ tbody {
 #tlink {
     text-decoration:none;
     color: #222;
+    transition: font-size ease-out 0.2s;
 }
 
 #tlink:hover {
@@ -182,6 +196,10 @@ table td, p, ul li, ol li, li a {
 /*Form format*/
 label, select, input, option {
     font-size: 1.2rem;
+}
+
+select {
+    transition: box-shadow ease-out 0.5s;
 }
 
 select:hover {
@@ -203,6 +221,12 @@ option {
     font-size: 1.2rem;
 }
 /*Custom*/
+
+.click-del-link {
+    color: black;
+    transition: color ease-out 0.3s;
+}
+  
 .click-del-link:hover {
     font-size: 2rem;
     color:rgb(249, 43, 43);
@@ -214,6 +238,7 @@ option {
     padding-top: 1.2rem;
     padding-bottom: 1.2rem;
     background: rgb(255, 246, 223);
+    transition: background ease-out 2s, border ease-in 1s;
 }
 .custom-list:hover {
     background: rgb(240, 252, 255);

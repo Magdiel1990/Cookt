@@ -134,10 +134,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                     }
                 }
                 
-//Object to determine the title of the user            
-            $title = new TitleConvertor($row['sex']);
-            $_SESSION['title'] = $title -> title(); 
-
 //Check if the user has ever logged in
             $sql = "SELECT id FROM access WHERE userid= ?;";
             $stmt = $conn -> prepare($sql); 

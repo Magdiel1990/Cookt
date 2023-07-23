@@ -216,7 +216,7 @@ class TimeConvertor {
 }
 
 //Title convertion depending the sex of the user
-class TitleConvertor {
+/*class TitleConvertor {
     public $sex;
 
     function __construct($sex){
@@ -234,7 +234,7 @@ class TitleConvertor {
             default: return "";
         }
     }
-}
+}*/
 //Header of the pages
 class PageHeaders {
     private $uri;
