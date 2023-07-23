@@ -130,6 +130,8 @@ footer {
    height:850%;
 }
 
+
+
 /*Profile format*/
 .profile_description {
     font-weight: bold;
@@ -207,7 +209,17 @@ option {
 }
 .custom-list {
     list-style: none;
+    border: 1px dotted #aaa;
+    padding-right: 1.8rem;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    background: rgb(255, 246, 223);
 }
+.custom-list:hover {
+    background: rgb(240, 252, 255);
+    border: 1px dotted #ff9494;
+}
+
 .see-btn:hover {
     position: relative;
     font-size: 1.2rem;
