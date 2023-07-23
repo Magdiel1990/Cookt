@@ -61,8 +61,8 @@ if(isset($_POST["category"])) {
     $categoryId = $row['categoryid'];
 
 //Random recipe for that category
-    $sql = "SELECT recipename FROM recipe WHERE categoryid = ?
-    AND username = ? AND state = 1 ORDER BY rand() LIMIT 1;";
+    $sql = "SELECT recipename, cookingtime FROM recipe WHERE categoryid = ?
+    AND username = ? AND state = 1 ORDER BY rand() LIMIT 10;";
 
     $stmt = $conn -> prepare($sql); 
     $stmt->bind_param("is", $categoryId, $_SESSION['username']);
@@ -77,18 +77,6 @@ if(isset($_POST["category"])) {
         } else {
         $row = $result -> fetch_assoc();
         $recipename= $row['recipename'];
-
-        $sql = "SELECT DISTINCT cookingtime
-                FROM recipe  
-                WHERE recipename = ? AND username = ? AND state = 1";
-
-        $stmt = $conn -> prepare($sql); 
-        $stmt->bind_param("ss", $recipename, $_SESSION['username']);
-        $stmt->execute();
-
-        $result = $stmt -> get_result(); 
-        $row = $result -> fetch_assoc();  
-
         $cookingtime = $row['cookingtime'];       
     ?>
     <div class="my-4">

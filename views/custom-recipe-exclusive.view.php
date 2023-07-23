@@ -77,8 +77,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                 $ingArray[] = $row["ingredient"];
             }
             $html .= "</ul>";
-            $html .= "</div>";                   
-            $html .= "</div>";      
+            $html .= "</div>";   
             echo $html;
         }
         ?>
