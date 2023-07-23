@@ -30,4 +30,12 @@ if(isset($_GET["r_code"])){
         }
     } 
 }
+
+$conn -> close();
+
+//Verify that data comes
+if(empty($_GET) && empty($_POST)) {
+    header('Location: ' . root);
+    exit;  
+}
 ?>

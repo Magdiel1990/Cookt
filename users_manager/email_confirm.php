@@ -44,4 +44,11 @@ if(isset($_GET["code"])){
         }
     } 
 }
+$conn -> close();
+
+//Verify that data comes
+if(empty($_GET)) {
+    header('Location: ' . root);
+    exit;  
+}
 ?>

@@ -109,6 +109,7 @@ $header = $header -> pageHeader();
     }
     </script>
 <?php
+$conn -> close(); 
 //Footer of the page.
 require_once ("views/partials/footer.php");
 ?>

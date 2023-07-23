@@ -140,6 +140,7 @@ $conn = DatabaseConnection::dbConnection();
         </div>
     </main>
 <?php
+$conn -> close();
 //Footer of the page.
 require_once ("views/partials/footer.php");
 } else {
