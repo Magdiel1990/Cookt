@@ -200,7 +200,7 @@ $header = $header -> pageHeader();
     }
 ?>  
 
-    <section class="my-4">
+    <div class="my-4">
         <div class="container-fluid h-custom my-4">
             <div class="row d-flex justify-content-center align-items-center">
 <!-- Login image-->
@@ -257,7 +257,7 @@ $header = $header -> pageHeader();
                 </div>
             </div>
         </div>  
-    </section>
+    </div>
 </main>
 <?php
 //Close connection

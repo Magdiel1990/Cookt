@@ -21,11 +21,11 @@ header, footer {
 }
 
 main {
-    min-height: calc(100vh - 6rem);
+    min-height: calc(100vh - 8rem);
 }
 
 footer {
-    height: auto;
+    height: 8rem;
 }
 
 .fa-linkedin, .fa-github, .fa-instagram, .fa-facebook-f {
