@@ -25,7 +25,7 @@ main {
 }
 
 footer {
-    height: 6rem;
+    height: auto;
 }
 
 .fa-linkedin:hover, .fa-github:hover, .fa-instagram:hover, .fa-facebook-f:hover {
@@ -124,6 +124,11 @@ footer {
     text-decoration: none;
     text-align: center;
     display: block;
+}
+
+#recipePic {
+   width:50%;
+   height:850%;
 }
 
 /*Profile format*/

@@ -72,7 +72,7 @@ if(isset($_POST["category"])) {
     $num_rows = $result -> num_rows;
 //If there is no recipe
         if($num_rows == 0){
-            echo "<p class='text-center'>¡No hay recetas disponibles para esta categoría!</p>";
+            echo "<p class='mt-5 text-center'>¡No hay recetas disponibles para esta categoría!</p>";
 //If there is       
         } else {
         $row = $result -> fetch_assoc();
@@ -107,7 +107,7 @@ if(isset($_POST["category"])) {
                 $recipeImageDir = "";
             } 
             ?>
-            <img src="<?php echo $recipeImageDir?>" title="receta" alt="Imangen de la receta" style="width:50%;height:850%;">
+            <img id="recipePic" src="<?php echo $recipeImageDir?>" title="receta" alt="Imangen de la receta">
             <?php
             ?>      
         </a>

@@ -70,7 +70,6 @@ $_SESSION["location"] = root;
         <table class="table table-condensed shadow">
             <thead>
                 <tr class="table_header text-center">
-                    <!--<th scope="col">#</th>-->
                     <th scope="col">Receta</th>
                     <th scope="col">Tiempo (min)</th>
                     <th scope="col">Categoría</th>

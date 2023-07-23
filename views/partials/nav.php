@@ -30,12 +30,12 @@ if($counter == 0){
                 <li class="nav-item">
                     <a class="nav-link text-white" href="<?php echo root;?>custom-exclusive" title="Elegir por ingredientes">Excluir ingredientes</a>
                 </li>
-                <li class="nav-item dropdown"  <?php if($_SESSION['type'] == 'Viewer') { echo "style = 'display : none;'";}?>>
+                <li id="dropdownbtn" class="nav-item dropdown"  <?php if($_SESSION['type'] == 'Viewer') { echo "style = 'display : none;'";}?>>
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa-solid fa-gears text-white"></i>
                     </a>
 <!-- Not Admin users can't access some of the links-->
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">                    
+                    <div id="dropdown-menu" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">                    
                         <a class="dropdown-item" href="<?php echo root;?>ingredients" title="Ingredientes">Ingredientes</a>
                         <a class="dropdown-item" href="<?php echo root;?>add-recipe" title="Recetas">Recetas</a>
                         <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="<?php echo root;?>categories" title="Categorías">Categorías</a>
@@ -73,7 +73,7 @@ if($counter == 0){
 </header>
  <script>
 deleteMessage("logout");  
-resetCounter();
+hoverMenu();
 
 //Delete message
 function deleteMessage(button){
@@ -90,4 +90,19 @@ var deleteButtons = document.getElementsByClassName(button);
         })
     }
 }
+
+function hoverMenu(){
+    var dropdownbtn = document.getElementById("dropdownbtn");
+    var dropdown_menu =  document.getElementById("dropdown-menu");
+    
+    dropdownbtn.addEventListener("mouseover", function (event){
+        dropdown_menu.style.display = "block";
+    });
+    dropdownbtn.addEventListener("mouseout", function (event){
+        dropdown_menu.style.display = "none";
+    });
+}
+
+
+
 </script>

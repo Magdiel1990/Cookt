@@ -62,7 +62,7 @@
     } else {  
         while($row =  $result -> fetch_assoc()){
 //Time ago calculation                
-        $timeAgo = new DateCalculation($row["date"]); 
+        $timeAgo = new DateCalculation($row["date"], null); 
         $timeAgo = $timeAgo -> timeAgo();  
         
         $output['data'] .= '<div class="py-2 col-auto">'; 
