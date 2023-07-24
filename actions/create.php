@@ -731,9 +731,9 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
           $type = "add";
 
           if($_SESSION['notification'] == 1) {
-            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', '0');";
             $conn -> query($sql);
-          }
+          }          
 
           $_SESSION['message'] = '¡Receta agragada exitosamente!';
           $_SESSION['message_alert'] = "success";

@@ -73,12 +73,37 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
                         $sql = "INSERT INTO shares (share_from, share_to, recipeid) VALUES ('$username', '$destination', '$recipeid');";
                     
                         if($conn -> query($sql)) {
-                            $log_message_receiver = "El usuario " . $username . " te ha compartido la receta \"" . $recipe . "\".";
-                            $log_message_sender = "Has compartido la receta \"" . $recipe . "\" con el usuario " . $destination . ".";
-                            
-                            $type = "share";
+// Image path (sender)
+                            $recipeImagesDirSender = "imgs/recipes/". $_SESSION['username'] ."/";
 
+                            if (!file_exists($recipeImagesDirSender)) {
+                                mkdir($recipeImagesDirSender, 0777, true);
+                            }   
+
+                            $files = new Directories($recipeImagesDirSender, $recipe);
+                            $ext = $files -> directoryFiles();
+//Image complete path (sender)
+                            if($ext !== null) {
+                                $imageDirSender = $recipeImagesDirSender . $recipename . "." . $ext;
+// Image path (receiver)
+                                $recipeImagesDirReceiver = "imgs/recipes/". $username ."/";
+
+                                if (!file_exists($recipeImagesDirReceiver)) {
+                                    mkdir($recipeImagesDirReceiver, 0777, true);
+                                }  
+//Image complete path (receiver)                           
+
+                                $imageDirReceiver = $recipeImagesDirReceiver . $recipename . "." . $ext;
+//Moving the file
+                                rename($imageDirSender, $imageDirReceiver);
+                            }
+
+//Notification message            
                             if($_SESSION['notification'] == 1) {
+                                $log_message_receiver = "El usuario " . $username . " te ha compartido la receta \"" . $recipe . "\".";
+                                $log_message_sender = "Has compartido la receta \"" . $recipe . "\" con el usuario " . $destination . ".";
+                            
+                                $type = "share";
                                 $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message_receiver', '$type', 0);";
                                 $sql .= "INSERT INTO `log` (username, log_message, type, state) VALUES ('$username', '$log_message_sender', '$type', 0);";
                                 $conn -> multi_query($sql);                     

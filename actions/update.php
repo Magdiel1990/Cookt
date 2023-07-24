@@ -149,7 +149,7 @@ $categoryId = $row['categoryid'];
 // Save image 
                         } else {
                             if(file_put_contents($recipeImagesDir, file_get_contents($url)) !== false){
-                                $_SESSION['message'] = '¡Receta agregada exitosamente!';
+                                $_SESSION['message'] = '¡Receta editada exitosamente!';
                                 $_SESSION['message_alert'] = "success";
 
                                 header('Location: ' . root . 'edit?recipename='. $newRecipeName .'&username=' . $userName);
