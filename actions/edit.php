@@ -143,11 +143,11 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
     r.ingredients, 
     r.preparation,
     c.category
-    from recipe r 
-    join categories c 
-    on r.categoryid = c.categoryid
+    FROM recipe r 
+    JOIN categories c 
+    ON r.categoryid = c.categoryid
     WHERE r.recipename = ? 
-    AND r.username = ? AND r.state = 1;";
+    AND r.username = ? AND r.state = 1 OR c.state = 1;"; //Proving
 
     $stmt = $conn -> prepare($sql); 
     $stmt->bind_param("ss", $recipeName, $userName);
