@@ -727,7 +727,7 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
 //The page is redirected to the notifications
         if($conn -> multi_query($sql)) {
 //Notification message        
-          $log_message = "Has aceptado la receta \"" . $$recipename . "\".";       
+          $log_message = "Has aceptado la receta \"" . $recipename . "\".";       
           $type = "add";
 
           if($_SESSION['notification'] == 1) {
