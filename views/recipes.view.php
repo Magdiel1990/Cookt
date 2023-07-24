@@ -135,14 +135,15 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
                     <hr class="my-3">
                 </div>
 <!-- Link-->                 
-                <div class="p-2 col-12">
-                    <div class="lead text-center">
-                        <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapse" title='Preparación'>
-                        Preparación
-                        </a>
+                <div class="row justify-content-center">                   
+                    <div class="col-auto btn-group" role="group">
                         <a href='<?php echo root . "edit?recipename=" . $row['recipename'] . "&username=" . $_SESSION['username']; ?>' class='btn btn-secondary' title='Editar'>Editar</a>
+                        <a href='<?php echo root . "delete?recipename=" . $row['recipename']; ?>' class='btn btn-danger' title='Eliminar' onclick='deleteMessage()' id='recipe'>Eliminar</a>
+                        <a href="<?php echo $_SESSION["location"];?>" class="btn btn-info"  title='Regresar'>Regresar</a>
+                    </div>
+                     <div class="col-auto btn-group" role="group">
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapse" title='Preparación'>Preparación</a>
                         <a class='btn btn-warning dropdown-toggle' data-toggle="collapse" href="#share" role="button"  aria-expanded="false" aria-controls="share" title='Compartir'>Compartir</a>
-                        <a class="btn btn-info" href="<?php echo $_SESSION["location"];?>" title='Regresar'>Regresar</a>
                     </div>
                 </div>
 <!-- Email box-->                 
@@ -195,6 +196,18 @@ function mailValidation(){
         }     
         return true;               
     })
+}
+
+//Delete message
+function deleteMessage(){
+    var deleteButtons = document.getElementById("recipe");
+  
+    if(confirm("¿Desea eliminar esta receta?")) {
+        return true;
+    } else {
+        event.preventDefault();
+        return false;
+    }
 }
 </script>
 <?php
