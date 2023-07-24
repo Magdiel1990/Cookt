@@ -82,22 +82,23 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
 
                             $files = new Directories($recipeImagesDirSender, $recipe);
                             $ext = $files -> directoryFiles();
+
 //Image complete path (sender)
                             if($ext !== null) {
-                                $imageDirSender = $recipeImagesDirSender . $recipename . "." . $ext;
+                                $imageDirSender = $recipeImagesDirSender . $recipe . "." . $ext;
+
 // Image path (receiver)
-                                $recipeImagesDirReceiver = "imgs/recipes/". $username ."/";
+                                $recipeImagesDirReceiver = "imgs/recipes/". $destination ."/";
 
                                 if (!file_exists($recipeImagesDirReceiver)) {
                                     mkdir($recipeImagesDirReceiver, 0777, true);
                                 }  
 //Image complete path (receiver)                           
 
-                                $imageDirReceiver = $recipeImagesDirReceiver . $recipename . "." . $ext;
-//Moving the file
-                                rename($imageDirSender, $imageDirReceiver);
+                                $imageDirReceiver = $recipeImagesDirReceiver . $recipe . "." . $ext;
+//Copying the file
+                                copy ($imageDirSender, $imageDirReceiver);
                             }
-
 //Notification message            
                             if($_SESSION['notification'] == 1) {
                                 $log_message_receiver = "El usuario " . $username . " te ha compartido la receta \"" . $recipe . "\".";
