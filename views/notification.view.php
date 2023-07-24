@@ -115,14 +115,13 @@ function deleteMessageLoop(){
 }
 </script>
 <?php
-//Reseting the message counter
-if($_SERVER["REQUEST_URI"] ==  "/notifications") {
+require_once ("views/partials/footer.php");
+
+//Reseting the message 
+if($_SERVER["REQUEST_URI"] == root . "notifications") {
     $conn-> query ("UPDATE `log` SET `state` = 1 WHERE `state` = 0;");
 }
 
 //Exiting connection
 $conn -> close();
-
-//Footer
-require_once ("views/partials/footer.php");
 ?>
