@@ -97,11 +97,11 @@ $result = $stmt -> get_result();
                 ?>
                 <h3>Lista de Recetas del Usuario "<?php echo $username;?>"</h3>
             </div>
-            <ol>
+            <ol class="mt-3">
             <?php
 //Recipes            
                 while($row = $result -> fetch_assoc()){
-                    $html = "<li>"; 
+                    $html = "<li class='py-1'>"; 
                     $html .= "<a href='" . root . "recipes?recipe=" . $row['recipename'] . "&username=" . $username . "'>"; 
                     $html .= $row['recipename'];
                     $html .= "</a>"; 
