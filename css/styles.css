@@ -47,6 +47,7 @@ footer {
     border-radius: 20%;
 }
 
+
 #logo:hover {
     height: 2.3rem;
     box-shadow: 1px 1px 16px -4px rgb(223, 73, 73);
@@ -55,6 +56,11 @@ footer {
 #profile {
     max-width: 30%;
     object-fit:fill;
+}
+
+#profile:hover {
+    max-width: 22%;
+    object-fit:cover;
 }
 
 .logo {
