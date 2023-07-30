@@ -28,7 +28,7 @@ $result = $stmt -> get_result();
     <div class="row justify-content-center form">
         <div class="col-12 mb-5">
             <div class="text-center">
-                <h3>Datos del usuario <?php echo $username;?></h3>                
+                <h3>Datos del usuario "<?php echo $username;?>"</h3>                
             </div>
             <div class="table-responsive-md mt-4">
                 <table class="table table-sm table-bordered shadow">
@@ -43,7 +43,7 @@ $result = $stmt -> get_result();
                     <tbody>   
                     <?php 
 //User umages directory                   
-                        $imgDirectory = "../imgs/recipes/" . $username . "/";
+                        $imgDirectory = "imgs/recipes/" . $username . "/";
                         
 //Size of the images directory
                         $files = new Directories($imgDirectory, null);                        
@@ -95,7 +95,7 @@ $result = $stmt -> get_result();
 
                 if($result -> num_rows > 0) {
                 ?>
-                <h3>Lista de Recetas del Usuario <?php echo $username;?></h3>
+                <h3>Lista de Recetas del Usuario "<?php echo $username;?>"</h3>
             </div>
             <ol>
             <?php
