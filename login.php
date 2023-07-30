@@ -69,7 +69,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                     $row = $conn -> query($sql) -> fetch_assoc(); 
 
                     if($row["suggestion_day"] > 0) {
-                    $days = rand(1, 30);   
+                    $days = rand(1, 7);   
 //Saving next suggestin date
                     $sql = "UPDATE users SET suggestion_day = '" . $days . "' WHERE username = '" . $_SESSION['username'] . "';";
                     $conn -> query($sql);
