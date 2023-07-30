@@ -175,7 +175,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
 <script>
 mailValidation(); 
 
-//Mail format validation
+//Share recipe confirmation
 function shareConfirm() {
     var email = document.getElementById("email").value;
 
