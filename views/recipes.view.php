@@ -150,7 +150,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
                 <div class="row mt-4">
                     <div class="col-12 collapse" id="share">
                         <div class="recovery-form">                            
-                            <form method="POST" action="<?php echo root . 'share?recipe=' . base64_encode(serialize($recipe)) . '&username=' . $username;?>" class="text-center" id="share_form">
+                            <form method="POST" action="<?php echo root . 'share?recipe=' . base64_encode(serialize($recipe)) . '&username=' . $username;?>" class="text-center" id="share_form" onsubmit="shareConfirm()">
                                 <label class="form-label mb-2" for="email">Email:</label>
                                 <div class="input-group mb-3">                                
                                     <input type="email" id="email" class="form-control" name="email" placeholder="Escribe el correo electrónico" minlength="15" maxlength="70" required/>
@@ -174,6 +174,18 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
 </main>
 <script>
 mailValidation(); 
+
+//Mail format validation
+function shareConfirm() {
+    var email = document.getElementById("email").value;
+
+    if (confirm("¿Desea compartir esta receta con " + email + "?")) {
+        return true;
+    } else {
+        event.preventDefault();
+        return false;
+    }
+}
 
 //Mail format validation
 function mailValidation(){

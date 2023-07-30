@@ -104,9 +104,11 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
                                 $log_message_receiver = "El usuario " . $username . " te ha compartido la receta \"" . $recipe . "\".";
                                 $log_message_sender = "Has compartido la receta \"" . $recipe . "\" con el usuario " . $destination . ".";
                             
-                                $type = "share";
-                                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message_receiver', '$type', 0);";
-                                $sql .= "INSERT INTO `log` (username, log_message, type, state) VALUES ('$username', '$log_message_sender', '$type', 0);";
+                                $type_receiver = "share_receiver";
+                                $type_sender = "share_sender";
+
+                                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message_receiver', '$type_receiver', 0);";
+                                $sql .= "INSERT INTO `log` (username, log_message, type, state) VALUES ('$username', '$log_message_sender', '$type_sender', 0);";
                                 $conn -> multi_query($sql);                     
                             }
                             

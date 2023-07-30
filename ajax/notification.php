@@ -70,12 +70,13 @@
         $output['data'] .= '<div class="card-header">' . $timeAgo . '</div>';
         $output['data'] .= '<div class="card-body">';
         $output['data'] .= '<p class="card-text">' . $row ["log_message"] . '</p>';
+        $output['data'] .= '<div class = "btn-group">';
         $output['data'] .= '<a href="' . root . 'delete?messageid=' . $row['id'] . '&type=' . $row["type"] . '" class="btn btn-danger" onclick="deleteMessageLoop()">Eliminar</a>';
                     
-        if($row["type"] == "share"){
+        if($row["type"] == "share_receiver"){
             $output['data'] .= '<a href="' . root . 'create?messageid=' . $row['id'] . '&type=' . $row["type"] .'" class="btn btn-primary">Aceptar</a>';
         }
-
+        $output['data'] .= '</div>';
         $output['data'] .= '</div>'; 
         $output['data'] .= '</div>';  
         $output['data'] .= '</div>'; 

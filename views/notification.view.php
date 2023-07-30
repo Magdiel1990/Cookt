@@ -47,7 +47,7 @@ require_once ("views/partials/nav.php");
     <div class="row my-3 justify-content-start" id="content">
     </div>        
 
-    <div class="col-8" id="nav-pagination">            
+    <div class="col-8 mt-4" id="nav-pagination">            
     </div> 
 </main>
 <!-- Ajax script-->

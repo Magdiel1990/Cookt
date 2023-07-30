@@ -687,7 +687,7 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
   $type = $_GET['type'];
 
 //Only if it is a shared recipe
-  if($type != "share" ){
+  if($type != "share_receiver"){
     header('Location: ' . root . 'error404');
     exit;
   } else {
@@ -735,7 +735,6 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
 
 //The page is redirected to the notifications
         if($conn -> multi_query($sql)) {   
-
           $_SESSION['message'] = '¡Receta agragada exitosamente!';
           $_SESSION['message_alert'] = "success";
 
