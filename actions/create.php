@@ -719,21 +719,22 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
       $preparation = $row["preparation"];
       $cookingtime = $row["cookingtime"];
 
-      $sql = "INSERT INTO recipe (recipename, categoryid, username, ingredients, preparation, cookingtime) VALUES ('$recipename', '$categoryid', '" . $_SESSION["username"]. "', '$ingredients', '$preparation', '$cookingtime');";
-      if($conn -> query($sql)) {
+      $result = $conn -> query("INSERT INTO recipe (recipename, categoryid, username, ingredients, preparation, cookingtime) VALUES ('$recipename', '$categoryid', '" . $_SESSION["username"]. "', '$ingredients', '$preparation', '$cookingtime');");
+
+//Notification message        
+      $log_message = "Has aceptado la receta \"" . $recipename . "\".";       
+      $type = "add";
+
+      if($result) {
         $sql = "DELETE FROM shares WHERE recipeid = '$recipeid';";
         $sql .= "DELETE FROM `log` WHERE id = '$messageid';";
+        
+        if($_SESSION['notification'] == 1) {
+           $sql .= "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', '0');";
+        }      
 
 //The page is redirected to the notifications
-        if($conn -> multi_query($sql)) {
-//Notification message        
-          $log_message = "Has aceptado la receta \"" . $recipename . "\".";       
-          $type = "add";
-
-          if($_SESSION['notification'] == 1) {
-            $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', '0');";
-            $conn -> query($sql);
-          }          
+        if($conn -> multi_query($sql)) {   
 
           $_SESSION['message'] = '¡Receta agragada exitosamente!';
           $_SESSION['message_alert'] = "success";

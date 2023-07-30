@@ -48,7 +48,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
                 $row = $result -> fetch_assoc();
                 $destination = $row["username"];
                 $shares = $row["shares"];
-
+//Verify whether the destionation account is the sender account or the destination user has the share disabled
                 if ($destination == $_SESSION["username"] || $shares == 0) {
                     $_SESSION['message'] = '¡No puedes compartir la receta con este usuario!';
                     $_SESSION['message_alert'] = "danger";
