@@ -147,14 +147,14 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
     JOIN categories c 
     ON r.categoryid = c.categoryid
     WHERE r.recipename = ? 
-    AND r.username = ? AND r.state = 1 OR c.state = 1;"; //Proving
+    AND r.username = ? AND r.state = 1 AND c.state = 1;";
 
     $stmt = $conn -> prepare($sql); 
     $stmt->bind_param("ss", $recipeName, $userName);
     $stmt->execute();
 
     $result = $stmt -> get_result(); 
-    $row = $result -> fetch_assoc();   
+    $row = $result -> fetch_assoc();  
 
     if(isset($row["cookingtime"]) && isset($row["ingredients"]) && isset($row["preparation"]) && isset($row["category"])) {
         $cookingTime = $row["cookingtime"];
