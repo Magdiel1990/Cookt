@@ -40,7 +40,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
     join categories c 
     on r.categoryid = c.categoryid    
     WHERE r.recipename = ?
-    AND r.username = ? AND r.state = 1;";
+    AND r.username = ? AND r.state = 1 AND c.state = 1;";
 
     $stmt = $conn -> prepare($sql); 
     $stmt->bind_param("ss", $recipe, $username);

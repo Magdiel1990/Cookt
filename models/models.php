@@ -215,26 +215,6 @@ class TimeConvertor {
     }
 }
 
-//Title convertion depending the sex of the user
-/*class TitleConvertor {
-    public $sex;
-
-    function __construct($sex){
-        $this -> sex = $sex;    
-    }
-    
-    public function title(){
-        switch ($this -> sex){
-            case "M": return "Sr. ";
-            break;
-
-            case "F": return "Sra. ";
-            break;
-
-            default: return "";
-        }
-    }
-}*/
 //Header of the pages
 class PageHeaders {
     private $uri;
@@ -268,7 +248,8 @@ class PageHeaders {
             root . "not-found" => "No encontrado",
             root. "recovery-page" => "Recuperación",
             root. "reactivate-account" => "Reactivar cuenta",   
-            root. "settings" => "Configuración" 
+            root. "settings" => "Configuración",
+            root. "diet" =>  "Dieta"   
         ];
 
         switch ($this -> uri) {

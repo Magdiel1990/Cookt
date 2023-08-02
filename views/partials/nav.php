@@ -40,6 +40,7 @@ if($counter == 0){
                         <a class="dropdown-item" href="<?php echo root;?>add-recipe" title="Recetas">Recetas</a>
                         <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="<?php echo root;?>categories" title="Categorías">Categorías</a>
                         <a <?php if($_SESSION['type'] != 'Admin') { echo "style = 'display : none;'";}?> class="dropdown-item" href="<?php echo root;?>user" title="Usuarios">Usuarios</a>
+                        <a class="dropdown-item" href="<?php echo root. "diet";?>">Dieta</a>
                         <a class="dropdown-item" href="<?php echo root. "recycle";?>">Papelera</a>
                         <a class="dropdown-item" href="<?php echo root. "settings";?>">Configuración</a>
                     </div>
