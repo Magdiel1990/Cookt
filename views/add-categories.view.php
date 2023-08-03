@@ -40,7 +40,7 @@ require_once ("views/partials/nav.php");
             </div> 
 
             <div class="mb-3">
-                <input  class="btn btn-success" name="categorySubmit" type="submit" value="Agregar">
+                <input class="btn btn-success" name="categorySubmit" type="submit" value="Agregar">
             </div>
 
         </form>
