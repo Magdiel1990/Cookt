@@ -21,24 +21,15 @@ $_SESSION["lastcheck"] = 3;
 
 <?php
     if(isset($_POST["generate"])) {   
-?>
-<!--  Saving recipe form-->
-    <div class="row text-center justify-content-center p-2 mt-4">
-        <form class="col-auto" method="POST" action="<?php echo root;?>create">           
-            <input class="form-control mb-3" type="text" name="diet" id="diet" placeholder="Escriba el nombre de la dieta">
-            <input class="btn btn-primary" type="submit" value="Agregar" title="Generar">
-        </form>
-    </div>
 
-<?php
 //Receiving how many meals a day  
     $amount = $_POST["generate"];
     $_SESSION["lastcheck"] = $amount;
 
     $daysNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
-
+//Amount of days
     $dayCount = count($daysNames);
-
+//Amount of recipes
     $totalRecipe = $amount * $dayCount;
 
     $limit = "LIMIT " . $totalRecipe;
@@ -46,7 +37,7 @@ $_SESSION["lastcheck"] = 3;
     $result = $conn -> query("SELECT r.recipename, r.recipeid FROM recipe r JOIN categories c ON r.categoryid = c.categoryid WHERE username = '" . $_SESSION['username'] . "' AND r.state = 1 AND c.state = 1 ORDER BY rand() $limit;"); 
 ?>
 <!-- Table with the diets-->
-    <div class="row p-2">  
+    <div class="d-flex flex-column-reverse p-2">  
         <div class="table-responsive mt-4">
             <table class="table text-center">
                 <thead class="text-light">       
@@ -65,15 +56,15 @@ $_SESSION["lastcheck"] = 3;
                     while($row = $result -> fetch_array()) {
                         $recipes[] = $row [0]; 
                     }
-//Amount of recipes demanded are higher than the recipes avalables                        
+//Amount of recipes demanded are higher than the recipes availables                        
                     if(count($recipes) < $totalRecipe) {
                         $excess = $totalRecipe - count($recipes);
 //New array with some of the recipes already added
                         $newArray = array_slice($recipes,0,$excess);               
-//Final array
+//Completing the array so it can have the amount demanded
                         $recipes = array_merge($recipes, $newArray);
                     }
-//Recipes chunk
+//Recipes chunks
                     $sliceRecipes = (array_chunk($recipes, $dayCount));
             
                     for($i = 0; $i < count($sliceRecipes); $i++) {
@@ -86,6 +77,14 @@ $_SESSION["lastcheck"] = 3;
                 ?>
                 </tbody>
             </table>
+        </div>
+
+<!--  Saving recipe form-->
+        <div class="row text-center justify-content-center p-2 mt-4">
+            <form class="col-auto" method="POST" action="<?php echo root;?>create">           
+                <input class="form-control mb-3" type="text" name="diet" id="diet" placeholder="Escriba el nombre de la dieta">
+                <input class="btn btn-primary" type="submit" value="Agregar" title="Generar">
+            </form>
         </div>
     </div>
 <?php
