@@ -62,8 +62,8 @@ $date = date("d-m-Y", strtotime($row["created_at"]));
     <div class="row my-3 justify-content-center align-items-center">        
         <div class="col-xl-5 col-lg-6 col-md-7 col-sm-9">
             <div class="p-4 card card-body bg-form">
-                <div class="row my-4 justify-content-center align-items-center">
-                    <img <?php echo $path;?> alt="Foto de perfil" id="profilePicture">
+                <div class="row my-4 justify-content-center">
+                    <img id="img-profile" class="img-thumbnail" <?php echo $path;?> alt="Foto de perfil">
                 </div>
                 <div class="my-2">
                     <h4><span class="profile_description">Usuario: </span><?php echo $userName;?></h4>

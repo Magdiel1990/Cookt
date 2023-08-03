@@ -118,9 +118,9 @@ if(isset($_GET["recipe"]) && isset($_GET["username"])){
                     </div>
                     <div class="mt-4">
                         <div class="text-center">
-                            <img src="<?php echo $recipeImageDir;?>" alt="Imangen de la receta" style="width:auto;height:11rem;">
+                            <img id="recipe-image" class="img-thumbnail" src="<?php echo $recipeImageDir;?>" alt="Imangen de la receta">
                         </div> 
-                        <div class="pt-4">                           
+                        <div class="pt-2">                           
                         <?php 
 //Ingredients list                        
                             $html = "<ul>";

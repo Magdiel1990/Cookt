@@ -51,7 +51,6 @@ footer h5 {
     border-radius: 20%;
 }
 
-
 #logo:hover {
     height: 2.3rem;
     box-shadow: 1px 1px 16px -4px rgb(223, 73, 73);
@@ -146,6 +145,13 @@ footer h5 {
 #recipePic {
    width:50%;
    height:850%;
+}
+
+/*Recipe picture and Profile picture*/
+#recipe-image, #img-profile {
+    width: 400px;
+    height: auto;
+    object-fit: fill;
 }
 
 /*Profile format*/
