@@ -59,31 +59,31 @@ $_SESSION["lastcheck"] = 3;
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
+                <?php
 //Users recipes                     
-                        $recipes = [];
-                        while($row = $result -> fetch_array()) {
-                            $recipes[] = $row [0]; 
-                        }
+                    $recipes = [];
+                    while($row = $result -> fetch_array()) {
+                        $recipes[] = $row [0]; 
+                    }
 //Amount of recipes demanded are higher than the recipes avalables                        
-                        if(count($recipes) < $totalRecipe) {
-                            $excess = $totalRecipe - count($recipes);
+                    if(count($recipes) < $totalRecipe) {
+                        $excess = $totalRecipe - count($recipes);
 //New array with some of the recipes already added
-                            $newArray = array_slice($recipes,0,$excess);               
+                        $newArray = array_slice($recipes,0,$excess);               
 //Final array
-                            $recipes = array_merge($recipes, $newArray);
-                        }
+                        $recipes = array_merge($recipes, $newArray);
+                    }
 //Recipes chunk
-                        $sliceRecipes = (array_chunk($recipes, $dayCount));
-               
-                        for($i = 0; $i < count($sliceRecipes); $i++) {
-                            echo "<tr>";
-                            for($j = 0; $j < count($sliceRecipes[$i]); $j++) {
-                                echo "<td><a class='p-2 my-2' id='tlink' href='recipes?recipe=" . $sliceRecipes [$i][$j] . "&username=" . $_SESSION['username']. "'>" . $sliceRecipes [$i][$j] . "</a></td>";
-                            } 
-                            echo "</tr>"; 
-                        }
-                    ?>
+                    $sliceRecipes = (array_chunk($recipes, $dayCount));
+            
+                    for($i = 0; $i < count($sliceRecipes); $i++) {
+                        echo "<tr>";
+                        for($j = 0; $j < count($sliceRecipes[$i]); $j++) {
+                            echo "<td><a class='p-2 my-2' id='tlink' href='recipes?recipe=" . $sliceRecipes [$i][$j] . "&username=" . $_SESSION['username']. "'>" . $sliceRecipes [$i][$j] . "</a></td>";
+                        } 
+                        echo "</tr>"; 
+                    }
+                ?>
                 </tbody>
             </table>
         </div>
