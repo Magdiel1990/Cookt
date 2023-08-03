@@ -7,22 +7,6 @@ require_once ("views/partials/nav.php");
 
 $_SESSION["lastcheck"] = 3;
 
-//Receiving how many meals a day  
-if(isset($_POST["generate"])){
-    $amount = $_POST["generate"];
-    $_SESSION["lastcheck"] = $amount;
-
-    $daysNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
-
-    $dayCount = count($daysNames);
-
-    $totalRecipe = $amount * $dayCount;
-
-    $limit = "LIMIT " . $totalRecipe;
-
-    $result = $conn -> query("SELECT r.recipename, r.recipeid FROM recipe r JOIN categories c ON r.categoryid = c.categoryid WHERE username = '" . $_SESSION['username'] . "' AND r.state = 1 AND c.state = 1 ORDER BY rand() $limit;"); 
-}
-
 //Messages
     if(isset($_SESSION['message'])){
     $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
@@ -36,7 +20,7 @@ if(isset($_POST["generate"])){
 <main class="container p-4">
 
 <?php
-    if(isset($_POST["generate"])){   
+    if(isset($_POST["generate"])) {   
 ?>
 <!--  Saving recipe form-->
     <div class="row text-center justify-content-center p-2 mt-4">
@@ -46,6 +30,21 @@ if(isset($_POST["generate"])){
         </form>
     </div>
 
+<?php
+//Receiving how many meals a day  
+    $amount = $_POST["generate"];
+    $_SESSION["lastcheck"] = $amount;
+
+    $daysNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+    $dayCount = count($daysNames);
+
+    $totalRecipe = $amount * $dayCount;
+
+    $limit = "LIMIT " . $totalRecipe;
+
+    $result = $conn -> query("SELECT r.recipename, r.recipeid FROM recipe r JOIN categories c ON r.categoryid = c.categoryid WHERE username = '" . $_SESSION['username'] . "' AND r.state = 1 AND c.state = 1 ORDER BY rand() $limit;"); 
+?>
 <!-- Table with the diets-->
     <div class="row p-2">  
         <div class="table-responsive mt-4">
