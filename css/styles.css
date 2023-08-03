@@ -191,14 +191,22 @@ tbody {
     background-color:rgb(255, 246, 234);
 }
 
-#tlink {
+#tlink, .diet-elements td a {
     text-decoration:none;
     color: #222;
     transition: font-size ease-out 0.2s;
 }
 
-#tlink:hover {
+#tlink:hover, .diet-elements td a:hover {
     font-size: 2rem;
+}
+
+.diet-elements td:hover {
+    background-color: #525151;
+}
+
+.diet-elements td a:hover {
+    color: #ffffff;    
 }
 
 table td, p, ul li, ol li, li a {

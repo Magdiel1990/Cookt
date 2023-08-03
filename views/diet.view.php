@@ -39,8 +39,8 @@ $_SESSION["lastcheck"] = 3;
 <!-- Table with the diets-->
     <div class="d-flex flex-column-reverse p-2">  
         <div class="table-responsive mt-4">
-            <table class="table text-center">
-                <thead class="text-light">       
+            <table class="table table-bordered">
+                <thead class="text-light text-center">       
                     <tr>
                     <?php
                         for($i = 0; $i < count($daysNames); $i++) {
@@ -68,12 +68,30 @@ $_SESSION["lastcheck"] = 3;
                     $sliceRecipes = (array_chunk($recipes, $dayCount));
             
                     for($i = 0; $i < count($sliceRecipes); $i++) {
-                        echo "<tr>";
+                        echo "<tr class='diet-elements'>";
                         for($j = 0; $j < count($sliceRecipes[$i]); $j++) {
-                            echo "<td><a id='tlink' href='recipes?recipe=" . $sliceRecipes [$i][$j] . "&username=" . $_SESSION['username']. "'>" . $sliceRecipes [$i][$j] . "</a></td>";
+                            echo "<td><a href='recipes?recipe=" . $sliceRecipes [$i][$j] . "&username=" . $_SESSION['username']. "'>" . $sliceRecipes [$i][$j] . "</a></td>";
                         } 
                         echo "</tr>"; 
                     }
+
+//Creating an array with the days and its corresponding recipes to be store
+                    $daysRecipes = [];
+
+                    for($i = 0; $i < $dayCount; $i++) {
+//The array is emptied                        
+                        $recipesDaysNames = [];
+//The day is added
+                        $recipesDaysNames [] = $daysNames[$i];
+//The recipes are added
+                        for($j = 0; $j < $amount; $j++) {                            
+                            array_push($recipesDaysNames, $sliceRecipes [$j][$i]);                         
+                        }
+//Each resulted array is added to the main one
+                        $daysRecipes [] = $recipesDaysNames;
+                    }
+//Encripting the data
+                    $data = base64_encode(serialize($daysRecipes));
                 ?>
                 </tbody>
             </table>
@@ -81,7 +99,8 @@ $_SESSION["lastcheck"] = 3;
 
 <!--  Saving recipe form-->
         <div class="row text-center justify-content-center p-2 mt-4">
-            <form class="col-auto" method="POST" action="<?php echo root;?>create">           
+            <form class="col-auto" method="POST" action="<?php echo root;?>create"> 
+                <input type="hidden" name="data" value = "<?php echo $data;?>">          
                 <input class="form-control mb-3" type="text" name="diet" id="diet" placeholder="Escriba el nombre de la dieta">
                 <input class="btn btn-primary" type="submit" value="Agregar" title="Generar">
             </form>
