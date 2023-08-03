@@ -757,6 +757,73 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
     }
   }
 }
+
+/******************************************************************************************************************** */
+/*************************************************DIET ADDING CODE*************************************************** */
+/******************************************************************************************************************** */
+
+if (isset($_POST['data']) && isset($_POST['diet']) && isset($_POST['days'])) {
+
+$filter = new Filter ($_POST['diet'], FILTER_SANITIZE_STRING, $conn);
+$dietName = $filter -> sanitization();
+
+$data = $_POST['data'];
+$days = $_POST['days'];
+
+$pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:\t\h]+|(^$)/";
+
+  if ($dietName == "" || $data == "" || $days == "") {
+    $_SESSION['message'] = '¡Complete todos los campos por favor!';
+    $_SESSION['message_alert'] = "danger";
+
+    header('Location: ' . root . 'diet');
+    exit;
+  }
+
+  if (!preg_match($pattern, $dietName)){
+    $_SESSION['message'] = '¡Nombre incorrecto!';
+    $_SESSION['message_alert'] = "danger";
+
+    header('Location: ' . root . 'diet');
+    exit;
+  } 
+
+//Inserting the recipe name
+  $sql = "INSERT INTO diet (dietname, username) VALUES ('$dietName', '". $_SESSION["username"]."');";
+  $result = $conn -> query($sql);
+
+  if($result) {
+//Getting the last id    
+    $last_id = $conn->insert_id;
+//Declaring the multi query
+    $sql = "";
+//Inserting the recipes details
+    for($i = 0; $i < count($data); $i++) {
+      $sql .= "INSERT INTO diet_details (day, recipes, dietid) VALUES ('" . $days[$i]. "', '". $data[$i] ."', '$last_id');";
+    }
+
+    if($conn -> multi_query($sql)) {
+      $_SESSION['message'] = '¡Dieta agregada correctamente!';
+      $_SESSION['message_alert'] = "success";
+
+      header('Location: ' . root . 'diet');
+      exit;
+    } else {
+      $_SESSION['message'] = '¡Error al agregar dieta!';
+      $_SESSION['message_alert'] = "danger";
+
+      header('Location: ' . root . 'diet');
+      exit;
+    }
+  } else {
+      $_SESSION['message'] = '¡Error al agregar dieta!';
+      $_SESSION['message_alert'] = "danger";
+
+      header('Location: ' . root . 'diet');
+      exit;
+  }
+}
+
 //Exiting db connection.
 $conn -> close(); 
 

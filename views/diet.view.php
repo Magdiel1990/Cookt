@@ -90,8 +90,33 @@ $_SESSION["lastcheck"] = 3;
 //Each resulted array is added to the main one
                         $daysRecipes [] = $recipesDaysNames;
                     }
-//Encripting the data
-                    $data = base64_encode(serialize($daysRecipes));
+
+                    
+                    
+//Getting nonly the days
+                    $days = [];
+
+                    for($i = 0; $i < count($daysRecipes); $i++) {
+                        array_push($days, $daysRecipes [$i] [0]);
+                    }
+//Recipes
+                    $onlyRecipes = [];
+//Getting only the recipes not the days
+                    for($i = 0; $i < count($daysRecipes); $i++) {
+                        $subOnlyRecipes = [];
+                        for($j = 0; $j < count($daysRecipes [$i]); $j++) {
+                            if($j != 0) {
+                                array_push($subOnlyRecipes, $daysRecipes[$i][$j]);  
+                            }                                    
+                        }                         
+                        array_push($onlyRecipes, $subOnlyRecipes);        
+                    }
+//Converting the array into string
+                    $recipesString = [];
+
+                    for($i = 0; $i < count($onlyRecipes); $i++) {
+                        $recipesString [] = implode(",",$onlyRecipes [$i]);  
+                    }
                 ?>
                 </tbody>
             </table>
@@ -99,8 +124,16 @@ $_SESSION["lastcheck"] = 3;
 
 <!--  Saving recipe form-->
         <div class="row text-center justify-content-center p-2 mt-4">
-            <form class="col-auto" method="POST" action="<?php echo root;?>create"> 
-                <input type="hidden" name="data" value = "<?php echo $data;?>">          
+            <form class="col-auto" method="POST" action="<?php echo root;?>create">
+                <?php
+                    for($i = 0; $i < count($days); $i++) {
+                        echo '<input type="hidden" name="days[]" value = "' . $days [$i] . '">';
+                    }
+
+                    for($i = 0; $i < count($recipesString); $i++) {
+                        echo '<input type="hidden" name="data[]" value = "' . $recipesString [$i] . '">';
+                    }                    
+                ?>                         
                 <input class="form-control mb-3" type="text" name="diet" id="diet" placeholder="Escriba el nombre de la dieta">
                 <input class="btn btn-primary" type="submit" value="Agregar" title="Generar">
             </form>
