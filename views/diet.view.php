@@ -79,7 +79,7 @@ $_SESSION["lastcheck"] = 3;
                     for($i = 0; $i < count($sliceRecipes); $i++) {
                         echo "<tr>";
                         for($j = 0; $j < count($sliceRecipes[$i]); $j++) {
-                            echo "<td><a class='p-2 my-2' id='tlink' href='recipes?recipe=" . $sliceRecipes [$i][$j] . "&username=" . $_SESSION['username']. "'>" . $sliceRecipes [$i][$j] . "</a></td>";
+                            echo "<td><a id='tlink' href='recipes?recipe=" . $sliceRecipes [$i][$j] . "&username=" . $_SESSION['username']. "'>" . $sliceRecipes [$i][$j] . "</a></td>";
                         } 
                         echo "</tr>"; 
                     }
