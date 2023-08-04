@@ -36,7 +36,7 @@ require_once ("views/partials/nav.php");
 
             <div class="mb-3">
                 <label class="form-label is-required" for="categoryImage">Foto de la categoría</label>
-                <input type="file" name="categoryImage" accept=".png, .webp, .jpeg, .jpg, .gif" class="form-control" id="categoryImage" required>
+                <input type="file" name="categoryImage" accept=".jpg" class="form-control" id="categoryImage" required>
             </div> 
 
             <div class="mb-3">
@@ -51,6 +51,7 @@ require_once ("views/partials/nav.php");
             <thead>
                 <tr class="table_header">
                     <th class='px-2' scope="col">Categorías</th>
+                    <th class='px-2' scope="col">Imagen</th>
                     <th class='px-2' scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -58,11 +59,14 @@ require_once ("views/partials/nav.php");
                 <?php
                     $sql = "SELECT * FROM categories WHERE state = 1 ORDER BY category;";
                     $result = $conn -> query($sql);
+//Category images main directory
+                    $categoryImg = "imgs/categories/";
 
                     if($result -> num_rows > 0){
                         while($row = $result -> fetch_assoc()){
                             $html = "<tr>";
                             $html .= "<td class='px-2'>" . ucfirst($row['category']) . "</td>";
+                            $html .= "<td class='px-2'><img src='" . $categoryImg . $row['category'] . ".jpg' alt='imagen de la categoría'></td>";
                             $html .= "<td class='px-2'>";
                             $html .= "<div class='btn-group' role='group'>";
 //Delete and edit buttons
@@ -119,7 +123,7 @@ function formValidation(){
         var categoryImage = categoryImageInput.value;                            
         var categoryNameInput = document.getElementById('add_categories');
         var categoryName = categoryNameInput.value;
-        var allowedImageTypes = ["image/jpeg", "image/gif", "image/png", "image/jpg", "image/webp"];  
+        var allowedImageTypes = ["image/jpg"];  
 
         if(categoryName == "") {
             event.preventDefault();                
@@ -153,7 +157,7 @@ function formValidation(){
 //Image format validation
             if(!allowedImageTypes.includes(fileType)){
                 event.preventDefault();
-                confirm ("¡Formatos de imagen admitidos: jpg, png, webp y gif!");
+                confirm ("¡Solo jpg admitido!");
                 return false;
             }                            
         }

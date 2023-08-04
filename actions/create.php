@@ -92,8 +92,7 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
         }
 
   // Allow certain file formats
-        if($ext != "jpg" && $ext != "png" && $ext != "webp" && $ext != "jpeg"
-        && $ext != "gif" ) {
+        if($ext != "jpg") {
           $uploadOk = "¡Formato no admitido!";
         } 
 
