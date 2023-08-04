@@ -176,7 +176,7 @@ $_SESSION["lastcheck"] = 3;
 
             $result = $conn -> query ("SELECT dd.recipes, dd.day, d.id FROM diet AS d JOIN diet_details AS dd ON dd.dietid = d.id WHERE d.username = '" . $_SESSION["username"] . "' AND dd.dietid = '$id' AND d.state = 1;"); 
     ?> 
-    <div class="table-responsive mt-4">         
+    <div class="table-responsive my-4">         
         <div class="row">
             <h3 class="text-center"><a class="text-warning" style= "text-decoration: none;" href='<?php echo root . "delete?dietid=" . $id . "&username=" . $_SESSION['username']; ?>' title='Eliminar'>Dieta <?php echo $dietname;?></a></h3>
             <table class="table table-bordered">
