@@ -24,6 +24,14 @@ $_SESSION["lastcheck"] = 3;
 
 //Receiving how many meals a day  
     $amount = $_POST["generate"];
+
+    if($amount == ""){
+        $_SESSION['message'] = '¡Elija la cantidad de recetas por día!';
+        $_SESSION['message_alert'] = "danger";
+
+        exit;
+    }
+    
     $_SESSION["lastcheck"] = $amount;
 
     $daysNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
@@ -122,7 +130,7 @@ $_SESSION["lastcheck"] = 3;
 
 <!--  Saving recipe form-->
         <div class="row text-center justify-content-center p-2 mt-4">
-            <form class="col-auto" method="POST" action="<?php echo root;?>create">
+            <form class="col-auto" method="POST" action="<?php echo root;?>create" id="diet_form">
                 <?php
                     for($i = 0; $i < count($days); $i++) {
                         echo '<input type="hidden" name="days[]" value = "' . $days [$i] . '">';
@@ -132,7 +140,7 @@ $_SESSION["lastcheck"] = 3;
                         echo '<input type="hidden" name="data[]" value = "' . $recipesString [$i] . '">';
                     }                    
                 ?>                         
-                <input class="form-control mb-3" type="text" name="diet" id="diet" placeholder="Escriba el nombre de la dieta">
+                <input class="form-control mb-3" type="text" name="diet" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="40" minlength="7" id="diet_name" placeholder="Escriba el nombre de la dieta" required>
                 <input class="btn btn-primary" type="submit" value="Agregar" title="Generar">
             </form>
         </div>
@@ -141,11 +149,11 @@ $_SESSION["lastcheck"] = 3;
     }
 ?>
     <div class="row p-4 text-center">
-        <form class="col" method="POST" action="<?php echo root;?>diet">
+        <form class="col" method="POST" action="<?php echo root;?>diet" id="recipesPerDay">
             <h3 class="mb-4">Cantidad de comidas</h3>
             <div class="mb-4">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="generate" id="three" value="3" <?php if($_SESSION["lastcheck"] == 3) { echo "checked";}?>>
+                    <input class="form-check-input" type="radio" name="generate" id="three" value="3" <?php if($_SESSION["lastcheck"] == 3) { echo "checked";}?> required>
                     <label class="form-check-label" for="three">3</label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -221,6 +229,40 @@ $_SESSION["lastcheck"] = 3;
     }
     ?>
 </main>
+<script>
+diet_validation();
+
+//Diet addition validation method              
+    function diet_validation() {
+//Form   
+        var form = document.getElementById("diet_form");
+        form.addEventListener("submit", function(event){
+
+        var regExp = /[a-zA-Z,;:\t\h]+|(^$)/;
+        var dietname = document.getElementById("diet_name").value;
+               
+//Conditions
+        if(dietname == ""){
+            event.preventDefault();
+            confirm("Completar los campos requeridos");             
+            return false;
+        }
+//Regular Expression    
+        if(!dietname.match(regExp)){
+            event.preventDefault();
+            confirm("¡Nombre de dieta incorrecto!");                 
+            return false;
+        }
+//Diet length    
+        if(dietname.length > 40 || dietname.length < 4){
+            event.preventDefault();
+            confirm("¡Dieta debe tener entre 4 y 40 caracteres!");  
+            return false;
+        }            
+            return true;                           
+        })
+    }
+</script>
 <?php
 require_once ("views/partials/footer.php");
 
