@@ -674,7 +674,7 @@ if(isset($_GET['id']) && isset($_GET['table'])) {
     $table = $_GET['table'];
 
 //Possible tables
-    $tables = ["recipe", "ingredients", "categories"];
+    $tables = ["recipe", "ingredients", "categories", "diet"];
 
     if(!in_array($table, $tables)) {
         header('Location: ' . root . 'error404');
@@ -688,7 +688,10 @@ if(isset($_GET['id']) && isset($_GET['table'])) {
             break;
         case "ingredients":
             $idName = "id";
-            break;                    
+            break;  
+        case "diet":
+            $idName = "id";
+            break;                  
         default:
             $idName = "categoryid";
     }   

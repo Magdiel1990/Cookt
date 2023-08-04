@@ -143,7 +143,6 @@ if($ext !== null) {
             $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$categoryName', 'Categoría', '" . $_SESSION['username'] . "', '$id');";
             $result = $conn -> query($sql);
 
-
             $_SESSION['message'] = '¡Categoría eliminada!';
             $_SESSION['message_alert'] = "success";
 
@@ -527,7 +526,7 @@ if(isset($_GET['id']) && isset($_GET['table'])) {
     $table = $_GET['table'];
 
 //Possible tables
-    $tables = ["recipe", "ingredients", "categories"];
+    $tables = ["recipe", "ingredients", "categories", "diet"];
 
     if(!in_array($table, $tables)) {
         header('Location: ' . root . 'error404');
@@ -541,7 +540,10 @@ if(isset($_GET['id']) && isset($_GET['table'])) {
             break;
         case "ingredients":
             $idName = "id";
-            break;                    
+            break;     
+        case "diet":
+            $idName = "id";
+            break;                
         default:
             $idName = "categoryid";
     }
@@ -594,6 +596,54 @@ if(isset($_GET['empty'])) {
     }   
 }
 
+/************************************************************************************************/
+/*****************************************DIET DELETION CODE*************************************/
+/************************************************************************************************/
+
+if(isset($_GET['dietid']) && isset($_GET['username'])) {
+    $dietid = $_GET['dietid'];
+    $username = $_GET['username'];
+
+    if($dietid == "" || $username == "") {
+        header('Location: ' . root . 'error404');
+        exit;
+    }
+
+    $result = $conn -> query("SELECT dietname FROM diet WHERE id = '$dietid' AND username = '$username';");
+
+    if($result -> num_rows > 0) {
+//Diet name
+        $row = $result -> fetch_assoc();
+        $dietname = $row['dietname'];
+
+        $result = $conn -> query("UPDATE diet SET state = 0 WHERE id = '$dietid';");
+        if($result) {
+//Notification message        
+            $log_message = "Has eliminado la dieta \"" . $dietname . "\".";       
+            $type = "diet";
+//Verify if notifications are on
+            if($_SESSION['notification'] == 1) {
+                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
+                $conn -> query($sql);
+            }
+
+            $sql = "INSERT INTO recycle (name, type, username, elementid) VALUES ('$dietname', 'dieta', '" . $_SESSION['username'] . "', '$dietid');";
+            $conn -> query($sql);
+            
+            $_SESSION['message'] = '¡Dieta eliminada!';
+            $_SESSION['message_alert'] = "success";
+
+            header('Location: ' . root . 'diet');
+            exit;
+        }
+    } else {
+        $_SESSION['message'] = '¡Esta dieta no existe!';
+        $_SESSION['message_alert'] = "danger";
+
+        header('Location: ' . root . 'diet');
+        exit;
+    }
+}
 //Exiting db connection.
 $conn -> close(); 
 

@@ -149,8 +149,8 @@ footer h5 {
 
 /*Recipe picture and Profile picture*/
 #recipe-image, #img-profile {
-    width: 400px;
-    height: auto;
+    max-width: 200px;
+    max-height: 200px;
     object-fit: fill;
 }
 

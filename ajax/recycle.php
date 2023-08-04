@@ -68,6 +68,11 @@ if($totalFilter > 0) {
                 $table = "ingredients";
                 $title = "INGREDIENTE";
                 $color = "success";
+                break; 
+            case "dieta":
+                $table = "diet";
+                $title = "DIETA";
+                $color = "info";
                 break;                    
             default:
                 $table = "categories";
