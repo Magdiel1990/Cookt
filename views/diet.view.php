@@ -65,12 +65,12 @@ $_SESSION["lastcheck"] = 3;
                         $recipes = array_merge($recipes, $newArray);
                     }
 //Recipes chunks
-                    $sliceRecipes = (array_chunk($recipes, $dayCount));
+                    $recipes = (array_chunk($recipes, $dayCount));
             
-                    for($i = 0; $i < count($sliceRecipes); $i++) {
+                    for($i = 0; $i < count($recipes); $i++) {
                         echo "<tr class='diet-elements'>";
-                        for($j = 0; $j < count($sliceRecipes[$i]); $j++) {
-                            echo "<td><a href='recipes?recipe=" . $sliceRecipes [$i][$j] . "&username=" . $_SESSION['username']. "'>" . $sliceRecipes [$i][$j] . "</a></td>";
+                        for($j = 0; $j < count($recipes[$i]); $j++) {
+                            echo "<td><a href='recipes?recipe=" . $recipes [$i][$j] . "&username=" . $_SESSION['username']. "'>" . $recipes [$i][$j] . "</a></td>";
                         } 
                         echo "</tr>"; 
                     }
@@ -85,13 +85,11 @@ $_SESSION["lastcheck"] = 3;
                         $recipesDaysNames [] = $daysNames[$i];
 //The recipes are added
                         for($j = 0; $j < $amount; $j++) {                            
-                            array_push($recipesDaysNames, $sliceRecipes [$j][$i]);                         
+                            array_push($recipesDaysNames, $recipes [$j][$i]);                         
                         }
 //Each resulted array is added to the main one
                         $daysRecipes [] = $recipesDaysNames;
-                    }
-
-                    
+                    }                    
                     
 //Getting nonly the days
                     $days = [];
@@ -162,6 +160,66 @@ $_SESSION["lastcheck"] = 3;
             <input class="btn btn-success" type="submit" value="Generar dieta" title="Generar">            
         </form>
     </div>
+    <?php
+    $resultDiet = $conn -> query ("SELECT id, dietname FROM diet WHERE username = '" . $_SESSION["username"] . "' AND state = 1 ORDER BY dietname;");
+    $num_rows = $resultDiet -> num_rows;   
+
+    if($num_rows > 0) { 
+    ?>
+    <div class="row my-2">
+        <span>Tienes <span style="font-weight: bold;"><?php  echo $num_rows;?></span> dietas</span>
+    </div>
+    <?php
+        while ($row = $resultDiet -> fetch_assoc()) {
+            $id = $row["id"];
+            $dietname = $row["dietname"];
+
+            $result = $conn -> query ("SELECT dd.recipes, dd.day, d.id FROM diet AS d JOIN diet_details AS dd ON dd.dietid = d.id WHERE d.username = '" . $_SESSION["username"] . "' AND dd.dietid = '$id' AND d.state = 1;"); 
+    ?> 
+    <div class="table-responsive mt-4">         
+        <div class="row">
+            <h3 class="text-center"><a class="text-warning" style= "text-decoration: none;" href='<?php echo root . "delete?dietid=" . $id . "&username=" . $_SESSION['username']; ?>' title='Eliminar'>Dieta <?php echo $dietname;?></a></h3>
+            <table class="table table-bordered">
+                <thead class="text-light text-center">       
+                    <tr>
+                    <?php
+                        while ($row = $result -> fetch_assoc()) {
+                            echo "<th scope='col'><h4>" . $row["day"] . "</h4></th>";
+                        }
+                    ?>    
+                    </tr>
+                </thead>
+                <tbody>
+                <?php       
+                    $result = $conn -> query ("SELECT dd.recipes, dd.day, d.id, d.dietname FROM diet AS d JOIN diet_details AS dd ON dd.dietid = d.id WHERE d.username = '" . $_SESSION["username"] . "' AND dd.dietid = '$id' AND d.state = 1;"); 
+                    $recipes = [];
+//List of days                    
+                    while ($row = $result -> fetch_assoc()) {
+                        array_push ($recipes, explode(",", $row ["recipes"]));
+                    }
+//List of recipes                
+                    for($i = 0; $i < count($recipes[$i]); $i++) {
+                        echo "<tr class='diet-elements'>";
+                        for($j = 0; $j < count($recipes); $j++) {
+                            echo "<td><a href='recipes?recipe=" . $recipes [$j][$i] . "&username=" . $_SESSION['username']. "'>" . $recipes [$j][$i] . "</a></td>";
+                        } 
+                        echo "</tr>"; 
+                    }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <?php
+        }
+    } else {
+    ?>
+    <div class="row">
+        <h3 class="text-center mt-4 p-4">No hay dietas agregadas aún...</h3>
+    </div>
+    <?php
+    }
+    ?>
 </main>
 <?php
 require_once ("views/partials/footer.php");
