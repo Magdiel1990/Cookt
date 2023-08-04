@@ -66,7 +66,7 @@ require_once ("views/partials/nav.php");
                         while($row = $result -> fetch_assoc()){
                             $html = "<tr>";
                             $html .= "<td class='px-2'>" . ucfirst($row['category']) . "</td>";
-                            $html .= "<td class='px-2'><img src='" . $categoryImg . $row['category'] . ".jpg' alt='imagen de la categoría'></td>";
+                            $html .= "<td><img id='categoryImg' src='" . $categoryImg . $row['category'] . ".jpg' alt='Ninguna imagen'></td>";
                             $html .= "<td class='px-2'>";
                             $html .= "<div class='btn-group' role='group'>";
 //Delete and edit buttons

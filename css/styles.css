@@ -151,7 +151,13 @@ footer h5 {
 #recipe-image, #img-profile {
     max-width: 200px;
     max-height: 200px;
-    object-fit: fill;
+    object-fit: scale-down;
+}
+
+#categoryImg {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: scale-down;
 }
 
 /*Profile format*/
