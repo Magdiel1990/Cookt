@@ -85,7 +85,7 @@ $result = $stmt -> get_result();
             <div class="text-center">
             <?php
 //Check if the user has added recipes
-                $sql = "SELECT recipename FROM recipe WHERE username = ? AND state = 1;";
+                $sql = "SELECT recipename FROM recipe WHERE username = ? AND state = 1 ORDER BY rand() LIMIT 15;";
 
                 $stmt = $conn -> prepare($sql); 
                 $stmt->bind_param("s", $username);
