@@ -34,10 +34,10 @@ $result = $stmt -> get_result();
                 <table class="table table-sm table-bordered shadow">
                     <thead>
                         <tr class="table_header">
-                            <th scope="col">Tiempo de uso</th>
-                            <th scope="col">Último acceso</th>   
+                            <th scope="col">Signup</th>
+                            <th scope="col">Login</th>   
                             <th scope="col">Hora</th>
-                            <th scope="col">Imágenes</th>                 
+                            <th scope="col">Images</th>                 
                         </tr>
                     </thead>
                     <tbody>   
