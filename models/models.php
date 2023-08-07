@@ -408,4 +408,72 @@ class DateCalculation {
         return $mod_date;
     }
 }
+
+//Verify images before storing them
+class ImageVerif {
+    public $submitBtn;
+    public $tmp_dir;
+    public $file_dir;
+    public $set_size;
+    public $image_size;
+    public $set_extentions;
+    public $ext;
+
+    function __construct($submitBtn, $tmp_dir, $file_dir, $set_size, $image_size, $set_extentions, $ext){
+        $this -> submitBtn = $submitBtn;
+        $this -> tmp_dir = $tmp_dir;
+        $this -> file_dir = $file_dir;
+        $this -> set_size = $set_size; 
+        $this -> image_size = $image_size;
+        $this -> set_extentions = $set_extentions;
+        $this -> ext = $ext;        
+    }
+// Check if image file is a actual image or fake image
+    public function is_image() {
+        if($this -> submitBtn !== 0) {
+          $check = getimagesize($this -> tmp_dir);
+          if($check == false) {
+              return "¡Este archivo no es una imagen!";
+          } else {
+              return null;  
+          }
+        } else {
+            return null;
+        }
+    }
+
+// Check if file already exists
+    public function file_existance() {
+        $uploadOk = $this -> is_image();
+        if (file_exists($this -> file_dir)) {
+            $uploadOk = "¡Esta imagen ya existe!";
+            return $uploadOk;
+        } else {
+            return $uploadOk; 
+        }
+    }
+
+// Check file size
+    public function file_size() {
+        $uploadOk = $this -> file_existance();
+        if ($this -> image_size > $this -> set_size) {
+            $uploadOk = "¡El tamaño debe ser menor que " . $this -> set_size ." KB!";
+            return $uploadOk;
+        } else {            
+            return $uploadOk; 
+        }
+    }
+
+// Allow certain file formats
+    public function file_extention() {    
+        $uploadOk = $this -> file_size();  
+
+        if(!in_array($this -> ext, $this -> set_extentions)) {
+          $uploadOk = "¡Formato no admitido!";
+          return $uploadOk;
+        } else {            
+            return $uploadOk; 
+        }
+    }
+}
 ?>

@@ -72,31 +72,16 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
         $target_dir = "../imgs/categories/";
         $ext = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
         $target_file = $target_dir . $category . "." . $ext;
-        $uploadOk = "";
-        
-  // Check if image file is a actual image or fake image
-        if(isset($_POST["categorySubmit"])) {
-          $check = getimagesize($categoryImage["tmp_name"]);
-          if($check == false) {
-              $uploadOk = "¡Este archivo no es una imagen!";
-          } 
-        }
-  // Check if file already exists
-        if (file_exists($target_file)) {
-          $uploadOk = "¡Esta imagen ya existe!";
-        }
 
-  // Check file size
-        if ($categoryImage["size"] > 300000) {
-            $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
-        }
+        $categorySubmit = isset($_POST["categorySubmit"]) ? $_POST["categorySubmit"] : 0;
 
-  // Allow certain file formats
-        if($ext != "jpg") {
-          $uploadOk = "¡Formato no admitido!";
-        } 
+        $admittedFormats = [".jpg"];
 
-        if ($uploadOk == "") {
+//Image verification        
+        $uploadOk = new ImageVerif($categorySubmit, $categoryImage["tmp_name"], $target_file, 300000, $categoryImage["size"], $admittedFormats, $ext);
+        $uploadOk = $uploadOk -> file_extention();        
+  
+        if ($uploadOk == null) {
           if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $stmt -> execute()){
 //Notification message        
             $log_message = "Has creado la categoría \"" . $category . "\".";       
