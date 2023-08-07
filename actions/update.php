@@ -126,19 +126,18 @@ $categoryId = $row['categoryid'];
                             unlink($imageDir);
                         }
                     
-                        $ext = pathinfo($url, PATHINFO_EXTENSION);
-                        $uploadOk = "";
-//Format verification
-                        if($ext  != "jpg" && $ext  != "jpeg" && $ext != "png" && $ext != "webp" && $ext  != "gif") {
-                            $uploadOk = '¡Formato de imagen no admitido!';
-                        }   
-//Size verification                
-                        if(array_change_key_case(get_headers($url,1))['content-length'] > 300000){
-                            $uploadOk = '¡El tamaño debe ser menor que 300 KB!';
-                        }
+                        $ext = pathinfo($url, PATHINFO_EXTENSION);                        
+//Button set          
+                        $editsubmit = isset($_POST["edit"]) ? $_POST["edit"] : 0;
+
+                        $admittedFormats = ["jpg", "jpeg", "png", "gif", "webp"];
 
 //New name for the saved image         
                         $recipeImagesDir = $recipeImagesDir . "/" . $newRecipeName . "." . $ext;
+
+//Message
+                        $uploadOk = new ImageVerifFromWeb ($editsubmit, null, $recipeImagesDir, 300000, null, $admittedFormats, $ext, $url);
+                        $uploadOk = $uploadOk -> file_extention();  
 
                         if($uploadOk != "") {
                             $_SESSION['message'] = $uploadOk;
@@ -189,24 +188,15 @@ $categoryId = $row['categoryid'];
 
                 $ext = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
                 $target_file = $target_dir . $newRecipeName . "." . $ext;
-                $uploadOk = "";
 
-// Check if image file is a actual image or fake image
-                if(isset($_POST["edit"])) {
-                    $check = getimagesize($recipeImage["tmp_name"]);
-                    if($check == false) {
-                        $uploadOk = "¡Este archivo no es una imagen!";
-                    } 
-                }
-// Check file size
-                if ($recipeImage["size"] > 300000) {
-                    $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
-                }
+//Button set          
+                $editsubmit = isset($_POST["edit"]) ? $_POST["edit"] : 0;
 
-// Allow certain file formats
-                if($ext != "jpg" && $ext != "jpeg" && $ext != "png" && $ext != "webp" && $ext != "gif") {
-                    $uploadOk = "¡Formato no admitido!";
-                } 
+                $admittedFormats = ["jpg", "jpeg", "png", "gif", "webp"];      
+                
+//Image verification        
+                $uploadOk = new ImageVerif($editsubmit, $recipeImage["tmp_name"], $target_file, 300000, $recipeImage["size"], $admittedFormats, $ext);
+                $uploadOk = $uploadOk -> file_extention();   
 
                 if ($uploadOk == "") {
                     if(move_uploaded_file($recipeImage["tmp_name"], $target_file) && $conn->query($sql)){
@@ -218,7 +208,6 @@ $categoryId = $row['categoryid'];
                         $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
                         $conn -> query($sql);
                     }
-
 //Success message.
                     $_SESSION['message'] = '¡Receta editada con éxito!';
                     $_SESSION['message_alert'] = "success";
@@ -354,34 +343,18 @@ $oldCategoryName = $row['category'];
         $target_dir = "imgs/categories/";
         $ext = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
         $target_file = $target_dir . $newCategoryName . "." . $ext;
-        $uploadOk = "";
 
         if(is_file($target_file)){
             unlink($target_file);
         }
         
-// Check if image file is a actual image or fake image
-        if(isset($_POST["categoryeditionsubmit"])) {
-            $check = getimagesize($categoryImage["tmp_name"]);
-            if($check == false) {
-                $uploadOk = "¡Este archivo no es una imagen!";
-            } 
-        }
-// Check if file already exists
-        if (file_exists($target_file)) {
-            $uploadOk = "¡Esta imagen ya existe!";
-        }
+        $categorySubmit = isset($_POST["categoryeditionsubmit"]) ? $_POST["categoryeditionsubmit"] : 0;
 
-// Check file size
-        if ($categoryImage["size"] > 300000) {
-            $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
-        }
+        $admittedFormats = ["jpg"];
 
-// Allow certain file formats
-        if($ext != "jpg" && $ext != "png" && $ext != "webp" && $ext != "jpeg"
-        && $ext != "gif" ) {
-            $uploadOk = "¡Formato no admitido!";
-        } 
+//Image verification        
+        $uploadOk = new ImageVerif($categorySubmit, $categoryImage["tmp_name"], $target_file, 300000, $categoryImage["size"], $admittedFormats, $ext);
+        $uploadOk = $uploadOk -> file_extention();    
 
         if ($uploadOk == "") {
             if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $conn->query($sql)){
@@ -488,26 +461,14 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
 //New picture data
         $ext = strtolower(pathinfo($profileImg["name"], PATHINFO_EXTENSION));
         $target_file = $target_dir . $_SESSION["username"] . "." . $ext;
-        $uploadOk = "";
+        
+        $userSubmit = isset($_POST["usersubmit"]) ?$_POST["usersubmit"] : 0;
 
-// Check if image file is a actual image or fake image
-        if(isset($_POST["usersubmit"])) {
-            $check = getimagesize($profileImg["tmp_name"]);
-            if($check == false) {
-                $uploadOk = "¡Este archivo no es una imagen!";
-            } 
-        }
+        $admittedFormats = ["jpg", "jpeg", "png", "gif", "webp"];
 
-// Check file size
-        if ($profileImg["size"] > 300000) {
-            $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
-        }
-
-// Allow certain file formats
-        if($ext != "jpg" && $ext != "png" && $ext != "webp" && $ext != "jpeg"
-        && $ext != "gif" ) {
-            $uploadOk = "¡Formato no admitido!";
-        } 
+//Image verification        
+        $uploadOk = new ImageVerif($userSubmit, $profileImg["tmp_name"], $target_file, 300000, $profileImg["size"], $admittedFormats, $ext);
+        $uploadOk = $uploadOk -> file_extention();  
 
         if ($uploadOk == "") {
             move_uploaded_file($profileImg["tmp_name"], $target_file);
