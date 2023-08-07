@@ -10,6 +10,9 @@ if($_SESSION['type'] != 'Admin') {
 
 //Nav of the page
 require_once ("views/partials/nav.php");
+
+//Current location in order to come back
+$_SESSION['location'] = $_SERVER["REQUEST_URI"];
 ?>
 
 <main class="container p-4">

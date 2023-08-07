@@ -7,6 +7,9 @@ require_once ("views/partials/nav.php");
 
 $_SESSION["lastcheck"] = 3;
 
+//Current location in order to come back
+$_SESSION['location'] = $_SERVER["REQUEST_URI"];
+
 //Messages
     if(isset($_SESSION['message'])){
     $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);

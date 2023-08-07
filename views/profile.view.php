@@ -5,8 +5,8 @@ require_once ("views/partials/head.php");
 //Nav
 require_once ("views/partials/nav.php");
 
-//Page location to come back
-$_SESSION["location"] = root . "profile";
+//Current location in order to come back
+$_SESSION['location'] = $_SERVER["REQUEST_URI"];
 
 //Users data
 $sql = "SELECT * FROM users WHERE userid = ?;";

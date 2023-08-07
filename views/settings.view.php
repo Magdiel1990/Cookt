@@ -5,6 +5,9 @@ require_once ("views/partials/head.php");
 //Nav of the page
 require_once ("views/partials/nav.php");
 
+//Current location in order to come back
+$_SESSION['location'] = $_SERVER["REQUEST_URI"];
+
 //Verify the user settings
 $sql = "SELECT notification, recycle, shares, reminders FROM users WHERE username = '" . $_SESSION['username'] . "';";
 $result = $conn -> query($sql);

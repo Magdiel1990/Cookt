@@ -5,6 +5,7 @@ require_once ("views/partials/head.php");
 //Nav
 require_once ("views/partials/nav.php");
 
+//Current location in order to come back
 $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 ?>
 
