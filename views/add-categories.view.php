@@ -123,7 +123,7 @@ function formValidation(){
         var categoryImage = categoryImageInput.value;                            
         var categoryNameInput = document.getElementById('add_categories');
         var categoryName = categoryNameInput.value;
-        var allowedImageTypes = ["image/jpg"];  
+        var allowedImageTypes = ["jpg"];  
 
         if(categoryName == "") {
             event.preventDefault();                
@@ -155,7 +155,7 @@ function formValidation(){
                 return false;
             }       
 //Image format validation
-            if(!allowedImageTypes.includes(fileType)){
+            if(allowedImageTypes.includes(fileType)){
                 event.preventDefault();
                 confirm ("¡Solo jpg admitido!");
                 return false;

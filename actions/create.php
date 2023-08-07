@@ -75,11 +75,11 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
 
         $categorySubmit = isset($_POST["categorySubmit"]) ? $_POST["categorySubmit"] : 0;
 
-        $admittedFormats = [".jpg"];
+        $admittedFormats = ["jpg"];
 
 //Image verification        
         $uploadOk = new ImageVerif($categorySubmit, $categoryImage["tmp_name"], $target_file, 300000, $categoryImage["size"], $admittedFormats, $ext);
-        $uploadOk = $uploadOk -> file_extention();        
+        $uploadOk = $uploadOk -> file_extention();   
   
         if ($uploadOk == null) {
           if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $stmt -> execute()){
@@ -321,18 +321,18 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
           }
 
           $ext = pathinfo($url, PATHINFO_EXTENSION);
-          $uploadOk = "";
-//Format verification
-          if($ext != "jpg" && $ext != "jpeg" && $ext != "png" && $ext != "gif" && $ext != "webp") {
-            $uploadOk = '¡Formato de imagen no admitido!';
-          }   
-//Size verification            
-          if(array_change_key_case(get_headers($url,1))['content-length'] > 300000){
-            $uploadOk = '¡El tamaño debe ser menor que 300 KB!';
-          }
 
-//Name of the saved image         
+//Button set          
+          $addrecipe = isset($_POST["addrecipe"]) ? $_POST["addrecipe"] : 0;
+
+          $admittedFormats = ["jpg", "jpeg", "png", "gif", "webp"];
+
+//Image directory       
           $imageDir = $recipeImagesDir ."/". $recipename . "." . $ext;
+
+//Message
+          $uploadOk = new ImageVerifFromWeb ($addrecipe, null, $imageDir, 300000, null, $admittedFormats, $ext, $url);
+          $uploadOk = $uploadOk -> file_extention();  
 
 // Save image 
           if($uploadOk != "") {
@@ -385,25 +385,15 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
           
         $ext = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
         $imageDir = $recipeImagesDir .  $recipename . "." . $ext;
-        $uploadOk = "";
+
+//Button set          
+        $addrecipe = isset($_POST["addrecipe"]) ? $_POST["addrecipe"] : 0;
+
+        $admittedFormats = ["jpg", "jpeg", "png", "gif", "webp"];      
         
-// Check if image file is a actual image or fake image
-        if(isset($_POST["addrecipe"])) {
-          $check = getimagesize($recipeImage["tmp_name"]);
-          if($check == false) {
-              $uploadOk = "¡Este archivo no es una imagen!";
-          } 
-        }
-
-// Check file size
-        if ($recipeImage["size"] > 300000) {
-            $uploadOk = "¡El tamaño debe ser menor que 300 KB!";
-        }
-
-// Allow certain file formats
-        if($ext != "jpg" && $ext != "jpeg" && $ext != "png" && $ext != "webp" && $ext != "gif") {
-            $uploadOk = "¡Formato no admitido!";
-        }      
+//Image verification        
+        $uploadOk = new ImageVerif($addrecipe, $recipeImage["tmp_name"], $imageDir, 300000, $recipeImage["size"], $admittedFormats, $ext);
+        $uploadOk = $uploadOk -> file_extention();   
 
         if ($uploadOk == "") {
 

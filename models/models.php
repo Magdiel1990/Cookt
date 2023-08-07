@@ -429,7 +429,7 @@ class ImageVerif {
         $this -> ext = $ext;        
     }
 // Check if image file is a actual image or fake image
-    public function is_image() {
+    private function is_image() {
         if($this -> submitBtn !== 0) {
           $check = getimagesize($this -> tmp_dir);
           if($check == false) {
@@ -443,7 +443,7 @@ class ImageVerif {
     }
 
 // Check if file already exists
-    public function file_existance() {
+    private function file_existance() {
         $uploadOk = $this -> is_image();
         if (file_exists($this -> file_dir)) {
             $uploadOk = "¡Esta imagen ya existe!";
@@ -457,7 +457,7 @@ class ImageVerif {
     public function file_size() {
         $uploadOk = $this -> file_existance();
         if ($this -> image_size > $this -> set_size) {
-            $uploadOk = "¡El tamaño debe ser menor que " . $this -> set_size ." KB!";
+            $uploadOk = "¡El tamaño debe ser menor que " . $this -> set_size/1000 ." KB!";
             return $uploadOk;
         } else {            
             return $uploadOk; 
@@ -475,5 +475,27 @@ class ImageVerif {
             return $uploadOk; 
         }
     }
+}
+
+//Verify images from the web before storing them
+class ImageVerifFromWeb extends ImageVerif{
+
+    public $url;
+
+    public function __construct($submitBtn, $tmp_dir, $file_dir, $set_size, $image_size, $set_extentions, $ext, $url){
+        parent::__construct($submitBtn, $tmp_dir, $file_dir, $set_size, $image_size, $set_extentions, $ext);
+        $this -> url = $url; 
+    }
+// Check file size
+    public function file_size() {
+        $uploadOk = "";
+
+        if(array_change_key_case(get_headers($this -> url, 1))['content-length'] > 300000){
+            $uploadOk = '¡El tamaño debe ser menor que ' . $this -> set_size/1000 . ' KB!';
+            return $uploadOk;
+        }  else {            
+            return $uploadOk; 
+        }
+    }     
 }
 ?>
