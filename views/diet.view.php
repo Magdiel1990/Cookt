@@ -23,21 +23,18 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 <main class="container p-4">
 
 <?php
-    if(isset($_POST["generate"])) {   
+    if(isset($_POST["generate"]) && isset($_POST["days"])) {   
 
 //Receiving how many meals a day  
     $amount = $_POST["generate"];
+//Selected days
+    $daysNames = $_POST["days"];
 
-    if($amount == ""){
-        $_SESSION['message'] = '¡Elija la cantidad de recetas por día!';
-        $_SESSION['message_alert'] = "danger";
-
-        exit;
-    }
-    
+//So the selection remains after reloading the page
+    $_SESSION ["lastdays"] = $daysNames;
     $_SESSION["lastcheck"] = $amount;
 
-    $daysNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+    //$daysNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 //Amount of days
     $dayCount = count($daysNames);
 //Amount of recipes
@@ -143,7 +140,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                         echo '<input type="hidden" name="data[]" value = "' . $recipesString [$i] . '">';
                     }                    
                 ?>                         
-                <input class="form-control mb-3" type="text" name="diet" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="40" minlength="7" id="diet_name" placeholder="Escriba el nombre de la dieta" required>
+                <input class="form-control mb-3" type="text" name="diet" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="40" minlength="7" id="diet_name" placeholder="Escriba el nombre de la dieta" required autofocus>
                 <input class="btn btn-primary" type="submit" value="Agregar" title="Generar">
             </form>
         </div>
@@ -151,10 +148,10 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 <?php
     }
 ?>
-    <div class="row p-4 text-center">
-        <form class="col" method="POST" action="<?php echo root;?>diet" id="recipesPerDay">
-            <h3 class="mb-4">Cantidad de comidas</h3>
-            <div class="mb-4">
+    <div class="row p-4 text-center justify-content-center">
+        <form class="col-sm-8 col-md-9 col-lg-8 col-xl-8" method="POST" action="<?php echo root;?>diet" id="recipesPerDay">
+            <h3 class="mb-3">Comidas</h3>
+            <div class="mb-3 border py-4" style="background-color: rgb(255, 246, 234);">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="generate" id="three" value="3" <?php if($_SESSION["lastcheck"] == 3) { echo "checked";}?> required>
                     <label class="form-check-label" for="three">3</label>
@@ -168,6 +165,26 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                     <label class="form-check-label" for="five">5</label>
                 </div>
             </div>
+
+            <h3 class="mb-3">Días</h3>
+            <div class="p-2 mb-3 border py-4" style="background-color: rgb(255, 246, 234);" id="dayslist">
+            <?php
+//All days of the week
+                $daysNamesAssigned = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+                for($i = 0; $i < count($daysNamesAssigned); $i++) {
+//The options selected by the user remain selected, by default all the options are selected
+            ?>            
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="days[]" id="<?php echo $daysNamesAssigned[$i];?>" value="<?php echo $daysNamesAssigned[$i];?>" <?php if(isset($_SESSION ["lastdays"])){if(in_array($daysNamesAssigned[$i], $_SESSION ["lastdays"])) {echo "checked";}} else {echo "checked";}?> <?php if($i == 0) {echo "required";}?>>
+                    <label class="form-check-label" for="<?php echo $daysNamesAssigned[$i];?>"><?php echo $daysNamesAssigned[$i];?></label>
+                </div> 
+
+            <?php
+                }
+            ?>
+            </div>
+
             <input class="btn btn-success" type="submit" value="Generar dieta" title="Generar">            
         </form>
     </div>
@@ -197,6 +214,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                         while ($row = $result -> fetch_assoc()) {
                             echo "<th scope='col'><h4>" . $row["day"] . "</h4></th>";
                         }
+
                     ?>    
                     </tr>
                 </thead>
