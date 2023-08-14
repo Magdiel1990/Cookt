@@ -19,9 +19,7 @@ if(isset($_POST['email'])){
     $filter = new Filter ($_POST['email'], FILTER_SANITIZE_EMAIL, $conn);
     $email = $filter -> sanitization();
 //Email existance    
-    $sql = "SELECT userid, email, sex, firstname, lastname FROM users WHERE email = ?;";
-
-    $stmt = $conn -> prepare($sql); 
+    $stmt = $conn -> prepare( "SELECT userid, email, sex, firstname, lastname FROM users WHERE email = ?;"); 
     $stmt->bind_param("s", $email);
     $stmt->execute();
 
@@ -40,9 +38,7 @@ if(isset($_POST['email'])){
             $userid = $row ["userid"];
             
 //Delete the old codes
-            $sql = "SELECT userid FROM recovery WHERE userid = ?;";
-
-            $stmt = $conn -> prepare($sql); 
+            $stmt = $conn -> prepare("SELECT userid FROM recovery WHERE userid = ?;"); 
             $stmt->bind_param("i", $userid);
             $stmt->execute();
 
@@ -50,8 +46,7 @@ if(isset($_POST['email'])){
             $num_rows = $result -> num_rows;
 
             if($num_rows > 0) {
-                $sql = "DELETE FROM recovery WHERE userid = '$userid';";
-                $conn -> query($sql);             
+                $conn -> query("DELETE FROM recovery WHERE userid = '$userid';");             
             }
 
 //User title

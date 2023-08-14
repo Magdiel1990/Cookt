@@ -12,8 +12,7 @@ if(isset($_GET["r_code"])){
         header('Location: ' . root . 'not-found');
         exit;
     } else {
-        $sql = "SELECT userid FROM recovery WHERE forgot_pass_identity = ?;";        
-        $stmt = $conn -> prepare($sql); 
+        $stmt = $conn -> prepare("SELECT userid FROM recovery WHERE forgot_pass_identity = ?;"); 
         $stmt->bind_param("s", $recovery_code);
         $stmt->execute();
 

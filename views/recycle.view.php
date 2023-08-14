@@ -18,8 +18,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
     }
 
 //total registers
-    $sql = "SELECT id FROM recycle WHERE username = '" . $_SESSION['username'] . "';";
-    $count =  $conn -> query($sql) -> num_rows;      
+    $count =  $conn -> query("SELECT id FROM recycle WHERE username = '" . $_SESSION['username'] . "';") -> num_rows;      
 
     if($count > 0) {
         $display = "";        

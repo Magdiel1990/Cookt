@@ -13,8 +13,7 @@ if(isset($_GET['categoryid'])){
 $categoryId = $_GET['categoryid'];
 
 //Verify the category existance
-$sql = "SELECT * FROM categories WHERE categoryid = ? AND state = 1;";
-$stmt = $conn -> prepare($sql); 
+$stmt = $conn -> prepare("SELECT * FROM categories WHERE categoryid = ? AND state = 1;"); 
 $stmt->bind_param("i", $categoryId);
 $stmt->execute();
 
@@ -123,10 +122,95 @@ if($result -> num_rows > 0) {
 
 <?php
 }
+
+/************************************************************************************************/
+/**************************************INGREDIENT EDITION CODE***********************************/
+/************************************************************************************************/
+if(isset($_GET['ingredientname'])){
+    $ingredientName = $_GET['ingredientname'];
+    
+    $result = $conn -> query("SELECT id FROM ingredients WHERE ingredient = '$ingredientName' AND state = 1 AND username = '" . $_SESSION['username'] . "';");
+
+    if(!$result) {
+        header('Location: ' . root . 'error404');
+        die();
+    } else {
+        $row = $result -> fetch_assoc();
+        $id = $row["id"];
+?>
+<main class="container p-4">
+<?php
+//Messages that are shown in the index page
+    if(isset($_SESSION['message'])) {
+    $message = new Messages ($_SESSION['message'], $_SESSION['message_alert']);
+    echo $message -> buttonMessage();         
+
+//Unsetting the messages variables so the message fades after refreshing the page.
+    unset($_SESSION['message_alert'], $_SESSION['message']);
+    }
+?>
+    <div class="row mt-2 text-center justify-content-center">
+        <h3>EDITAR INGREDIENTE</h3>     
+        <div class="mt-3 col-auto">
+            <form id="ingredient_form" class="form card card-body" action="update?ingredientId=<?php echo $id; ?>" method="POST">
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text is-required" for="ingredientName">Ingrediente: </label>
+                    <input type="text" name="ingredientName" value="<?php echo $ingredientName;?>" class="form-control" id="ingredientName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="50" minlength="2" required>
+                </div>
+                <div class="mt-2">
+                    <input class="btn btn-primary" type="submit" value="Editar" name="ingredienteditionsubmit">
+                    <a href= "<?php echo root;?>ingredients" class="btn btn-secondary">Regresar</a>
+                </div>
+                </form>
+                <script>
+                formValidation();   
+               
+//Image format validation
+                function formValidation(){
+
+                    var form = document.getElementById("ingredient_form");    
+
+                    form.addEventListener("submit", function(event) { 
+      
+                        var regExp = /[a-zA-Z,;:]/;                        
+                        var ingredientNameInput = document.getElementById('ingredientName');
+                        var ingredientName = ingredientNameInput.value;
+                       
+                        if(ingredientName == "") {
+                            event.preventDefault();                
+                            confirm ("¡Escriba el nombre del ingrediente!");                                
+                            return false;
+                        }
+
+                        if(ingredientName.length < 2 || ingredientName.length > 50) {
+                            event.preventDefault();
+                            confirm("¡Longitud de ingrediente incorrecta!");               
+                            return false;                
+                        }
+                        
+                        if(!ingredientName.match(regExp)){ 
+                            event.preventDefault();                
+                            confirm ("¡Nombre de ingrediente incorrecto!");                                
+                            return false;
+                        }                       
+                        return true;               
+                    })
+                }
+                </script>    
+            </div>
+       </div>                  
+    </div>     
+</main>
+
+<?php
+
+    }
+}
+
 /************************************************************************************************/
 /******************************************RECIPE EDITION CODE***********************************/
 /************************************************************************************************/
-
 
 if(isset($_GET['recipename']) || isset($_GET['username'])) {
 $recipeName = isset($_GET['recipename']) ? $_GET['recipename'] : "";
@@ -203,10 +287,8 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
                         <div class="input-group mb-3 col">
                             <label class="input-group-text" for="category">Categoría: </label>                
                             <select class="form-select" name="category" id="category">
-                                <?php
-                                $sql = "SELECT category FROM categories WHERE NOT category= ? AND state = 1;";
-                                
-                                $stmt = $conn -> prepare($sql); 
+                                <?php                   
+                                $stmt = $conn -> prepare("SELECT category FROM categories WHERE NOT category= ? AND state = 1;"); 
                                 $stmt->bind_param("s", $category);
                                 $stmt->execute();
 
@@ -354,9 +436,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 if(isset($_GET['userid'])) {
 $userId = $_GET['userid'];
 
-$sql = "SELECT userid FROM users WHERE type = 'Admin' AND userid = ?;";
-
-$stmt = $conn -> prepare($sql); 
+$stmt = $conn -> prepare("SELECT userid FROM users WHERE type = 'Admin' AND userid = ?;"); 
 $stmt->bind_param("i", $_SESSION["userid"]);
 $stmt->execute();
 
@@ -364,9 +444,7 @@ $result = $stmt -> get_result();
 $num_rows  = $result -> num_rows;
 
     if($num_rows > 0) {
-    $sql = "SELECT * FROM users WHERE userid = ?;";
-
-    $stmt = $conn -> prepare($sql); 
+    $stmt = $conn -> prepare("SELECT * FROM users WHERE userid = ?;"); 
     $stmt->bind_param("i", $userId);
     $stmt->execute();
 
@@ -448,9 +526,7 @@ $num_rows  = $result -> num_rows;
                     <label class="input-group-text" for="userrol">Rol: </label>
                     <select class="form-select" name="userrol" id="userrol" <?php echo $userNameState; ?>>
                     <?php
-                        $sql = "SELECT type FROM type WHERE NOT type = ? ORDER BY rand();";
-
-                        $stmt = $conn -> prepare($sql); 
+                        $stmt = $conn -> prepare("SELECT type FROM type WHERE NOT type = ? ORDER BY rand();"); 
                         $stmt->bind_param("s", $type);
                         $stmt->execute();
 

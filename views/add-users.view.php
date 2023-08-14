@@ -68,8 +68,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                         <select class="form-select" name="userrol" id="userrol">
                         <?php
         //Types of users
-                            $sql = "SELECT type FROM type ORDER BY rand();";
-                            $result = $conn -> query($sql);
+                            $result = $conn -> query("SELECT type FROM type ORDER BY rand();");
 
                             while($row = $result -> fetch_assoc()){
                                 echo "<option value='" . $row["type"] . "'>" . $row["type"] . "</option>";
@@ -204,9 +203,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                     </thead>
                     <tbody>                
                         <?php
-                        $sql = "SELECT email_code, type, username, state, userid FROM users ORDER BY type;";
-
-                        $result = $conn -> query($sql);                    
+                        $result = $conn -> query("SELECT email_code, type, username, state, userid FROM users ORDER BY type;");                    
 
                         while($row = $result -> fetch_assoc()){
                             $type = $row['type'];
@@ -216,8 +213,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
                             $email_code = $row['email_code'];
 
     //Recipes of each user
-                            $sql = "SELECT count(recipeid) as `count` FROM recipe WHERE username = '$username' AND state = 1;";
-                            $row = $conn -> query($sql) -> fetch_assoc();   
+                            $row = $conn -> query("SELECT count(recipeid) as `count` FROM recipe WHERE username = '$username' AND state = 1;") -> fetch_assoc();   
                             $recipeCount = $row ['count'];
     //Active users are colored green and inactive, gray                            
                             if($state == 1 && $email_code == null) {

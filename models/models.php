@@ -498,4 +498,80 @@ class ImageVerifFromWeb extends ImageVerif{
         }
     }     
 }
+
+class InputValidation {
+
+    public $inputs;
+    public $pattern;
+
+    function __construct($inputs, $pattern){
+        $this -> inputs = $inputs;
+        $this -> pattern = $pattern;
+    }
+
+    public function nullValidation() {
+        $message = [];
+
+        foreach ($this -> inputs as $x => $val) {
+//If the input is a string
+            if(!is_array($val[0])) {
+                if($val[0] == null) {
+                    $message [] = "¡Complete todos los campos requeridos!";
+                    $message [] = "danger";
+                    break;
+                }
+//If the input is an array
+            } else {
+                if(count($val[0]) == 0) {
+                    $message [] = "¡Complete todos los campos requeridos!";
+                    $message [] = "danger";
+                    break;
+                }
+            }
+        }
+
+        return $message;
+    }
+
+    public function regExpValidation() {
+        $message = $this -> nullValidation();
+
+        if(count($message) == 0) {
+            foreach ($this -> inputs as $key => $value) {
+                if(count($value[1]) != 0 && !is_numeric($value[0]) && !is_array($value[0]) && $value[3] === true) {
+                    if (!preg_match($this -> pattern, $value[0])){
+                        $message [] = "¡" . $key . " " . $value[2] . "!";
+                        $message [] = "danger"; 
+                        break;
+                    }
+                }
+            }          
+        }
+        return $message;   
+    }
+    
+    public function lengthValidation() {
+        $message = $this -> regExpValidation();
+
+        if(count($message) == 0) {
+            foreach ($this -> inputs as $key => $value) {
+                if(count($value[1]) != 0 && !is_numeric($value[0]) && !is_array($value[0])) {
+                    if(strlen($value[0]) < $val[1][0] || strlen($value[0]) > $value[1][1]) {
+                        $message [] = "¡" . $key . " debe tener entre " . $value[1][0] ." y " . $value[1][1] ." caracteres!";
+                        $message [] = "danger"; 
+                        break;
+                    }
+                } else {
+                    if($value[0] > $value[1][1] || $value[0] < $val[1][0]) {
+                        $message [] = "¡" . $key . " debe tener un valor entre " . $value[1][0] ." y " . $value[1][1] . "!";
+                        $message [] = "danger"; 
+                        break;
+                    }
+                }
+            }         
+        } 
+        
+        return $message;   
+    }
+}
 ?>

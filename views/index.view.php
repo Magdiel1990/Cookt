@@ -45,25 +45,6 @@ $_SESSION["location"] = root;
                 <input class="form-control" type="text" id="search" name="search" maxlength="50">
             </div>
         </div>
-
- <!--         <div class="col-1"></div>
-
- 
-    <div class="col-auto">
-        <div class="form-check form-check-inline">   
-            <input class="form-check-input" type="radio" id="name" name="orderby" value="r.recipename" checked>
-            <label class="form-check-label" for="name">Nombre</label><br>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="category" name="orderby" value="c.category">
-            <label class="form-check-label" for="category">Categoría</label><br>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="time" name="orderby" value="r.cookingtime">
-            <label class="form-check-label" for="time">Tiempo</label><br>
-        </div> 
-    </div> 
--->       
     </div>
 <!-- Table to show the recipes-->
     <div class="table-responsive-sm mt-4">

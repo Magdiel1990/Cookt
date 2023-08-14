@@ -13,9 +13,7 @@ $_SESSION["location"] = $_SERVER["REQUEST_URI"];
 
 $username = $_GET["username"];
 
-$sql = "SELECT userid FROM users WHERE username = ?;";
-
-$stmt = $conn -> prepare($sql); 
+$stmt = $conn -> prepare("SELECT userid FROM users WHERE username = ?;"); 
 $stmt->bind_param("s", $username);
 $stmt->execute();
 
@@ -52,8 +50,7 @@ $result = $stmt -> get_result();
                         date_default_timezone_set("America/Santo_Domingo");        
 
 //Recipes of each user
-                        $sql = "SELECT u.created_at as `time`, max(a.lastlogin) as `lastlogin` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';";
-                        $result = $conn -> query($sql); 
+                        $result = $conn -> query("SELECT u.created_at as `time`, max(a.lastlogin) as `lastlogin` FROM users u LEFT JOIN access a on a.userid = u.userid WHERE u.username = '$username';"); 
                         $row = $result -> fetch_assoc();     
 //Days using the app                        
                         $time_days = round((strtotime(date("Y-m-d H:i:s")) - strtotime($row ['time'])) / 86400);
@@ -85,9 +82,7 @@ $result = $stmt -> get_result();
             <div class="text-center">
             <?php
 //Check if the user has added recipes
-                $sql = "SELECT recipename FROM recipe WHERE username = ? AND state = 1 ORDER BY rand() LIMIT 15;";
-
-                $stmt = $conn -> prepare($sql); 
+                $stmt = $conn -> prepare("SELECT recipename FROM recipe WHERE username = ? AND state = 1 ORDER BY rand() LIMIT 15;"); 
                 $stmt->bind_param("s", $username);
                 $stmt->execute();
 

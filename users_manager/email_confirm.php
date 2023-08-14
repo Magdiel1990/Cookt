@@ -16,8 +16,7 @@ if(isset($_GET["code"])){
         header('Location: ' . root . 'not-found');
         exit;
     } else {
-        $sql = "SELECT userid FROM users WHERE email_code = ?;";        
-        $stmt = $conn -> prepare($sql); 
+        $stmt = $conn -> prepare("SELECT userid FROM users WHERE email_code = ?;"); 
         $stmt->bind_param("s", $confirm_code);
         $stmt->execute();
 
@@ -27,8 +26,8 @@ if(isset($_GET["code"])){
 
         $num_rows  = $result -> num_rows;
         if($num_rows != 0) {
-            $sql = "UPDATE users SET email_code = null WHERE userid = '$id';";
-            if($conn -> query($sql)){ 
+            $result = $conn -> query("UPDATE users SET email_code = null WHERE userid = '$id';");
+            if($result){ 
                 $_SESSION['message'] = '¡Correo verificado o reactivado correctamente!';
                 $_SESSION['message_alert'] = "success";
 

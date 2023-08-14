@@ -58,9 +58,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
     <div class="row mt-4">
         <?php
 //List of chosen ingredients 
-        $sql = "SELECT i.ingredient, ih.ingredientid FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "' AND i.state = 1;";
-
-        $result = $conn -> query($sql);
+        $result = $conn -> query("SELECT i.ingredient, ih.ingredientid FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "' AND i.state = 1;");
 
         if($result -> num_rows == 0){
             echo "<p class='text-center'>Agregue los ingredientes para conseguir recetas...</p>";
@@ -91,8 +89,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
         
         $arrayCount = count($ingArray);
 //Recipes of the user
-        $sql = "SELECT r.recipename, r.ingredients, c.category FROM recipe r JOIN categories c ON r.categoryid = c.categoryid WHERE username = '" . $_SESSION['username'] . "' AND r.state = 1";
-        $result = $conn -> query($sql);
+        $result = $conn -> query("SELECT r.recipename, r.ingredients, c.category FROM recipe r JOIN categories c ON r.categoryid = c.categoryid WHERE username = '" . $_SESSION['username'] . "' AND r.state = 1;");
         
             if($result -> num_rows != 0){
 //Array to save the recipes that have the ingredients

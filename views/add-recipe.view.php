@@ -51,8 +51,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                         <?php
 //We retrieve the last chosen category
                         if(isset($_SESSION['category'])){
-                            $sql = "SELECT category FROM categories WHERE NOT category = ? AND state = 1 ORDER BY rand();";
-                            $stmt = $conn -> prepare($sql); 
+                            $stmt = $conn -> prepare("SELECT category FROM categories WHERE NOT category = ? AND state = 1 ORDER BY rand();"); 
                             $stmt->bind_param("s", $_SESSION['category']);
                             $stmt->execute();
 
@@ -61,8 +60,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                            echo '<option value="' .  $_SESSION['category'] . '">' . ucfirst( $_SESSION['category']) . '</option>';
 //If no category had been picked, random categories are shown                        
                         } else {
-                            $sql = "SELECT category FROM categories WHERE state = 1 ORDER BY rand();";
-                            $result = $conn -> query($sql);
+                            $result = $conn -> query("SELECT category FROM categories WHERE state = 1 ORDER BY rand();");
                         }
 
                         while($row = $result -> fetch_assoc()) {

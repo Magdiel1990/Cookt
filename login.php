@@ -23,9 +23,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
 //Check the data and if the user is active
-    $sql = "SELECT * FROM users WHERE username = ? AND `state` = 1 OR email_code = null;";
-
-    $stmt = $conn -> prepare($sql); 
+    $stmt = $conn -> prepare("SELECT * FROM users WHERE username = ? AND `state` = 1 OR email_code = null;"); 
     $stmt->bind_param("s", $username);
     $stmt->execute();
 
@@ -74,8 +72,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                     if($row["suggestion_day"] > 0) {
                     $days = rand(1, 7);   
 //Saving next suggestin date
-                    $sql = "UPDATE users SET suggestion_day = '" . $days . "' WHERE username = '" . $_SESSION['username'] . "';";
-                    $conn -> query($sql);
+                    $conn -> query("UPDATE users SET suggestion_day = '" . $days . "' WHERE username = '" . $_SESSION['username'] . "';");
 
                     $sql = "SELECT suggestion_day FROM users WHERE username = '" . $_SESSION['username'] . "';";
                     $row = $conn -> query($sql) -> fetch_assoc(); 
@@ -87,8 +84,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         if(date('Y-m-d') >= $future_day) {
                         $recipeArray = [];
 
-                        $sql = "SELECT recipeid FROM recipe WHERE username = '" . $_SESSION['username'] . "';";
-                        $result = $conn -> query($sql); 
+                        $result = $conn -> query("SELECT recipeid FROM recipe WHERE username = '" . $_SESSION['username'] . "';"); 
 //id of the recipes
                             while ($row = $result -> fetch_assoc()) {
                                 $recipeArray [] = $row["recipeid"];
@@ -126,20 +122,17 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                             if(mail($email, $subject, $message, $headers)) {                            
                                 $days = rand(1, 30);   
 //Saving next suggestin date
-                                $sql = "UPDATE users SET suggestion_day = '" . $days . "' WHERE username = '" . $_SESSION['username'] . "';";
-                                $conn -> query($sql);
+                                $conn -> query("UPDATE users SET suggestion_day = '" . $days . "' WHERE username = '" . $_SESSION['username'] . "';");
                             }
                         }
                     } else {
 //Saving next suggestin date
-                        $sql = "UPDATE users SET suggestion_day = '" . rand(1, 30) . "' WHERE username = '" . $_SESSION['username'] . "';";
-                        $conn -> query($sql);
+                        $conn -> query("UPDATE users SET suggestion_day = '" . rand(1, 30) . "' WHERE username = '" . $_SESSION['username'] . "';");
                     }
                 }
                 
 //Check if the user has ever logged in
-            $sql = "SELECT id FROM access WHERE userid= ?;";
-            $stmt = $conn -> prepare($sql); 
+            $stmt = $conn -> prepare("SELECT id FROM access WHERE userid= ?;"); 
             $stmt->bind_param("i", $_SESSION['userid']);
             $stmt->execute();
             $result = $stmt -> get_result(); 

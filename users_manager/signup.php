@@ -35,100 +35,95 @@ if(!empty($_POST)) {
     $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ\t\h]+|(^$)/";
 
     if($terms == "yes") {
-    
-        if ($firstname == "" || $lastname == "" || $username == "" || $password == ""  || $passrepeat == "" || $sex == "" || $email == "") {
+//Input validation object  
+        $inputs = ["El nombre" => [$firstname, [2,30], "incorrecto", true], 
+        "El apellido" => [$lastname, [2,40], "incorrecto", true],
+        "El usuario" => [$username, [2,30], "incorrecto", true],   
+        "La contraseña" => [$password, [8,50], "incorrecta", false], 
+        "La contraseña" => [$passrepeat, [8,50], "incorrecta", false],
+        "El correo electrónico" => [$email, [15,70], "incorrecto", false]]; 
+       
+        $message = new InputValidation ($inputs, "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]/");  
+        $message = $message -> lengthValidation();
+       
+        if(count($message) > 0) {
+            $_SESSION['message'] = $message [0];
+            $_SESSION['message_alert'] = $message [1];          
+        } 
 
+        $stmt = $conn -> prepare("SELECT userid FROM users WHERE username = ?;"); 
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+
+        $result = $stmt -> get_result(); 
+        $num_rows = $result -> num_rows;
+
+        if($num_rows == 0){   
+            if($password != $passrepeat) {
 //Message if the variable is null.
-            $_SESSION['message'] = '¡Complete o seleccione todos los campos por favor!';
-            $_SESSION['message_alert'] = "danger";
-                
-        } else {
-            if (!preg_match($pattern, $firstname) || !preg_match($pattern, $lastname) || !preg_match($pattern, $username)){
-                $_SESSION['message'] = '¡Nombre, apellido o usuario incorrecto!';
-                $_SESSION['message_alert'] = "danger";
+            $_SESSION['message'] = '¡Contraseñas no coinciden!';
+            $_SESSION['message_alert'] = "danger";  
+            
             } else {
-                if(strlen($firstname) < 2 || strlen($firstname) > 30 || strlen($lastname) < 2 || strlen($lastname) > 40 || strlen($username) < 2 || strlen($username) > 30 ||  strlen($password) < 8 ||  strlen($password) > 50 || strlen($passrepeat) < 8 ||  strlen($passrepeat) > 50 || strlen($email) < 15 || strlen($email) > 70){
-                    $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
-                    $_SESSION['message_alert'] = "danger";
-                } else {
-                    $sql = "SELECT userid FROM users WHERE username = ?;";
-                    $stmt = $conn -> prepare($sql); 
-                    $stmt->bind_param("s", $username);
-                    $stmt->execute();
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-                    $result = $stmt -> get_result(); 
-                    $num_rows = $result -> num_rows;
+                if($state == "yes") {
+                    $state = 1;
+                } else { 
+                    $state = 0;
+                }
 
-                    if($num_rows == 0){   
-                        if($password != $passrepeat) {
-                        //Message if the variable is null.
-                        $_SESSION['message'] = '¡Contraseñas no coinciden!';
-                        $_SESSION['message_alert'] = "danger";  
-                        
-                        } else {
-                            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $stmt = $conn -> prepare("SELECT userid FROM users WHERE firstname = ? AND lastname = ? AND username = ? AND `password` = ?;"); 
+                $stmt->bind_param("ssss", $firstname, $lastname, $username, $hashed_password);
+                $stmt->execute();
 
-                            if($state == "yes") {
-                                $state = 1;
-                            } else { 
-                                $state = 0;
-                            }
+                $result = $stmt -> get_result();
+                $num_rows = $result -> num_rows;
 
-                            $sql = "SELECT userid FROM users WHERE firstname = ? AND lastname = ? AND username = ? AND `password` = ?;";
-                            $stmt = $conn -> prepare($sql); 
-                            $stmt->bind_param("ssss", $firstname, $lastname, $username, $hashed_password);
-                            $stmt->execute();
+                if($num_rows == 0) {
+                    $uniqcode = md5(uniqid(mt_rand()));
 
-                            $result = $stmt -> get_result();
-                            $num_rows = $result -> num_rows;
-
-                            if($num_rows == 0) {
-                                $uniqcode = md5(uniqid(mt_rand()));
-
-                                $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex, email_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
-                                $stmt->bind_param ("ssssssiss", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sex, $uniqcode);
-    //Confirmation link                            
-                                $confirmPassLink = "www.recipeholder.net". root ."email_confirm?code=". $uniqcode;
-    //Message
-                                $subject = "Confirmación de correo";                            
-                                $message = "<p>Te has suscrito en la página de recetas: recipeholder.net. Si no has sido tú, ignora este mensaje, de lo contrario haz click en el enlace de confirmación.</p>";
-                                $message .= "<a href='" . $confirmPassLink . "'>" . $confirmPassLink . "</a>";                           
-    //set content-type header for sending HTML email
-                                $headers = "MIME-Version: 1.0" . "\r\n";
-                                $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-    //additionals
-                                $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n" .
-                                "CC: magdielmagdiel01@gmail.com";
-    //Send email
-                                if ($stmt->execute() && mail($email, $subject, $message, $headers)) {   
-                                //The page is redirected to the add-recipe.php
-                                header('Location: ' . root . 'login');
-                                exit;
-                                } else {
-                                //Failure message.
-                                    $_SESSION['message'] = '¡Error al agregar usuario!';
-                                    $_SESSION['message_alert'] = "danger";
-                                }
-                            } else {
-                            //Success message.
-                                $_SESSION['message'] = '¡Este usuario ya existe!';
-                                $_SESSION['message_alert'] = "success";                        
-                            }
-                        }
+                    $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex, email_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                    $stmt->bind_param ("ssssssiss", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sex, $uniqcode);
+//Confirmation link                            
+                    $confirmPassLink = "www.recipeholder.net". root ."email_confirm?code=". $uniqcode;
+//Message
+                    $subject = "Confirmación de correo";                            
+                    $message = "<p>Te has suscrito en la página de recetas: recipeholder.net. Si no has sido tú, ignora este mensaje, de lo contrario haz click en el enlace de confirmación.</p>";
+                    $message .= "<a href='" . $confirmPassLink . "'>" . $confirmPassLink . "</a>";                           
+//set content-type header for sending HTML email
+                    $headers = "MIME-Version: 1.0" . "\r\n";
+                    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+//additionals
+                    $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n" .
+                    "CC: magdielmagdiel01@gmail.com";
+//Send email
+                    if ($stmt->execute() && mail($email, $subject, $message, $headers)) {   
+                    //The page is redirected to the add-recipe.php
+                    header('Location: ' . root . 'login');
+                    exit;
                     } else {
-                        //Failure message.
-                        $_SESSION['message'] = '¡Este usuario no está disponible!';
+                    //Failure message.
+                        $_SESSION['message'] = '¡Error al agregar usuario!';
                         $_SESSION['message_alert'] = "danger";
                     }
+                } else {
+                //Success message.
+                    $_SESSION['message'] = '¡Este usuario ya existe!';
+                    $_SESSION['message_alert'] = "success";                        
                 }
-            }            
+            }
+        } else {
+            //Failure message.
+            $_SESSION['message'] = '¡Este usuario no está disponible!';
+            $_SESSION['message_alert'] = "danger";
         }
     } else {
-//Failure message.
-        $_SESSION['message'] = '¡Acepte primero los términos de servicio!';
-        $_SESSION['message_alert'] = "danger";
+        //Failure message.
+                $_SESSION['message'] = '¡Acepte primero los términos de servicio!';
+                $_SESSION['message_alert'] = "danger";
     }
-}
+} 
 
 $header = new PageHeaders($_SERVER["REQUEST_URI"]);
 $header = $header -> pageHeader();        
@@ -290,8 +285,8 @@ $header = $header -> pageHeader();
     }                                   
 
 //Form validation
-function userValidation(){
-    var form = document.getElementById("signup-form");    
+    function userValidation(){
+        var form = document.getElementById("signup-form");    
 
         form.addEventListener("submit", function(event){ 
             var regExp = /[a-zA-Z\t\h]+|(^$)/;

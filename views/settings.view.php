@@ -9,8 +9,7 @@ require_once ("views/partials/nav.php");
 $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 
 //Verify the user settings
-$sql = "SELECT notification, recycle, shares, reminders FROM users WHERE username = '" . $_SESSION['username'] . "';";
-$result = $conn -> query($sql);
+$result = $conn -> query("SELECT notification, recycle, shares, reminders FROM users WHERE username = '" . $_SESSION['username'] . "';");
 $row = $result -> fetch_assoc();
 
 //Settings variables

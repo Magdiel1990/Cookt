@@ -9,8 +9,7 @@ require_once ("views/partials/nav.php");
 $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 
 //Users data
-$sql = "SELECT * FROM users WHERE userid = ?;";
-$stmt = $conn -> prepare($sql); 
+$stmt = $conn -> prepare("SELECT * FROM users WHERE userid = ?;"); 
 $stmt->bind_param("i", $_SESSION['userid']);
 $stmt->execute();
 

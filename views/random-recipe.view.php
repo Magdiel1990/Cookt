@@ -51,8 +51,7 @@ if(isset($_POST["category"])) {
     $category = $_POST["category"];
 
 //category id
-    $sql = "SELECT categoryid FROM categories WHERE category= ? AND state = 1;"; 
-    $stmt = $conn -> prepare($sql); 
+    $stmt = $conn -> prepare("SELECT categoryid FROM categories WHERE category= ? AND state = 1;"); 
     $stmt->bind_param("s", $category);
     $stmt->execute();
 

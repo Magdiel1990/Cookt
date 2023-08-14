@@ -18,118 +18,116 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
     $filter = new Filter ($_POST["email"], FILTER_SANITIZE_EMAIL, $conn);
     $email = $filter -> sanitization();
 
-    if($recipe == "" || $username == "" || $email == "") {
-        $_SESSION['message'] = '¡Complete todos los campos por favor!';
+//Input validation object  
+    $inputs = ["El usuario" => [$username, [2,30], "incorrecto", true],
+    "La receta" => [$recipe, [7,50], "incorrecta", true],     
+    "El correo electrónico" => [$email, [15,70], "incorrecto", false]];
+
+    $message = new InputValidation ($inputs, "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]/");  
+    $message = $message -> lengthValidation();
+
+        if(count($message) > 0) {
+        $_SESSION['message'] = $message [0];
+        $_SESSION['message_alert'] = $message [1];          
+//The page is redirected to the recovery-page.php
+            header('Location: ' . root . 'recipes?recipe=' . $recipe . '&username=' . $username); 
+            exit;
+        } 
+
+    $stmt = $conn -> prepare("SELECT email, username, shares FROM users WHERE email = ?;"); 
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt -> get_result(); 
+
+    if($result -> num_rows == 0) {
+        $_SESSION['message'] = '¡Este usuario no existe!';
         $_SESSION['message_alert'] = "danger";
 
-        header('Location: ' . root . 'recipes?recipe=' . $recipe . '&username=' . $_GET["username"]); 
-        exit;
+        header('Location: ' . root . 'recipes?recipe=' . $recipe. '&username=' . $_GET["username"]); 
+        exit;               
     } else {
-        if(strlen($email) < 15 || strlen($email) > 70) {
-            $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
+        $row = $result -> fetch_assoc();
+        $destination = $row["username"];
+        $shares = $row["shares"];
+//Verify whether the destionation account is the sender account or the destination user has the share disabled
+        if ($destination == $_SESSION["username"] || $shares == 0) {
+            $_SESSION['message'] = '¡No puedes compartir la receta con este usuario!';
             $_SESSION['message_alert'] = "danger";
 
             header('Location: ' . root . 'recipes?recipe=' . $recipe . '&username=' . $_GET["username"]); 
-            exit;
+            exit; 
         } else {
-            $sql = "SELECT email, username, shares FROM users WHERE email = ?;";
-            $stmt = $conn -> prepare($sql); 
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
-            $result = $stmt -> get_result(); 
+            $result = $conn -> query ("SELECT recipeid FROM recipe WHERE recipename = '$recipe' AND username = '$username' AND state = 1;"); 
+            $row = $result -> fetch_assoc();
+            $recipeid = $row["recipeid"];
 
-            if($result -> num_rows == 0) {
-                $_SESSION['message'] = '¡Este usuario no existe!';
+            $result = $conn -> query("SELECT id FROM shares WHERE share_from = '$username' AND share_to = '$destination' AND recipeid = '$recipeid';"); 
+            if ($result -> num_rows > 0) {
+                $_SESSION['message'] = '¡Esta receta ya ha sido compartida!';
                 $_SESSION['message_alert'] = "danger";
 
                 header('Location: ' . root . 'recipes?recipe=' . $recipe. '&username=' . $_GET["username"]); 
-                exit;               
+                exit;  
             } else {
-                $row = $result -> fetch_assoc();
-                $destination = $row["username"];
-                $shares = $row["shares"];
-//Verify whether the destionation account is the sender account or the destination user has the share disabled
-                if ($destination == $_SESSION["username"] || $shares == 0) {
-                    $_SESSION['message'] = '¡No puedes compartir la receta con este usuario!';
+                $result = $conn -> query("INSERT INTO shares (share_from, share_to, recipeid) VALUES ('$username', '$destination', '$recipeid');"); 
+
+                if($result) {
+// Image path (sender)
+                    $recipeImagesDirSender = "imgs/recipes/". $_SESSION['username'] ."/";
+
+                    if (!file_exists($recipeImagesDirSender)) {
+                        mkdir($recipeImagesDirSender, 0777, true);
+                    }   
+
+                    $files = new Directories($recipeImagesDirSender, $recipe);
+                    $ext = $files -> directoryFiles();
+
+//Image complete path (sender)
+                    if($ext !== null) {
+                        $imageDirSender = $recipeImagesDirSender . $recipe . "." . $ext;
+
+// Image path (receiver)
+                        $recipeImagesDirReceiver = "imgs/recipes/". $destination ."/";
+
+                        if (!file_exists($recipeImagesDirReceiver)) {
+                            mkdir($recipeImagesDirReceiver, 0777, true);
+                        }  
+//Image complete path (receiver)                           
+
+                        $imageDirReceiver = $recipeImagesDirReceiver . $recipe . "." . $ext;
+//Copying the file
+                        copy ($imageDirSender, $imageDirReceiver);
+                    }
+//Notification message            
+                    if($_SESSION['notification'] == 1) {
+                        $log_message_receiver = "El usuario " . $username . " te ha compartido la receta \"" . $recipe . "\".";
+                        $log_message_sender = "Has compartido la receta \"" . $recipe . "\" con el usuario " . $destination . ".";
+                    
+                        $type_receiver = "share_receiver";
+                        $type_sender = "share_sender";
+
+                        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message_receiver', '$type_receiver', 0);";
+                        $sql .= "INSERT INTO `log` (username, log_message, type, state) VALUES ('$username', '$log_message_sender', '$type_sender', 0);";
+                        $conn -> multi_query($sql);                     
+                    }
+                    
+                    $_SESSION['message'] = '¡Receta ha sido compartida con ' . $email . '!';
+                    $_SESSION['message_alert'] = "success";
+
+                    header('Location: ' . root . 'recipes?recipe=' . $recipe . '&username=' . $_GET["username"]); 
+                    exit;                           
+                } else {
+                    $_SESSION['message'] = '¡Error al compartir receta!';
                     $_SESSION['message_alert'] = "danger";
 
                     header('Location: ' . root . 'recipes?recipe=' . $recipe . '&username=' . $_GET["username"]); 
-                    exit; 
-                } else {
-                    $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipe' AND username = '$username' AND state = 1;";
-                    $result = $conn -> query($sql); 
-                    $row = $result -> fetch_assoc();
-                    $recipeid = $row["recipeid"];
-
-                    $sql = "SELECT id FROM shares WHERE share_from = '$username' AND share_to = '$destination' AND recipeid = '$recipeid';";
-                    $result = $conn -> query($sql); 
-                    if ($result -> num_rows > 0) {
-                        $_SESSION['message'] = '¡Esta receta ya ha sido compartida!';
-                        $_SESSION['message_alert'] = "danger";
-
-                        header('Location: ' . root . 'recipes?recipe=' . $recipe. '&username=' . $_GET["username"]); 
-                        exit;  
-                    } else {
-                        $sql = "INSERT INTO shares (share_from, share_to, recipeid) VALUES ('$username', '$destination', '$recipeid');";
-                    
-                        if($conn -> query($sql)) {
-// Image path (sender)
-                            $recipeImagesDirSender = "imgs/recipes/". $_SESSION['username'] ."/";
-
-                            if (!file_exists($recipeImagesDirSender)) {
-                                mkdir($recipeImagesDirSender, 0777, true);
-                            }   
-
-                            $files = new Directories($recipeImagesDirSender, $recipe);
-                            $ext = $files -> directoryFiles();
-
-//Image complete path (sender)
-                            if($ext !== null) {
-                                $imageDirSender = $recipeImagesDirSender . $recipe . "." . $ext;
-
-// Image path (receiver)
-                                $recipeImagesDirReceiver = "imgs/recipes/". $destination ."/";
-
-                                if (!file_exists($recipeImagesDirReceiver)) {
-                                    mkdir($recipeImagesDirReceiver, 0777, true);
-                                }  
-//Image complete path (receiver)                           
-
-                                $imageDirReceiver = $recipeImagesDirReceiver . $recipe . "." . $ext;
-//Copying the file
-                                copy ($imageDirSender, $imageDirReceiver);
-                            }
-//Notification message            
-                            if($_SESSION['notification'] == 1) {
-                                $log_message_receiver = "El usuario " . $username . " te ha compartido la receta \"" . $recipe . "\".";
-                                $log_message_sender = "Has compartido la receta \"" . $recipe . "\" con el usuario " . $destination . ".";
-                            
-                                $type_receiver = "share_receiver";
-                                $type_sender = "share_sender";
-
-                                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('$destination', '$log_message_receiver', '$type_receiver', 0);";
-                                $sql .= "INSERT INTO `log` (username, log_message, type, state) VALUES ('$username', '$log_message_sender', '$type_sender', 0);";
-                                $conn -> multi_query($sql);                     
-                            }
-                            
-                            $_SESSION['message'] = '¡Receta ha sido compartida con ' . $email . '!';
-                            $_SESSION['message_alert'] = "success";
-
-                            header('Location: ' . root . 'recipes?recipe=' . $recipe . '&username=' . $_GET["username"]); 
-                            exit;                           
-                        } else {
-                            $_SESSION['message'] = '¡Error al compartir receta!';
-                            $_SESSION['message_alert'] = "danger";
-
-                            header('Location: ' . root . 'recipes?recipe=' . $recipe . '&username=' . $_GET["username"]); 
-                            exit;  
-                        }
-                    }
+                    exit;  
                 }
             }
         }
     }
 }
+
 //Exiting connection
 $conn -> close();
 

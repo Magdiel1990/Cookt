@@ -17,8 +17,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
     unset($_SESSION['message_alert'], $_SESSION['message']);
     }
 
-    $sql = "SELECT id FROM `log` WHERE username = '" . $_SESSION["username"] . "';";
-    $result= $conn -> query($sql);
+    $result = $conn -> query("SELECT id FROM `log` WHERE username = '" . $_SESSION["username"] . "';");
     $num_rows = $result -> num_rows;
 
     if($num_rows == 0) {

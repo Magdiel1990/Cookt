@@ -36,8 +36,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 <!--Ingredients list-->      
     <div class="table-responsive-sm mt-4">
          <?php
-            $sql = "SELECT ingredient FROM ingredients WHERE username = ? AND state = 1 ORDER BY ingredient;";
-            $stmt = $conn -> prepare($sql); 
+            $stmt = $conn -> prepare("SELECT ingredient FROM ingredients WHERE username = ? AND state = 1 ORDER BY ingredient;"); 
             $stmt->bind_param("s",  $_SESSION['username']);
             $stmt->execute();
 
@@ -58,8 +57,12 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                 $html = "<tr>";
                 $html .= "<td class='ingredient px-2' title='ingrediente'>" . ucfirst($row['ingredient']) . "</td>";
                 $html .= "<td class='px-2'>";
+                $html .= "<span class='btn-group'>";
+//Edit button
+                $html .= "<a href='" . root . "edit?ingredientname=" . $row['ingredient'] . "' class='btn btn-outline-secondary' title='Editar'><i class='fa-solid fa-pen'></i></a>";
 //Delete button                    
                 $html .= "<a href='" . root . "delete?ingredientname=" . $row['ingredient'] . "' class='btn btn-outline-danger' title='Eliminar'><i class='fa-solid fa-trash'></i></a>";
+                $html .= "</span>";
                 $html .= "</td>";
                 $html .= "</tr>";
                 echo $html;

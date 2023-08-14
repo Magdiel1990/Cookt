@@ -22,102 +22,86 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
 
   $categoryImage = $_FILES["categoryImage"];
 
-//Regex that the category should have
-  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:\t\h]+|(^$)/";   
+//Input validation object  
+  $inputs = ["La categoría" => [$category, [2,20], "incorrecta", true], 
+  "La imagen de la categoría" => [$categoryImage ['name'], [], "incorrecta", true]];
 
-  if ($category == "" || $categoryImage ['name'] == null){
+  $message = new InputValidation ($inputs, "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]/");  
+  $message = $message -> lengthValidation();
 
-      $_SESSION['message'] = '¡Escriba la categoría o cargue la imagen!';
-      $_SESSION['message_alert'] = "danger";          
+    if(count($message) > 0) {
+      $_SESSION['message'] = $message [0];
+      $_SESSION['message_alert'] = $message [1];          
 
       header('Location: ' . root . 'categories');
       exit;
-  } else {
-    if (!preg_match($pattern, $category)){
-        $_SESSION['message'] = '¡Categoría incorrecta!';
-        $_SESSION['message_alert'] = "danger";
-            
-        header('Location: ' . root . 'categories');
-        exit;
-    } else {
-      if(strlen($category) > 20 || strlen($category) < 2) {
-        $_SESSION['message'] = '¡Longitud de categoría incorrecta!';
-        $_SESSION['message_alert'] = "danger";
-            
-        header('Location: ' . root . 'categories');
-        exit;
-      } else{
-  //lowercase the variable
-        $category = strtolower($category);
-  //Check if the category had been added
-        $sql = "SELECT category FROM categories WHERE category = '$category' AND state = 1;";
-        $num_rows = $conn -> query($sql) -> num_rows;      
+    }  
+//lowercase the variable
+  $category = strtolower($category);
+//Check if the category had been added
+  $result = $conn -> query("SELECT category FROM categories WHERE category = '$category' AND state = 1;");
+  $num_rows = $result -> num_rows;      
 
-        if($num_rows != 0){
-            $_SESSION['message'] = '¡Ya ha sido agregado!';
-            $_SESSION['message_alert'] = "success";
+  if($num_rows != 0){
+      $_SESSION['message'] = '¡Ya ha sido agregado!';
+      $_SESSION['message_alert'] = "success";
 
-            header('Location: ' . root . 'categories');
-            exit;
-        }  
-        
-        $stmt = $conn -> prepare("INSERT INTO categories (category) VALUES (?);");
-        $stmt->bind_param("s", $category);
-          
-        $categoryImagesDir = "../imgs/categories";
-        if (!file_exists($categoryImagesDir)) {
-            mkdir($categoryImagesDir, 0777, true);
-        }
+      header('Location: ' . root . 'categories');
+      exit;
+  }  
+  
+  $stmt = $conn -> prepare("INSERT INTO categories (category) VALUES (?);");
+  $stmt->bind_param("s", $category);
+    
+  $categoryImagesDir = "../imgs/categories";
+  if (!file_exists($categoryImagesDir)) {
+      mkdir($categoryImagesDir, 0777, true);
+  }
 
-        $target_dir = "../imgs/categories/";
-        $ext = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
-        $target_file = $target_dir . $category . "." . $ext;
+  $target_dir = "../imgs/categories/";
+  $ext = strtolower(pathinfo($categoryImage["name"], PATHINFO_EXTENSION));
+  $target_file = $target_dir . $category . "." . $ext;
 
-        $categorySubmit = isset($_POST["categorySubmit"]) ? $_POST["categorySubmit"] : 0;
+  $categorySubmit = isset($_POST["categorySubmit"]) ? $_POST["categorySubmit"] : 0;
 
-        $admittedFormats = ["jpg"];
+  $admittedFormats = ["jpg"];
 
 //Image verification        
-        $uploadOk = new ImageVerif($categorySubmit, $categoryImage["tmp_name"], $target_file, 300000, $categoryImage["size"], $admittedFormats, $ext);
-        $uploadOk = $uploadOk -> file_extention();   
-  
-        if ($uploadOk == null) {
-          if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $stmt -> execute()){
+  $uploadOk = new ImageVerif($categorySubmit, $categoryImage["tmp_name"], $target_file, 300000, $categoryImage["size"], $admittedFormats, $ext);
+  $uploadOk = $uploadOk -> file_extention();   
+
+  if ($uploadOk == null) {
+    if(move_uploaded_file($categoryImage["tmp_name"], $target_file) && $stmt -> execute()){
 //Notification message        
-            $log_message = "Has creado la categoría \"" . $category . "\".";       
-            $type = "add";
-            
-            if($_SESSION['notification'] == 1) {
-              $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-              $conn -> query($sql);
-            }
-
-            $_SESSION['message'] = '¡Categoría agregada con éxito!';
-            $_SESSION['message_alert'] = "success";
-
-            $stmt -> close();
-
-            header('Location: ' . root . 'categories');  
-            exit;  
-          } else {
-          $_SESSION['message'] = '¡Error al agregar categoría!';
-          $_SESSION['message_alert'] = "danger";
-
-          header('Location: ' . root . 'categories');
-          exit;
-          }
-        } else {
-          $_SESSION['message'] = $uploadOk;
-          $_SESSION['message_alert'] = "danger";
-
-          header('Location: ' . root . 'categories');
-          exit;
-        }
+      $log_message = "Has creado la categoría \"" . $category . "\".";       
+      $type = "add";
+      
+      if($_SESSION['notification'] == 1) {
+        $conn -> query("INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);");
       }
+
+      $_SESSION['message'] = '¡Categoría agregada con éxito!';
+      $_SESSION['message_alert'] = "success";
+
+      $stmt -> close();
+
+      header('Location: ' . root . 'categories');  
+      exit;  
+    } else {
+    $_SESSION['message'] = '¡Error al agregar categoría!';
+    $_SESSION['message_alert'] = "danger";
+
+    header('Location: ' . root . 'categories');
+    exit;
     }
+  } else {
+    $_SESSION['message'] = $uploadOk;
+    $_SESSION['message_alert'] = "danger";
+
+    header('Location: ' . root . 'categories');
+    exit;
   }
 }
-
 /************************************************************************************************/
 /***************************************INGREDIENT ADITION CODE**********************************/
 /************************************************************************************************/
@@ -126,66 +110,59 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
 if(isset($_POST['add_ingredient'])){
   $filter = new Filter ($_POST['add_ingredient'], FILTER_SANITIZE_STRING, $conn);
   $ingredient = $filter -> sanitization();
-  
-  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:\t\h]+|(^$)/"; 
- 
-//Variable is null.
-  if ($ingredient == ""){
-      $_SESSION['message'] = '¡Escriba el ingrediente por favor!';
-      $_SESSION['message_alert'] = "danger";
+
+//Input validation object  
+  $inputs = ["El ingrediente" => [$ingredient, [2,50], "incorrecto", true]];
+
+  $message = new InputValidation ($inputs, "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]/");  
+  $message = $message -> lengthValidation();
+
+    if(count($message) > 0) {
+      $_SESSION['message'] = $message [0];
+      $_SESSION['message_alert'] = $message [1];          
+
+      header('Location: ' . root . 'ingredients');
+      exit;
+    } 
+//lowercase the variable
+  $ingredient = strtolower($ingredient);
+
+  $result = $conn -> query("SELECT ingredient FROM ingredients WHERE ingredient = '$ingredient' AND username = '" .  $_SESSION['username'] . "' AND state = 1;");
+  $num_rows = $result -> num_rows;
+
+//Check if it already exists
+  if($num_rows != 0){
+      $_SESSION['message'] = '¡Ya ha sido agregado!';
+      $_SESSION['message_alert'] = "success";
 
       header('Location: ' . root . 'ingredients');
       exit;
   } else {
-  if(!preg_match($pattern, $ingredient)){
-      $_SESSION['message'] = '¡Ingrediente incorrecto!';
+  $stmt = $conn -> prepare("INSERT INTO ingredients (ingredient, username) VALUES (?, ?);");
+  $stmt->bind_param("ss", $ingredient, $_SESSION['username']);
+
+  if ($stmt -> execute()) {
+//Notification message        
+      $log_message = "Has creado el ingrediente \"" . $ingredient . "\".";       
+      $type = "add";
+
+//Verify the settings
+      if($_SESSION['notification'] == 1) {
+        $conn -> query("INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);");
+      }
+
+      $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
+      $_SESSION['message_alert'] = "success";
+
+      $stmt -> close();
+      header('Location: ' . root . 'ingredients');
+      exit;
+    } else {
+      $_SESSION['message'] = '¡Error al agregar ingrediente!';
       $_SESSION['message_alert'] = "danger";
           
       header('Location: ' . root . 'ingredients');
       exit;
-  }
-//lowercase the variable
-    $ingredient = strtolower($ingredient);
-
-    $sql = "SELECT ingredient FROM ingredients WHERE ingredient = '$ingredient' AND username = '" .  $_SESSION['username'] . "' AND state = 1;";
-
-    $num_rows = $conn -> query($sql) -> num_rows;
-
-//Check if it already exists
-    if($num_rows != 0){
-        $_SESSION['message'] = '¡Ya ha sido agregado!';
-        $_SESSION['message_alert'] = "success";
-
-        header('Location: ' . root . 'ingredients');
-        exit;
-    } else {
-    $stmt = $conn -> prepare("INSERT INTO ingredients (ingredient, username) VALUES (?, ?);");
-    $stmt->bind_param("ss", $ingredient, $_SESSION['username']);
-
-    if ($stmt -> execute()) {
-//Notification message        
-        $log_message = "Has creado el ingrediente \"" . $ingredient . "\".";       
-        $type = "add";
-
-//Verify the settings
-        if($_SESSION['notification'] == 1) {
-          $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-          $conn -> query($sql);
-        }
-
-        $_SESSION['message'] = '¡Ingrediente agregado con éxito!';
-        $_SESSION['message_alert'] = "success";
-
-        $stmt -> close();
-        header('Location: ' . root . 'ingredients');
-        exit;
-      } else {
-        $_SESSION['message'] = '¡Error al agregar ingrediente!';
-        $_SESSION['message_alert'] = "danger";
-            
-        header('Location: ' . root . 'ingredients');
-        exit;
-      }
     }
   }
 }
@@ -213,166 +190,88 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
   $category = $_POST['category']; 
   $recipeImage = $_FILES["recipeImage"];  
 
-  $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:\t\h]+|(^$)/"; 
-//If this variables are null
-  if ($recipename == "" || $preparation == "" || $ingredients == "") {
-      $_SESSION['message'] = '¡Falta nombre de la receta o la preparación!';
-      $_SESSION['message_alert'] = "danger";
+//Input validation object  
+  $inputs = ["La receta" => [$recipename, [7,50], "incorrecta", true], 
+  "Los ingredientes" => [$ingredients, [], "incorrectos", false],
+  "La preparación" => [$preparation, [], "incorrecta", false],   
+  "El tiempo de cocción" => [$cookingtime, [5,180], "incorrecto", false]];
+
+  $message = new InputValidation ($inputs, "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]/");  
+  $message = $message -> lengthValidation();
+
+    if(count($message) > 0) {
+      $_SESSION['message'] = $message [0];
+      $_SESSION['message_alert'] = $message [1];          
 
       header('Location: ' . root . 'add-recipe');
       exit;
-  } else {
-  if (!preg_match($pattern, $recipename)){
-      $_SESSION['message'] = '¡Nombre de receta incorrecto!';
-      $_SESSION['message_alert'] = "danger";
-          
-      header('Location: ' . root . 'add-recipe');
-      exit;
-  } 
-//If cookingtime is not between 5 and 180  
-  if ($cookingtime > 180 || $cookingtime < 5) {
-      $_SESSION['message'] = '¡Tiempo de cocción debe estar entre 5 - 180 minutos!';
-      $_SESSION['message_alert'] = "danger";
-          
-      header('Location: ' . root . 'add-recipe');
-      exit;
-  } 
-      $_SESSION['category'] = $category;
+    } 
 
-      $sql = "SELECT recipename FROM recipe WHERE recipename = '$recipename' AND username = '" .  $_SESSION['username'] . "' AND state = 1;";
-      $result = $conn -> query($sql);
-      $num_rows = $result -> num_rows;
+    $_SESSION['category'] = $category;
+
+    $result = $conn -> query("SELECT recipename FROM recipe WHERE recipename = '$recipename' AND username = '" .  $_SESSION['username'] . "' AND state = 1;");
+    $num_rows = $result -> num_rows;
 //Check if the recipe exists            
-      if($num_rows == 0){
-        
-        if($cookingtime == "") { 
-          $cookingtime = 0;
-        }
+    if($num_rows == 0){
 //Get the category id        
-      $sql = "SELECT categoryid FROM categories WHERE category = ? AND state = 1;";   
-      $stmt = $conn -> prepare($sql); 
-      $stmt -> bind_param("s", $category);
-      $stmt -> execute();
+    $stmt = $conn -> prepare("SELECT categoryid FROM categories WHERE category = ? AND state = 1;"); 
+    $stmt -> bind_param("s", $category);
+    $stmt -> execute();
 
-      $result = $stmt -> get_result(); 
-      $row = $result -> fetch_assoc();       
-     
-      $categoryid = $row["categoryid"];
+    $result = $stmt -> get_result(); 
+    $row = $result -> fetch_assoc();       
+    
+    $categoryid = $row["categoryid"];
 
-      $stmt = $conn -> prepare("INSERT INTO recipe (recipeid, ingredients, preparation, cookingtime, recipename, categoryid, username) VALUES (?, ?, ?, ?, ?, ?, ?);");
-      $stmt->bind_param ("issisis", $recipeId, $ingredients, $preparation, $cookingtime, $recipename, $categoryid, $_SESSION['username']);
-      
-      $stmt -> execute();
-      $stmt -> close(); 
+    $stmt = $conn -> prepare("INSERT INTO recipe (recipeid, ingredients, preparation, cookingtime, recipename, categoryid, username) VALUES (?, ?, ?, ?, ?, ?, ?);");
+    $stmt->bind_param ("issisis", $recipeId, $ingredients, $preparation, $cookingtime, $recipename, $categoryid, $_SESSION['username']);
+    
+    $stmt -> execute();
+    $stmt -> close(); 
 
 //Notification message        
-      $log_message = "Has creado la receta \"" . $recipename . "\".";       
-      $type = "add";
-      
-      if($_SESSION['notification'] == 1) {
-        $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-        $conn -> query($sql);
-      }
+    $log_message = "Has creado la receta \"" . $recipename . "\".";       
+    $type = "add";
+    
+    if($_SESSION['notification'] == 1) {
+      $conn -> query("INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);");
+    }
 
 //If no image has been added
-        if ($recipeImage ['name'] == null && $_POST["imageUrl"] == "") {           
-        $_SESSION['message'] = '¡Receta agregada exitosamente!';
-        $_SESSION['message_alert'] = "success";
+      if ($recipeImage ['name'] == null && $_POST["imageUrl"] == "") {           
+      $_SESSION['message'] = '¡Receta agregada exitosamente!';
+      $_SESSION['message_alert'] = "success";
 
-        header('Location: ' . root . 'add-recipe');
-        exit;
-        } else if ($_POST["imageUrl"] != "") {
+      header('Location: ' . root . 'add-recipe');
+      exit;
+      } else if ($_POST["imageUrl"] != "") {
 // Remote image URL Sanitization   
-          $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL, $conn);
-          $url = $filter -> sanitization();
+        $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL, $conn);
+        $url = $filter -> sanitization();
 //Url existance verification          
-          $URLVerif = new UrlVerification ($url);
-          $URLVerif = $URLVerif -> urlVerif();
-          
-          if($URLVerif === false) {
+        $URLVerif = new UrlVerification ($url);
+        $URLVerif = $URLVerif -> urlVerif();
+        
+        if($URLVerif === false) {
 //Notification message        
-            $log_message = "Has creado la receta \"" . $recipename . "\".";       
-            $type = "add";
-            if($_SESSION['notification'] == 1) {
-              $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-              $conn -> query($sql);
-            }
+          $log_message = "Has creado la receta \"" . $recipename . "\".";       
+          $type = "add";
+          if($_SESSION['notification'] == 1) {
+            $conn -> query("INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);");
+          }
 
-            $_SESSION['message'] = '¡Receta agregada exitosamente sin imagen!';
-            $_SESSION['message_alert'] = "success";
+          $_SESSION['message'] = '¡Receta agregada exitosamente sin imagen!';
+          $_SESSION['message_alert'] = "success";
 
-            header('Location: ' . root . 'add-recipe');
-            exit;        
-          } else {
+          header('Location: ' . root . 'add-recipe');
+          exit;        
+        } else {
 // Image path
-          $recipeImagesDir = "imgs/recipes/". $_SESSION['username'] ."/";
-
-            if (!file_exists($recipeImagesDir)) {
-              mkdir($recipeImagesDir, 0777, true);
-            }        
-//Delete an old image if it exists
-          $files = new Directories($recipeImagesDir, $recipename);
-          $ext = $files -> directoryFiles();
-
-          if($ext !== null) {
-            $imageDir = $recipeImagesDir . $recipename . "." . $ext;
-
-            unlink($imageDir);
-          }
-
-          $ext = pathinfo($url, PATHINFO_EXTENSION);
-
-//Button set          
-          $addrecipe = isset($_POST["addrecipe"]) ? $_POST["addrecipe"] : 0;
-
-          $admittedFormats = ["jpg", "jpeg", "png", "gif", "webp"];
-
-//Image directory       
-          $imageDir = $recipeImagesDir ."/". $recipename . "." . $ext;
-
-//Message
-          $uploadOk = new ImageVerifFromWeb ($addrecipe, null, $imageDir, 300000, null, $admittedFormats, $ext, $url);
-          $uploadOk = $uploadOk -> file_extention();  
-
-// Save image 
-          if($uploadOk != "") {
-            $_SESSION['message'] = $uploadOk;
-            $_SESSION['message_alert'] = "danger";
-
-            header('Location: ' . root . 'add-recipe');
-            exit;
-          } else {
-            if(file_put_contents($imageDir, file_get_contents($url)) !== false){
-//Notification message        
-              $log_message = "Has creado la receta \"" . $recipename . "\".";       
-              $type = "add";
-
-              if($_SESSION['notification'] == 1) {
-                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                $conn -> query($sql);
-              }
-
-              $_SESSION['message'] = '¡Receta agregada exitosamente!';
-              $_SESSION['message_alert'] = "success";
-
-              header('Location: ' . root . 'add-recipe');
-              exit;
-            } else {
-              $_SESSION['message'] = '¡Error al cargar imagen!';
-              $_SESSION['message_alert'] = "success";
-
-              header('Location: ' . root . 'add-recipe');
-              exit;
-            }             
-          }
-        }          
-      } else {
-        $recipeImagesDir = "imgs/recipes/". $_SESSION['username']. "/" ;
+        $recipeImagesDir = "imgs/recipes/". $_SESSION['username'] ."/";
 
           if (!file_exists($recipeImagesDir)) {
             mkdir($recipeImagesDir, 0777, true);
-          }
-
+          }        
 //Delete an old image if it exists
         $files = new Directories($recipeImagesDir, $recipename);
         $ext = $files -> directoryFiles();
@@ -382,29 +281,36 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
 
           unlink($imageDir);
         }
-          
-        $ext = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
-        $imageDir = $recipeImagesDir .  $recipename . "." . $ext;
+
+        $ext = pathinfo($url, PATHINFO_EXTENSION);
 
 //Button set          
         $addrecipe = isset($_POST["addrecipe"]) ? $_POST["addrecipe"] : 0;
 
-        $admittedFormats = ["jpg", "jpeg", "png", "gif", "webp"];      
-        
-//Image verification        
-        $uploadOk = new ImageVerif($addrecipe, $recipeImage["tmp_name"], $imageDir, 300000, $recipeImage["size"], $admittedFormats, $ext);
-        $uploadOk = $uploadOk -> file_extention();   
+        $admittedFormats = ["jpg", "jpeg", "png", "gif", "webp"];
 
-        if ($uploadOk == "") {
+//Image directory       
+        $imageDir = $recipeImagesDir ."/". $recipename . "." . $ext;
 
-            if(move_uploaded_file($recipeImage["tmp_name"], $imageDir)){
+//Message
+        $uploadOk = new ImageVerifFromWeb ($addrecipe, null, $imageDir, 300000, null, $admittedFormats, $ext, $url);
+        $uploadOk = $uploadOk -> file_extention();  
+
+// Save image 
+        if($uploadOk != "") {
+          $_SESSION['message'] = $uploadOk;
+          $_SESSION['message_alert'] = "danger";
+
+          header('Location: ' . root . 'add-recipe');
+          exit;
+        } else {
+          if(file_put_contents($imageDir, file_get_contents($url)) !== false){
 //Notification message        
             $log_message = "Has creado la receta \"" . $recipename . "\".";       
             $type = "add";
 
             if($_SESSION['notification'] == 1) {
-              $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-              $conn -> query($sql);
+              $conn -> query("INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);");
             }
 
             $_SESSION['message'] = '¡Receta agregada exitosamente!';
@@ -412,28 +318,81 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
 
             header('Location: ' . root . 'add-recipe');
             exit;
-            } else {
-            $_SESSION['message'] = '¡Error al agregar receta!';
-            $_SESSION['message_alert'] = "danger";
-                
-            header('Location: ' . root . 'add-recipe');
-            exit;
-          }
-        } else {
-            $_SESSION['message'] = $uploadOk;
-            $_SESSION['message_alert'] = "danger";
+          } else {
+            $_SESSION['message'] = '¡Error al cargar imagen!';
+            $_SESSION['message_alert'] = "success";
 
             header('Location: ' . root . 'add-recipe');
             exit;
+          }             
         }
-      }
+      }          
     } else {
-            $_SESSION['message'] = '¡Esta receta ya existe!';
-            $_SESSION['message_alert'] = "danger";
+      $recipeImagesDir = "imgs/recipes/". $_SESSION['username']. "/" ;
 
-            header('Location: ' . root . 'add-recipe');
-            exit;
+        if (!file_exists($recipeImagesDir)) {
+          mkdir($recipeImagesDir, 0777, true);
+        }
+
+//Delete an old image if it exists
+      $files = new Directories($recipeImagesDir, $recipename);
+      $ext = $files -> directoryFiles();
+
+      if($ext !== null) {
+        $imageDir = $recipeImagesDir . $recipename . "." . $ext;
+
+        unlink($imageDir);
+      }
+        
+      $ext = strtolower(pathinfo($recipeImage["name"], PATHINFO_EXTENSION));
+      $imageDir = $recipeImagesDir .  $recipename . "." . $ext;
+
+//Button set          
+      $addrecipe = isset($_POST["addrecipe"]) ? $_POST["addrecipe"] : 0;
+
+      $admittedFormats = ["jpg", "jpeg", "png", "gif", "webp"];      
+      
+//Image verification        
+      $uploadOk = new ImageVerif($addrecipe, $recipeImage["tmp_name"], $imageDir, 300000, $recipeImage["size"], $admittedFormats, $ext);
+      $uploadOk = $uploadOk -> file_extention();   
+
+      if ($uploadOk == "") {
+
+          if(move_uploaded_file($recipeImage["tmp_name"], $imageDir)){
+//Notification message        
+          $log_message = "Has creado la receta \"" . $recipename . "\".";       
+          $type = "add";
+
+          if($_SESSION['notification'] == 1) {
+            $conn -> query("INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);");
+          }
+
+          $_SESSION['message'] = '¡Receta agregada exitosamente!';
+          $_SESSION['message_alert'] = "success";
+
+          header('Location: ' . root . 'add-recipe');
+          exit;
+          } else {
+          $_SESSION['message'] = '¡Error al agregar receta!';
+          $_SESSION['message_alert'] = "danger";
+              
+          header('Location: ' . root . 'add-recipe');
+          exit;
+        }
+      } else {
+          $_SESSION['message'] = $uploadOk;
+          $_SESSION['message_alert'] = "danger";
+
+          header('Location: ' . root . 'add-recipe');
+          exit;
+      }
     }
+  } else {
+          $_SESSION['message'] = '¡Esta receta ya existe!';
+          $_SESSION['message_alert'] = "danger";
+
+          header('Location: ' . root . 'add-recipe');
+          exit;
   }
 }
 
@@ -446,12 +405,11 @@ if(isset($_POST['customingredient']) && isset($_POST['uri'])){
   $ingredient = $_POST['customingredient'];
   $uri = $_POST['uri'];
 
-  $sql = "SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "' AND state = 1;";
-  $row = $conn -> query($sql) -> fetch_assoc();
+  $result = $conn -> query ("SELECT id FROM ingredients WHERE ingredient = '$ingredient' AND username = '" . $_SESSION['username'] . "' AND state = 1;");
+  $row = $result -> fetch_assoc();
   $ingredientId = $row['id'];
   
-  $sql = "SELECT ingredientid FROM ingholder WHERE ingredientid = $ingredientId AND username = '" . $_SESSION['username'] . "';";
-  $result = $conn -> query($sql);
+  $result = $conn -> query("SELECT ingredientid FROM ingholder WHERE ingredientid = $ingredientId AND username = '" . $_SESSION['username'] . "';");
 //Check if the recipe has been added
   if($result -> num_rows > 0){
       $_SESSION['message'] = '¡Ya ha sido agregado!';
@@ -515,8 +473,7 @@ if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex
   $pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:\t\h]+|(^$)/";
 
 //Check if the user is Admin
-  $sql = "SELECT userid, `type` FROM users WHERE username = ?;";
-  $stmt = $conn -> prepare($sql); 
+  $stmt = $conn -> prepare("SELECT userid, `type` FROM users WHERE username = ?;"); 
   $stmt->bind_param("s", $sessionUser);
   $stmt->execute();
 
@@ -528,127 +485,117 @@ if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex
   if($sessionUserType !== 'Admin') {
         header('Location: ' . root . 'error404');
         exit;
-//If null        
-  } else {
-    if ($firstname == "" || $lastname == "" || $username == "" || $password == "" || $sex == "" || $email == "") {
-        $_SESSION['message'] = '¡Complete todos los campos por favor!';
-        $_SESSION['message_alert'] = "danger";
+  } 
 
-        header('Location: ' . root . 'user');
-        exit;
-//If passwords don't match        
-    } else {
-      if (!preg_match($pattern, $firstname) || !preg_match($pattern, $lastname) || !preg_match($pattern, $username)){
-        $_SESSION['message'] = '¡Nombre, apellido o usuario incorrecto!';
-        $_SESSION['message_alert'] = "danger";
+//Input validation object  
+ $inputs = ["El nombre" => [$firstname, [2,30], "incorrecto", true], 
+ "El apellido" => [$lastname, [2,40], "incorrecto", true],
+ "El usuario" => [$username, [2,30], "incorrecto", true],   
+ "La contraseña" => [$password, [8,50], "incorrecta", false], 
+ "La contraseña" => [$passrepeat, [8,50], "incorrecta", false],
+ "El correo electrónico" => [$email, [15,70], "incorrecto", false]]; 
 
-        header('Location: ' . root . 'user');
-        exit;
-      } else {
-        if(strlen($firstname) < 2 || strlen($firstname) > 30 || strlen($lastname) < 2 || strlen($lastname) > 40 || strlen($username) < 2 || strlen($username) > 30 ||  strlen($password) < 8 ||  strlen($password) > 50 || strlen($passrepeat) < 8 ||  strlen($passrepeat) > 50 || strlen($email) < 15 || strlen($email) > 70) {
-            $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
-            $_SESSION['message_alert'] = "danger";
+ $message = new InputValidation ($inputs, "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]/");  
+ $message = $message -> lengthValidation();
 
-            header('Location: ' . root . 'user');
-            exit;
-        } else {
-          $sql = "SELECT userid FROM users WHERE username = '$username' AND email = '$email';";
-          $result = $conn -> query($sql);
+   if(count($message) > 0) {
+     $_SESSION['message'] = $message [0];
+     $_SESSION['message_alert'] = $message [1];          
 
-          if($result -> num_rows == 0) {   
-            if($password != $passrepeat) {  
-              $_SESSION['message'] = '¡Contraseñas no coinciden!';
-              $_SESSION['message_alert'] = "danger";  
-              
-              header('Location: ' . root . 'user');
-              exit;
+     header('Location: ' . root . 'user');
+     exit;
+   } 
+
+  $result = $conn -> query("SELECT userid FROM users WHERE username = '$username' AND email = '$email';");
+
+  if($result -> num_rows == 0) {   
+    if($password != $passrepeat) {  
+      $_SESSION['message'] = '¡Contraseñas no coinciden!';
+      $_SESSION['message_alert'] = "danger";  
+      
+      header('Location: ' . root . 'user');
+      exit;
 //Hash password            
-            } else {
-              $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    } else {
+      $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-              if($state == "yes") {
-                $state = 1;
-              } else { 
-                $state = 0;
-              }
+      if($state == "yes") {
+        $state = 1;
+      } else { 
+        $state = 0;
+      }
 //Check if it already exists
-              $sql = "SELECT email_code FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';";
-              $result = $conn -> query($sql);
+      $result = $conn -> query("SELECT email_code FROM users WHERE firstname = '$firstname' AND lastname = '$lastname' AND username = '$username' AND `password` = '$hashed_password';");
 
-              if($result -> num_rows == 0) { 
-                
-              $uniqcode = md5(uniqid(mt_rand()));
+      if($result -> num_rows == 0) { 
+        
+      $uniqcode = md5(uniqid(mt_rand()));
 
-              $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex, email_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
-              $stmt->bind_param ("ssssssiss", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sex, $uniqcode);
+      $stmt = $conn -> prepare("INSERT INTO users (firstname, lastname, username, `password`, `type`, email, `state`, sex, email_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+      $stmt->bind_param ("ssssssiss", $firstname, $lastname, $username, $hashed_password, $rol, $email, $state, $sex, $uniqcode);
 //Confirmation link                            
-              $confirmPassLink = "www.recipeholder.net". root ."email_confirm?code=". $uniqcode;
+      $confirmPassLink = "www.recipeholder.net". root ."email_confirm?code=". $uniqcode;
 //Message
-              $subject = "Confirmación de correo";                            
-              $message = "<p>Has sido suscrito en la página de recetas: recipeholder.net. Si no te interesa usar este servicio, ignora este mensaje, de lo contrario haz click en el enlace de confirmación.</p>";
-              $message .= "<a href='" . $confirmPassLink . "'>" . $confirmPassLink . "</a>";                           
+      $subject = "Confirmación de correo";                            
+      $message = "<p>Has sido suscrito en la página de recetas: recipeholder.net. Si no te interesa usar este servicio, ignora este mensaje, de lo contrario haz click en el enlace de confirmación.</p>";
+      $message .= "<a href='" . $confirmPassLink . "'>" . $confirmPassLink . "</a>";                           
 //set content-type header for sending HTML email
-              $headers = "MIME-Version: 1.0" . "\r\n";
-              $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+      $headers = "MIME-Version: 1.0" . "\r\n";
+      $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 //additionals
-              $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n" .
-              "CC: magdielmagdiel01@gmail.com";
+      $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n" .
+      "CC: magdielmagdiel01@gmail.com";
 //Send email
 
-                if ($stmt->execute() && mail($email, $subject, $message, $headers)) {
+        if ($stmt->execute() && mail($email, $subject, $message, $headers)) {
 //Notification message        
-                  $log_message = "Has creado el usuario \"" . $username . "\".";       
-                  $type = "add";
+          $log_message = "Has creado el usuario \"" . $username . "\".";       
+          $type = "add";
 
-                  if($_SESSION['notification'] == 1) {
-                    $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                    $conn -> query($sql);
-                  }
+          if($_SESSION['notification'] == 1) {
+            $conn -> query("INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);");
+          }
 
-                  $_SESSION['message'] = '¡Usuario agregado con éxito!';
-                  $_SESSION['message_alert'] = "success";
+          $_SESSION['message'] = '¡Usuario agregado con éxito!';
+          $_SESSION['message_alert'] = "success";
 
-                  $stmt->close();                  
-                  header('Location: ' . root . 'user');
-                  exit;
-                } else {
-                  $_SESSION['message'] = '¡Error al agregar usuario!';
-                  $_SESSION['message_alert'] = "danger";
-                      
-                  header('Location: ' . root . 'user');
-                  exit;
-                }
-              } else {
-                $_SESSION['message'] = '¡Este usuario ya existe!';
-                $_SESSION['message_alert'] = "success";
-
-                header('Location: ' . root . 'user');
-                exit;
-              }
-            }
-          } else {
-            $row = $result -> fetch_assoc();
-            $email_code = $row ["email_code"];
-//The user had deleted his account, reactivate
-            if($email_code != null) {
-              $_SESSION['message'] = '¡Este usuario ya existe, reactiva tu cuenta!';
-              $_SESSION['message_alert'] = "danger";
-
-              header('Location: ' . root . 'reactive-account');
-              exit;
-//The user is already registered and his account is active              
-            } else {
-              $_SESSION['message'] = '¡Este usuario ya existe!';
-              $_SESSION['message_alert'] = "danger";
-
-              header('Location: ' . root . 'user');
-              exit;
-            } 
-          }           
+          $stmt->close();                  
+          header('Location: ' . root . 'user');
+          exit;
+        } else {
+          $_SESSION['message'] = '¡Error al agregar usuario!';
+          $_SESSION['message_alert'] = "danger";
+              
+          header('Location: ' . root . 'user');
+          exit;
         }
+      } else {
+        $_SESSION['message'] = '¡Este usuario ya existe!';
+        $_SESSION['message_alert'] = "success";
+
+        header('Location: ' . root . 'user');
+        exit;
       }
     }
-  }
+  } else {
+    $row = $result -> fetch_assoc();
+    $email_code = $row ["email_code"];
+//The user had deleted his account, reactivate
+    if($email_code != null) {
+      $_SESSION['message'] = '¡Este usuario ya existe, reactiva tu cuenta!';
+      $_SESSION['message_alert'] = "danger";
+
+      header('Location: ' . root . 'reactive-account');
+      exit;
+//The user is already registered and his account is active              
+    } else {
+      $_SESSION['message'] = '¡Este usuario ya existe!';
+      $_SESSION['message_alert'] = "danger";
+
+      header('Location: ' . root . 'user');
+      exit;
+    } 
+  }           
 }
 
 /************************************************************************************************/
@@ -666,26 +613,22 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
     exit;
   } else {
 //Getting the date    
-    $sql = "SELECT date FROM `log` WHERE id = '$messageid';";
-    $result = $conn -> query($sql);
+    $result = $conn -> query("SELECT date FROM `log` WHERE id = '$messageid';");
     $row = $result -> fetch_assoc();
     
     $date = $row["date"];
 //Getting the id 
-    $sql = "SELECT recipeid FROM shares WHERE date = '$date' AND share_to = '" . $_SESSION["username"] . "';";
-    $result = $conn -> query($sql);
+    $result = $conn -> query("SELECT recipeid FROM shares WHERE date = '$date' AND share_to = '" . $_SESSION["username"] . "';");
     $row = $result -> fetch_assoc();
 
     $recipeid = $row["recipeid"];
 //Getting the recipe name
-    $sql = "SELECT * FROM recipe WHERE recipeid = '$recipeid' AND state = 1;";
-    $result = $conn -> query($sql);
+    $result = $conn -> query("SELECT * FROM recipe WHERE recipeid = '$recipeid' AND state = 1;");
     $row = $result -> fetch_assoc();
 
     $recipename = $row["recipename"];
 //Verifying if the recipe already exists
-    $sql = "SELECT recipeid FROM recipe WHERE recipename = '$recipename' AND username = '" . $_SESSION["username"] . "' AND state = 1;";
-    $result = $conn -> query($sql);
+    $result = $conn -> query("SELECT recipeid FROM recipe WHERE recipename = '$recipename' AND username = '" . $_SESSION["username"] . "' AND state = 1;");
 
     if($result -> num_rows == 0){
       $categoryid = $row["categoryid"];
@@ -744,27 +687,24 @@ $dietName = $filter -> sanitization();
 $data = $_POST['data'];
 $days = $_POST['days'];
 
-$pattern = "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:\t\h]+|(^$)/";
+//Input validation object  
+$inputs = ["El nombre de dieta" => [$dietName, [2,30], "incorrecto", true], 
+"Los datos" => [$data, [], "incorrectos", false],
+"Los días" => [$days, [], "incorrectos", false]]; 
 
-  if ($dietName == "" || $data == "" || $days == "") {
-    $_SESSION['message'] = '¡Complete todos los campos por favor!';
-    $_SESSION['message_alert'] = "danger";
+$message = new InputValidation ($inputs, "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]/");  
+$message = $message -> lengthValidation();
 
-    header('Location: ' . root . 'diet');
-    exit;
-  }
-
-  if (!preg_match($pattern, $dietName)){
-    $_SESSION['message'] = '¡Nombre incorrecto!';
-    $_SESSION['message_alert'] = "danger";
+  if(count($message) > 0) {
+    $_SESSION['message'] = $message [0];
+    $_SESSION['message_alert'] = $message [1];          
 
     header('Location: ' . root . 'diet');
     exit;
   } 
 
 //Inserting the recipe name
-  $sql = "INSERT INTO diet (dietname, username) VALUES ('$dietName', '". $_SESSION["username"]."');";
-  $result = $conn -> query($sql);
+  $result = $conn -> query("INSERT INTO diet (dietname, username) VALUES ('$dietName', '". $_SESSION["username"]."');");
 
   if($result) {
 //Getting the last id    

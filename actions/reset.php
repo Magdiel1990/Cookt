@@ -10,9 +10,7 @@ if(isset($_GET['user_id']) && isset($_GET['reset'])) {
 
 $userId = $_GET['user_id'];
 //User data
-$sql = "SELECT * FROM users WHERE userid = ?;";
-
-$stmt = $conn -> prepare($sql); 
+$stmt = $conn -> prepare("SELECT * FROM users WHERE userid = ?;"); 
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 
@@ -36,21 +34,20 @@ $target_dir = "imgs/recipes/" . $username;
     }
     
 //Deleting the user account
-$sql = "DELETE FROM users WHERE username = '$username';";
+$result = $conn -> query("DELETE FROM users WHERE username = '$username';");
 
 //Inserting the user data back
-    if($conn -> query($sql)){
-        $sql = "INSERT INTO users (userid, username, firstname, lastname, `password`, `type`, email, `state`, sex)
-        VALUES ($userId, '$username', '$firstname', '$lastname', '$password', '$type', '$email', $state, '$sex');";
-
-        if($conn -> query($sql) === TRUE){
+    if($result){
+        $result = $conn -> query ("INSERT INTO users (userid, username, firstname, lastname, `password`, `type`, email, `state`, sex)
+        VALUES ($userId, '$username', '$firstname', '$lastname', '$password', '$type', '$email', $state, '$sex');");
+      
+        if($result){
 //Notification message        
             $log_message = "Has reiniciado el usuario \"" . $username . "\".";       
             $type = "reset";
 
             if($_SESSION['notification'] == 1) {
-                $sql = "INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);";
-                $conn -> query($sql);
+                $conn -> query("INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);");
             }
 
             $_SESSION['message'] = '¡Usuario reseteado!';

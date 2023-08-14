@@ -29,65 +29,64 @@ $passrepeat = $filter -> sanitization();
 $id = $_GET['id'];
 $key = $_GET['pass'];
 
-    if($password != "" && $passrepeat != ""){
-        if (strlen($password) < 8 ||  strlen($password) > 50 || strlen($passrepeat) < 8 || strlen($passrepeat) > 50) {
-            $_SESSION['message'] = '¡Cantidad de caracteres no aceptada!';
+
+//Input validation object  
+  $inputs = ["La contraseña" => [$password, [8,50], "incorrecta", false], 
+  "La contraseña" => [$passrepeat, [8,50], "incorrecta", false]];
+
+  $message = new InputValidation ($inputs, "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]/");  
+  $message = $message -> lengthValidation();
+
+    if(count($message) > 0) {
+      $_SESSION['message'] = $message [0];
+      $_SESSION['message_alert'] = $message [1];          
+//The page is redirected to the recovery-page.php
+        header('Location: ' . root . 'recovery-page?id=' . $id . '&pass=' . $key);
+        exit;
+    } 
+
+    if ($password == $passrepeat){
+        $hash_password = password_hash($password, PASSWORD_DEFAULT);          
+
+        $result = $conn -> query("UPDATE users SET password = '$hash_password' WHERE userid = '$id';");  
+
+        if ($result) {
+            $result = $conn -> query("DELETE FROM recovery WHERE userid = '$id';");                              
+            if($result){
+//Message if the variable is null.
+                $_SESSION['message'] = '¡Usuario editado correctamente!';
+                $_SESSION['message_alert'] = "success";
+
+//The page is redirected to the edit.php
+                header('Location: ' . root . 'login');
+                exit;
+            } else {
+            $_SESSION['message'] = '¡Error al editar contraseña!';
             $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the recovery-page.php
             header('Location: ' . root . 'recovery-page?id=' . $id . '&pass=' . $key);
             exit;
-        } else {    
-            if ($password == $passrepeat){
-                $hash_password = password_hash($password, PASSWORD_DEFAULT);          
 
-                $sql = "UPDATE users SET password = '$hash_password' WHERE userid = '$id';";
-
-                if ($conn->query($sql)) {
-                    $sql = "DELETE FROM recovery WHERE userid = '$id';";               
-                    if($conn -> query($sql)){
-//Message if the variable is null.
-                        $_SESSION['message'] = '¡Usuario editado correctamente!';
-                        $_SESSION['message_alert'] = "success";
-
-//The page is redirected to the edit.php
-                        header('Location: ' . root . 'login');
-                        exit;
-                    } else {
-                    $_SESSION['message'] = '¡Error al editar contraseña!';
-                    $_SESSION['message_alert'] = "danger";
+            }
+        } else {
+            $_SESSION['message'] = '¡Error al editar contraseña!';
+            $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the recovery-page.php
-                    header('Location: ' . root . 'recovery-page?id=' . $id . '&pass=' . $key);
-                    exit;
-
-                    }
-                } else {
-                    $_SESSION['message'] = '¡Error al editar contraseña!';
-                    $_SESSION['message_alert'] = "danger";
-
-//The page is redirected to the recovery-page.php
-                    header('Location: ' . root . 'recovery-page?id=' . $id . '&pass=' . $key);
-                    exit;
-                }
-            } else {
-                $_SESSION['message'] = '¡Contraseñas no coinciden!';
-                $_SESSION['message_alert'] = "danger";
-
-//The page is redirected to the recovery-page.php
-                header('Location: ' . root . 'recovery-page?id=' . $id . '&pass=' . $key);
-                exit;
-            } 
-        }        
+            header('Location: ' . root . 'recovery-page?id=' . $id . '&pass=' . $key);
+            exit;
+        }
     } else {
-        $_SESSION['message'] = '¡Complete todos los campos!';
+        $_SESSION['message'] = '¡Contraseñas no coinciden!';
         $_SESSION['message_alert'] = "danger";
 
 //The page is redirected to the recovery-page.php
         header('Location: ' . root . 'recovery-page?id=' . $id . '&pass=' . $key);
         exit;
-    }
-}
+    } 
+}      
+
 //Exit connection
 $conn->close();
 

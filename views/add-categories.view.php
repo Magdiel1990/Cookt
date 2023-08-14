@@ -34,7 +34,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
             
             <div class="input-group mb-3">
                 <label class="input-group-text is-required" for="add_categories">Categoría: </label>
-                <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" minlength="2" maxlength="50" autofocus required>
+                <input class="form-control" type="text" id="add_categories" name="add_categories"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]" minlength="2" maxlength="20" autofocus required>
             </div>
 
             <div class="mb-3">
@@ -60,8 +60,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
             </thead>
             <tbody>                
                 <?php
-                    $sql = "SELECT * FROM categories WHERE state = 1 ORDER BY category;";
-                    $result = $conn -> query($sql);
+                    $result = $conn -> query("SELECT * FROM categories WHERE state = 1 ORDER BY category;");
 //Category images main directory
                     $categoryImg = "imgs/categories/";
 
