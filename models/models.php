@@ -499,6 +499,7 @@ class ImageVerifFromWeb extends ImageVerif{
     }     
 }
 
+//Verify the inputs
 class InputValidation {
 
     public $inputs;
@@ -508,7 +509,7 @@ class InputValidation {
         $this -> inputs = $inputs;
         $this -> pattern = $pattern;
     }
-
+//Validate if it comes null
     public function nullValidation() {
         $message = [];
 
@@ -532,12 +533,13 @@ class InputValidation {
 
         return $message;
     }
-
+//Regular expression
     public function regExpValidation() {
         $message = $this -> nullValidation();
 
         if(count($message) == 0) {
             foreach ($this -> inputs as $key => $value) {
+//Apply regular expression only if it is not numeric, an array, the second element of the array has the max and min, or the fourth element of the array is true                
                 if(count($value[1]) != 0 && !is_numeric($value[0]) && !is_array($value[0]) && $value[3] === true) {
                     if (!preg_match($this -> pattern, $value[0])){
                         $message [] = "¡" . $key . " " . $value[2] . "!";
@@ -549,19 +551,21 @@ class InputValidation {
         }
         return $message;   
     }
-    
+//Validate the length    
     public function lengthValidation() {
         $message = $this -> regExpValidation();
 
         if(count($message) == 0) {
             foreach ($this -> inputs as $key => $value) {
+//If it is a string
                 if(count($value[1]) != 0 && !is_numeric($value[0]) && !is_array($value[0])) {
                     if(strlen($value[0]) < $val[1][0] || strlen($value[0]) > $value[1][1]) {
                         $message [] = "¡" . $key . " debe tener entre " . $value[1][0] ." y " . $value[1][1] ." caracteres!";
                         $message [] = "danger"; 
                         break;
                     }
-                } else {
+//If it is a number
+                } else if (is_numeric($value[0])){
                     if($value[0] > $value[1][1] || $value[0] < $val[1][0]) {
                         $message [] = "¡" . $key . " debe tener un valor entre " . $value[1][0] ." y " . $value[1][1] . "!";
                         $message [] = "danger"; 
