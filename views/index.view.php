@@ -42,7 +42,7 @@ $_SESSION["location"] = root;
         <div class="col-auto">
             <div class="input-group mb-3">
                 <label for="search" class="input-group-text">Buscar: </label>
-                <input class="form-control" type="text" id="search" name="search" maxlength="50">
+                <input class="form-control" type="text" id="search" name="search" maxlength="50" autofocus> 
             </div>
         </div>
     </div>

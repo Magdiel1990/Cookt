@@ -31,6 +31,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
                 <input class="btn btn-success" type="submit" value="Agregar">
             </div>
         </form>
+
     </div>
     <div id="message"></div>
 <!--Ingredients list-->      
@@ -44,7 +45,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 
             if($result -> num_rows > 0){
         ?>
-        <table class="table table-sm shadow">
+        <table class="table table-sm table-hover shadow">
             <thead>
                 <tr class="table_header">
                     <th class='px-2' scope="col">Ingredientes</th>
@@ -54,7 +55,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
             <tbody>  
             <?php              
             while($row = $result -> fetch_assoc()){
-                $html = "<tr>";
+                $html = "<tr class='ingredient_container'>";
                 $html .= "<td class='ingredient px-2' title='ingrediente'>" . ucfirst($row['ingredient']) . "</td>";
                 $html .= "<td class='px-2'>";
                 $html .= "<span class='btn-group'>";
@@ -83,13 +84,13 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 </main>
 <script>
 add_ingredient_validation();
-deleteMessage("btn-outline-danger", "ingrediente");   
+deleteMessage("btn-outline-danger", "ingrediente");  
 
 //Delete message
 function add_ingredient_validation() {
     var form = document.getElementById("ingform");    
 
-    form.addEventListener("submit", function (event){
+    form.addEventListener("submit", function (event) {
     var regExp = /[a-zA-Z,;:\t\h]+|(^$)/;
     var message = document.getElementById("message");    
     var ingredient = document.getElementById("add_ingredient").value;

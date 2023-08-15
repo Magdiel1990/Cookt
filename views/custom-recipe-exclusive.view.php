@@ -35,7 +35,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
 
                 if($num_rows > 0) {
                 ?>
-                <select class="form-select" name="customingredient" id="customingredient">
+                <select class="form-select" name="customingredient" id="customingredient" autofocus>
                     <?php 
                     $options = new IngredientList("ingholder", "ingredients", "ingredient", $_SESSION['username']);
                     $options -> ingredientOptions();                   

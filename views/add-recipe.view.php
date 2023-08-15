@@ -28,7 +28,7 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
             
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="recipename">Nombre: </label>
-                    <input  class="form-control" type="text" id="recipename" name="recipename" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="50" minlength="7" required>             
+                    <input  class="form-control" type="text" id="recipename" name="recipename" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="50" minlength="7" required autofocus>             
                 </div>
 
                 <div class="input-group mb-3">

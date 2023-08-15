@@ -82,52 +82,46 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                     $future_day = $future_day -> addDays();               
 
                         if(date('Y-m-d') >= $future_day) {
-                        $recipeArray = [];
 
-                        $result = $conn -> query("SELECT recipeid FROM recipe WHERE username = '" . $_SESSION['username'] . "';"); 
-//id of the recipes
-                            while ($row = $result -> fetch_assoc()) {
-                                $recipeArray [] = $row["recipeid"];
-                            }
-
-                        $count = count($recipeArray);
-//random id
-                        $key = rand(0, $count - 1); 
-
-                        $sql = "SELECT recipename, preparation, ingredients FROM recipe WHERE recipeid = '" . $recipeArray [$key] . "' AND username = '" . $_SESSION['username'] . "';";
-                        $row = $conn -> query($sql) -> fetch_assoc();
+                        $recipeId = new Random("recipeid", "recipe");
+                        $recipeId = $recipeId -> randomElement();
+                        
+                            if($recipeId !== false) {
+                            $sql = "SELECT recipename, preparation, ingredients FROM recipe WHERE recipeid = '" . $recipeId . "';";
+                            $row = $conn -> query($sql) -> fetch_assoc();
+                                    
+                            $recipeRecomendation = "www.recipeholder.net". root ."?recipe=" . $row ["recipename"] . "&username=" . $row['username'];
+    //Message
+                            $subject = "Recomendación";                            
+                            $message = "<p>La receta " . $row ["recipename"] . " podría interesarte para hoy.</p>";
+                            $message .= "<a href='" . $recipeRecomendation . "'>" . $recipeRecomendation . "</a>";                      
+                            $message .= "<h2>Ingredientes</h2>"; 
+    //Separating ingredients    
+                            $arrayIngredients = explode(".rn", $row["ingredients"]);
                                 
-                        $recipeRecomendation = "www.recipeholder.net". root ."?recipe=" . $row ["recipename"] . "&username=" . $row['username'];
-//Message
-                        $subject = "Recomendación";                            
-                        $message = "<p>La receta " . $row ["recipename"] . " podría interesarte para hoy.</p>";
-                        $message .= "<a href='" . $recipeRecomendation . "'>" . $recipeRecomendation . "</a>";                      
-                        $message .= "<h2>Ingredientes</h2>"; 
-//Separating ingredients    
-                        $arrayIngredients = explode(".rn", $row["ingredients"]);
-                            
-                        $message .= "<div><ul>";
-                            for($i = 0; $i<count($arrayIngredients); $i++){
-                                $message .= "<li>" . $arrayIngredients[$i] . "</li>";
-                            }
-                        $message .= "</ul></div>";
-                        $message .= "<h2>Preparación</h2>"; 
-                        $message .= "<p>" . $row ["preparation"] . "</p>";                      
-//set content-type header for sending HTML email
-                        $headers = "MIME-Version: 1.0" . "\r\n";
-                        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-//additionals
-                        $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n";
+                            $message .= "<div><ul>";
+                                for($i = 0; $i < count($arrayIngredients); $i++){
+                                    $message .= "<li>" . $arrayIngredients[$i] . "</li>";
+                                }
+                            $message .= "</ul></div>";
+                            $message .= "<h2>Preparación</h2>"; 
+                            $message .= "<p>" . $row ["preparation"] . "</p>";                      
+    //set content-type header for sending HTML email
+                            $headers = "MIME-Version: 1.0" . "\r\n";
+                            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    //additionals
+                            $headers .= "From: " .  $_SERVER['HTTP_REFERER'] . "\r\n";
 
-                            if(mail($email, $subject, $message, $headers)) {                            
-                                $days = rand(1, 30);   
-//Saving next suggestin date
-                                $conn -> query("UPDATE users SET suggestion_day = '" . $days . "' WHERE username = '" . $_SESSION['username'] . "';");
+                                if(mail($email, $subject, $message, $headers)) {                            
+                                    $days = rand(1, 7);   
+    //Saving next suggestin date
+                                    $conn -> query("UPDATE users SET suggestion_day = '" . $days . "' WHERE username = '" . $_SESSION['username'] . "';");
+                                }
                             }
                         }
                     } else {
 //Saving next suggestin date
-                        $conn -> query("UPDATE users SET suggestion_day = '" . rand(1, 30) . "' WHERE username = '" . $_SESSION['username'] . "';");
+                        $conn -> query("UPDATE users SET suggestion_day = '" . rand(1, 7) . "' WHERE username = '" . $_SESSION['username'] . "';");
                     }
                 }
                 

@@ -573,9 +573,41 @@ class InputValidation {
                     }
                 }
             }         
-        } 
-        
+        }         
         return $message;   
+    }
+}
+
+//Random Element
+class Random {
+    public $id;
+    public $table;
+
+    function __construct($id, $table){
+        $this -> id = $id;
+        $this -> table = $table;
+    }
+
+    public function randomElement() {
+        $elementArray = [];
+
+        $result = $conn -> query("SELECT " . $this -> id . " FROM " . $this -> table . " WHERE username = '" . $_SESSION['username'] . "' AND state = 1;");
+        
+        if($result) {
+//ids collection
+            while ($row = $result -> fetch_assoc()) {
+                $elementArray [] = $row [$this -> id];
+            }
+
+            $count = count($elementArray);
+//random id
+            $key = rand(0, $count - 1); 
+
+            return $elementArray [$key];
+
+        } else {
+            return false;
+        }
     }
 }
 ?>

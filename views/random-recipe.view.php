@@ -21,7 +21,7 @@ if(isset($_POST["category"])) {
             <div class="input-group mb-3">
                 <label for="category" class="input-group-text">Categoría: </label>
                 
-                <select class="form-select" name="category" id="category">
+                <select class="form-select" name="category" id="category" autofocus>
                     <?php
                     if(isset($_SESSION['categoryName'])){
                         $sql = "SELECT category FROM categories WHERE NOT category='" . $_SESSION['categoryName'] . "' AND state = 1;";                    

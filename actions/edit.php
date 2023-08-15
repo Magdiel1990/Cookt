@@ -45,7 +45,7 @@ if($result -> num_rows > 0) {
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="categoryName">Nombre: </label>
-                    <input type="text" name="categoryName" value="<?php echo $category;?>" class="form-control" id="categoryName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="20" minlength="2" required>
+                    <input type="text" name="categoryName" value="<?php echo $category;?>" class="form-control" id="categoryName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="20" minlength="2" required autofocus>
                 </div>
 
                 <div class="mb-3">
@@ -156,7 +156,7 @@ if(isset($_GET['ingredientname'])){
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="ingredientName">Ingrediente: </label>
-                    <input type="text" name="ingredientName" value="<?php echo $ingredientName;?>" class="form-control" id="ingredientName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="50" minlength="2" required>
+                    <input type="text" name="ingredientName" value="<?php echo $ingredientName;?>" class="form-control" id="ingredientName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="50" minlength="2" required autofocus>
                 </div>
                 <div class="mt-2">
                     <input class="btn btn-primary" type="submit" value="Editar" name="ingredienteditionsubmit">
@@ -266,7 +266,7 @@ $userName = isset($_GET['username']) ? $_GET['username'] : "";
 
                     <div class="input-group mb-3">
                         <label class="input-group-text is-required" for="newRecipeName">Nombre: </label>
-                        <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="50" minlength="7" required>
+                        <input type="text" name="newRecipeName" value="<?php echo $recipeName;?>" class="form-control" id="newRecipeName" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="50" minlength="7" required autofocus>
                     </div>
 
                     <div class="input-group mb-3">
@@ -494,7 +494,7 @@ $num_rows  = $result -> num_rows;
 
                 <div class="input-group mb-3">
                     <label class="input-group-text is-required" for="firstname">Nombre: </label>
-                    <input class="form-control"  value="<?php echo $firstName; ?>" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" minlength="2" maxlength="30" required>
+                    <input class="form-control"  value="<?php echo $firstName; ?>" type="text" id="firstname" name="firstname"  pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" minlength="2" maxlength="30" required autofocus>
                 </div>
 
                 <div class="input-group mb-3">

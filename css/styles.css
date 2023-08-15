@@ -166,16 +166,6 @@ footer h5 {
     color: rgb(4, 4, 99);
 }
 
-/*Ingredient format*/
-.ingredient {
-    transition: text-transform ease-in 1s;
-}
-
-.ingredient:hover {
-    text-transform: uppercase;
-    font-size: 1.6rem;
-}
-
 /*Tables*/
 thead {
     background-color:#444444;
