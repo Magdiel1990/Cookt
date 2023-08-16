@@ -589,6 +589,8 @@ class Random {
     }
 
     public function randomElement() {
+        $conn = DatabaseConnection::dbConnection();
+        
         $elementArray = [];
 
         $result = $conn -> query("SELECT " . $this -> id . " FROM " . $this -> table . " WHERE username = '" . $_SESSION['username'] . "' AND state = 1;");
