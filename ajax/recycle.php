@@ -7,9 +7,6 @@ session_start();
 //Models.
 require_once ("../models/models.php");
 
-//Current location
-$_SESSION["location"] = root;
-
 //Including the database connection.
 $conn = DatabaseConnection::dbConnection();    
 

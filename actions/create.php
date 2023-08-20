@@ -17,7 +17,7 @@ $conn = DatabaseConnection::dbConnection();
 
 //receive the data
 if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){  
-  $filter = new Filter ($_POST['add_categories'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['add_categories'], FILTER_SANITIZE_STRING);
   $category = $filter -> sanitization();
 
   $categoryImage = $_FILES["categoryImage"];
@@ -108,7 +108,7 @@ if(isset($_POST['add_categories']) && isset($_FILES["categoryImage"])){
 
 //receive the data
 if(isset($_POST['add_ingredient'])){
-  $filter = new Filter ($_POST['add_ingredient'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['add_ingredient'], FILTER_SANITIZE_STRING);
   $ingredient = $filter -> sanitization();
 
 //Input validation object  
@@ -175,16 +175,16 @@ if(isset($_POST['add_ingredient'])){
 if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["recipeImage"]) && isset($_POST['category']) && isset($_POST['cookingtime']) && isset($_POST['ingredients']) && isset($_POST['preparation'])){
 
 //Data sanitization
-  $filter = new Filter ($_POST['recipename'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['recipename'], FILTER_SANITIZE_STRING);
   $recipename = $filter -> sanitization();
 
-  $filter = new Filter ($_POST['preparation'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['preparation'], FILTER_SANITIZE_STRING);
   $preparation = $filter -> sanitization();
 
-  $filter = new Filter ($_POST['cookingtime'], FILTER_SANITIZE_NUMBER_INT, $conn);
+  $filter = new Filter ($_POST['cookingtime'], FILTER_SANITIZE_NUMBER_INT);
   $cookingtime = $filter -> sanitization();
 
-  $filter = new Filter ($_POST['ingredients'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['ingredients'], FILTER_SANITIZE_STRING);
   $ingredients = $filter -> sanitization();
 
   $category = $_POST['category']; 
@@ -246,7 +246,7 @@ if(isset($_POST["recipename"]) && isset($_POST["imageUrl"]) && isset($_FILES["re
       exit;
       } else if ($_POST["imageUrl"] != "") {
 // Remote image URL Sanitization   
-        $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL, $conn);
+        $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL);
         $url = $filter -> sanitization();
 //Url existance verification          
         $URLVerif = new UrlVerification ($url);
@@ -446,22 +446,22 @@ if(isset($_POST['customingredient']) && isset($_POST['uri'])){
 //receive the data
 if (isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['sex']) || isset($_POST['username']) || isset($_POST['userpassword']) || isset($_POST['userrol']) || isset($_POST['useremail']) || isset($_POST['session_user'])) {
 
-  $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING);
   $firstname = $filter -> sanitization();
 
-  $filter = new Filter ($_POST['lastname'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['lastname'], FILTER_SANITIZE_STRING);
   $lastname = $filter -> sanitization();
 
-  $filter = new Filter ($_POST['username'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['username'], FILTER_SANITIZE_STRING);
   $username = $filter -> sanitization();
   
-  $filter = new Filter ($_POST['useremail'], FILTER_SANITIZE_EMAIL, $conn);
+  $filter = new Filter ($_POST['useremail'], FILTER_SANITIZE_EMAIL);
   $email = $filter -> sanitization();
 
-  $filter = new Filter ($_POST['userpassword'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['userpassword'], FILTER_SANITIZE_STRING);
   $password = $filter -> sanitization();
 
-  $filter = new Filter ($_POST['passrepeat'], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST['passrepeat'], FILTER_SANITIZE_STRING);
   $passrepeat = $filter -> sanitization();
   
   $sex = $_POST['sex']; 
@@ -681,7 +681,7 @@ if (isset($_GET['messageid']) && isset($_GET['type'])) {
 
 if (isset($_POST['data']) && isset($_POST['diet']) && isset($_POST['days'])) {
 
-$filter = new Filter ($_POST['diet'], FILTER_SANITIZE_STRING, $conn);
+$filter = new Filter ($_POST['diet'], FILTER_SANITIZE_STRING);
 $dietName = $filter -> sanitization();
 
 $data = $_POST['data'];

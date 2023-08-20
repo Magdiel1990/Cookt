@@ -1,19 +1,19 @@
 <?php
 //Directory root
-define("root", "/");
+define("root", "/recipes/");
 
 class DatabaseConnection {
 //Database information
-   /* static $hostname = "localhost";
+    static $hostname = "localhost";
     static $username = "u743896838_magdiel";
     static $password = ">Af=jh8E";
     static $database = "u743896838_foodbase";
-*/
 
-    static $hostname = "localhost:3306";
+
+   /*  static $hostname = "localhost:3306";
     static $username = "root";
     static $password = "123456";
-    static $database = "foodbase";
+    static $database = "foodbase";*/
 
 //Connection to the database.
     public static function dbConnection(){
@@ -169,16 +169,16 @@ class Directories {
 class Filter {
 public $input;
 public $type; 
-public $conn;
 
-function __construct($input, $type, $conn){
+function __construct($input, $type){
     $this -> input = $input;
     $this -> type = $type;
-    $this -> conn = $conn;
 }
 
 public function sanitization() {
-    $this -> input = mysqli_real_escape_string($this -> conn, $this -> input);   
+    $conn = DatabaseConnection::dbConnection();
+
+    $this -> input = mysqli_real_escape_string($conn, $this -> input);   
     $this -> input = htmlspecialchars($this -> input);
     $this -> input = filter_var($this -> input, $this -> type);
     $this -> input = trim($this -> input);
@@ -589,6 +589,8 @@ class Random {
     }
 
     public function randomElement() {
+        $conn = DatabaseConnection::dbConnection();
+        
         $elementArray = [];
 
         $result = $conn -> query("SELECT " . $this -> id . " FROM " . $this -> table . " WHERE username = '" . $_SESSION['username'] . "' AND state = 1;");

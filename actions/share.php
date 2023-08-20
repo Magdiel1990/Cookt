@@ -15,7 +15,7 @@ if(isset($_GET["recipe"]) && isset($_GET["username"]) && isset($_POST["email"]))
     $recipe = unserialize(base64_decode($_GET["recipe"]));
     $username = $_GET["username"];
 
-    $filter = new Filter ($_POST["email"], FILTER_SANITIZE_EMAIL, $conn);
+    $filter = new Filter ($_POST["email"], FILTER_SANITIZE_EMAIL);
     $email = $filter -> sanitization();
 
 //Input validation object  

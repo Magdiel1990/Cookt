@@ -13,7 +13,7 @@ $conn = DatabaseConnection::dbConnection();
 
 if(isset($_POST["email"])){
 
-    $filter = new Filter ($_POST["email"], FILTER_SANITIZE_EMAIL, $conn);
+    $filter = new Filter ($_POST["email"], FILTER_SANITIZE_EMAIL);
     $email = $filter -> sanitization();
 
 //Input validation object  

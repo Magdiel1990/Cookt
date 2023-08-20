@@ -9,7 +9,7 @@ $_SESSION['location'] = root;
 /************************************************************************************************/
 
 if(isset($_POST["ingredientName"]) && isset($_GET["ingredientId"])){
-  $filter = new Filter ($_POST["ingredientName"], FILTER_SANITIZE_STRING, $conn);
+  $filter = new Filter ($_POST["ingredientName"], FILTER_SANITIZE_STRING);
   $ingredient = $filter -> sanitization();
   
   $id = $_GET["ingredientId"];
@@ -71,16 +71,16 @@ if(isset($_GET["editname"]) && isset($_GET["username"]) && isset($_POST["imageUr
 
 $oldName = $_GET["editname"];
 
-$filter = new Filter ($_POST["newRecipeName"], FILTER_SANITIZE_STRING, $conn);  
+$filter = new Filter ($_POST["newRecipeName"], FILTER_SANITIZE_STRING);  
 $newRecipeName = $filter -> sanitization();
 
-$filter = new Filter ($_POST["cookingTime"], FILTER_SANITIZE_NUMBER_INT, $conn);  
+$filter = new Filter ($_POST["cookingTime"], FILTER_SANITIZE_NUMBER_INT);  
 $cookingTime = $filter -> sanitization();
 
-$filter = new Filter ($_POST["preparation"], FILTER_SANITIZE_STRING, $conn);  
+$filter = new Filter ($_POST["preparation"], FILTER_SANITIZE_STRING);  
 $preparation = $filter -> sanitization();
 
-$filter = new Filter ($_POST["ingredients"], FILTER_SANITIZE_STRING, $conn);  
+$filter = new Filter ($_POST["ingredients"], FILTER_SANITIZE_STRING);  
 $ingredients = $filter -> sanitization();
 
 $category = $_POST["category"];
@@ -154,7 +154,7 @@ $categoryId = $row['categoryid'];
             }
 
 // Remote image URL Sanitization   
-            $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL, $conn);
+            $filter = new Filter ($_POST["imageUrl"], FILTER_SANITIZE_URL);
             $url = $filter -> sanitization();
 //Url existance verification          
             $URLVerif = new UrlVerification ($url);
@@ -310,7 +310,7 @@ if(isset($_POST['categoryName']) || isset($_FILES["categoryImage"])) {
 
 $categoryId = $_GET["categoryid"];
 
-$filter = new Filter ($_POST["categoryName"], FILTER_SANITIZE_STRING, $conn);  
+$filter = new Filter ($_POST["categoryName"], FILTER_SANITIZE_STRING);  
 $newCategoryName = $filter -> sanitization();
 
 $categoryImage = $_FILES["categoryImage"];
@@ -452,25 +452,25 @@ if(isset($_POST['firstname']) && isset($_GET['userid']) && isset($_POST['lastnam
   
     date_default_timezone_set("America/Santo_Domingo");
 
-    $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING);
     $firstname = $filter -> sanitization();
 
-    $filter = new Filter ($_POST['lastname'], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST['lastname'], FILTER_SANITIZE_STRING);
     $lastname = $filter -> sanitization();
 
-    $filter = new Filter ($_POST['username'], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST['username'], FILTER_SANITIZE_STRING);
     $username = $filter -> sanitization();
 
-    $filter = new Filter ($_POST['useremail'], FILTER_SANITIZE_EMAIL, $conn);
+    $filter = new Filter ($_POST['useremail'], FILTER_SANITIZE_EMAIL);
     $userEmail = $filter -> sanitization();
 
-    $filter = new Filter ($_POST['current_password'], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST['current_password'], FILTER_SANITIZE_STRING);
     $actualPassword = $filter -> sanitization();
 
-    $filter = new Filter ($_POST['new_password'], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST['new_password'], FILTER_SANITIZE_STRING);
     $newPassword = $filter -> sanitization();
 
-    $filter = new Filter ($_POST['repite_password'], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST['repite_password'], FILTER_SANITIZE_STRING);
     $againNewPassword = $filter -> sanitization();
 
     $userId = $_GET['userid'];  

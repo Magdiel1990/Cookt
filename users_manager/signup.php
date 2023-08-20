@@ -10,22 +10,22 @@ require_once ("models/models.php");
 $conn = DatabaseConnection::dbConnection();
 
 if(!empty($_POST)) {
-    $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST['firstname'], FILTER_SANITIZE_STRING);
     $firstname = $filter -> sanitization();
 
-    $filter = new Filter ($_POST['lastname'], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST['lastname'], FILTER_SANITIZE_STRING);
     $lastname = $filter -> sanitization();
 
-    $filter = new Filter ($_POST['username'], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST['username'], FILTER_SANITIZE_STRING);
     $username = $filter -> sanitization();
 
-    $filter = new Filter ($_POST ["email"], FILTER_SANITIZE_EMAIL, $conn);
+    $filter = new Filter ($_POST ["email"], FILTER_SANITIZE_EMAIL);
     $email = $filter -> sanitization();
 
-    $filter = new Filter ($_POST ["password"], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST ["password"], FILTER_SANITIZE_STRING);
     $password = $filter -> sanitization();
 
-    $filter = new Filter ($_POST ["passrepeat"], FILTER_SANITIZE_STRING, $conn);
+    $filter = new Filter ($_POST ["passrepeat"], FILTER_SANITIZE_STRING);
     $passrepeat = $filter -> sanitization();
 
     $sex = $_POST ["sex"];

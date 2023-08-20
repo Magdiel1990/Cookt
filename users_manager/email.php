@@ -16,7 +16,7 @@ if(isset($_POST['email'])){
 
     if($_POST['email'] != ""){
 //Sanitize        
-    $filter = new Filter ($_POST['email'], FILTER_SANITIZE_EMAIL, $conn);
+    $filter = new Filter ($_POST['email'], FILTER_SANITIZE_EMAIL);
     $email = $filter -> sanitization();
 //Email existance    
     $stmt = $conn -> prepare( "SELECT userid, email, sex, firstname, lastname FROM users WHERE email = ?;"); 

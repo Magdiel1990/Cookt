@@ -20,10 +20,10 @@ $_SESSION['location'] = root;
 
 if(isset($_POST['userpassword']) && isset($_POST['passrepeat']) && isset($_GET['id']) && isset($_GET['pass'])){
 
-$filter = new Filter ($_POST['userpassword'], FILTER_SANITIZE_STRING, $conn);
+$filter = new Filter ($_POST['userpassword'], FILTER_SANITIZE_STRING);
 $password = $filter -> sanitization();
 
-$filter = new Filter ($_POST['passrepeat'], FILTER_SANITIZE_STRING, $conn);
+$filter = new Filter ($_POST['passrepeat'], FILTER_SANITIZE_STRING);
 $passrepeat = $filter -> sanitization();
 
 $id = $_GET['id'];

@@ -55,7 +55,6 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
         </form>
     </div>
     <div class="row mt-4">
-        <div class="col-auto">
         <?php
 //List of chosen ingredients 
         $result = $conn -> query("SELECT i.ingredient, ih.ingredientid FROM ingholder ih JOIN ingredients i ON i.id = ih.ingredientid WHERE ih.username = '" . $_SESSION['username'] . "' AND i.state = 1;");
@@ -80,9 +79,9 @@ $_SESSION['location'] = $_SERVER["REQUEST_URI"];
             echo $html;
         }
         ?>
-        </div>
-            
-        <div class="row mt-2">
+    </div>
+
+    <div class="row mt-2">
         <?php
 //Array containing the chosen recipes        
         if(isset($ingArray)){
