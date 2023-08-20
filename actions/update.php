@@ -146,7 +146,7 @@ $categoryId = $row['categoryid'];
         $result = $conn-> query("UPDATE recipe SET recipename = '$newRecipeName', preparation = '$preparation', ingredients = '$ingredients', cookingtime = '$cookingTime', categoryid = '$categoryId' WHERE recipename = '$oldName' AND username = '$userName' AND state = 1;");
         if ($result) {
 //Notification message        
-            $log_message = "Has actualizado la receta \"" . $oldName . "\" por el nuevo nombre \"" . $newRecipeName . "\".";       
+            $log_message = "Has actualizado la receta \"" . $oldName . "\".";       
             $type = "update";
 
             if($_SESSION['notification'] == 1) {
@@ -260,7 +260,7 @@ $categoryId = $row['categoryid'];
         if ($uploadOk == "") {
             if(move_uploaded_file($recipeImage["tmp_name"], $target_file) && $result){
 //Notification message        
-            $log_message = "Has actualizado la receta \"" . $oldName . "\" por el nuevo nombre \"" . $newRecipeName . "\".";       
+            $log_message = "Has actualizado la receta \"" . $oldName . "\".";       
             $type = "update";
 
             if($_SESSION['notification'] == 1) {
